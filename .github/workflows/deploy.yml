@@ -1,0 +1,33 @@
+name: Deploy the Website
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.SECRET_ACCESS_KEY }}
+          aws-region: ap-south-1
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run prettier
+        run: npx prettier -c .
+
+      - name: Upload to S3
+        run: |
+          npm run build
+          S3_FILE_NAME="canopas_blog_${GITHUB_RUN_ID}"
+          cp -r dist $S3_FILE_NAME
+          aws s3 sync $S3_FILE_NAME s3://articles.canopas.com

@@ -1,0 +1,31 @@
+---
+import config from "../../config";
+console.log(config.API_BASE);
+
+export async function getStaticPaths() {
+  const headers = { "Content-Type": "application/json" };
+  const response = await fetch(
+    "https://blog-admin.canopas.com/api/posts?populate=*",
+    {
+      method: "GET",
+      headers,
+    }
+  ).then((res) => res.json());
+  return response.data.map((el: any) => ({
+    params: {
+      slug: el.cca3,
+    },
+  }));
+}
+const slug = Astro.params;
+console.log(slug);
+const data = await fetch(
+  `https://blog-admin.canopas.com/api/posts/${slug}?populate=*`
+).then((res) => res.json());
+
+console.log(data);
+---
+
+<html>
+  <body> </body>
+</html>

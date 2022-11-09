@@ -20,6 +20,14 @@ export const postStore = defineStore("posts", {
           .get(config.API_BASE + "/api/posts?populate=*")
           .then((response) => {
             this.items = response.data.data;
+            for (let i = 0; i <= this.items.length; i++) {
+              let date = new Date();
+              var month = date.toLocaleString("en-US", { month: "short" });
+              const dates =
+                date.getDate() + " " + month + " " + date.getFullYear();
+
+              this.items[i].attributes.publishedAt = dates;
+            }
             this.isLoading = false;
             resolve();
           })

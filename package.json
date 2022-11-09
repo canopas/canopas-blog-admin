@@ -13,6 +13,7 @@
   "dependencies": {
     "@astrojs/tailwind": "^2.1.1",
     "@astrojs/vue": "^1.2.1",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "astro": "^1.6.1",
     "axios": "^1.1.3",
     "pinia": "^2.0.23",

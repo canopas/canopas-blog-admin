@@ -1,31 +1,28 @@
 ---
+import PostDetail from "../../components/PostDetail.vue";
 import config from "../../config";
-console.log(config.API_BASE);
 
 export async function getStaticPaths() {
-  const headers = { "Content-Type": "application/json" };
-  const response = await fetch(
-    "https://blog-admin.canopas.com/api/posts?populate=*",
-    {
-      method: "GET",
-      headers,
-    }
-  ).then((res) => res.json());
-  return response.data.map((el: any) => ({
-    params: {
-      slug: el.cca3,
-    },
+  const response = await fetch(config.API_BASE + "/api/posts?populate=*").then(
+    (response) => response.json()
+  );
+  // Generate a page for every post, passing the full object as a prop
+  return response.data.map((post) => ({
+    params: { slug: post.attributes.slug },
+    props: { post },
   }));
 }
-const slug = Astro.params;
-console.log(slug);
-const data = await fetch(
-  `https://blog-admin.canopas.com/api/posts/${slug}?populate=*`
-).then((res) => res.json());
 
-console.log(data);
+const slug = Astro.params;
+
+import { postDetailStore } from "../../stores/posts/index.js";
+const readingTime = await postDetailStore;
 ---
 
 <html>
-  <body> </body>
+  <body>
+    <div></div>
+    <div>Post uid is {slug.slug}</div>
+    <PostDetail client:visible />
+  </body>
 </html>

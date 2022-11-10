@@ -14,15 +14,11 @@ export async function getStaticPaths() {
 }
 
 const slug = Astro.params;
-
-import { postDetailStore } from "../../stores/posts/index.js";
-const readingTime = await postDetailStore;
 ---
 
 <html>
   <body>
     <div></div>
-    <div>Post uid is {slug.slug}</div>
-    <PostDetail client:visible />
+    <PostDetail client:visible postId={slug.slug} />
   </body>
 </html>

@@ -7,74 +7,67 @@
   <div class="mb-4 ml-auto mr-auto">
     <div
       class="container mb-8 space-y-6 py-3"
-      v-for="detail in details"
-      :key="detail"
+      v-for="post in posts"
+      :key="post"
     >
       <h1 class="text-4xl"></h1>
       <div class="flex items-center gap-4 mb-10">
         <img class="w-7 h-7 rounded-full" src="" />
-        <p class="text-xl">{{ detail.name }}</p>
+        <p class="text-xl">
+          {{ post.title }}
+        </p>
       </div>
       <figure class="relative overflow-hidden mb-10">
-        <img
-          :src="detail.image"
-          alt="alt-image"
-          class="object-top h-auto w-auto mx-auto object-cover rounded-t-lg lg:rounded-lg"
-        />
+        <div v-for="image in post.attributes.images.data" :key="image">
+          <img
+            :src="'https://blog-admin.canopas.com' + image.attributes.url"
+            class="w-full h-full object-cover font-bold rounded-t-lg"
+            :alt="image.attributes.title"
+          />
+        </div>
       </figure>
-      <div v-html="detail.Description"></div>
+      <div v-html="post.content"></div>
+      <div>{{ post.publishedAt }}</div>
+      <reading-time :text="post.content"></reading-time>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { postDetailStore } from "../stores/posts";
+import { mapState } from "pinia";
+import { mapActions } from "pinia";
+import ReadingTime from "./ReadingTime.vue";
+
 export default {
+  props: ["postId"],
   data() {
     return {
-      details: [
-        {
-          id: 1,
-          image:
-            "https://blog-admin.canopas.com/uploads/google_spreadsheets_b6cf585630.png",
-          name: "Priyanka Gour",
-          date: "08-2-2022",
-          title: "Qualities of an Effectively Creative People",
-          Description: `I'm going to share with you some of the most important ideas that have ever been discovered in the area to be a Highly Creative person.
-      Creativity enables individuals to generate new or innovative ideas.<br/><br/>
-      Having the Trait of a creative thinker often enables individuals to generate novel solutions to any problem. Creative peoples have various qualities.
-      <ul>
-      <li>Dedication</li>
-      <li>Persistence & Patience</li>
-      <li>Creative Mindset</li>
-      <li>Opposable mind </li>
-      <li>Take Hobbies Seriously </li>
-      <li>Self-confidence</li>
-      <li>Self-talk</li>
-      <li class="text-pink-700 ">Curious:</li> They generally opt to live the examined life, and even as they get older, maintain a sense of curiosity about life. Creatives look at the world around them and want to know why, and how, it is the way it is.
-      <li class="text-pink-700 ">Observant:</li> Observant by nature and curious about the lives of others, creative types often love to people-watch-and they may generate some of their best ideas from it.
-      Experiment & explore: "I make more mistakes than anyone else I know, and sooner or later, I patent most of them." - Thomas Edison
-      </ul>
-      Here are 8 traits that I have described below about creative people.<br/><br/>
-      <span class="text-pink-700 ">1. Persistence & Patience:</span>
-      It is the quality of stubbornness or continuing something in spite of opposition.
-      Many times in our life we face the situation, but we give up easily when we don't get any results. We don't have patience.
-Many times in our life we face the situation, but we give up easily when we don't get any results. We don't have patience. 
-      Many times in our life we face the situation, but we give up easily when we don't get any results. We don't have patience.
-      Here is a saying; "Good things come to those who wait." Patience allows you to persevere and make more productive decisions, often leading to greater success.
-      Life is that one coin that flips over and over again irrespective of what you do, what you say, what you try. The only thing that is in control is you.
-      "Persistence, patience, and hard work, bet at it, keep on doing it, and don't give up even if it's tough, and nothing in life is easier, it's all about the choices you make.
-      You can lie to the world but not to yourself. Every single day when you put your head over the pillow, as if you are alone in your head, just trust your dignity, hard work, and honesty.
-      When you are conscious it's clear that you are successful. when you sleep you should be at peace.
-      There is a stanza from Robert frost's poem"
-      The woods are lovely, dark and deep,
-      But I have promises to keep,
-      And miles to go before I sleep,
-      And miles to go before I sleep.
-      its means, don't lose the grip on the dream of your life you have to fight to keep them alive.`,
-          category: "Flutter",
-        },
-      ],
+      id: this.postId,
     };
+  },
+  components: {
+    ReadingTime,
+  },
+  async mounted() {
+    await this.setPostDetails();
+  },
+  computed: {
+    ...mapState(postDetailStore, {
+      posts: "item",
+      postsError: "error",
+      isLoading: "isLoading",
+    }),
+  },
+  methods: {
+    ...mapActions(postDetailStore, ["loadPost"]),
+    async setPostDetails() {
+      await this.loadPost(this.id);
+
+      if (this.postsError != null) {
+        this.showErrorMessagePopup = true;
+      }
+    },
   },
 };
 </script>

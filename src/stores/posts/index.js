@@ -50,8 +50,7 @@ export const postDetailStore = defineStore("post-detail", {
     };
   },
   actions: {
-    async loadPostDetail(id) {
-      console.log("here");
+    async loadPost(id) {
       // No need of API call if the item is already loaded
       if (
         this.item != null &&
@@ -70,7 +69,12 @@ export const postDetailStore = defineStore("post-detail", {
         axios
           .get(config.API_BASE + "/api/posts/" + id + "?populate=*")
           .then((response) => {
-            this.item = response.data;
+            this.item = response.data.data;
+            let date = new Date();
+            var month = date.toLocaleString("en-US", { month: "short" });
+            const dates =
+              date.getDate() + " " + month + " " + date.getFullYear();
+            this.item.attributes.publishedAt = dates;
             this.isLoading = false;
             resolve();
           })

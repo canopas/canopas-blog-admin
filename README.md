@@ -1,4 +1,4 @@
-# 🚀 Getting started with Astro + Vue
+# 🚀 Getting started with NextJS
 
 Canopas Blog website
 
@@ -12,7 +12,7 @@ npm install
 
 ### `Dev`
 
-Starts local dev server at `localhost:3000`
+Start Next.js in development mode at `localhost:3000`
 
 ```
 npm run dev
@@ -20,16 +20,16 @@ npm run dev
 
 ### `Build`
 
-Build your production site to `./dist/`
+Build the application for production usage
 
 ```
 npm run build
 ```
 
-### `Preview`
+### `Start`
 
-Preview your build locally, before deploying
+Start a Next.js production server
 
 ```
-npm run preview
+npm run start
 ```

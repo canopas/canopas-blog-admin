@@ -12,32 +12,31 @@ const PostView = (props) => {
           className="container flex  lg:flex-col flex-col-reverse sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
         >
           <div className="pt-14 lg:pt-0">
-            {post.data.attributes.authors.data.map((author) => (
-              <>
-                <div className="flex flex-col md:flex-row pb-12">
-                  <div>
-                    <div className=" text-lg text-gray-600">
-                      {author.attributes.name}
-                    </div>
-                    <div className="pt-1 text-gray-500">
-                      {author.attributes.bio}
-                    </div>
-                  </div>
+            <div className="flex flex-col md:flex-row pb-12">
+              <div>
+                <a
+                  href={"/author/" + post.authors.data.attributes.slug}
+                  className="text-lg text-gray-600"
+                >
+                  {post.authors.data.attributes.name}
+                </a>
+                <div className="pt-1 text-gray-500">
+                  {post.authors.data.attributes.bio}
                 </div>
-              </>
-            ))}
+              </div>
+            </div>
           </div>
           <div>
             <div className="pb-3 text-4xl font-bold text-black">
-              {post.data.attributes.title}
+              {post.title}
             </div>
             <div className="pb-5 text-base text-gray-500">
-              <span className="">{post.data.attributes.publishedAt}</span>
+              <span className="">{post.publishedAt}</span>
               <spn className=" after:content-['\00B7'] after:mx-1 "></spn>
-              <span>{post.data.attributes.readingTime}</span>
+              <span>{post.readingTime}</span>
             </div>
 
-            {post.data.attributes.images.data.map((image) => (
+            {post.image.data.map((image) => (
               <Image
                 layout="responsive"
                 objectFit="contain"
@@ -51,7 +50,7 @@ const PostView = (props) => {
             <div className="pt-10">
               <MarkdownView
                 className="content text-xl font-light"
-                markdown={post.data.attributes.content}
+                markdown={post.content}
                 escapeHtml={false}
               />
             </div>
@@ -79,12 +78,11 @@ export async function getStaticProps(context) {
     throw new Error("Slug not valid");
   }
 
-  const post = await fetchPost(slug);
+  var post = await fetchPost(slug);
+  post = post.data.attributes;
 
-  const formattedDate = await formateDate(post.data.attributes.publishedAt);
-  post.data.attributes.publishedAt = formattedDate;
-  const readingTime = await getReadingTime(post.data.attributes.content);
-  post.data.attributes["readingTime"] = readingTime;
+  post.publishedAt = await formateDate(post.publishedAt);
+  post["readingTime"] = await getReadingTime(post.content);
 
   if (!post) {
     return { notFound: true };

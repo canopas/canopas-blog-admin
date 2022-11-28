@@ -34,5 +34,5 @@ jobs:
         run: |
           npm run build
           S3_FILE_NAME="canopas_blog_${GITHUB_RUN_ID}"
-          cp -r dist $S3_FILE_NAME
+          cp -r .next $S3_FILE_NAME
           aws s3 sync $S3_FILE_NAME s3://articles.canopas.com

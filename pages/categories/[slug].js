@@ -1,32 +1,34 @@
-import { fetchPost, getReadingTime, formateDate } from "../lib/post";
-import Image from "next/image";
 import MarkdownView from "react-showdown";
-import Loader from "./../component/loader";
+import Image from "next/image";
+import config from "../../config";
+import Loader from "../../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import config from "../config";
 const baseUrl = config.STRAPI_URL;
+import { getReadingTime, formateDate, fetchCategory } from "../../lib/post";
 
-export default function Home({ posts, status }) {
+const CategoryView = ({ category, status }) => {
   let [isOpen, setIsOpen] = useState(true);
-
   function closeModal() {
     setIsOpen(false);
   }
   return (
     <section className="py-5">
-      <div className="container">
+      <div
+        className="container flex flex-col sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
+        key={category.id}
+      >
         <a
           href="/"
-          className="text-pink-400 flex justify-center text-7xl mt-10 mb-20"
+          className="text-pink-400 flex justify-center text-4xl sm:text-7xl mt-10 mb-20"
         >
           CANOPAS BLOG
         </a>
-        {posts == null ? (
+        {category == null ? (
           <Loader />
         ) : status != 200 ? (
-          posts.error.status == 404 ? (
-            <div className="text-xl text-center">There is no any posts</div>
+          category.error.status == 404 ? (
+            <div className="text-xl text-center">There is no any Category</div>
           ) : (
             <Transition appear show={isOpen} as={Fragment}>
               <Dialog
@@ -91,40 +93,34 @@ export default function Home({ posts, status }) {
             </Transition>
           )
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2 xl:grid-cols-3">
-            {posts.data.map((post) => {
+          <div className="flex flex-col items-center">
+            <div className="pt-6 text-3xl font-bold text-gray-600 mb-20">
+              {category.name}
+            </div>
+
+            {category.posts.data.map((post) => {
               post = post.attributes;
+
               return (
                 <div
                   className="flex flex-col basis-[30%] justify-center hover:animate-jump-card -translate-y-6 m-2.5 flex-[1_1_0%] z-0 border shadow-md rounded-xl"
                   key={post.id}
                 >
-                  <div className="rounded-t-lg overflow-hidden relative pt-[52%]">
-                    <div className="absolute inset-0">
-                      <div className="relative">
+                  <div className="rounded-lg overflow-hidden relative  pt-[50%]">
+                    <div className="absolute inset-0 h-full w-full">
+                      <div className="relative h-full w-full">
                         {post.image.data.map((image) => (
-                          <>
+                          <div>
                             <a href={"/post/" + post.slug}>
                               <Image
-                                layout="responsive"
-                                objectFit="contain"
-                                width={500}
-                                height={500}
-                                src={baseUrl + image.attributes.url || ""}
+                                layout="fill"
+                                objectFit="cover"
+                                src={baseUrl + image.attributes.url}
                                 alt={image.alternativeText || ""}
                               />
                             </a>
-                          </>
+                          </div>
                         ))}
-                        <a
-                          href={
-                            "/categories/" +
-                            post.categories.data.attributes.slug
-                          }
-                          className="px-5 py-2 bg-pink-600 rounded-lg absolute top-[15px] right-[20px] cursor-pointer z-10 text-white hover:text-white active:scale-[0.98]"
-                        >
-                          {post.categories.data.attributes.name}
-                        </a>
                       </div>
                     </div>
                   </div>
@@ -140,6 +136,20 @@ export default function Home({ posts, status }) {
                         className="text-gray-800 mt-5 text-sm line-clamp-3"
                         markdown={post.content}
                       />
+                      <div className="text-sm">
+                        {post.tags.data.map((tag) => (
+                          <a
+                            href={"/tags/" + tag.attributes.slug}
+                            className="text-black "
+                          >
+                            <div className="mt-5">
+                              <span className="text-block-500 bg-slate-100 hover:bg-slate-300 rounded-full px-2 py-1.5">
+                                {tag.attributes.name[0]}
+                              </span>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
                       <div className="pt-4">
                         <div className="flex flex-row ">
                           <a
@@ -190,18 +200,40 @@ export default function Home({ posts, status }) {
       </div>
     </section>
   );
+};
+
+export async function getStaticPaths() {
+  var [_, Categories] = await fetchCategory();
+  if (Categories.data) {
+    const paths = Categories.data.map((Category) => ({
+      params: { slug: Category.attributes.slug },
+    }));
+    return {
+      paths: paths,
+      fallback: false,
+    };
+  }
 }
 
-export async function getStaticProps() {
-  const [status, posts] = await fetchPost();
-  if (posts.data) {
-    for (let i = 0; i < posts.data.length; i++) {
-      const post = posts.data[i].attributes;
+export async function getStaticProps(context) {
+  const slug = context.params.slug;
+
+  if (!slug) {
+    throw new Error("Slug not valid");
+  }
+
+  var [status, category] = await fetchCategory(slug);
+  if (category.data) {
+    category = category.data.attributes;
+
+    for (let i = 0; i < category.posts.data.length; i++) {
+      const post = category.posts.data[i].attributes;
       post.publishedAt = await formateDate(post.publishedAt);
       post.readingTime = await getReadingTime(post.content);
     }
   }
   return {
-    props: { posts: posts, status: status },
+    props: { category: category, status: status },
   };
 }
+export default CategoryView;

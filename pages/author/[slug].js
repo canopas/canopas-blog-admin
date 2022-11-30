@@ -4,7 +4,8 @@ import Image from "next/image";
 import Loader from "../../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-const baseUrl = "https://blog-admin.canopas.com";
+import config from "../../config";
+const baseUrl = config.STRAPI_URL;
 
 const AuthorView = ({ author, status }) => {
   let [isOpen, setIsOpen] = useState(true);
@@ -145,6 +146,20 @@ const AuthorView = ({ author, status }) => {
                         className="text-gray-800 mt-5 text-sm line-clamp-3"
                         markdown={post.content}
                       />
+                      <div className="text-sm">
+                        {post.tags.data.map((tag) => (
+                          <a
+                            href={"/tags/" + tag.attributes.slug}
+                            className="text-black "
+                          >
+                            <div className="mt-5">
+                              <span className="text-block-500 bg-slate-100 hover:bg-slate-300 rounded-full px-2 py-1.5">
+                                {tag.attributes.name[0]}
+                              </span>
+                            </div>
+                          </a>
+                        ))}
+                      </div>
                       <div className="pt-4">
                         <div className="flex flex-row ">
                           <div className="text-gray-500 flex">
@@ -193,7 +208,7 @@ export async function getStaticProps(context) {
     for (let i = 0; i < author.posts.data.length; i++) {
       const post = author.posts.data[i].attributes;
       post.publishedAt = await formateDate(post.publishedAt);
-      post["readingTime"] = await getReadingTime(post.content);
+      post.readingTime = await getReadingTime(post.content);
     }
   }
   return { props: { author: author, status: status } };

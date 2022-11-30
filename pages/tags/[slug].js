@@ -1,13 +1,13 @@
-import { fetchPost, getReadingTime, formateDate } from "../lib/post";
-import Image from "next/image";
+import { fetchTag, getReadingTime, formateDate } from "../../lib/post";
 import MarkdownView from "react-showdown";
-import Loader from "./../component/loader";
+import Image from "next/image";
+import Loader from "../../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-import config from "../config";
+import config from "../../config";
 const baseUrl = config.STRAPI_URL;
 
-export default function Home({ posts, status }) {
+const TagView = ({ tags, status }) => {
   let [isOpen, setIsOpen] = useState(true);
 
   function closeModal() {
@@ -15,18 +15,21 @@ export default function Home({ posts, status }) {
   }
   return (
     <section className="py-5">
-      <div className="container">
+      <div
+        className="container flex flex-col sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
+        key={tags.id}
+      >
         <a
           href="/"
-          className="text-pink-400 flex justify-center text-7xl mt-10 mb-20"
+          className="text-pink-400 flex justify-center text-4xl sm:text-7xl mt-10 mb-20"
         >
           CANOPAS BLOG
         </a>
-        {posts == null ? (
+        {tags == null ? (
           <Loader />
         ) : status != 200 ? (
-          posts.error.status == 404 ? (
-            <div className="text-xl text-center">There is no any posts</div>
+          author.error.status == 404 ? (
+            <div className="text-xl text-center">There is no any Author</div>
           ) : (
             <Transition appear show={isOpen} as={Fragment}>
               <Dialog
@@ -91,40 +94,29 @@ export default function Home({ posts, status }) {
             </Transition>
           )
         ) : (
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2 xl:grid-cols-3">
-            {posts.data.map((post) => {
+          <div className="flex flex-col items-center">
+            {tags.posts.data.map((post) => {
               post = post.attributes;
               return (
                 <div
                   className="flex flex-col basis-[30%] justify-center hover:animate-jump-card -translate-y-6 m-2.5 flex-[1_1_0%] z-0 border shadow-md rounded-xl"
                   key={post.id}
                 >
-                  <div className="rounded-t-lg overflow-hidden relative pt-[52%]">
-                    <div className="absolute inset-0">
-                      <div className="relative">
+                  <div className="rounded-lg overflow-hidden relative  pt-[50%]">
+                    <div className="absolute inset-0 h-full w-full">
+                      <div className="relative h-full w-full">
                         {post.image.data.map((image) => (
-                          <>
+                          <div>
                             <a href={"/post/" + post.slug}>
                               <Image
-                                layout="responsive"
-                                objectFit="contain"
-                                width={500}
-                                height={500}
-                                src={baseUrl + image.attributes.url || ""}
+                                layout="fill"
+                                objectFit="cover"
+                                src={baseUrl + image.attributes.url}
                                 alt={image.alternativeText || ""}
                               />
                             </a>
-                          </>
+                          </div>
                         ))}
-                        <a
-                          href={
-                            "/categories/" +
-                            post.categories.data.attributes.slug
-                          }
-                          className="px-5 py-2 bg-pink-600 rounded-lg absolute top-[15px] right-[20px] cursor-pointer z-10 text-white hover:text-white active:scale-[0.98]"
-                        >
-                          {post.categories.data.attributes.name}
-                        </a>
                       </div>
                     </div>
                   </div>
@@ -190,18 +182,39 @@ export default function Home({ posts, status }) {
       </div>
     </section>
   );
+};
+
+export async function getStaticPaths() {
+  const [_, Tags] = await fetchTag();
+  if (Tags.data) {
+    const paths = Tags.data.map((Tag) => ({
+      params: { slug: Tag.attributes.slug },
+    }));
+    return {
+      paths: paths,
+      fallback: false,
+    };
+  }
 }
 
-export async function getStaticProps() {
-  const [status, posts] = await fetchPost();
-  if (posts.data) {
-    for (let i = 0; i < posts.data.length; i++) {
-      const post = posts.data[i].attributes;
+export async function getStaticProps(context) {
+  const slug = context.params.slug;
+  if (!slug) {
+    throw new Error("Slug not valid");
+  }
+
+  var [status, tags] = await fetchTag(slug);
+  if (tags.data) {
+    tags = tags.data.attributes;
+
+    for (let i = 0; i < tags.posts.data.length; i++) {
+      const post = tags.posts.data[i].attributes;
       post.publishedAt = await formateDate(post.publishedAt);
       post.readingTime = await getReadingTime(post.content);
     }
   }
-  return {
-    props: { posts: posts, status: status },
-  };
+
+  return { props: { tags: tags, status: status } };
 }
+
+export default TagView;

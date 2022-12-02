@@ -28,8 +28,8 @@ const TagView = ({ tags, status }) => {
         {tags == null ? (
           <Loader />
         ) : status != 200 ? (
-          author.error.status == 404 ? (
-            <div className="text-xl text-center">There is no any Author</div>
+          tags.error.status == 404 ? (
+            <div className="text-xl text-center">There is no any Tags</div>
           ) : (
             <Transition appear show={isOpen} as={Fragment}>
               <Dialog

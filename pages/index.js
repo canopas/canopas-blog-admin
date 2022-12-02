@@ -190,7 +190,8 @@ export async function getStaticProps() {
   if (posts.data) {
     for (let i = 0; i < posts.data.length; i++) {
       const post = posts.data[i].attributes;
-      post.publishedAt = await formateDate(post.publishedAt);
+      var [date, _] = await formateDate(post.publishedAt);
+      post.publishedAt = date;
       post["readingTime"] = await getReadingTime(post.content);
     }
   }

@@ -5,7 +5,8 @@ import Loader from "../../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Comment from "../../component/comment/comments";
-const baseUrl = "https://blog-admin.canopas.com";
+import config from "../../config";
+const baseUrl = config.STRAPI_URL;
 
 const PostView = ({ post, status }) => {
   let [isOpen, setIsOpen] = useState(true);
@@ -87,7 +88,7 @@ const PostView = ({ post, status }) => {
         ) : (
           <div
             key={post.id}
-            className="container flex  lg:flex-col flex-col-reverse sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
+            className="container flex  flex-col  sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
           >
             <a
               href="/"

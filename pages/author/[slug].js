@@ -6,6 +6,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import config from "../../config";
 const baseUrl = config.STRAPI_URL;
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faComments } from "@fortawesome/free-solid-svg-icons";
+
 
 const AuthorView = ({ author, status }) => {
   let [isOpen, setIsOpen] = useState(true);
@@ -166,6 +169,13 @@ const AuthorView = ({ author, status }) => {
                             <span>{post.publishedAt}</span>
                             <span className=" after:content-['\00B7'] after:mx-1 "></span>
                             <span>{post.readingTime}</span>
+                            <span className="pl-4">
+                              <FontAwesomeIcon
+                                icon={faComments}
+                                className="pr-1 text-sm"
+                              />
+                              {post.comments.data.length}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -207,8 +217,9 @@ export async function getStaticProps(context) {
     author["totalStory"] = author.posts.data.length;
     for (let i = 0; i < author.posts.data.length; i++) {
       const post = author.posts.data[i].attributes;
-      post.publishedAt = await formateDate(post.publishedAt);
-      post.readingTime = await getReadingTime(post.content);
+      var [date, _] = await formateDate(post.publishedAt);
+      post.publishedAt = date;
+      post["readingTime"] = await getReadingTime(post.content);
     }
   }
   return { props: { author: author, status: status } };

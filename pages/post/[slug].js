@@ -4,6 +4,7 @@ import { fetchPost, getReadingTime, formateDate } from "../../lib/post";
 import Loader from "../../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
+import Comment from "../../component/comment/comments";
 import config from "../../config";
 const baseUrl = config.STRAPI_URL;
 
@@ -98,7 +99,9 @@ const PostView = ({ post, status }) => {
             <div className="pt-14 lg:pt-0">
               <div className="flex flex-col md:flex-row pb-12">
                 <a
-                  href={"/author/" + post.authors.data.attributes.slug}
+                  href={
+                    "/author/" + post.attributes.authors.data.attributes.slug
+                  }
                   className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] lg:w-[80px] lg:h-[80px] mb-2 md:mb-0"
                 >
                   <Image
@@ -107,38 +110,41 @@ const PostView = ({ post, status }) => {
                     objectFit="cover"
                     src={
                       baseUrl +
-                      post.authors.data.attributes.image.data.attributes.url
+                      post.attributes.authors.data.attributes.image.data
+                        .attributes.url
                     }
                     alt={
-                      post.authors.data.attributes.image.data.attributes
-                        .alternativeText || ""
+                      post.attributes.authors.data.attributes.image.data
+                        .attributes.alternativeText || ""
                     }
                   />
                 </a>
                 <div className="md:pl-4">
                   <a
-                    href={"/author/" + post.authors.data.attributes.slug}
+                    href={
+                      "/author/" + post.attributes.authors.data.attributes.slug
+                    }
                     className="text-lg text-gray-600"
                   >
-                    {post.authors.data.attributes.name}
+                    {post.attributes.authors.data.attributes.name}
                   </a>
                   <div className="pt-1 text-gray-500">
-                    {post.authors.data.attributes.bio}
+                    {post.attributes.authors.data.attributes.bio}
                   </div>
                 </div>
               </div>
             </div>
             <div>
               <div className="pb-3 text-4xl font-bold text-black">
-                {post.title}
+                {post.attributes.title}
               </div>
               <div className="pb-5 text-base text-gray-500">
-                <span className="">{post.publishedAt}</span>
+                <span className="">{post.attributes.publishedAt}</span>
                 <spn className=" after:content-['\00B7'] after:mx-1 "></spn>
-                <span>{post.readingTime}</span>
+                <span>{post.attributes.readingTime}</span>
               </div>
 
-              {post.image.data.map((image) => (
+              {post.attributes.image.data.map((image) => (
                 <Image
                   layout="responsive"
                   objectFit="contain"
@@ -152,11 +158,14 @@ const PostView = ({ post, status }) => {
               <div className="pt-10">
                 <MarkdownView
                   className="content text-xl font-light"
-                  markdown={post.content}
+                  markdown={post.attributes.content}
                   escapeHtml={false}
                 />
               </div>
             </div>
+
+            {/* Comment Form */}
+            <Comment post={post} />
           </div>
         )}
       </div>
@@ -184,10 +193,17 @@ export async function getStaticProps(context) {
   }
   var [status, post] = await fetchPost(slug);
   if (post.data) {
-    post = post.data.attributes;
+    post = post.data;
 
-    post.publishedAt = await formateDate(post.publishedAt);
-    post.readingTime = await getReadingTime(post.content);
+    var [date, _] = await formateDate(post.attributes.publishedAt);
+    post.attributes.publishedAt = date;
+    post.attributes["readingTime"] = await getReadingTime(
+      post.attributes.content
+    );
+    post.attributes.comments.data.map(async (comment) => {
+      const [date, time] = await formateDate(comment.attributes.publishedAt);
+      comment.attributes.publishedAt = date + " at " + time;
+    });
   }
 
   return { props: { post: post, status: status } };

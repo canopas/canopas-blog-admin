@@ -19,6 +19,8 @@
     "sass": "^1.56.1"
   },
   "devDependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "autoprefixer": "^10.4.13",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.3",

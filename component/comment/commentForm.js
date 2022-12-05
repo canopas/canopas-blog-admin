@@ -16,10 +16,9 @@ export default function CommentForm({ post }) {
       data: {
         comment: comment,
         post: postId,
-        parentId: commentsId ? commentsId : "",
+        parentId: commentsId ? commentsId : null,
       },
     };
-
 
     const [status, comments] = await addComment(commentData);
     if (status === 200) {

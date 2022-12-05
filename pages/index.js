@@ -4,7 +4,8 @@ import MarkdownView from "react-showdown";
 import Loader from "./../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-const baseUrl = "https://blog-admin.canopas.com";
+import config from "../config";
+const baseUrl = config.STRAPI_URL;
 
 export default function Home({ posts, status }) {
   let [isOpen, setIsOpen] = useState(true);
@@ -115,9 +116,15 @@ export default function Home({ posts, status }) {
                             </a>
                           </>
                         ))}
-                        <div className="px-5 py-2 bg-pink-600 rounded-lg absolute top-[15px] right-[20px] cursor-pointer z-10 text-white hover:text-white active:scale-[0.98]">
+                        <a
+                          href={
+                            "/categories/" +
+                            post.categories.data.attributes.slug
+                          }
+                          className="px-5 py-2 bg-pink-600 rounded-lg absolute top-[15px] right-[20px] cursor-pointer z-10 text-white hover:text-white active:scale-[0.98]"
+                        >
                           {post.categories.data.attributes.name}
-                        </div>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -191,10 +198,9 @@ export async function getStaticProps() {
     for (let i = 0; i < posts.data.length; i++) {
       const post = posts.data[i].attributes;
       post.publishedAt = await formateDate(post.publishedAt);
-      post["readingTime"] = await getReadingTime(post.content);
+      post.readingTime = await getReadingTime(post.content);
     }
   }
-
   return {
     props: { posts: posts, status: status },
   };

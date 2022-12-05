@@ -1,4 +1,4 @@
-import { fetchAuthor, getReadingTime, formateDate } from "../../lib/post";
+import { fetchTag, getReadingTime, formateDate } from "../../lib/post";
 import MarkdownView from "react-showdown";
 import Image from "next/image";
 import Loader from "../../component/loader";
@@ -7,7 +7,7 @@ import { Fragment, useState } from "react";
 import config from "../../config";
 const baseUrl = config.STRAPI_URL;
 
-const AuthorView = ({ author, status }) => {
+const TagView = ({ tags, status }) => {
   let [isOpen, setIsOpen] = useState(true);
 
   function closeModal() {
@@ -15,18 +15,21 @@ const AuthorView = ({ author, status }) => {
   }
   return (
     <section className="py-5">
-      <div className="container flex flex-col sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]">
+      <div
+        className="container flex flex-col sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
+        key={tags.id}
+      >
         <a
           href="/"
           className="text-pink-400 flex justify-center text-4xl sm:text-7xl mt-10 mb-20"
         >
           CANOPAS BLOG
         </a>
-        {author == null ? (
+        {tags == null ? (
           <Loader />
         ) : status != 200 ? (
-          author.error.status == 404 ? (
-            <div className="text-xl text-center">There is no any Author</div>
+          tags.error.status == 404 ? (
+            <div className="text-xl text-center">There is no any Tags</div>
           ) : (
             <Transition appear show={isOpen} as={Fragment}>
               <Dialog
@@ -91,25 +94,8 @@ const AuthorView = ({ author, status }) => {
             </Transition>
           )
         ) : (
-          <div className="flex flex-col items-center" key={author.id}>
-            <div className="pt-6 text-3xl font-bold text-gray-600">
-              {author.name}
-            </div>
-            <div className="pt-6 pb-10 text-gray-500">{author.bio}</div>
-            <div className="relative w-[80px] h-[80px] sm:w-[100px] sm:h-[100px] object-cover">
-              <Image
-                className="rounded-full h-full w-full object-cover absolute inset-0"
-                layout="fill"
-                objectFit="cover"
-                src={baseUrl + author.image.data.attributes.url}
-                alt={author.image.data.attributes.alternativeText}
-              />
-            </div>
-
-            <div className="pt-6 pb-10 text-2xl">
-              {author.totalStory} Stories by {author.name}
-            </div>
-            {author.posts.data.map((post) => {
+          <div className="flex flex-col items-center">
+            {tags.posts.data.map((post) => {
               post = post.attributes;
               return (
                 <div
@@ -146,26 +132,43 @@ const AuthorView = ({ author, status }) => {
                         className="text-gray-800 mt-5 text-sm line-clamp-3"
                         markdown={post.content}
                       />
-                      <div className="text-sm">
-                        {post.tags.data.map((tag) => (
-                          <a
-                            href={"/tags/" + tag.attributes.slug}
-                            className="text-black "
-                          >
-                            <div className="mt-5">
-                              <span className="text-block-500 bg-slate-100 hover:bg-slate-300 rounded-full px-2 py-1.5">
-                                {tag.attributes.tags[0]}
-                              </span>
-                            </div>
-                          </a>
-                        ))}
-                      </div>
                       <div className="pt-4">
                         <div className="flex flex-row ">
-                          <div className="text-gray-500 flex">
-                            <span>{post.publishedAt}</span>
-                            <span className=" after:content-['\00B7'] after:mx-1 "></span>
-                            <span>{post.readingTime}</span>
+                          <a
+                            href={
+                              "/author/" + post.authors.data.attributes.slug
+                            }
+                            className="relative w-[40px] h-[40px]"
+                          >
+                            <Image
+                              className="rounded-full h-full w-full object-cover absolute inset-0"
+                              layout="fill"
+                              objectFit="cover"
+                              src={
+                                baseUrl +
+                                post.authors.data.attributes.image.data
+                                  .attributes.url
+                              }
+                              alt={
+                                post.authors.data.attributes.image.data
+                                  .attributes.alternativeText || ""
+                              }
+                            />
+                          </a>
+                          <div className="pl-3 text-sm">
+                            <a
+                              href={
+                                "/author/" + post.authors.data.attributes.slug
+                              }
+                              className="text-gray-800 "
+                            >
+                              {post.authors.data.attributes.name}
+                            </a>
+                            <div className="text-gray-500 flex">
+                              <span>{post.publishedAt}</span>
+                              <span className=" after:content-['\00B7'] after:mx-1 "></span>
+                              <span>{post.readingTime}</span>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -182,10 +185,10 @@ const AuthorView = ({ author, status }) => {
 };
 
 export async function getStaticPaths() {
-  const [_, Authors] = await fetchAuthor();
-  if (Authors.data) {
-    const paths = Authors.data.map((Author) => ({
-      params: { slug: Author.attributes.slug },
+  const [_, Tags] = await fetchTag();
+  if (Tags.data) {
+    const paths = Tags.data.map((Tag) => ({
+      params: { slug: Tag.attributes.slug },
     }));
     return {
       paths: paths,
@@ -200,18 +203,18 @@ export async function getStaticProps(context) {
     throw new Error("Slug not valid");
   }
 
-  var [status, author] = await fetchAuthor(slug);
-  if (author.data) {
-    author = author.data.attributes;
+  var [status, tags] = await fetchTag(slug);
+  if (tags.data) {
+    tags = tags.data.attributes;
 
-    author["totalStory"] = author.posts.data.length;
-    for (let i = 0; i < author.posts.data.length; i++) {
-      const post = author.posts.data[i].attributes;
+    for (let i = 0; i < tags.posts.data.length; i++) {
+      const post = tags.posts.data[i].attributes;
       post.publishedAt = await formateDate(post.publishedAt);
       post.readingTime = await getReadingTime(post.content);
     }
   }
-  return { props: { author: author, status: status } };
+
+  return { props: { tags: tags, status: status } };
 }
 
-export default AuthorView;
+export default TagView;

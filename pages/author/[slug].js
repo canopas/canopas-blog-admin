@@ -1,6 +1,7 @@
 import { fetchAuthor, getReadingTime, formateDate } from "../../lib/post";
 import MarkdownView from "react-showdown";
 import Image from "next/image";
+import Link from "next/link";
 import Loader from "../../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
@@ -18,12 +19,12 @@ const AuthorView = ({ author, status }) => {
   return (
     <section className="py-5">
       <div className="container flex flex-col sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]">
-        <a
+        <Link
           href="/"
           className="text-pink-400 flex justify-center text-4xl sm:text-7xl mt-10 mb-20"
         >
           CANOPAS BLOG
-        </a>
+        </Link>
         {author == null ? (
           <Loader />
         ) : status != 200 ? (
@@ -123,26 +124,26 @@ const AuthorView = ({ author, status }) => {
                       <div className="relative h-full w-full">
                         {post.image.data.map((image) => (
                           <div>
-                            <a href={"/post/" + post.slug}>
+                            <Link href={"/post/" + post.slug}>
                               <Image
                                 layout="fill"
                                 objectFit="cover"
                                 src={baseUrl + image.attributes.url}
                                 alt={image.alternativeText || ""}
                               />
-                            </a>
+                            </Link>
                           </div>
                         ))}
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-col justify-between flex-[1_0_0%] px-2.5 py-5 sm:p-5 rounded-b-lg">
-                    <a
+                    <Link
                       href={"/post/" + post.slug}
                       className="text-black text-xl"
                     >
                       {post.title}
-                    </a>
+                    </Link>
                     <div>
                       <MarkdownView
                         className="text-gray-800 mt-5 text-sm line-clamp-3"
@@ -150,7 +151,7 @@ const AuthorView = ({ author, status }) => {
                       />
                       <div className="text-sm">
                         {post.tags.data.map((tag) => (
-                          <a
+                          <Link
                             href={"/tags/" + tag.attributes.slug}
                             className="text-black "
                           >
@@ -159,7 +160,7 @@ const AuthorView = ({ author, status }) => {
                                 {tag.attributes.tags[0]}
                               </span>
                             </div>
-                          </a>
+                          </Link>
                         ))}
                       </div>
                       <div className="pt-4">

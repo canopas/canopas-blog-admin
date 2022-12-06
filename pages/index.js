@@ -1,5 +1,6 @@
 import { fetchPost, getReadingTime, formateDate } from "../lib/post";
 import Image from "next/image";
+import Link from "next/link";
 import MarkdownView from "react-showdown";
 import Loader from "./../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
@@ -18,12 +19,12 @@ export default function Home({ posts, status }) {
   return (
     <section className="py-5">
       <div className="container">
-        <a
+        <Link
           href="/"
           className="text-pink-400 flex justify-center text-7xl mt-10 mb-20"
         >
           CANOPAS BLOG
-        </a>
+        </Link>
         {posts == null ? (
           <Loader />
         ) : status != 200 ? (
@@ -106,7 +107,7 @@ export default function Home({ posts, status }) {
                       <div className="relative">
                         {post.image.data.map((image) => (
                           <>
-                            <a href={"/post/" + post.slug}>
+                            <Link href={"/post/" + post.slug}>
                               <Image
                                 layout="responsive"
                                 objectFit="contain"
@@ -115,10 +116,10 @@ export default function Home({ posts, status }) {
                                 src={baseUrl + image.attributes.url || ""}
                                 alt={image.alternativeText || ""}
                               />
-                            </a>
+                            </Link>
                           </>
                         ))}
-                        <a
+                        <Link
                           href={
                             "/categories/" +
                             post.categories.data.attributes.slug
@@ -126,17 +127,17 @@ export default function Home({ posts, status }) {
                           className="px-5 py-2 bg-pink-600 rounded-lg absolute top-[15px] right-[20px] cursor-pointer z-10 text-white hover:text-white active:scale-[0.98]"
                         >
                           {post.categories.data.attributes.name}
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-col justify-between flex-[1_0_0%] px-2.5 py-5 sm:p-5 rounded-b-lg">
-                    <a
+                    <Link
                       href={"/post/" + post.slug}
                       className="text-black text-xl"
                     >
                       {post.title}
-                    </a>
+                    </Link>
                     <div>
                       <MarkdownView
                         className="text-gray-800 mt-5 text-sm line-clamp-3"
@@ -145,7 +146,7 @@ export default function Home({ posts, status }) {
                       <div className="pt-4">
                         <div className="flex flex-row items-center justify-between">
                           <div className="relative flex">
-                            <a
+                            <Link
                               href={
                                 "/author/" + post.authors.data.attributes.slug
                               }
@@ -165,16 +166,16 @@ export default function Home({ posts, status }) {
                                     .attributes.alternativeText || ""
                                 }
                               />
-                            </a>
+                            </Link>
                             <div className="pl-3 text-sm">
-                              <a
+                              <Link
                                 href={
                                   "/author/" + post.authors.data.attributes.slug
                                 }
                                 className="text-gray-800 "
                               >
                                 {post.authors.data.attributes.name}
-                              </a>
+                              </Link>
                               <div className="text-gray-500 ">
                                 <span>{post.publishedAt}</span>
                                 <span className=" after:content-['\00B7'] after:mx-1 "></span>

@@ -10,7 +10,7 @@ export default function Comment({ post }) {
   let [reviews, setReviews] = useState(false);
   let [currentIndex, setcurrentIndex] = useState(0);
   let [previousIndex, setpreviousIndex] = useState(0);
-  let ThreadComments = post.attributes.comments.data;
+  let threadComments = post.attributes.comments.data;
 
   const handleSubmit = (id) => () => {
     if (previousIndex == id) {
@@ -69,11 +69,11 @@ export default function Comment({ post }) {
 
                   {/* Thread comments */}
 
-                  {ThreadComments.map((threadComments) => {
+                  {threadComments.map((threadComment) => {
                     return (
                       <div>
-                        {threadComments.attributes.parentId &&
-                        threadComments.attributes.parentId == comment.id ? (
+                        {threadComment.attributes.parentId &&
+                        threadComment.attributes.parentId == comment.id ? (
                           <ol className="pt-2">
                             <li className="px-5 py-5 bg-white border border-solid border-gray-300 rounded">
                               <div className="flex justify-between items-center">
@@ -87,7 +87,7 @@ export default function Comment({ post }) {
                                       alt={"user-avatar"}
                                     />
                                   </div>
-                                  {threadComments.attributes.commentators.data.map(
+                                  {threadComment.attributes.commentators.data.map(
                                     (user) => {
                                       user = user.attributes;
                                       return (
@@ -103,10 +103,10 @@ export default function Comment({ post }) {
                                 style={{ ["font-size"]: "14px" }}
                                 className="text-gray-500"
                               >
-                                {threadComments.attributes.publishedAt}
+                                {threadComment.attributes.publishedAt}
                               </p>
                               <div className="pt-4">
-                                {threadComments.attributes.comment}
+                                {threadComment.attributes.comment}
                               </div>
                             </li>
                           </ol>

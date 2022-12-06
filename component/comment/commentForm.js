@@ -2,7 +2,7 @@ import { useState } from "react";
 import { addComment, addUser, updateCommentator } from "../../lib/post";
 
 export default function CommentForm({ post }) {
-  const [postId, commentsId] = post;
+  const [postId, commentId] = post;
 
   let [showComment, setShowResults] = useState(false);
   const onClick = () => setShowResults(true);
@@ -16,10 +16,9 @@ export default function CommentForm({ post }) {
       data: {
         comment: comment,
         post: postId,
-        parentId: commentsId ? commentsId : "",
+        parentId: commentId ? commentId : null,
       },
     };
-
 
     const [status, comments] = await addComment(commentData);
     if (status === 200) {

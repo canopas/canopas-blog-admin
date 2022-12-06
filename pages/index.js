@@ -6,6 +6,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import config from "../config";
 const baseUrl = config.STRAPI_URL;
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMessage } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home({ posts, status }) {
   let [isOpen, setIsOpen] = useState(true);
@@ -141,43 +143,53 @@ export default function Home({ posts, status }) {
                         markdown={post.content}
                       />
                       <div className="pt-4">
-                        <div className="flex flex-row ">
-                          <a
-                            href={
-                              "/author/" + post.authors.data.attributes.slug
-                            }
-                            className="relative w-[40px] h-[40px]"
-                          >
-                            <Image
-                              className="rounded-full h-full w-full object-cover absolute inset-0"
-                              layout="fill"
-                              objectFit="cover"
-                              src={
-                                baseUrl +
-                                post.authors.data.attributes.image.data
-                                  .attributes.url
-                              }
-                              alt={
-                                post.authors.data.attributes.image.data
-                                  .attributes.alternativeText || ""
-                              }
-                            />
-                          </a>
-                          <div className="pl-3 text-sm">
+                        <div className="flex flex-row items-center justify-between">
+                          <div className="relative flex">
                             <a
                               href={
                                 "/author/" + post.authors.data.attributes.slug
                               }
-                              className="text-gray-800 "
+                              className="relative w-[40px] h-[40px]"
                             >
-                              {post.authors.data.attributes.name}
+                              <Image
+                                className="rounded-full h-full w-full object-cover absolute inset-0"
+                                layout="fill"
+                                objectFit="cover"
+                                src={
+                                  baseUrl +
+                                  post.authors.data.attributes.image.data
+                                    .attributes.url
+                                }
+                                alt={
+                                  post.authors.data.attributes.image.data
+                                    .attributes.alternativeText || ""
+                                }
+                              />
                             </a>
-                            <div className="text-gray-500 flex">
-                              <span>{post.publishedAt}</span>
-                              <span className=" after:content-['\00B7'] after:mx-1 "></span>
-                              <span>{post.readingTime}</span>
+                            <div className="pl-3 text-sm">
+                              <a
+                                href={
+                                  "/author/" + post.authors.data.attributes.slug
+                                }
+                                className="text-gray-800 "
+                              >
+                                {post.authors.data.attributes.name}
+                              </a>
+                              <div className="text-gray-500 ">
+                                <span>{post.publishedAt}</span>
+                                <span className=" after:content-['\00B7'] after:mx-1 "></span>
+                                <span>{post.readingTime}</span>
+                              </div>
                             </div>
                           </div>
+
+                          <span className="pl-4 text-gray-500">
+                            <FontAwesomeIcon
+                              icon={faMessage}
+                              className="pr-1 text-sm"
+                            />
+                            {post.comments.data.length}
+                          </span>
                         </div>
                       </div>
                     </div>

@@ -10,6 +10,7 @@ export default function Comment({ post }) {
   let [reviews, setReviews] = useState(false);
   let [currentIndex, setcurrentIndex] = useState(0);
   let [previousIndex, setpreviousIndex] = useState(0);
+  let threadComments = post.attributes.comments.data;
 
   const handleSubmit = (id) => () => {
     if (previousIndex == id) {
@@ -66,6 +67,56 @@ export default function Comment({ post }) {
                   </p>
                   <div className="pt-4">{comment.attributes.comment}</div>
 
+                  {/* Thread comments */}
+
+                  {threadComments.map((threadComment) => {
+                    return (
+                      <div>
+                        {threadComment.attributes.parentId &&
+                        threadComment.attributes.parentId == comment.id ? (
+                          <ol className="pt-2">
+                            <li className="px-5 py-5 bg-white border border-solid border-gray-300 rounded">
+                              <div className="flex justify-between items-center">
+                                <div className="flex items-center">
+                                  <div className="relative w-[40px] h-[40px] mb-2 md:mb-0">
+                                    <Image
+                                      className="rounded-full h-full w-full object-cover absolute inset-0"
+                                      layout="fill"
+                                      objectFit="cover"
+                                      src={UserImage}
+                                      alt={"user-avatar"}
+                                    />
+                                  </div>
+                                  {threadComment.attributes.commentators.data.map(
+                                    (user) => {
+                                      user = user.attributes;
+                                      return (
+                                        <div className="pl-3">
+                                          {user.username}
+                                        </div>
+                                      );
+                                    }
+                                  )}
+                                </div>
+                              </div>
+                              <p
+                                style={{ ["font-size"]: "14px" }}
+                                className="text-gray-500"
+                              >
+                                {threadComment.attributes.publishedAt}
+                              </p>
+                              <div className="pt-4">
+                                {threadComment.attributes.comment}
+                              </div>
+                            </li>
+                          </ol>
+                        ) : (
+                          ""
+                        )}
+                      </div>
+                    );
+                  })}
+
                   {reviews && comment.id === currentIndex ? (
                     <CommentForm post={[post.id, comment.id]} />
                   ) : (
@@ -73,48 +124,7 @@ export default function Comment({ post }) {
                   )}
                 </li>
               ) : (
-                <li className="px-5 py-5 bg-white border border-solid border-gray-300 rounded">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <div className="relative w-[40px] h-[40px] mb-2 md:mb-0">
-                        <Image
-                          className="rounded-full h-full w-full object-cover absolute inset-0"
-                          layout="fill"
-                          objectFit="cover"
-                          src={UserImage}
-                          alt={"user-avatar"}
-                        />
-                      </div>
-                      {comment.attributes.commentators.data.map((user) => {
-                        user = user.attributes;
-                        return <div className="pl-3">{user.username}</div>;
-                      })}
-                    </div>
-                    <div
-                      onClick={handleSubmit(comment.id)}
-                      className="text-gray-500 cursor-pointer"
-                    >
-                      <FontAwesomeIcon
-                        icon={faReply}
-                        className="pr-1 text-sm"
-                      />
-                      Reply
-                    </div>
-                  </div>
-                  <p
-                    style={{ ["font-size"]: "14px" }}
-                    className="text-gray-500"
-                  >
-                    {comment.attributes.publishedAt}
-                  </p>
-                  <div className="pt-4">{comment.attributes.comment}</div>
-
-                  {reviews && comment.id === currentIndex ? (
-                    <CommentForm post={[post.id, comment.id]} />
-                  ) : (
-                    ""
-                  )}
-                </li>
+                ""
               )}
             </ol>
           );
@@ -122,7 +132,7 @@ export default function Comment({ post }) {
       })}
 
       {/* comments form */}
-      {description ? <CommentForm post={[post.id, ""]} /> : ""}
+      {description ? <CommentForm post={[post.id, null]} /> : ""}
     </div>
   );
 }

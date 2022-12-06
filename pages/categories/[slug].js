@@ -7,6 +7,8 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 const baseUrl = config.STRAPI_URL;
 import { getReadingTime, formateDate, fetchCategory } from "../../lib/post";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMessage } from "@fortawesome/free-solid-svg-icons";
 
 const CategoryView = ({ category, status }) => {
   let [isOpen, setIsOpen] = useState(true);
@@ -187,6 +189,13 @@ const CategoryView = ({ category, status }) => {
                               <span>{post.publishedAt}</span>
                               <span className=" after:content-['\00B7'] after:mx-1 "></span>
                               <span>{post.readingTime}</span>
+                              <span className="pl-4">
+                                <FontAwesomeIcon
+                                  icon={faMessage}
+                                  className="pr-1 text-sm"
+                                />
+                                {post.comments.data.length}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -229,7 +238,8 @@ export async function getStaticProps(context) {
 
     for (let i = 0; i < category.posts.data.length; i++) {
       const post = category.posts.data[i].attributes;
-      post.publishedAt = await formateDate(post.publishedAt);
+      var [date, _] = await formateDate(post.publishedAt);
+      post.publishedAt = date;
       post.readingTime = await getReadingTime(post.content);
     }
   }

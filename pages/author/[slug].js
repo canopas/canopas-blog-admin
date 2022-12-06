@@ -8,7 +8,7 @@ import { Fragment, useState } from "react";
 import config from "../../config";
 const baseUrl = config.STRAPI_URL;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComments } from "@fortawesome/free-solid-svg-icons";
+import { faMessage } from "@fortawesome/free-solid-svg-icons";
 
 const AuthorView = ({ author, status }) => {
   let [isOpen, setIsOpen] = useState(true);
@@ -171,7 +171,7 @@ const AuthorView = ({ author, status }) => {
                             <span>{post.readingTime}</span>
                             <span className="pl-4">
                               <FontAwesomeIcon
-                                icon={faComments}
+                                icon={faMessage}
                                 className="pr-1 text-sm"
                               />
                               {post.comments.data.length}

@@ -1,5 +1,6 @@
 import MarkdownView from "react-showdown";
 import Image from "next/image";
+import Link from "next/link";
 import { fetchPost, getReadingTime, formateDate } from "../../lib/post";
 import Loader from "../../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
@@ -90,15 +91,15 @@ const PostView = ({ post, status }) => {
             key={post.id}
             className="container flex  flex-col  sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
           >
-            <a
+            <Link
               href="/"
               className="text-pink-400 flex justify-center text-4xl sm:text-7xl mt-10 mb-20"
             >
               CANOPAS BLOG
-            </a>
+            </Link>
             <div className="pt-14 lg:pt-0">
               <div className="flex flex-col md:flex-row pb-12">
-                <a
+                <Link
                   href={
                     "/author/" + post.attributes.authors.data.attributes.slug
                   }
@@ -118,16 +119,16 @@ const PostView = ({ post, status }) => {
                         .attributes.alternativeText || ""
                     }
                   />
-                </a>
+                </Link>
                 <div className="md:pl-4">
-                  <a
+                  <Link
                     href={
                       "/author/" + post.attributes.authors.data.attributes.slug
                     }
                     className="text-lg text-gray-600"
                   >
                     {post.attributes.authors.data.attributes.name}
-                  </a>
+                  </Link>
                   <div className="pt-1 text-gray-500">
                     {post.attributes.authors.data.attributes.bio}
                   </div>

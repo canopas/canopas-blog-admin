@@ -5,7 +5,6 @@ import config from "../../config";
 import Loader from "../../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
-const baseUrl = config.STRAPI_URL;
 import { getReadingTime, formateDate, fetchCategory } from "../../lib/post";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
@@ -118,7 +117,7 @@ const CategoryView = ({ category, status }) => {
                               <Image
                                 layout="fill"
                                 objectFit="cover"
-                                src={baseUrl + image.attributes.url}
+                                src={image.attributes.url}
                                 alt={image.alternativeText || ""}
                               />
                             </Link>
@@ -166,7 +165,6 @@ const CategoryView = ({ category, status }) => {
                               layout="fill"
                               objectFit="cover"
                               src={
-                                baseUrl +
                                 post.authors.data.attributes.image.data
                                   .attributes.url
                               }

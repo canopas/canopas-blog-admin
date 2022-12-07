@@ -6,7 +6,6 @@ import Loader from "../../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import config from "../../config";
-const baseUrl = config.STRAPI_URL;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 
@@ -104,7 +103,7 @@ const AuthorView = ({ author, status }) => {
                 className="rounded-full h-full w-full object-cover absolute inset-0"
                 layout="fill"
                 objectFit="cover"
-                src={baseUrl + author.image.data.attributes.url}
+                src={author.image.data.attributes.url}
                 alt={author.image.data.attributes.alternativeText}
               />
             </div>
@@ -128,7 +127,7 @@ const AuthorView = ({ author, status }) => {
                               <Image
                                 layout="fill"
                                 objectFit="cover"
-                                src={baseUrl + image.attributes.url}
+                                src={image.attributes.url}
                                 alt={image.alternativeText || ""}
                               />
                             </Link>

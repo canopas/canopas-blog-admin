@@ -7,7 +7,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import Comment from "../../component/comment/comments";
 import config from "../../config";
-const baseUrl = config.STRAPI_URL;
 
 const PostView = ({ post, status }) => {
   let [isOpen, setIsOpen] = useState(true);
@@ -110,7 +109,6 @@ const PostView = ({ post, status }) => {
                     layout="fill"
                     objectFit="cover"
                     src={
-                      baseUrl +
                       post.attributes.authors.data.attributes.image.data
                         .attributes.url
                     }
@@ -151,7 +149,7 @@ const PostView = ({ post, status }) => {
                   objectFit="contain"
                   width={376}
                   height={190}
-                  src={baseUrl + image.attributes.url}
+                  src={image.attributes.url}
                   alt={image.attributes.alternativeText || ""}
                   key={image.id}
                 />

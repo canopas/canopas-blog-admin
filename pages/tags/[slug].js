@@ -6,7 +6,6 @@ import Loader from "../../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import config from "../../config";
-const baseUrl = config.STRAPI_URL;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 
@@ -114,7 +113,7 @@ const TagView = ({ tags, status }) => {
                               <Image
                                 layout="fill"
                                 objectFit="cover"
-                                src={baseUrl + image.attributes.url}
+                                src={image.attributes.url}
                                 alt={image.alternativeText || ""}
                               />
                             </Link>
@@ -148,7 +147,6 @@ const TagView = ({ tags, status }) => {
                               layout="fill"
                               objectFit="cover"
                               src={
-                                baseUrl +
                                 post.authors.data.attributes.image.data
                                   .attributes.url
                               }

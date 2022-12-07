@@ -6,7 +6,6 @@ import Loader from "./../component/loader";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import config from "../config";
-const baseUrl = config.STRAPI_URL;
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 
@@ -113,7 +112,7 @@ export default function Home({ posts, status }) {
                                 objectFit="contain"
                                 width={500}
                                 height={500}
-                                src={baseUrl + image.attributes.url || ""}
+                                src={image.attributes.url || ""}
                                 alt={image.alternativeText || ""}
                               />
                             </Link>
@@ -157,7 +156,6 @@ export default function Home({ posts, status }) {
                                 layout="fill"
                                 objectFit="cover"
                                 src={
-                                  baseUrl +
                                   post.authors.data.attributes.image.data
                                     .attributes.url
                                 }

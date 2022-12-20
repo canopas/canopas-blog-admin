@@ -1,96 +1,28 @@
-import { fetchAuthor, getReadingTime, formateDate } from "../../lib/post";
+import { fetchAuthor } from "../../lib/author";
+import { getReadingTime, formateDate } from "../../utils";
 import MarkdownView from "react-showdown";
 import Image from "next/image";
 import Link from "next/link";
-import Loader from "../../component/loader";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import config from "../../config";
+import Loader from "../../components/loader";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
+import ServerError from "../../components/errors/serverError";
+import Avatar from "../../assets/images/user.png";
 
 const AuthorView = ({ author, status }) => {
-  let [isOpen, setIsOpen] = useState(true);
+  let imageUrl = author.image.data ? author.image.data.attributes.url : Avatar
+  let altText = author.image.data ? author.image.data.attributes.alternativeText : "author"
 
-  function closeModal() {
-    setIsOpen(false);
-  }
   return (
     <section className="py-5">
       <div className="container flex flex-col sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]">
-        <Link
-          href="/"
-          className="text-pink-400 flex justify-center text-4xl sm:text-7xl mt-10 mb-20"
-        >
-          CANOPAS BLOG
-        </Link>
         {author == null ? (
           <Loader />
         ) : status != 200 ? (
           author.error.status == 404 ? (
             <div className="text-xl text-center">There is no any Author</div>
           ) : (
-            <Transition appear show={isOpen} as={Fragment}>
-              <Dialog
-                as="div"
-                className="fixed inset-0 z-10 overflow-y-auto bg-[#00000080]"
-                onClose={closeModal}
-              >
-                <div className="min-h-screen px-4 text-center">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <Dialog.Overlay className="fixed inset-0" />
-                  </Transition.Child>
-
-                  <span
-                    className="inline-block h-screen align-middle"
-                    aria-hidden="true"
-                  >
-                    &#8203;
-                  </span>
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 scale-95"
-                    enterTo="opacity-100 scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 scale-100"
-                    leaveTo="opacity-0 scale-95"
-                  >
-                    <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-lg font-medium leading-6 text-gray-900"
-                      >
-                        Error
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500 border-t pt-2">
-                          Something went wrong !!
-                        </p>
-                      </div>
-
-                      <div className="mt-4">
-                        <button
-                          type="button"
-                          className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300"
-                          onClick={closeModal}
-                        >
-                          Close
-                        </button>
-                      </div>
-                    </div>
-                  </Transition.Child>
-                </div>
-              </Dialog>
-            </Transition>
+            <ServerError />
           )
         ) : (
           <div className="flex flex-col items-center" key={author.id}>
@@ -103,13 +35,13 @@ const AuthorView = ({ author, status }) => {
                 className="rounded-full h-full w-full object-cover absolute inset-0"
                 layout="fill"
                 objectFit="cover"
-                src={author.image.data.attributes.url}
-                alt={author.image.data.attributes.alternativeText}
+                src={imageUrl}
+                alt={altText}
               />
             </div>
 
             <div className="pt-6 pb-10 text-2xl">
-              {author.totalStory} Stories by {author.name}
+              Stories
             </div>
             {author.posts.data.map((post) => {
               post = post.attributes;
@@ -167,7 +99,7 @@ const AuthorView = ({ author, status }) => {
                           <div className="text-gray-500 flex">
                             <span>{post.publishedAt}</span>
                             <span className=" after:content-['\00B7'] after:mx-1 "></span>
-                            <span>{post.readingTime}</span>
+                            <span>{post.readingTime} min read</span>
                             <span className="pl-4">
                               <FontAwesomeIcon
                                 icon={faMessage}
@@ -191,16 +123,17 @@ const AuthorView = ({ author, status }) => {
 };
 
 export async function getStaticPaths() {
-  const [_, Authors] = await fetchAuthor();
-  if (Authors.data) {
-    const paths = Authors.data.map((Author) => ({
-      params: { slug: Author.attributes.slug },
-    }));
-    return {
-      paths: paths,
-      fallback: false,
-    };
+  const [_, authors] = await fetchAuthor();
+  var paths = []
+  if (authors && authors.data) {
+    paths = authors.data.map((author) => ({
+      params: { slug: author.attributes.slug },
+    }))
   }
+  return {
+    paths,
+    fallback: false,
+  };
 }
 
 export async function getStaticProps(context) {
@@ -210,10 +143,9 @@ export async function getStaticProps(context) {
   }
 
   var [status, author] = await fetchAuthor(slug);
-  if (author.data) {
+  if (author && author.data) {
     author = author.data.attributes;
 
-    author["totalStory"] = author.posts.data.length;
     for (let i = 0; i < author.posts.data.length; i++) {
       const post = author.posts.data[i].attributes;
       var [date, _] = await formateDate(post.publishedAt);
@@ -221,7 +153,7 @@ export async function getStaticProps(context) {
       post["readingTime"] = await getReadingTime(post.content);
     }
   }
-  return { props: { author: author, status: status } };
+  return { props: { author, status } };
 }
 
 export default AuthorView;

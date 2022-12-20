@@ -1,19 +1,17 @@
 import MarkdownView from "react-showdown";
 import Image from "next/image";
 import Link from "next/link";
-import { fetchPost, getReadingTime, formateDate } from "../../lib/post";
-import Loader from "../../component/loader";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-import Comment from "../../component/comment/comments";
-import config from "../../config";
+import { fetchPost } from "../../lib/post";
+import { getReadingTime, formateDate } from "../../utils";
+import Loader from "../../components/loader";
+import Comment from "../../components/comment/comments";
+import ServerError from "../../components/errors/serverError";
+import Avatar from "../../assets/images/user.png";
 
 const PostView = ({ post, status }) => {
-  let [isOpen, setIsOpen] = useState(true);
-
-  function closeModal() {
-    setIsOpen(false);
-  }
+  var authorData = post.attributes.authors.data.attributes.image.data
+  var authorImage = authorData ? authorData.attributes.url : Avatar
+  var authorAltText = authorData ? authorData.attributes.alternativeText : "author"
   return (
     <section className="py-5">
       <div>
@@ -23,79 +21,13 @@ const PostView = ({ post, status }) => {
           post.error.status == 404 ? (
             <div className="text-xl text-center">There is no any post</div>
           ) : (
-            <Transition appear show={isOpen} as={Fragment}>
-              <Dialog
-                as="div"
-                className="fixed inset-0 z-10 overflow-y-auto bg-[#00000080]"
-                onClose={closeModal}
-              >
-                <div className="min-h-screen px-4 text-center">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <Dialog.Overlay className="fixed inset-0" />
-                  </Transition.Child>
-
-                  <span
-                    className="inline-block h-screen align-middle"
-                    aria-hidden="true"
-                  >
-                    &#8203;
-                  </span>
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 scale-95"
-                    enterTo="opacity-100 scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 scale-100"
-                    leaveTo="opacity-0 scale-95"
-                  >
-                    <div className="inline-block w-full max-w-md p-6 my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-lg font-medium leading-6 text-gray-900"
-                      >
-                        Error
-                      </Dialog.Title>
-                      <div className="mt-2">
-                        <p className="text-sm text-gray-500 border-t pt-2">
-                          Something went wrong !!
-                        </p>
-                      </div>
-
-                      <div className="mt-4">
-                        <button
-                          type="button"
-                          className="inline-flex justify-center px-4 py-2 text-sm text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 duration-300"
-                          onClick={closeModal}
-                        >
-                          Close
-                        </button>
-                      </div>
-                    </div>
-                  </Transition.Child>
-                </div>
-              </Dialog>
-            </Transition>
+            <ServerError />
           )
         ) : (
           <div
             key={post.id}
             className="container flex  flex-col  sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
           >
-            <Link
-              href="/"
-              className="text-pink-400 flex justify-center text-4xl sm:text-7xl mt-10 mb-20"
-            >
-              CANOPAS BLOG
-            </Link>
             <div className="pt-14 lg:pt-0">
               <div className="flex flex-col md:flex-row pb-12">
                 <Link
@@ -108,14 +40,8 @@ const PostView = ({ post, status }) => {
                     className="rounded-full h-full w-full object-cover absolute inset-0"
                     layout="fill"
                     objectFit="cover"
-                    src={
-                      post.attributes.authors.data.attributes.image.data
-                        .attributes.url
-                    }
-                    alt={
-                      post.attributes.authors.data.attributes.image.data
-                        .attributes.alternativeText || ""
-                    }
+                    src={authorImage}
+                    alt={authorAltText}
                   />
                 </Link>
                 <div className="md:pl-4">
@@ -140,7 +66,7 @@ const PostView = ({ post, status }) => {
               <div className="pb-5 text-base text-gray-500">
                 <span className="">{post.attributes.publishedAt}</span>
                 <spn className=" after:content-['\00B7'] after:mx-1 "></spn>
-                <span>{post.attributes.readingTime}</span>
+                <span>{post.attributes.readingTime} min read</span>
               </div>
 
               {post.attributes.image.data.map((image) => (
@@ -173,16 +99,17 @@ const PostView = ({ post, status }) => {
 };
 
 export async function getStaticPaths() {
-  const [_, Posts] = await fetchPost();
-  if (Posts.data) {
-    const paths = Posts.data.map((Post) => ({
-      params: { slug: Post.attributes.slug },
-    }));
-    return {
-      paths: paths,
-      fallback: false,
-    };
+  const [_, posts] = await fetchPost();
+  var paths = []
+  if (posts && posts.data) {
+    paths = posts.data.map((post) => ({
+      params: { slug: post.attributes.slug },
+    }))
   }
+  return {
+    paths,
+    fallback: false,
+  };
 }
 
 export async function getStaticProps(context) {
@@ -191,21 +118,19 @@ export async function getStaticProps(context) {
     throw new Error("Slug not valid");
   }
   var [status, post] = await fetchPost(slug);
-  if (post.data) {
+  if (post && post.data) {
     post = post.data;
 
     var [date, _] = await formateDate(post.attributes.publishedAt);
     post.attributes.publishedAt = date;
-    post.attributes["readingTime"] = await getReadingTime(
-      post.attributes.content
-    );
+    post.attributes["readingTime"] = await getReadingTime(post.attributes.content);
     post.attributes.comments.data.map(async (comment) => {
       const [date, time] = await formateDate(comment.attributes.publishedAt);
       comment.attributes.publishedAt = date + " at " + time;
     });
   }
 
-  return { props: { post: post, status: status } };
+  return { props: { post, status } };
 }
 
 export default PostView;

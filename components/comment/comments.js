@@ -1,5 +1,5 @@
 import Image from "next/image";
-import UserImage from "../../styles/image/users.png";
+import UserImage from "../../assets/images/user.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";

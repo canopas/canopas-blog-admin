@@ -1,7 +1,7 @@
-import "../styles/global.css";
+import "../assets/css/global.css";
 
-function MyApp({ Component, pageProps }) {
+function BlogApp({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }
 
-export default MyApp;
+export default BlogApp;

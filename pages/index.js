@@ -6,7 +6,10 @@ import MarkdownView from "react-showdown";
 import Loader from "../components/loader";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMessage,
+  faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
 import ServerError from "../components/errors/serverError";
 import Avatar from "../assets/images/user.png";
 import config from "../config";
@@ -14,17 +17,17 @@ import config from "../config";
 export default function Home({ posts, status }) {
   const [query, setQuery] = useState("");
   const [searchBlogs, setResults] = useState(posts);
-  
+
   const searchPost = (event) => {
     const query = event.target.value;
     setQuery(query);
     if (!query) {
       setResults(posts);
     } else {
-      const filteredPosts = {}
+      const filteredPosts = {};
       filteredPosts.data = posts.data.filter(function (post) {
         return post.attributes.slug.includes(query);
-      })
+      });
       setResults(filteredPosts);
     }
   };
@@ -57,7 +60,7 @@ export default function Home({ posts, status }) {
           status == config.NOT_FOUND ? (
             <div className="text-xl text-center">There is no any posts.</div>
           ) : (
-           <ServerError />
+            <ServerError />
           )
         ) : !searchBlogs || !searchBlogs.data ? (
           <Loader />
@@ -67,11 +70,16 @@ export default function Home({ posts, status }) {
           searchBlogs.data.length != 0 &&
           searchBlogs.data.map((post) => {
             post = post.attributes;
-            var authorData = post.authors.data.attributes.image.data
-            var authorImage = authorData ? authorData.attributes.url : Avatar
-            var authorAltText = authorData ? authorData.attributes.alternativeText : "author"
+            var authorData = post.authors.data.attributes.image.data;
+            var authorImage = authorData ? authorData.attributes.url : Avatar;
+            var authorAltText = authorData
+              ? authorData.attributes.alternativeText
+              : "author";
             return (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2 xl:grid-cols-3 h-20 container">
+              <div
+                key={post.id}
+                className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2 xl:grid-cols-3 h-20 container"
+              >
                 <div
                   className="flex flex-col basis-[30%] justify-center hover:animate-jump-card -translate-y-6 m-2.5 flex-[1_1_0%] z-0 border shadow-md rounded-xl"
                   key={post.id}
@@ -81,7 +89,10 @@ export default function Home({ posts, status }) {
                       <div className="relative">
                         {post.image.data.map((image) => (
                           <>
-                            <Link href={"/post/" + post.slug}>
+                            <Link
+                              key={image.attributes.id}
+                              href={"/post/" + post.slug}
+                            >
                               <Image
                                 layout="responsive"
                                 objectFit="contain"

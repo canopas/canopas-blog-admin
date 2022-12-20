@@ -9,9 +9,11 @@ import ServerError from "../../components/errors/serverError";
 import Avatar from "../../assets/images/user.png";
 
 const PostView = ({ post, status }) => {
-  var authorData = post.attributes.authors.data.attributes.image.data
-  var authorImage = authorData ? authorData.attributes.url : Avatar
-  var authorAltText = authorData ? authorData.attributes.alternativeText : "author"
+  var authorData = post.attributes.authors.data.attributes.image.data;
+  var authorImage = authorData ? authorData.attributes.url : Avatar;
+  var authorAltText = authorData
+    ? authorData.attributes.alternativeText
+    : "author";
   return (
     <section className="py-5">
       <div>
@@ -100,11 +102,11 @@ const PostView = ({ post, status }) => {
 
 export async function getStaticPaths() {
   const [_, posts] = await fetchPost();
-  var paths = []
+  var paths = [];
   if (posts && posts.data) {
     paths = posts.data.map((post) => ({
       params: { slug: post.attributes.slug },
-    }))
+    }));
   }
   return {
     paths,
@@ -123,7 +125,9 @@ export async function getStaticProps(context) {
 
     var [date, _] = await formateDate(post.attributes.publishedAt);
     post.attributes.publishedAt = date;
-    post.attributes["readingTime"] = await getReadingTime(post.attributes.content);
+    post.attributes["readingTime"] = await getReadingTime(
+      post.attributes.content
+    );
     post.attributes.comments.data.map(async (comment) => {
       const [date, time] = await formateDate(comment.attributes.publishedAt);
       comment.attributes.publishedAt = date + " at " + time;

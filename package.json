@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build && next export",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "prettier -c . && next lint"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.4",
@@ -19,6 +19,7 @@
     "sass": "^1.56.1"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "autoprefixer": "^10.4.13",

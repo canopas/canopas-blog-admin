@@ -1,12 +1,12 @@
 import MarkdownView from "react-showdown";
 import Image from "next/image";
 import Link from "next/link";
-import Loader from "../../component/loader";
+import Loader from "../../components/loader";
 import { fetchCategory } from "../../lib/category";
 import { getReadingTime, formateDate } from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
-import ServerError from "../../component/errors/serverError";
+import ServerError from "../../components/errors/serverError";
 import Avatar from "../../assets/images/user.png";
 
 const CategoryView = ({ category, status }) => {

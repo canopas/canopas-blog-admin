@@ -4,7 +4,7 @@ import Link from "next/link";
 import { fetchPost } from "../../lib/post";
 import { getReadingTime, formateDate } from "../../utils";
 import Loader from "../../components/loader";
-import Comment from "../../components/comment/comments";
+import Comment from "../../components/comments/index";
 import ServerError from "../../components/errors/serverError";
 import Avatar from "../../assets/images/user.png";
 

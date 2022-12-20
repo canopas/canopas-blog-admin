@@ -1,5 +1,5 @@
 import Image from "next/image";
-import loader from "./../styles/image/loader.svg";
+import loader from "./../assets/images/loader.svg";
 
 export default function Loader() {
   return (

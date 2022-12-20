@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addComment, addUser, updateCommentator } from "../../lib/post";
+import { addComment, addCommentator, updateComment } from "../../lib/comment";
 
 export default function CommentForm({ post }) {
   const [postId, commentId] = post;
@@ -30,14 +30,14 @@ export default function CommentForm({ post }) {
         },
       };
 
-      const [userStatus, users] = await addUser(userData);
+      const [userStatus, users] = await addCommentator(userData);
       if (userStatus === 200) {
         const commentatorData = {
           data: {
             commentators: users.data.id,
           },
         };
-        await updateCommentator(postId, commentatorData);
+        await updateComment(postId, commentatorData);
       }
     }
   }

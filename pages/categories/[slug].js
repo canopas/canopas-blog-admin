@@ -32,9 +32,11 @@ const CategoryView = ({ category, status }) => {
 
             {category.posts.data.map((post) => {
               post = post.attributes;
-              var authorData = post.authors.data.attributes.image.data
-              var authorImage = authorData ? authorData.attributes.url : Avatar
-              var authorAltText = authorData ? authorData.attributes.alternativeText : "author"
+              var authorData = post.authors.data.attributes.image.data;
+              var authorImage = authorData ? authorData.attributes.url : Avatar;
+              var authorAltText = authorData
+                ? authorData.attributes.alternativeText
+                : "author";
               return (
                 <div
                   className="flex flex-col basis-[30%] justify-center hover:animate-jump-card -translate-y-6 m-2.5 flex-[1_1_0%] z-0 border shadow-md rounded-xl"
@@ -44,7 +46,7 @@ const CategoryView = ({ category, status }) => {
                     <div className="absolute inset-0 h-full w-full">
                       <div className="relative h-full w-full">
                         {post.image.data.map((image) => (
-                          <div>
+                          <div key={image.id}>
                             <Link href={"/post/" + post.slug}>
                               <Image
                                 layout="fill"
@@ -73,6 +75,7 @@ const CategoryView = ({ category, status }) => {
                       <div className="text-sm">
                         {post.tags.data.map((tag) => (
                           <Link
+                            key={tag.id}
                             href={"/tags/" + tag.attributes.slug}
                             className="text-black "
                           >
@@ -138,11 +141,11 @@ const CategoryView = ({ category, status }) => {
 
 export async function getStaticPaths() {
   var [_, categories] = await fetchCategory();
-  var paths = []
+  var paths = [];
   if (categories && categories.data) {
     paths = categories.data.map((category) => ({
       params: { slug: category.attributes.slug },
-    }))
+    }));
   }
   return {
     paths,

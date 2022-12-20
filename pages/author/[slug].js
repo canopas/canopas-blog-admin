@@ -10,8 +10,10 @@ import ServerError from "../../components/errors/serverError";
 import Avatar from "../../assets/images/user.png";
 
 const AuthorView = ({ author, status }) => {
-  let imageUrl = author.image.data ? author.image.data.attributes.url : Avatar
-  let altText = author.image.data ? author.image.data.attributes.alternativeText : "author"
+  let imageUrl = author.image.data ? author.image.data.attributes.url : Avatar;
+  let altText = author.image.data
+    ? author.image.data.attributes.alternativeText
+    : "author";
 
   return (
     <section className="py-5">
@@ -40,9 +42,7 @@ const AuthorView = ({ author, status }) => {
               />
             </div>
 
-            <div className="pt-6 pb-10 text-2xl">
-              Stories
-            </div>
+            <div className="pt-6 pb-10 text-2xl">Stories</div>
             {author.posts.data.map((post) => {
               post = post.attributes;
               return (
@@ -54,7 +54,7 @@ const AuthorView = ({ author, status }) => {
                     <div className="absolute inset-0 h-full w-full">
                       <div className="relative h-full w-full">
                         {post.image.data.map((image) => (
-                          <div>
+                          <div key={image.id}>
                             <Link href={"/post/" + post.slug}>
                               <Image
                                 layout="fill"
@@ -83,6 +83,7 @@ const AuthorView = ({ author, status }) => {
                       <div className="text-sm">
                         {post.tags.data.map((tag) => (
                           <Link
+                            key={tag.id}
                             href={"/tags/" + tag.attributes.slug}
                             className="text-black "
                           >
@@ -124,11 +125,11 @@ const AuthorView = ({ author, status }) => {
 
 export async function getStaticPaths() {
   const [_, authors] = await fetchAuthor();
-  var paths = []
+  var paths = [];
   if (authors && authors.data) {
     paths = authors.data.map((author) => ({
       params: { slug: author.attributes.slug },
-    }))
+    }));
   }
   return {
     paths,

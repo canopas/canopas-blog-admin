@@ -20,20 +20,19 @@ input[type="submit"] {
   @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-3;
 }
 
-
 .gradient-border-btn {
   @apply rounded-[0.6rem] p-[1rem]  text-center border-[1px] border-solid border-transparent bg-gradient-to-r from-[#ff9472] via-[#ff909c] to-[#f2709c] shadow-[inset_2px_1000px_1px_#fff] active:scale-[0.98] hover:from-[#f2709c] hover:to-[#ff9472]  hover:border-[1px] hover:border-solid hover:border-transparent hover:shadow-none;
 }
-  .gradient-border-btn > span {
-    @apply my-0 mx-[6px] text-[#3d3d3d];
-  }
+.gradient-border-btn > span {
+  @apply my-0 mx-[6px] text-[#3d3d3d];
+}
 
-  .gradient-border-btn:hover > span,
-  .gradient-border-btn:hover > span > span {
-    @apply text-[#fff];
-  }
+.gradient-border-btn:hover > span,
+.gradient-border-btn:hover > span > span {
+  @apply text-[#fff];
+}
 
-  .gradient-border-btn:hover > .fa,
-  .gradient-border-btn:hover > .arrow {
-    @apply text-white;
-  }
+.gradient-border-btn:hover > .fa,
+.gradient-border-btn:hover > .arrow {
+  @apply text-white;
+}

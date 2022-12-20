@@ -28,9 +28,11 @@ const TagView = ({ tags, status }) => {
           <div className="flex flex-col items-center">
             {tags.posts.data.map((post) => {
               post = post.attributes;
-              var authorData = post.authors.data.attributes.image.data
-              var authorImage = authorData ? authorData.attributes.url : Avatar
-              var authorAltText = authorData ? authorData.attributes.alternativeText : "author"
+              var authorData = post.authors.data.attributes.image.data;
+              var authorImage = authorData ? authorData.attributes.url : Avatar;
+              var authorAltText = authorData
+                ? authorData.attributes.alternativeText
+                : "author";
               return (
                 <div
                   className="flex flex-col basis-[30%] justify-center hover:animate-jump-card -translate-y-6 m-2.5 flex-[1_1_0%] z-0 border shadow-md rounded-xl"
@@ -40,7 +42,7 @@ const TagView = ({ tags, status }) => {
                     <div className="absolute inset-0 h-full w-full">
                       <div className="relative h-full w-full">
                         {post.image.data.map((image) => (
-                          <div>
+                          <div key={image.attributes.id}>
                             <Link href={"/post/" + post.slug}>
                               <Image
                                 layout="fill"
@@ -120,11 +122,11 @@ const TagView = ({ tags, status }) => {
 
 export async function getStaticPaths() {
   const [_, tags] = await fetchTag();
-  var paths = []
+  var paths = [];
   if (tags && tags.data) {
     paths = tags.data.map((tag) => ({
       params: { slug: tag.attributes.slug },
-    }))
+    }));
   }
   return {
     paths,

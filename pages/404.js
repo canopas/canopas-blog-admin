@@ -10,7 +10,7 @@ export default function Custom404() {
   return (
     <>
       <div className="container flex items-center justify-center flex-col my-0 mx-auto py-60 px-[5%] min-h-[50vh]">
-        <div class="flex flex-row my-auto mx-auto text-center">
+        <div className="flex flex-row my-auto mx-auto text-center">
           <Image src={firstErrorLetter} className="h-24" alt="404" />
           <Image
             src={middleErrorLetter}

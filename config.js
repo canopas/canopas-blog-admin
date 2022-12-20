@@ -1,5 +1,4 @@
 export default Object.freeze({
-
   STRAPI_URL: "https://blog-admin.canopas.com",
 
   WORDS_PER_MINUTE: 200,

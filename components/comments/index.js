@@ -29,7 +29,7 @@ export default function Comment({ post }) {
       {post.attributes.comments.data.map((comment) => {
         {
           return (
-            <ol className="px-10 py-2">
+            <ol key={comment.attributes.id} className="px-10 py-2">
               {comment && comment.attributes.parentId == null ? (
                 <li className="px-5 py-5 bg-white border border-solid border-gray-300 rounded">
                   <div className="flex justify-between items-center">
@@ -45,7 +45,11 @@ export default function Comment({ post }) {
                       </div>
                       {comment.attributes.commentators.data.map((user) => {
                         user = user.attributes;
-                        return <div className="pl-3">{user.username}</div>;
+                        return (
+                          <div key={user.id} className="pl-3">
+                            {user.username}
+                          </div>
+                        );
                       })}
                     </div>
                     <div
@@ -71,7 +75,7 @@ export default function Comment({ post }) {
 
                   {threadComments.map((threadComment) => {
                     return (
-                      <div>
+                      <div key={threadComment.attributes.id}>
                         {threadComment.attributes.parentId &&
                         threadComment.attributes.parentId == comment.id ? (
                           <ol className="pt-2">
@@ -91,7 +95,7 @@ export default function Comment({ post }) {
                                     (user) => {
                                       user = user.attributes;
                                       return (
-                                        <div className="pl-3">
+                                        <div key={user.id} className="pl-3">
                                           {user.username}
                                         </div>
                                       );

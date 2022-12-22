@@ -27,7 +27,8 @@ jobs:
       - name: Upload to S3
         run: |
           yarn install --frozen-lockfile
-          yarn run build
+          echo NEXT_PUBLIC_IFRAMELY_KEY=${{ secrets.NEXT_PUBLIC_IFRAMELY_KEY }} >> .env
+          yarn build
           S3_FILE_NAME="canopas_blog_${GITHUB_RUN_ID}"
           cp -r out $S3_FILE_NAME
           aws s3 sync $S3_FILE_NAME s3://articles.canopas.com

@@ -1,4 +1,4 @@
-import MarkdownView from "react-showdown";
+import md from "markdown-it";
 import Image from "next/image";
 import Link from "next/link";
 import { fetchPost } from "../../lib/post";
@@ -7,6 +7,7 @@ import Loader from "../../components/loader";
 import Comment from "../../components/comments/index";
 import ServerError from "../../components/errors/serverError";
 import Avatar from "../../assets/images/user.png";
+import Script from "next/script";
 
 const PostView = ({ post, status }) => {
   var authorData = post.attributes.authors.data.attributes.image.data;
@@ -14,89 +15,102 @@ const PostView = ({ post, status }) => {
   var authorAltText = authorData
     ? authorData.attributes.alternativeText
     : "author";
+
   return (
-    <section className="py-5">
-      <div>
-        {post == null ? (
-          <Loader />
-        ) : status != 200 ? (
-          post.error.status == 404 ? (
-            <div className="text-xl text-center">There is no any post</div>
+    <>
+      <Script
+        src={
+          "//cdn.iframe.ly/embed.js?key=" + process.env.NEXT_PUBLIC_IFRAMELY_KEY
+        }
+        onLoad={() => {
+          // Load media preview
+          document.querySelectorAll("oembed[url]").forEach((element) => {
+            iframely.load(element, element.attributes.url.value);
+          });
+        }}
+      />
+      <section className="py-5">
+        <div>
+          {post == null ? (
+            <Loader />
+          ) : status != 200 ? (
+            post.error.status == 404 ? (
+              <div className="text-xl text-center">There is no any post</div>
+            ) : (
+              <ServerError />
+            )
           ) : (
-            <ServerError />
-          )
-        ) : (
-          <div
-            key={post.id}
-            className="container flex  flex-col  sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
-          >
-            <div className="pt-14 lg:pt-0">
-              <div className="flex flex-col md:flex-row pb-12">
-                <Link
-                  href={
-                    "/author/" + post.attributes.authors.data.attributes.slug
-                  }
-                  className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] lg:w-[80px] lg:h-[80px] mb-2 md:mb-0"
-                >
-                  <Image
-                    className="rounded-full h-full w-full object-cover absolute inset-0"
-                    layout="fill"
-                    objectFit="cover"
-                    src={authorImage}
-                    alt={authorAltText}
-                  />
-                </Link>
-                <div className="md:pl-4">
+            <div
+              key={post.id}
+              className="container flex  flex-col  sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
+            >
+              <div className="pt-14 lg:pt-0">
+                <div className="flex flex-col md:flex-row pb-12">
                   <Link
                     href={
                       "/author/" + post.attributes.authors.data.attributes.slug
                     }
-                    className="text-lg text-gray-600"
+                    className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] lg:w-[80px] lg:h-[80px] mb-2 md:mb-0"
                   >
-                    {post.attributes.authors.data.attributes.name}
+                    <Image
+                      className="rounded-full h-full w-full object-cover absolute inset-0"
+                      layout="fill"
+                      objectFit="cover"
+                      src={authorImage}
+                      alt={authorAltText}
+                    />
                   </Link>
-                  <div className="pt-1 text-gray-500">
-                    {post.attributes.authors.data.attributes.bio}
+                  <div className="md:pl-4 flex flex-col justify-center">
+                    <Link
+                      href={
+                        "/author/" +
+                        post.attributes.authors.data.attributes.slug
+                      }
+                      className="text-lg text-gray-600"
+                    >
+                      {post.attributes.authors.data.attributes.name}
+                    </Link>
+                    <div className="text-gray-500">
+                      <span className="">{post.attributes.publishedAt}</span>
+                      <spn className=" after:content-['\00B7'] after:mx-1 "></spn>
+                      <span>{post.attributes.readingTime} min read</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div>
-              <div className="pb-3 text-4xl font-bold text-black">
-                {post.attributes.title}
-              </div>
-              <div className="pb-5 text-base text-gray-500">
-                <span className="">{post.attributes.publishedAt}</span>
-                <spn className=" after:content-['\00B7'] after:mx-1 "></spn>
-                <span>{post.attributes.readingTime} min read</span>
+              <div>
+                <div className="pb-3 text-4xl font-bold text-black">
+                  {post.attributes.title}
+                </div>
+                {post.attributes.image.data.map((image) => (
+                  <Image
+                    layout="responsive"
+                    objectFit="contain"
+                    width={376}
+                    height={190}
+                    src={image.attributes.url}
+                    alt={image.attributes.alternativeText || ""}
+                    key={image.id}
+                  />
+                ))}
+                <article className="prose lg:prose-xl">
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: md({
+                        html: true,
+                      }).render(post.attributes.content),
+                    }}
+                  />
+                </article>
               </div>
 
-              {post.attributes.image.data.map((image) => (
-                <Image
-                  layout="responsive"
-                  objectFit="contain"
-                  width={376}
-                  height={190}
-                  src={image.attributes.url}
-                  alt={image.attributes.alternativeText || ""}
-                  key={image.id}
-                />
-              ))}
-              <div className="pt-10">
-                <MarkdownView
-                  className="content text-xl font-light"
-                  markdown={post.attributes.content}
-                  escapeHtml={false}
-                />
-              </div>
+              {/* Comment Form */}
+              <Comment post={post} />
             </div>
-
-            {/* Comment Form */}
-            <Comment post={post} />
-          </div>
-        )}
-      </div>
-    </section>
+          )}
+        </div>
+      </section>
+    </>
   );
 };
 

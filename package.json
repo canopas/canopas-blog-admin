@@ -11,17 +11,18 @@
   "dependencies": {
     "@headlessui/react": "^1.7.4",
     "@tailwindcss/line-clamp": "^0.4.2",
+    "markdown-it": "^13.0.1",
     "next": "^13.0.6-canary.0",
     "node-sass": "^7.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-showdown": "^2.3.1",
     "sass": "^1.56.1"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@tailwindcss/typography": "^0.5.8",
     "autoprefixer": "^10.4.13",
     "eslint": "8.27.0",
     "eslint-config-next": "13.0.3",

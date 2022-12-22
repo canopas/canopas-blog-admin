@@ -25,7 +25,7 @@ export default function Comment({ post }) {
   };
 
   return (
-    <div className="px-10 py-2">
+    <div className="py-10">
       {post.attributes.comments.data.map((comment) => {
         {
           return (

@@ -19,7 +19,7 @@ yarn add
 Start Next.js in development using,
 
 ```
-yarn run dev
+yarn dev
 ```
 
 ## `Build`
@@ -27,7 +27,7 @@ yarn run dev
 Build the application for production usage
 
 ```
-yarn run build
+yarn build
 ```
 
 ## `Start`
@@ -35,7 +35,7 @@ yarn run build
 Start a Next.js production server
 
 ```
-yarn run start
+yarn start
 ```
 
 ## To enable pre-commit hook

@@ -2,7 +2,7 @@ import { fetchPost } from "../lib/post";
 import { getReadingTime, formateDate } from "../utils";
 import Image from "next/image";
 import Link from "next/link";
-import MarkdownView from "react-showdown";
+import md from "markdown-it";
 import Loader from "../components/loader";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -37,20 +37,20 @@ export default function Home({ posts, status }) {
       <div className="container">
         <div
           className="relative mb-20 w-64 pr-64 sm:w-96 mx-auto  w-full max-w-2xl  
-                    w-full flex items-center rounded-[12px]  sm:px-5 bg-slate-100"
+                    w-full flex items-center rounded-[12px] sm:px-5 bg-slate-100"
         >
-          <button>
-            <i className="pl-4 text-gray-500 rounded-full w-16 h-16 cursor-pointer">
+          <span>
+            <i className="text-gray-500 rounded-full w-16 h-16 cursor-pointer">
               <FontAwesomeIcon
                 icon={faMagnifyingGlass}
                 className="pr-1 text-sm"
               />
             </i>
-          </button>
+          </span>
           <input
             className="!border-0 text-sm px-5 !bg-slate-100 !w-52 sm:!w-96"
             onChange={searchPost}
-            placeholder="Search blog posts..."
+            placeholder="Search"
             type="text"
             value={query}
           />
@@ -124,10 +124,14 @@ export default function Home({ posts, status }) {
                       {post.title}
                     </Link>
                     <div>
-                      <MarkdownView
+                      <div
                         className="text-gray-800 mt-5 text-sm line-clamp-3"
-                        markdown={post.content}
-                      />
+                        dangerouslySetInnerHTML={{
+                          __html: md({
+                            html: true,
+                          }).render(post.content),
+                        }}
+                      ></div>
                       <div className="pt-4">
                         <div className="flex flex-row items-center justify-between">
                           <div className="relative flex">

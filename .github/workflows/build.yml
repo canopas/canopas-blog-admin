@@ -17,5 +17,5 @@ jobs:
       - name: Build
         run: |
           yarn add prettier
-          yarn run lint
-          yarn run build
+          yarn lint
+          yarn build

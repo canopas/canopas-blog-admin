@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { addComment, addCommentator, updateComment } from "../../lib/comment";
+import { faMessage } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function CommentForm({ post }) {
   const [postId, commentId] = post;
@@ -43,8 +45,11 @@ export default function CommentForm({ post }) {
   }
 
   return (
-    <div className="px-10 py-5">
-      <div className="pb-3 font-bold">Leave a Reply</div>
+    <div className="py-5">
+      <div className="pb-3 font-bold">
+        <FontAwesomeIcon icon={faMessage} className="pr-1 text-sm" /> Leave
+        comment
+      </div>
       <form onSubmit={handleSubmit}>
         <textarea
           id="comment"
@@ -53,7 +58,7 @@ export default function CommentForm({ post }) {
           style={{ ["height"]: "96px" }}
           onClick={onClick}
           className="form-control block w-full h-24"
-          placeholder="Leave your message"
+          placeholder="Your comment"
         ></textarea>
         <div
           style={{
@@ -61,9 +66,7 @@ export default function CommentForm({ post }) {
           }}
           className="pt-4"
         >
-          <label for="name" className="mb-3">
-            Name
-          </label>
+          <label className="mb-3">Name</label>
           <span style={{ ["color"]: "red" }}>*</span>
           <input
             id="title"
@@ -74,9 +77,7 @@ export default function CommentForm({ post }) {
             placeholder="Your name"
             required
           />
-          <label for="email" className="mb-3">
-            Email
-          </label>
+          <label className="mb-3">Email</label>
           <span style={{ ["color"]: "red" }}>*</span>
           <input
             id="email"

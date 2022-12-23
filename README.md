@@ -59,3 +59,7 @@ Following are dependencies used by the project
 #### [FontAwesome](https://github.com/FortAwesome/Font-Awesome)
 
 - Used for icons.
+
+## Licence
+
+This repository is released under the [BSD 3-Clause](https://github.com/canopas/canopas-blog/blob/master/LICENSE).

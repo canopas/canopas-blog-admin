@@ -93,7 +93,7 @@ const AuthorView = ({ author, status }) => {
                           >
                             <div className="mt-5">
                               <span className="text-block-500 bg-slate-100 hover:bg-slate-300 rounded-full px-2 py-1.5">
-                                {tag.attributes.tags[0]}
+                                {tag.attributes.slug}
                               </span>
                             </div>
                           </Link>

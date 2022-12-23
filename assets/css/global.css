@@ -36,3 +36,12 @@ input[type="submit"] {
 .gradient-border-btn:hover > .arrow {
   @apply text-white;
 }
+
+code {
+  @apply bg-slate-100 px-4 py-2 rounded text-sm;
+}
+
+code::before,
+code::after {
+  @apply content-none !important;
+}

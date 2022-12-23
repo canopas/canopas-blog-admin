@@ -1,4 +1,4 @@
-import MarkdownView from "react-showdown";
+import md from "markdown-it";
 import Image from "next/image";
 import Link from "next/link";
 import Loader from "../../components/loader";
@@ -68,10 +68,14 @@ const CategoryView = ({ category, status }) => {
                       {post.title}
                     </Link>
                     <div>
-                      <MarkdownView
+                      <div
                         className="text-gray-800 mt-5 text-sm line-clamp-3"
-                        markdown={post.content}
-                      />
+                        dangerouslySetInnerHTML={{
+                          __html: md({
+                            html: true,
+                          }).render(post.content),
+                        }}
+                      ></div>
                       <div className="text-sm">
                         {post.tags.data.map((tag) => (
                           <Link
@@ -81,7 +85,7 @@ const CategoryView = ({ category, status }) => {
                           >
                             <div className="mt-5">
                               <span className="text-block-500 bg-slate-100 hover:bg-slate-300 rounded-full px-2 py-1.5">
-                                {tag.attributes.tags[0]}
+                                {tag.attributes.slug}
                               </span>
                             </div>
                           </Link>

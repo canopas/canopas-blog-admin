@@ -14,6 +14,9 @@ module.exports = {
         xl: "1200px",
         "2xl": "1400px",
       },
+      fontFamily: {
+        "inter-medium": ["Inter-Medium"],
+      }
     },
   },
   corePlugins: {

@@ -16,7 +16,7 @@ module.exports = {
       },
       fontFamily: {
         "inter-medium": ["Inter-Medium"],
-      }
+      },
     },
   },
   corePlugins: {

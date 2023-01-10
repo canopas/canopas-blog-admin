@@ -14,6 +14,26 @@ module.exports = {
         xl: "1200px",
         "2xl": "1400px",
       },
+      fontFamily: {
+        "inter-medium": ["Inter-Medium"],
+      },
+      colors: {
+        black: {
+          core: "#000000",
+          900: "#3d3d3d",
+        },
+        white: "#ffffff",
+        pink: {
+          300: "#f2709c",
+        },
+        orange: {
+          300: "#ff835b",
+        },
+        slate: {
+          200: "rgb(226, 226, 226)",
+          400: "rgb(141, 138, 138)",
+        },
+      },
     },
   },
   corePlugins: {

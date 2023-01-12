@@ -6,10 +6,7 @@ import md from "markdown-it";
 import Loader from "../components/loader";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMessage,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import ServerError from "../components/errors/serverError";
 import Avatar from "../assets/images/user.png";
 import config from "../config";
@@ -35,27 +32,6 @@ export default function Home({ posts, status }) {
   return (
     <section className="py-5">
       <div className="container">
-        <div
-          className="relative mb-20 w-64 pr-64 sm:w-96 mx-auto  w-full max-w-2xl  
-                    w-full flex items-center rounded-[12px] sm:px-5 bg-slate-100"
-        >
-          <span>
-            <i className="text-gray-500 rounded-full w-16 h-16 cursor-pointer">
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className="pr-1 text-sm"
-              />
-            </i>
-          </span>
-          <input
-            className="!border-0 text-sm px-5 !bg-slate-100 !w-52 sm:!w-96"
-            onChange={searchPost}
-            placeholder="Search"
-            type="text"
-            value={query}
-          />
-        </div>
-
         {status != config.SUCCESS ? (
           status == config.NOT_FOUND ? (
             <div className="text-xl text-center">There is no any posts.</div>

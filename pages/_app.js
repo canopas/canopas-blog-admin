@@ -1,5 +1,5 @@
 import "../assets/css/global.css";
-import Header from "../components/partials/Header";
+import Header from "../components/partials/header";
 
 function BlogApp({ Component, pageProps }) {
   return (

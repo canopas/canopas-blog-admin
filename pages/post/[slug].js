@@ -1,19 +1,18 @@
 import md from "markdown-it";
 import Image from "next/image";
-import Link from "next/link";
 import { fetchPost } from "../../lib/post";
 import { getReadingTime, formateDate } from "../../utils";
 import Loader from "../../components/loader";
-import Comment from "../../components/comments/index";
 import ServerError from "../../components/errors/serverError";
 import Avatar from "../../assets/images/user.png";
 import Script from "next/script";
 
 const PostView = ({ post, status }) => {
-  var authorData = post.attributes.authors.data.attributes.image.data;
-  var authorImage = authorData ? authorData.attributes.url : Avatar;
+  post = post.attributes;
+  var authorData = post.author_id.data.attributes.image_url;
+  var authorImage = authorData ? authorData : Avatar;
   var authorAltText = authorData
-    ? authorData.attributes.alternativeText
+    ? post.author_id.data.attributes.username + "images"
     : "author";
 
   return (
@@ -45,67 +44,51 @@ const PostView = ({ post, status }) => {
               className="container flex  flex-col  sm:px-[4rem] md:px-[8rem] lg:px-[10rem] xl:px-[12rem] 2xl:px-[17rem]"
             >
               <div className="pt-14 lg:pt-0">
-                <div className="flex flex-col md:flex-row pb-12">
-                  <Link
-                    href={
-                      "/author/" + post.attributes.authors.data.attributes.slug
-                    }
-                    className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] lg:w-[80px] lg:h-[80px] mb-2 md:mb-0"
-                  >
+                <div className="flex flex-col md:flex-row pb-12 cursor-pointer">
+                  <div className="relative w-[60px] h-[60px] md:w-[80px] md:h-[80px] lg:w-[80px] lg:h-[80px] mb-2 md:mb-0">
                     <Image
                       className="rounded-full h-full w-full object-cover absolute inset-0"
-                      layout="fill"
-                      objectFit="cover"
+                      width={200}
+                      height={200}
                       src={authorImage}
                       alt={authorAltText}
                     />
-                  </Link>
+                  </div>
                   <div className="md:pl-4 flex flex-col justify-center">
-                    <Link
-                      href={
-                        "/author/" +
-                        post.attributes.authors.data.attributes.slug
-                      }
-                      className="text-lg text-gray-600"
-                    >
-                      {post.attributes.authors.data.attributes.name}
-                    </Link>
+                    <div className="text-lg text-gray-600">
+                      {post.author_id.data.attributes.username}
+                    </div>
                     <div className="text-gray-500">
-                      <span className="">{post.attributes.publishedAt}</span>
+                      <span className="">{post.publishedAt}</span>
                       <spn className=" after:content-['\00B7'] after:mx-1 "></spn>
-                      <span>{post.attributes.readingTime} min read</span>
+                      <span>{post.readingTime} min read</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div>
                 <div className="pb-3 text-4xl font-bold text-black">
-                  {post.attributes.title}
+                  {post.title}
                 </div>
-                {post.attributes.image.data.map((image) => (
+                <div className="relative overflow-hidden transition-all bg-gray-100 rounded-md dark:bg-gray-800 aspect-video">
                   <Image
-                    layout="responsive"
-                    objectFit="contain"
-                    width={376}
-                    height={190}
-                    src={image.attributes.url}
-                    alt={image.attributes.alternativeText || ""}
-                    key={image.id}
+                    width={200}
+                    height={200}
+                    src={post.image_url || ""}
+                    alt={post.alternativeText || ""}
+                    className="min-w-full max-w-full min-h-full max-h-full object-cover"
                   />
-                ))}
+                </div>
                 <article className="prose lg:prose-xl">
                   <div
                     dangerouslySetInnerHTML={{
                       __html: md({
                         html: true,
-                      }).render(post.attributes.content),
+                      }).render(post.content),
                     }}
                   />
                 </article>
               </div>
-
-              {/* Comment Form */}
-              <Comment post={post} />
             </div>
           )}
         </div>
@@ -142,10 +125,6 @@ export async function getStaticProps(context) {
     post.attributes["readingTime"] = await getReadingTime(
       post.attributes.content
     );
-    post.attributes.comments.data.map(async (comment) => {
-      const [date, time] = await formateDate(comment.attributes.publishedAt);
-      comment.attributes.publishedAt = date + " at " + time;
-    });
   }
 
   return { props: { post, status } };

@@ -23,7 +23,7 @@ export default function Header() {
     return () => {
       window.removeEventListener("scroll", onScroll, { passive: true });
     };
-  }, []);
+  }, [onScroll]);
 
   return (
     <>

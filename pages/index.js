@@ -2,153 +2,76 @@ import { fetchPost } from "../lib/post";
 import { getReadingTime, formateDate } from "../utils";
 import Image from "next/image";
 import Link from "next/link";
-import md from "markdown-it";
-import Loader from "../components/loader";
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import ServerError from "../components/errors/serverError";
 import Avatar from "../assets/images/user.png";
 import config from "../config";
 
 export default function Home({ posts, status }) {
-  const [query, setQuery] = useState("");
-  const [searchBlogs, setResults] = useState(posts);
-
-  const searchPost = (event) => {
-    const query = event.target.value;
-    setQuery(query);
-    if (!query) {
-      setResults(posts);
-    } else {
-      const filteredPosts = {};
-      filteredPosts.data = posts.data.filter(function (post) {
-        return post.attributes.slug.includes(query);
-      });
-      setResults(filteredPosts);
-    }
-  };
-
   return (
-    <section className="py-5">
-      <div className="container">
+    <section className="container">
+      <div className="grid gap-10 my-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
         {status != config.SUCCESS ? (
           status == config.NOT_FOUND ? (
             <div className="text-xl text-center">There is no any posts.</div>
           ) : (
             <ServerError />
           )
-        ) : !searchBlogs || !searchBlogs.data ? (
-          <Loader />
-        ) : searchBlogs.data.length === 0 ? (
-          <div className="text-xl text-center">There is no any posts.</div>
         ) : (
-          searchBlogs.data.length != 0 &&
-          searchBlogs.data.map((post) => {
+          posts.data.map((post) => {
             post = post.attributes;
-            var authorData = post.authors.data.attributes.image.data;
-            var authorImage = authorData ? authorData.attributes.url : Avatar;
+            var authorData = post.author_id.data.attributes.image_url;
+            var authorImage = authorData ? authorData : Avatar;
             var authorAltText = authorData
-              ? authorData.attributes.alternativeText
+              ? post.author_id.data.attributes.username + " image"
               : "author";
+            var tagData = post.tags.data;
+            var tagName = tagData.length ? tagData[0].attributes.name : "";
             return (
-              <div
-                key={post.id}
-                className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2 xl:grid-cols-3 h-20 container"
-              >
-                <div
-                  className="flex flex-col basis-[30%] justify-center hover:animate-jump-card -translate-y-6 m-2.5 flex-[1_1_0%] z-0 border shadow-md rounded-xl"
-                  key={post.id}
-                >
-                  <div className="rounded-t-lg overflow-hidden relative pt-[52%]">
-                    <div className="absolute inset-0">
-                      <div className="relative">
-                        {post.image.data.map((image) => (
-                          <>
-                            <Link
-                              key={image.attributes.id}
-                              href={"/post/" + post.slug}
-                            >
-                              <Image
-                                layout="responsive"
-                                objectFit="contain"
-                                width={500}
-                                height={500}
-                                src={image.attributes.url || ""}
-                                alt={image.alternativeText || ""}
-                              />
-                            </Link>
-                          </>
-                        ))}
-                        <Link
-                          href={
-                            "/categories/" +
-                            post.categories.data.attributes.slug
-                          }
-                          className="px-5 py-2 bg-pink-600 rounded-lg absolute top-[15px] right-[20px] cursor-pointer z-10 text-white hover:text-white active:scale-[0.98]"
-                        >
-                          {post.categories.data.attributes.name}
-                        </Link>
-                      </div>
-                    </div>
+              <div className="cursor-pointer" key={post.id}>
+                <div className="relative overflow-hidden rounded-md  bg-gray-100 transition-all aspect-square hover:scale-105">
+                  <Link href={"/post/" + post.slug}>
+                    <Image
+                      width={200}
+                      height={200}
+                      src={post.image_url || ""}
+                      alt={post.alternativeText || ""}
+                      className="min-w-full max-w-full min-h-full max-h-full object-cover"
+                    />
+                  </Link>
+                </div>
+                <div className="flex gap-3">
+                  <div className="inline-block mt-5 text-xs font-medium tracking-wider uppercase text-blue-600">
+                    {tagName}
                   </div>
-                  <div className="flex flex-col justify-between flex-[1_0_0%] px-2.5 py-5 sm:p-5 rounded-b-lg">
-                    <Link
-                      href={"/post/" + post.slug}
-                      className="text-black text-xl"
-                    >
-                      {post.title}
-                    </Link>
-                    <div>
-                      <div
-                        className="text-gray-800 mt-5 text-sm line-clamp-3"
-                        dangerouslySetInnerHTML={{
-                          __html: md({
-                            html: true,
-                          }).render(post.content),
-                        }}
-                      ></div>
-                      <div className="pt-4">
-                        <div className="flex flex-row items-center justify-between">
-                          <div className="relative flex">
-                            <Link
-                              href={
-                                "/author/" + post.authors.data.attributes.slug
-                              }
-                              className="relative w-[40px] h-[40px]"
-                            >
-                              <Image
-                                className="rounded-full h-full w-full object-cover absolute inset-0"
-                                layout="fill"
-                                objectFit="cover"
-                                src={authorImage}
-                                alt={authorAltText}
-                              />
-                            </Link>
-                            <div className="pl-3 text-sm">
-                              <Link
-                                href={
-                                  "/author/" + post.authors.data.attributes.slug
-                                }
-                                className="text-gray-800 "
-                              >
-                                {post.authors.data.attributes.name}
-                              </Link>
-                              <div className="text-gray-500 ">
-                                <span>{post.publishedAt}</span>
-                                <span className=" after:content-['\00B7'] after:mx-1 "></span>
-                                <span>{post.readingTime} min read</span>
-                              </div>
-                            </div>
-                          </div>
+                </div>
+                <div className="flex flex-col justify-between flex-[1_0_0%]">
+                  <div>
+                    <h2>
+                      <Link
+                        href={"/post/" + post.slug}
+                        className="mt-3 text-base font-semibold tracking-normal text-brand-primary"
+                      >
+                        {post.title}
+                      </Link>
+                    </h2>
 
-                          <span className="pl-4 text-gray-500">
-                            <FontAwesomeIcon
-                              icon={faMessage}
-                              className="pr-1 text-sm"
-                            />
-                            {post.comments.data.length}
-                          </span>
+                    <div className="flex flex-row items-center pt-4 text-xs text-gray-500">
+                      <div className="relative w-[30px] h-[30px]">
+                        <Image
+                          width={200}
+                          height={200}
+                          className="rounded-full h-full w-full object-cover absolute inset-0"
+                          src={authorImage}
+                          alt={authorAltText}
+                        />
+                      </div>
+                      <div className="pl-3">
+                        {post.author_id.data.attributes.username}
+
+                        <div>
+                          <span>{post.publishedAt}</span>
+                          <span className=" after:content-['\00B7'] after:mx-1 "></span>
+                          <span>{post.readingTime} min read</span>
                         </div>
                       </div>
                     </div>

@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Inter-Medium";
-  font-style: medium;
-  font-weight: 500;
+  font-family: "Product Sans";
+  font-style: normal;
+  font-weight: 400;
   font-display: swap;
-  src: url(./../fonts/Inter-Medium.ttf);
+  src: url(./../fonts/Product-sans-regular.ttf);
 }
 
 body {

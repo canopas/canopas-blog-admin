@@ -1,12 +1,32 @@
-import { fetchPost } from "../lib/post";
 import { getReadingTime, formateDate } from "../utils";
 import Image from "next/image";
 import Link from "next/link";
 import ServerError from "../components/errors/serverError";
 import Avatar from "../assets/images/user.png";
 import config from "../config";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts } from "../store/actions/postAction";
 
-export default function Home({ posts, status }) {
+export default function Home() {
+  const dispatch = useDispatch();
+  const postsList = useSelector((state) => state.postsList);
+  const posts = postsList.blogs;
+  const status = postsList.status;
+
+  if (posts && posts.data) {
+    for (let i = 0; i < posts.data.length; i++) {
+      const post = posts.data[i].attributes;
+      var [date, _] = formateDate(post.publishedAt);
+      post.publishedAt = date;
+      post.readingTime = getReadingTime(post.content);
+    }
+  }
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
+
   return (
     <section className="container">
       <div className="grid gap-10 my-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3">
@@ -84,23 +104,4 @@ export default function Home({ posts, status }) {
       </div>
     </section>
   );
-}
-
-export async function getStaticProps() {
-  const [status, posts] = await fetchPost();
-
-  if (posts && posts.data) {
-    for (let i = 0; i < posts.data.length; i++) {
-      const post = posts.data[i].attributes;
-      var [date, _] = await formateDate(post.publishedAt);
-      post.publishedAt = date;
-      post.readingTime = await getReadingTime(post.content);
-    }
-  }
-  return {
-    props: {
-      posts,
-      status,
-    },
-  };
 }

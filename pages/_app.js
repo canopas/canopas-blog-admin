@@ -1,10 +1,13 @@
 import "../assets/css/global.css";
 import Head from "next/head";
 import Header from "../components/partials/header";
+import { Provider } from "react-redux";
+import store from "../store/store";
 
 function BlogApp({ Component, pageProps }) {
   return (
     <>
+      <Provider store={store}>
       <Head>
         <meta charset="UTF-8" />
         <meta name="robots" content="noindex, nofollow" />
@@ -12,6 +15,7 @@ function BlogApp({ Component, pageProps }) {
       </Head>
       <Header></Header>
       <Component {...pageProps} />
+      </Provider>
     </>
   );
 }

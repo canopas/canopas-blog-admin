@@ -1,19 +1,44 @@
 import md from "markdown-it";
 import Image from "next/image";
-import { fetchPost } from "../../lib/post";
 import { getReadingTime, formateDate } from "../../utils";
 import Loader from "../../components/loader";
 import ServerError from "../../components/errors/serverError";
 import Avatar from "../../assets/images/user.png";
 import Script from "next/script";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getPost } from "../../store/actions/postAction";
 
-const PostView = ({ post, status }) => {
-  post = post.attributes;
-  var authorData = post.author_id.data.attributes.image_url;
-  var authorImage = authorData ? authorData : Avatar;
-  var authorAltText = authorData
-    ? post.author_id.data.attributes.username + "images"
-    : "author";
+export function getServerSideProps(context) {
+  const { slug } = context.params;
+  return { props: { slug } };
+}
+
+export default function PostView({ slug }) {
+  const dispatch = useDispatch();
+  const postList = useSelector((state) => state.postsList);
+  var post = postList.currentPost;
+  var status = postList.status;
+
+  if (post && post.data) {
+    post = post.data.data.attributes;
+    if (post.slug == slug) {
+      var [date, _] = formateDate(post.publishedAt);
+      post.publishedAt = date;
+      post.readingTime = getReadingTime(post.content);
+      var authorData = post.author_id.data.attributes.image_url;
+      var authorImage = authorData ? authorData : Avatar;
+      var authorAltText = authorData
+        ? post.author_id.data.attributes.username + "images"
+        : "author";
+    } else {
+      post = null;
+    }
+  }
+
+  useEffect(() => {
+    dispatch(getPost(slug));
+  }, [dispatch, slug]);
 
   return (
     <>
@@ -95,39 +120,4 @@ const PostView = ({ post, status }) => {
       </section>
     </>
   );
-};
-
-export async function getStaticPaths() {
-  const [_, posts] = await fetchPost();
-  var paths = [];
-  if (posts && posts.data) {
-    paths = posts.data.map((post) => ({
-      params: { slug: post.attributes.slug },
-    }));
-  }
-  return {
-    paths,
-    fallback: false,
-  };
 }
-
-export async function getStaticProps(context) {
-  const slug = context.params.slug;
-  if (!slug) {
-    throw new Error("Slug not valid");
-  }
-  var [status, post] = await fetchPost(slug);
-  if (post && post.data) {
-    post = post.data;
-
-    var [date, _] = await formateDate(post.attributes.publishedAt);
-    post.attributes.publishedAt = date;
-    post.attributes["readingTime"] = await getReadingTime(
-      post.attributes.content
-    );
-  }
-
-  return { props: { post, status } };
-}
-
-export default PostView;

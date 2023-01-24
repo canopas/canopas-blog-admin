@@ -1,9 +1,10 @@
 /* eslint-disable import/no-anonymous-default-export */
-import { GET_POSTS, POSTS_ERROR } from "../types";
+import { GET_POSTS, GET_SINGLE_POST, POSTS_ERROR } from "../types";
 import config from "../../config";
 
 const initialState = {
   blogs: [],
+  currentPost: null,
   loading: true,
   status: "",
 };
@@ -26,6 +27,13 @@ export default function (state = initialState, action) {
           status: config.NOT_FOUND,
         };
       }
+    case GET_SINGLE_POST:
+      return {
+        ...state,
+        currentPost: action.payload,
+        loading: false,
+        status: config.SUCCESS,
+      };
     case POSTS_ERROR:
       return {
         loading: false,

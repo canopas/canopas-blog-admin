@@ -1,17 +1,26 @@
-import { fetchPost } from "../lib/post";
-import { getReadingTime, formateDate } from "../utils";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPosts } from "../store/features/postSlice";
 import Image from "next/image";
 import Link from "next/link";
 import ServerError from "../components/errors/serverError";
 import Avatar from "../assets/images/user.png";
 import config from "../config";
 
-export default function Home({ posts, status }) {
-  if (posts) {
-    var count = posts.data.length;
-  }
+export default function Home() {
+  const dispatch = useDispatch();
+  const posts = useSelector((state) => state.post.posts);
+  const status = useSelector((state) => state.post.status);
+  useEffect(() => {
+    if (!status || status === 0) {
+      dispatch(fetchPosts());
+    }
+  }, [status, dispatch]);
+
+  const count = posts.length;
+
   return (
-    <section className="container mx-2 sm:mx-auto font-product-sans ">
+    <section className="container mx-2 sm:mx-auto font-product-sans">
       <div className="my-16 w-full bg-black-900">
         <div className="flex flex-col space-y-2 py-4 px-14 md:px-28 xl:px-44">
           <div className="w-20 md:w-1/5 ">
@@ -28,20 +37,21 @@ export default function Home({ posts, status }) {
         </div>
       </div>
       <hr className="mb-10" />
-
       <div
         className={`grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 ${
           count % 3 === 1 ? "md:col-span-1" : ""
         }`}
       >
-        {status != config.SUCCESS ? (
+        {status == 0 ? (
+          ""
+        ) : status != config.SUCCESS ? (
           status == config.NOT_FOUND ? (
             <div className="text-xl text-center">There is no any posts.</div>
           ) : (
             <ServerError />
           )
         ) : (
-          posts.data.map((post, i) => {
+          posts.map((post, i) => {
             post = post.attributes;
             var authorData = post.author_id.data.attributes.image_url;
             var authorImage = authorData ? authorData : Avatar;
@@ -58,7 +68,7 @@ export default function Home({ posts, status }) {
                 }`}
               >
                 <div
-                  className={`my-4 border border-1 border-gray-300 bg-white ${
+                  className={`my-4 border border-1 border-gray-300 bg-white transition-all aspect-auto hover:scale-105 ${
                     i === 0 && count % 3 === 1
                       ? "md:w-2/4 md:h-auto"
                       : "w-auto h-60 md:h-48 lg:h-60"
@@ -68,10 +78,7 @@ export default function Home({ posts, status }) {
                     <Image
                       width={200}
                       height={200}
-                      src={
-                        post.image_url ||
-                        "https://cdn-images-1.medium.com/max/1024/1*fsyn1XfxyH7ltTEwI6-n-w.png"
-                      }
+                      src={post.image_url || ""}
                       alt={post.alternativeText || ""}
                       className="w-full h-full object-cover"
                     />
@@ -92,7 +99,9 @@ export default function Home({ posts, status }) {
                     <Link href={"/post/" + post.slug}>{post.title}</Link>
                   </div>
                   <div className="text-[1.0625rem] leading-7 tracking-wider text-gray-500">
-                    <p className="line-clamp-3">{post.summary}</p>
+                    <Link href={"/post/" + post.slug}>
+                      <p className="line-clamp-3">{post.summary}</p>
+                    </Link>
                   </div>
                   <div className="flex flex-row items-center pt-3 text-sm text-gray-500">
                     <div className="relative w-[32px] h-[32px]">
@@ -124,23 +133,4 @@ export default function Home({ posts, status }) {
       </div>
     </section>
   );
-}
-
-export async function getStaticProps() {
-  const [status, posts] = await fetchPost();
-
-  if (posts && posts.data) {
-    for (let i = 0; i < posts.data.length; i++) {
-      const post = posts.data[i].attributes;
-      var [date, _] = await formateDate(post.publishedAt);
-      post.publishedAt = date;
-      post.readingTime = await getReadingTime(post.content);
-    }
-  }
-  return {
-    props: {
-      posts,
-      status,
-    },
-  };
 }

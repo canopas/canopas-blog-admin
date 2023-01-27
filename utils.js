@@ -1,7 +1,7 @@
 import config from "./config";
 
 // Calculate reading time
-async function getReadingTime(content) {
+function getReadingTime(content) {
   if (!content) return;
   const numberOfWords = content
     .replace(/<\/?[^>]+(>|$)/g, "")
@@ -10,7 +10,7 @@ async function getReadingTime(content) {
 }
 
 // Formate date and time from millis
-async function formateDate(date) {
+function formateDate(date) {
   if (!date) return;
   const newDate = new Date(date);
   const formattedDate = newDate.toLocaleDateString("en-US", {
@@ -27,4 +27,10 @@ async function formateDate(date) {
   return [formattedDate, formattedTime];
 }
 
-export { getReadingTime, formateDate };
+function setPostFields(post) {
+  var [date, _] = formateDate(post.attributes.publishedAt);
+  post.attributes.published_on = date;
+  post.attributes.readingTime = getReadingTime(post.attributes.content);
+}
+
+export { getReadingTime, formateDate, setPostFields };

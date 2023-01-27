@@ -1,19 +1,41 @@
+import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPostBySlug } from "../../store/features/postSlice";
 import md from "markdown-it";
 import Image from "next/image";
-import { fetchPost } from "../../lib/post";
-import { getReadingTime, formateDate } from "../../utils";
-import Loader from "../../components/loader";
-import ServerError from "../../components/errors/serverError";
 import Avatar from "../../assets/images/user.png";
 import Script from "next/script";
+import config from "../../config";
 
-const PostView = ({ post, status }) => {
-  post = post.attributes;
-  var authorData = post.author_id.data.attributes.image_url;
-  var authorImage = authorData ? authorData : Avatar;
-  var authorAltText = authorData
-    ? post.author_id.data.attributes.username + "images"
-    : "author";
+export default function Post() {
+  // get slug from URL
+  const router = useRouter();
+  const slug = router.query.slug;
+
+  // get post by slug
+  const dispatch = useDispatch();
+  var post = useSelector((state) => {
+    let post = null;
+    if (state.post.posts.length > 0) {
+      post = state.post.posts.find((post) => post.attributes.slug === slug);
+    }
+    if (!post) {
+      post = state.post.post;
+    }
+    return post;
+  });
+  const status = useSelector((state) => state.post.status);
+
+  if (!post) {
+    dispatch(fetchPostBySlug(slug));
+  } else {
+    post = post.attributes;
+    var authorData = post.author_id.data.attributes.image_url;
+    var authorImage = authorData ? authorData : Avatar;
+    var authorAltText = authorData
+      ? post.author_id.data.attributes.username + "images"
+      : "author";
+  }
 
   return (
     <>
@@ -31,13 +53,9 @@ const PostView = ({ post, status }) => {
       <section className="py-5">
         <div>
           {post == null ? (
-            <Loader />
-          ) : status != 200 ? (
-            post.error.status == 404 ? (
-              <div className="text-xl text-center">There is no any post</div>
-            ) : (
-              <ServerError />
-            )
+            ""
+          ) : status == config.NOT_FOUND ? (
+            <div className="text-xl text-center">There is no any posts.</div>
           ) : (
             <div
               key={post.id}
@@ -86,7 +104,7 @@ const PostView = ({ post, status }) => {
                         html: true,
                       }).render(post.content),
                     }}
-                  />
+                  ></div>
                 </article>
               </div>
             </div>
@@ -95,39 +113,4 @@ const PostView = ({ post, status }) => {
       </section>
     </>
   );
-};
-
-export async function getStaticPaths() {
-  const [_, posts] = await fetchPost();
-  var paths = [];
-  if (posts && posts.data) {
-    paths = posts.data.map((post) => ({
-      params: { slug: post.attributes.slug },
-    }));
-  }
-  return {
-    paths,
-    fallback: false,
-  };
 }
-
-export async function getStaticProps(context) {
-  const slug = context.params.slug;
-  if (!slug) {
-    throw new Error("Slug not valid");
-  }
-  var [status, post] = await fetchPost(slug);
-  if (post && post.data) {
-    post = post.data;
-
-    var [date, _] = await formateDate(post.attributes.publishedAt);
-    post.attributes.publishedAt = date;
-    post.attributes["readingTime"] = await getReadingTime(
-      post.attributes.content
-    );
-  }
-
-  return { props: { post, status } };
-}
-
-export default PostView;

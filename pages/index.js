@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../store/features/postSlice";
+import { formateDate } from "../utils";
 import Image from "next/image";
 import Link from "next/link";
 import ServerError from "../components/errors/serverError";
@@ -20,7 +21,7 @@ export default function Home() {
   const count = posts.length;
 
   return (
-    <section className="container mx-2 sm:mx-auto my-12 font-product-sans">
+    <section className="container my-16 mx-2 sm:mx-auto font-product-sans">
       <div className="my-16 w-full bg-black-900">
         <div className="flex flex-col space-y-2 py-4 px-14 md:px-28 xl:px-44">
           <div className="w-20 md:w-1/5 ">
@@ -53,6 +54,8 @@ export default function Home() {
         ) : (
           posts.map((post, i) => {
             post = post.attributes;
+            var [date, _] = formateDate(post.publishedAt);
+            var publishedAt = date.replace(",", "");
             var authorData = post.author_id.data.attributes.image_url;
             var authorImage = authorData ? authorData : Avatar;
             var authorAltText = authorData
@@ -68,10 +71,10 @@ export default function Home() {
                 }`}
               >
                 <div
-                  className={`my-4 border border-1 border-gray-300 bg-white transition-all aspect-auto hover:scale-105 ${
+                  className={`my-4 w-auto h-60 border border-1 border-gray-300 bg-white transition-all aspect-auto hover:scale-105 ${
                     i === 0 && count % 3 === 1
                       ? "md:w-2/4 md:h-auto"
-                      : "w-auto h-60 md:h-48 lg:h-60"
+                      : "md:h-48 lg:h-60"
                   }`}
                 >
                   <Link href={"/post/" + post.slug}>
@@ -84,6 +87,7 @@ export default function Home() {
                     />
                   </Link>
                 </div>
+
                 <div
                   className={`flex flex-col flex-[1_0_0%] space-y-2 ${
                     i === 0 && count % 3 === 1 ? "" : "justify-between"
@@ -104,7 +108,7 @@ export default function Home() {
                     </Link>
                   </div>
                   <div className="flex flex-row items-center pt-3 text-sm text-gray-500">
-                    <div className="relative w-[32px] h-[32px]">
+                    <div className="relative w-[38px] h-[38px]">
                       <Image
                         width={200}
                         height={200}
@@ -119,7 +123,7 @@ export default function Home() {
                       </span>
 
                       <div>
-                        <span>{post.published_on}</span>
+                        <span>{post.publishedAt}</span>
                         <span className=" after:content-['\00B7'] after:mx-1 "></span>
                         <span>{post.readingTime} min read</span>
                       </div>

@@ -33,6 +33,9 @@ module.exports = {
           400: "rgb(141, 138, 138)",
         },
       },
+      transitionTimingFunction: {
+        out: "cubic-bezier(0, 0.2, 0.5, 1)",
+      },
     },
   },
   corePlugins: {

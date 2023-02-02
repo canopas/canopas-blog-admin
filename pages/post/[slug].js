@@ -77,7 +77,7 @@ export default function Post() {
                       {post.author_id.data.attributes.username}
                     </div>
                     <div className="text-gray-500">
-                      <span className="">{post.publishedAt}</span>
+                      <span className="">{post.published_on}</span>
                       <spn className=" after:content-['\00B7'] after:mx-1 "></spn>
                       <span>{post.readingTime} min read</span>
                     </div>

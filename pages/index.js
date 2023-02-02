@@ -20,7 +20,7 @@ export default function Home() {
   const count = posts.length;
 
   return (
-    <section className="container mx-2 sm:mx-auto font-product-sans">
+    <section className="container mx-2 sm:mx-auto my-12 font-product-sans">
       <div className="my-16 w-full bg-black-900">
         <div className="flex flex-col space-y-2 py-4 px-14 md:px-28 xl:px-44">
           <div className="w-20 md:w-1/5 ">
@@ -119,7 +119,7 @@ export default function Home() {
                       </span>
 
                       <div>
-                        <span>{post.publishedAt}</span>
+                        <span>{post.published_on}</span>
                         <span className=" after:content-['\00B7'] after:mx-1 "></span>
                         <span>{post.readingTime} min read</span>
                       </div>

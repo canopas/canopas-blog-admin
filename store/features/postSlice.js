@@ -23,11 +23,14 @@ export const fetchPosts = createAsyncThunk("fetchPosts", async () => {
 export const fetchPostBySlug = createAsyncThunk(
   "fetchPostBySlug",
   async (slug) => {
-    const response = await axios.get(
-      config.STRAPI_URL + "/v1/posts/" + slug + "?populate=deep"
-    );
-    setPostFields(response.data.data);
-    return response.data.data;
+    if (slug) {
+      const response = await axios.get(
+        config.STRAPI_URL + "/v1/posts/" + slug + "?populate=deep"
+      );
+      setPostFields(response.data.data);
+      return response.data.data;
+    }
+    return null;
   }
 );
 

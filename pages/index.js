@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../store/features/postSlice";
-import { formateDate } from "../utils";
 import Image from "next/image";
 import Link from "next/link";
 import ServerError from "../components/errors/serverError";
@@ -54,8 +53,6 @@ export default function Home() {
         ) : (
           posts.map((post, i) => {
             post = post.attributes;
-            var [date, _] = formateDate(post.publishedAt);
-            var publishedAt = date.replace(",", "");
             var authorData = post.author_id.data.attributes.image_url;
             var authorImage = authorData ? authorData : Avatar;
             var authorAltText = authorData
@@ -123,7 +120,7 @@ export default function Home() {
                       </span>
 
                       <div>
-                        <span>{post.publishedAt}</span>
+                        <span>{post.published_on}</span>
                         <span className=" after:content-['\00B7'] after:mx-1 "></span>
                         <span>{post.readingTime} min read</span>
                       </div>

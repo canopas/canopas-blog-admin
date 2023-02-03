@@ -2,9 +2,8 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPostBySlug } from "../../store/features/postSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
-import { formateDate } from "../../utils";
 import md from "markdown-it";
 import Image from "next/image";
 import Avatar from "../../assets/images/user.png";
@@ -13,6 +12,8 @@ import config from "../../config";
 
 export default function Post() {
   const [loaded, setLoaded] = useState(false);
+  var contentEl = useRef(null);
+
   // get slug from URL
   const router = useRouter();
   const slug = router.query.slug;
@@ -39,16 +40,14 @@ export default function Post() {
     dispatch(fetchPostBySlug(slug));
   } else {
     post = post.attributes;
-    var [date, _] = formateDate(post.publishedAt);
-    var publishedAt = date.replace(",", "");
+    var published_on = post.published_on.replace(",", "");
     var authorData = post.author_id.data.attributes.image_url;
     var authorImage = authorData ? authorData : Avatar;
     var authorAltText = authorData
       ? post.author_id.data.attributes.username + "images"
       : "author";
     var tags = post.tags.data.map((tag) => {
-      var tagName = tag.attributes.name;
-      return tagName;
+      return tag.attributes.name;
     });
     var tagsString = tags.join(", ");
     var indexContent = post.content.match(
@@ -58,6 +57,18 @@ export default function Post() {
       /<div class="mce-toc">([\s\S]*?)<\/div>/,
       ""
     );
+    var handleClick = (event) => {
+      event.preventDefault();
+      const linkHref = event.target.getAttribute("href");
+
+      const element = contentEl.current.querySelector(linkHref);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    };
   }
 
   return (
@@ -83,19 +94,21 @@ export default function Post() {
           ) : (
             <div key={post.id} className="flex flex-col space-y-20 ">
               <div className="grid grid-flow-row xl:grid-flow-col gap-10 xl:gap-8 w-90 h-90 rounded-3xl md:bg-[#14161E] md:py-20 md:px-10 xl:py-14 xl:px-8 ">
-                <div className="md:container w-full xl:w-[35rem] 2xl:w-[42rem] h-auto sm:h-[18rem] md:h-[22rem] lg:h-[30rem] xl:h-[20rem] 2xl:h-[23rem] ">
+                <div className="md:container w-full xl:w-[35rem] 2xl:w-[42rem] h-auto sm:h-[18rem] md:h-[21rem] lg:h-[30rem] xl:h-[19rem] 2xl:h-[23rem] ">
                   <Image
                     width={200}
                     height={200}
                     src={post.image_url || ""}
                     alt={post.alternativeText || ""}
-                    className={`rounded-2xl lg:rounded-3xl object-cover transition-all duration-[2300ms] ease-out delay-300 ${
-                      loaded ? "w-full h-full" : "my-[25%] mx-[45%] w-0 h-0  "
+                    className={`rounded-2xl lg:rounded-3xl object-cover transition-all duration-[800ms] ease-out ${
+                      loaded
+                        ? "w-full h-full"
+                        : "mx-[2%] w-[95%] h-[95%] opacity-10"
                     }`}
                     onLoad={handleLoad}
                   />
                 </div>
-                <div className="flex flex-col space-y-5 text-black-900 md:text-white">
+                <div className="flex flex-col space-y-5 text-black-900 md:text-white ">
                   <div className="text-4xl lg:text-5xl font-normal leading-10 lg:leading-tight tracking-wide">
                     {post.title}
                   </div>
@@ -106,7 +119,7 @@ export default function Post() {
                         className="w-full h-full text-sm "
                       />
                     </div>
-                    <div>{publishedAt},</div>
+                    <div>{published_on},</div>
                     <div>{tagsString}</div>
                   </div>
                   <div className="text-lg leading-6 tracking-wider">
@@ -129,20 +142,19 @@ export default function Post() {
                 </div>
               </div>
 
-              <div className="container flex flex-col xl:flex-row space-y-20 xl:space-x-20 rounded-3xl text-lg">
+              <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 rounded-3xl text-lg">
                 <div className="xl:sticky top-12 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
                   <div className="rounded-t-[12px] bg-gray-100 py-5 pl-3 pr-10 ">
                     Contents
                   </div>
-                  <div className="m-4 text-gray-800 font-light tracking-wide">
+                  <div className="m-4 text-gray-800 font-light tracking-wider">
                     <div className="my-3 text-xl">{post.title}</div>
-                    <div className="my-3 text-base">
-                      {post.readingTime} mins
-                    </div>
+                    <div className="my-3 text-sm">{post.readingTime} mins</div>
                     <div className="mt-4 text-base list-none">
                       {indexContent.map((content, index) => (
                         <div
                           key={index}
+                          onClick={handleClick}
                           className="my-3 hover:underline"
                           dangerouslySetInnerHTML={{
                             __html: content,
@@ -154,6 +166,7 @@ export default function Post() {
                 </div>
                 <div className="prose lg:prose-lg tracking-wider">
                   <div
+                    ref={contentEl}
                     dangerouslySetInnerHTML={{
                       __html: md({
                         html: true,

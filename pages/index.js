@@ -26,7 +26,7 @@ export default function Home() {
           <div className="w-20 md:w-1/5 ">
             <hr className="border-1 border-[#ff9472]" />
           </div>
-          <div className="text-2xl sm:text-[1.67rem] text-white font-semibold leading-snug text-left tracking-wider">
+          <div className="text-[1.5rem] md:text-[1.60rem] xl:text-[1.67rem] text-white font-semibold leading-tight md:leading-snug text-left tracking-wider">
             On a mission to help you become a better{" "}
             <span className="text-[#ff9472]">Software Engineer</span>. Sharing
             knowlegde on{" "}
@@ -46,7 +46,9 @@ export default function Home() {
           ""
         ) : status != config.SUCCESS ? (
           status == config.NOT_FOUND ? (
-            <div className="text-xl text-center">There is no any posts.</div>
+            <div className="text-[1.25rem] text-center">
+              There is no any posts.
+            </div>
           ) : (
             <ServerError />
           )
@@ -58,12 +60,13 @@ export default function Home() {
             var authorAltText = authorData
               ? post.author_id.data.attributes.username + " image"
               : "author";
+
             return (
               <div
                 key={i}
                 className={`space-y-5 ${
                   i === 0 && count % 3 === 1
-                    ? "md:flex md:space-x-5 md:col-span-3"
+                    ? "md:flex md:space-x-6 md:col-span-3"
                     : ""
                 }`}
               >
@@ -93,18 +96,18 @@ export default function Home() {
                   <div
                     className={`text-[1.375rem] font-semibold leading-7 tracking-wider text-black-900 ${
                       i === 0 && count % 3 === 1
-                        ? "md:text-3xl md:font-bold md:leading-8 lg:leading-10"
-                        : ""
+                        ? "md:text-[1.5rem] lg:text-[1.875rem] md:font-bold md:leading-8 lg:leading-10"
+                        : "lg:text-[1.5rem] lg:leading-8"
                     }`}
                   >
                     <Link href={"/post/" + post.slug}>{post.title}</Link>
                   </div>
-                  <div className="text-[1.0625rem] leading-7 tracking-wider text-gray-500">
+                  <div className="text-[1.0625rem] md:text-[1.125rem] lg:text-[1.13rem] lg:leading-7 tracking-wider text-gray-500">
                     <Link href={"/post/" + post.slug}>
                       <p className="line-clamp-3">{post.summary}</p>
                     </Link>
                   </div>
-                  <div className="flex flex-row items-center pt-3 text-sm text-gray-500">
+                  <div className="flex flex-row items-center pt-3 text-[0.875rem] lg:text-[1.125rem] text-gray-500">
                     <div className="relative w-[38px] h-[38px]">
                       <Image
                         width={200}
@@ -114,14 +117,14 @@ export default function Home() {
                         alt={authorAltText}
                       />
                     </div>
-                    <div className="pl-3 text-sm leading-5 tracking-wider">
+                    <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wider">
                       <span className="text-green-700">
                         {post.author_id.data.attributes.username}
                       </span>
 
                       <div>
                         <span>{post.published_on}</span>
-                        <span className=" after:content-['\00B7'] after:mx-1 "></span>
+                        <span className="after:content-['\00B7'] after:mx-1"></span>
                         <span>{post.readingTime} min read</span>
                       </div>
                     </div>

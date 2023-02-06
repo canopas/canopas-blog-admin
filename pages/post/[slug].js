@@ -9,6 +9,7 @@ import Image from "next/image";
 import Avatar from "../../assets/images/user.png";
 import Script from "next/script";
 import config from "../../config";
+import DOMPurify from "dompurify";
 
 export default function Post() {
   const [loaded, setLoaded] = useState(false);
@@ -90,7 +91,9 @@ export default function Post() {
           {post == null ? (
             ""
           ) : status == config.NOT_FOUND ? (
-            <div className="text-xl text-center">There is no any posts.</div>
+            <div className="text-[1.25rem] text-center">
+              There is no any posts.
+            </div>
           ) : (
             <div key={post.id} className="flex flex-col space-y-20 ">
               <div className="grid grid-flow-row xl:grid-flow-col gap-10 xl:gap-8 w-90 h-90 rounded-3xl md:bg-[#14161E] md:py-20 md:px-10 xl:py-14 xl:px-8 ">
@@ -109,10 +112,10 @@ export default function Post() {
                   />
                 </div>
                 <div className="flex flex-col space-y-5 text-black-900 md:text-white ">
-                  <div className="text-4xl lg:text-5xl font-normal leading-10 lg:leading-tight tracking-wide">
+                  <div className="text-[2.20rem] lg:text-[2.50rem] xl:text-[2.80rem] font-normal leading-10 lg:leading-tight tracking-wide">
                     {post.title}
                   </div>
-                  <div className="flex flex-row space-x-4 text-base leading-6 tracking-wide">
+                  <div className="flex flex-row space-x-4 text-[1rem] leading-6 tracking-wide">
                     <div className="w-5 h-5">
                       <FontAwesomeIcon
                         icon={faClock}
@@ -122,11 +125,11 @@ export default function Post() {
                     <div>{published_on},</div>
                     <div>{tagsString}</div>
                   </div>
-                  <div className="text-lg leading-6 tracking-wider">
+                  <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-6 md:leading-7 tracking-wider">
                     {post.summary}
                   </div>
                   <div className="flex flex-row space-x-4 items-center text-sm">
-                    <div className="relative w-[40px] h-[40px]">
+                    <div className="relative w-[45px] h-[45px]">
                       <Image
                         width={200}
                         height={200}
@@ -135,22 +138,26 @@ export default function Post() {
                         alt={authorAltText}
                       />
                     </div>
-                    <div className="text-lg leading-5 tracking-wider">
+                    <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-5 tracking-wider">
                       {post.author_id.data.attributes.username}
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 rounded-3xl text-lg">
+              <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 rounded-3xl text-[1.125rem]">
                 <div className="xl:sticky top-12 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
-                  <div className="rounded-t-[12px] bg-gray-100 py-5 pl-3 pr-10 ">
+                  <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4 pr-10 ">
                     Contents
                   </div>
                   <div className="m-4 text-gray-800 font-light tracking-wider">
-                    <div className="my-3 text-xl">{post.title}</div>
-                    <div className="my-3 text-sm">{post.readingTime} mins</div>
-                    <div className="mt-4 text-base list-none">
+                    <div className="my-3 text-[1.125rem] md:text-[1.25rem]">
+                      {post.title}
+                    </div>
+                    <div className="my-3 text-[0.875rem]">
+                      {post.readingTime} mins
+                    </div>
+                    <div className="mt-4 text-[1rem] md:text-[1.010rem] list-none">
                       {indexContent.map((content, index) => (
                         <div
                           key={index}
@@ -168,9 +175,7 @@ export default function Post() {
                   <div
                     ref={contentEl}
                     dangerouslySetInnerHTML={{
-                      __html: md({
-                        html: true,
-                      }).render(modifiedContent),
+                      __html: DOMPurify.sanitize(modifiedContent),
                     }}
                   ></div>
                 </div>

@@ -14,6 +14,7 @@
     "@reduxjs/toolkit": "^1.9.1",
     "@tailwindcss/line-clamp": "^0.4.2",
     "axios": "^1.2.2",
+    "dompurify": "^2.4.3",
     "markdown-it": "^13.0.1",
     "next": "^13.0.6-canary.0",
     "node-sass": "^7.0.3",

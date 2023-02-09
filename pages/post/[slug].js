@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPostBySlug } from "../../store/features/postSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import Avatar from "../../assets/images/user.png";
@@ -13,7 +13,8 @@ import Seo from "../seo";
 
 export default function Post() {
   const [loaded, setLoaded] = useState(false);
-  var contentEl = useRef(null);
+  const [activeId, setActiveId] = useState(0);
+  const contentRef = useRef(null);
 
   // get slug from URL
   const router = useRouter();
@@ -60,9 +61,9 @@ export default function Post() {
     );
     var handleClick = (event) => {
       event.preventDefault();
-      const linkHref = event.target.getAttribute("href");
+      var linkHref = event.target.getAttribute("href");
+      var element = contentRef.current.querySelector(linkHref);
 
-      const element = contentEl.current.querySelector(linkHref);
       if (element) {
         window.scrollTo({
           top: element.offsetTop,
@@ -71,6 +72,25 @@ export default function Post() {
       }
     };
   }
+  const handleScroll = () => {
+    let newActiveId = null;
+    const content = contentRef.current.querySelectorAll("[id^='mcetoc_']");
+    for (let i = 0; i < content.length; i++) {
+      const element = content[i];
+      const id = element.id;
+      if (element.offsetTop - window.scrollY <= 0) {
+        newActiveId = id;
+      }
+    }
+    setActiveId(newActiveId);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -154,7 +174,7 @@ export default function Post() {
                 </div>
 
                 <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 rounded-3xl text-[1.125rem]">
-                  <div className="xl:sticky top-12 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
+                  <div className="xl:sticky top-24 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
                     <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4 pr-10 ">
                       Contents
                     </div>
@@ -166,22 +186,33 @@ export default function Post() {
                         {post.readingTime} mins
                       </div>
                       <div className="mt-4 text-[1rem] md:text-[1.010rem] list-none">
-                        {indexContent.map((content, index) => (
-                          <div
-                            key={index}
-                            onClick={handleClick}
-                            className="my-3 hover:underline"
-                            dangerouslySetInnerHTML={{
-                              __html: content,
-                            }}
-                          />
-                        ))}
+                        {indexContent.map((content, index) => {
+                          var href = content
+                            .match(/href="#(.*?)"/g)[0]
+                            .slice(7, -1);
+                          content = content.replace(
+                            /<a /,
+                            `<a class="hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text ${
+                              activeId === href
+                                ? "relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gradient-to-r from-pink-300 to-orange-300"
+                                : ""
+                            }" `
+                          );
+                          return (
+                            <div
+                              className="my-3"
+                              key={index}
+                              onClick={handleClick}
+                              dangerouslySetInnerHTML={{ __html: content }}
+                            />
+                          );
+                        })}
                       </div>
                     </div>
                   </div>
                   <div className="prose lg:prose-lg tracking-wider">
                     <div
-                      ref={contentEl}
+                      ref={contentRef}
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(modifiedContent),
                       }}

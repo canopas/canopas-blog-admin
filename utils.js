@@ -31,6 +31,7 @@ function setPostFields(post) {
   var [date, _] = formateDate(post.attributes.publishedAt);
   post.attributes.published_on = date;
   post.attributes.readingTime = getReadingTime(post.attributes.content);
+  post.attributes.image_url = post.attributes.image.data.attributes.url;
 }
 
 export { getReadingTime, formateDate, setPostFields };

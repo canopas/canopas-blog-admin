@@ -80,7 +80,7 @@ export default function Home() {
                   <Link href={"/post/" + post.slug}>
                     <Image
                       width={200}
-                      height={200}
+                      height={100}
                       src={post.image_url || ""}
                       alt={post.alternativeText || ""}
                       className="w-full h-full object-cover"

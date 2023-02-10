@@ -1,8 +1,7 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
-import Avatar from "../../assets/images/user.png";
 import Script from "next/script";
 import config from "../../config";
 import axios from "axios";
@@ -33,11 +32,7 @@ export default function Post({ post, status }) {
   if (post) {
     post = post.attributes;
     var published_on = post.published_on.replace(",", "");
-    var authorData = post.author_id.data.attributes.image_url;
-    var authorImage = authorData ? authorData : Avatar;
-    var authorAltText = authorData
-      ? post.author_id.data.attributes.username + "images"
-      : "author";
+    var published_time = new Date(post.publishedAt).toLocaleTimeString();
     var tags = post.tags.data.map((tag) => {
       return tag.attributes.name;
     });
@@ -108,9 +103,14 @@ export default function Post({ post, status }) {
             <>
               <Seo
                 title={post.title}
-                description={post.summary}
+                description={post.description}
+                authorName={post.authorName}
                 url={`https://articles.canopas.com/post/${post.slug}`}
                 date={post.published_on}
+                image_url={post.image_url}
+                publishedAt={post.published_on}
+                publishedTime={published_time}
+                readingTime={post.readingTime}
                 article={true}
               />
               <div key={post.id} className="flex flex-col space-y-20 ">
@@ -152,12 +152,12 @@ export default function Post({ post, status }) {
                           width={200}
                           height={200}
                           className="absolute w-full h-full rounded-full object-cover inset-0"
-                          src={authorImage}
-                          alt={authorAltText}
+                          src={post.authorImage}
+                          alt={post.authorAltText}
                         />
                       </div>
                       <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-5 tracking-wider">
-                        {post.author_id.data.attributes.username}
+                        {post.authorName}
                       </div>
                     </div>
                   </div>

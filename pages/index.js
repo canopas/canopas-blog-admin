@@ -1,22 +1,22 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPosts } from "../store/features/postSlice";
 import Image from "next/image";
 import Link from "next/link";
 import ServerError from "../components/errors/serverError";
 import Avatar from "../assets/images/user.png";
 import config from "../config";
+import axios from "axios";
+import { setPostFields } from "../utils";
 
-export default function Home() {
-  const dispatch = useDispatch();
-  const posts = useSelector((state) => state.post.posts);
-  const status = useSelector((state) => state.post.status);
-  useEffect(() => {
-    if (!status || status === 0) {
-      dispatch(fetchPosts());
-    }
-  }, [status, dispatch]);
+export async function getServerSideProps() {
+  const response = await axios.get(
+    config.STRAPI_URL + "/v1/posts?populate=deep&status=published"
+  );
+  const status = response.status;
+  const posts = response.data.data;
+  posts.forEach((post) => setPostFields(post));
+  return { props: { posts, status } };
+}
 
+export default function Home({ posts, status }) {
   const count = posts.length;
 
   return (

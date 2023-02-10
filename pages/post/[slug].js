@@ -1,6 +1,3 @@
-import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPostBySlug } from "../../store/features/postSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState, useRef, useEffect } from "react";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
@@ -8,39 +5,32 @@ import Image from "next/image";
 import Avatar from "../../assets/images/user.png";
 import Script from "next/script";
 import config from "../../config";
-import DOMPurify from "dompurify";
+import axios from "axios";
+import { setPostFields } from "../../utils";
+import DOMPurify from "isomorphic-dompurify";
 import Seo from "../seo";
 
-export default function Post() {
+export async function getServerSideProps(context) {
+  const slug = context.params.slug;
+  const response = await axios.get(
+    config.STRAPI_URL + "/v1/posts/" + slug + "?populate=deep"
+  );
+  const status = response.status;
+  const post = response.data.data;
+  setPostFields(post);
+  return { props: { post, status } };
+}
+
+export default function Post({ post, status }) {
   const [loaded, setLoaded] = useState(false);
   const [activeId, setActiveId] = useState(0);
   const contentRef = useRef(null);
-
-  // get slug from URL
-  const router = useRouter();
-  const slug = router.query.slug;
 
   const handleLoad = () => {
     setLoaded(true);
   };
 
-  // get post by slug
-  const dispatch = useDispatch();
-  var post = useSelector((state) => {
-    let post = null;
-    if (state.post.posts.length > 0) {
-      post = state.post.posts.find((post) => post.attributes.slug === slug);
-    }
-    if (!post) {
-      post = state.post.post;
-    }
-    return post;
-  });
-  const status = useSelector((state) => state.post.status);
-
-  if (!post) {
-    dispatch(fetchPostBySlug(slug));
-  } else {
+  if (post) {
     post = post.attributes;
     var published_on = post.published_on.replace(",", "");
     var authorData = post.author_id.data.attributes.image_url;

@@ -26,10 +26,10 @@ export default function Header() {
   return (
     <>
       <header
-        className={`sticky w-full top-0 z-10 bg-white ${
+        className={`w-full top-0 z-10 bg-white ${
           showHeader
-            ? `visible ${lastScrollPos > 0 ? "drop-shadow-lg" : ""}`
-            : "invisible"
+            ? `sticky ${lastScrollPos > 0 ? "drop-shadow-lg" : ""}`
+            : "relative"
         }`}
       >
         <nav className="mt-4 md:mt-7 py-2.5 md:py-5 px-[2%] md:px-0 font-product-sans">

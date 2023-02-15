@@ -10,6 +10,14 @@
   src: url(./../fonts/Product-sans-regular.ttf);
 }
 
+@font-face {
+  font-family: "Inter Medium";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Inter-Medium.ttf);
+}
+
 body {
   @apply font-sans;
 }
@@ -28,8 +36,16 @@ input[type="submit"] {
   @apply mt-3 rounded bg-blue-500 py-2 px-4 text-white font-bold hover:bg-blue-700;
 }
 
+.canopas-gradient-text {
+  @apply bg-clip-text bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] text-transparent;
+}
+
+.gradient-text:hover {
+  @apply bg-clip-text bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] text-transparent;
+}
+
 .gradient-border-btn {
-  @apply border-[1px] border-solid border-transparent rounded-[0.6rem] bg-gradient-to-r from-[#ff9472] via-[#ff909c] to-[#f2709c] shadow-[inset_2px_1000px_1px_#fff] p-[1rem] text-center hover:border-[1px] hover:border-solid hover:border-transparent hover:from-[#f2709c] hover:to-[#ff9472] hover:shadow-none active:scale-[0.98];
+  @apply border-[1px] border-solid border-transparent rounded-[0.6rem] bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] shadow-[inset_2px_1000px_1px_#fff] p-[1rem] text-center hover:border-[1px] hover:border-solid hover:border-transparent hover:from-[#f2709c] hover:to-[#ff9472] hover:shadow-none active:scale-[0.98];
 }
 
 .gradient-border-btn > span {
@@ -56,7 +72,7 @@ code::after {
 }
 
 .ephox-summary-card {
-  @apply flex flex-row-reverse items-center !max-w-full h-48 border-solid border border-slate-200;
+  @apply flex flex-row-reverse items-center !max-w-full h-60 sm:h-48 border-solid border border-slate-200;
 }
 
 .ephox-summary-card > a {
@@ -64,11 +80,11 @@ code::after {
 }
 
 .ephox-summary-card-link {
-  @apply flex-col basis-[75%] px-4;
+  @apply flex-col basis-2/4 sm:basis-3/5 lg:basis-[70%] px-4;
 }
 
 .ephox-summary-card-link-thumbnail {
-  @apply h-full basis-1/4 border-solid border-l border-slate-200;
+  @apply h-full basis-2/4 sm:basis-2/5 lg:basis-[30%] border-solid border-l border-slate-200;
 }
 
 .ephox-summary-card-link-thumbnail > img {

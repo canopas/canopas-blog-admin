@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Logo from "../../assets/images/logo-header.svg";
 import Link from "next/link";
+import config from "../../config";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
 export default function Header() {
+  const CANOPAS_URL = config.CANOPAS_URL;
   const router = useRouter();
   const [showHeader, setShowHeader] = useState(true);
   var [lastScrollPos, setLastScrollPos] = useState(0);
@@ -26,16 +28,16 @@ export default function Header() {
   return (
     <>
       <header
-        className={`w-full top-0 z-10 bg-white ${
+        className={`sticky w-full top-0 z-10 bg-white duration-500 ${
           showHeader
-            ? `sticky ${lastScrollPos > 0 ? "drop-shadow-lg" : ""}`
-            : "relative"
+            ? `${lastScrollPos > 0 ? "drop-shadow-lg" : ""}`
+            : "-top-28"
         }`}
       >
-        <nav className="mt-4 md:mt-7 py-2.5 md:py-5 px-[2%] md:px-0 font-product-sans">
-          <div className="container flex flex-col md:flex-row flex-wrap md:flex-nowrap justify-start">
+        <nav className="lg:mt-3 py-5 px-[2%] lg:px-0 font-inter-medium">
+          <div className="container flex flex-col lg:flex-row flex-wrap lg:flex-nowrap justify-start">
             <div className="mr-4 py-[0.3125rem] text-[1.25rem] text-black no-underline whitespace-nowrap">
-              <Link href="http://canopas.com">
+              <Link href={CANOPAS_URL}>
                 <Image
                   src={Logo}
                   className="mt-1 w-[205px] h-[38.5px]"
@@ -44,28 +46,41 @@ export default function Header() {
               </Link>
             </div>
 
-            <div className="flex grow items-center">
-              <ul className="flex flex-row flex-wrap items-center justify-start mb-[10px] my-0 md:ml-auto p-0 text-black-900/80">
-                <li className="ml-0 my-2 sm:my-0 p-0">
+            <div className="flex grow items-center mt-2 lg:mt-0">
+              <ul className="flex flex-row flex-wrap items-center justify-start lg:ml-auto text-[1rem] md:text-[1.09375rem] lg:text-[1.1875rem] leading-[1.125rem] md:leading-[1.28125rem] lg:leading-[1.4375rem]">
+                <li className="ml-0 my-2 sm:my-0">
                   <Link
-                    href="/"
-                    className={`relative mr-[20px] sm:mr-[40px] text-[1rem] md:text-[1.0625rem] lg:text-[1.125rem] font-normal leading-[1.125rem] md:leading-[1.5rem] lg:leading-[1.875rem] tracking-[1px] after:absolute after:top-[29px] after:md:top-[24px] after:bottom-0 after:left-0 after:w-2/4 after:h-[2px] after:bg-black-900 ${
-                      router.pathname == "/"
-                        ? ""
-                        : "after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                    href={`${CANOPAS_URL}/portfolio`}
+                    className={`relative mr-[20px] sm:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
+                      router.pathname == `${CANOPAS_URL}/portfolio`
+                        ? "canopas-gradient-text"
+                        : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                     }`}
                   >
-                    Home
+                    Portfolio
                   </Link>
                 </li>
 
-                <li className="ml-0 my-2 sm:my-0 p-0">
+                <li className="ml-0 my-2 sm:my-0">
                   <Link
-                    href="https://canopas.com/jobs"
-                    className={`relative mr-[20px] sm:mr-[40px] text-[1rem] md:text-[1.0625rem] lg:text-[1.125rem] font-normal leading-[1.125rem] md:leading-[1.5rem] lg:leading-[1.875rem] tracking-[1px] after:absolute after:top-[29px] after:md:top-[24px] after:bottom-0 after:left-0 after:w-2/4 after:h-[2px] after:bg-black-900 ${
-                      router.pathname == "https://canopas.com/jobs"
-                        ? ""
-                        : "after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                    href="/"
+                    className={`relative mr-[20px] sm:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
+                      router.pathname == "/"
+                        ? "canopas-gradient-text"
+                        : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                    }`}
+                  >
+                    Blog
+                  </Link>
+                </li>
+
+                <li className="ml-0 my-2 sm:my-0">
+                  <Link
+                    href={`${CANOPAS_URL}/jobs`}
+                    className={`relative mr-[20px] sm:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
+                      router.pathname == `${CANOPAS_URL}/jobs`
+                        ? "canopas-gradient-text"
+                        : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                     }`}
                   >
                     Career
@@ -74,27 +89,19 @@ export default function Header() {
 
                 <li className="ml-0 my-2 sm:my-0 p-0">
                   <Link
-                    href="https://canopas.com/portfolio"
-                    className={`relative mr-[20px] sm:mr-[40px] text-[1rem] md:text-[1.0625rem] lg:text-[1.125rem] font-normal leading-[1.125rem] md:leading-[1.5rem] lg:leading-[1.875rem] tracking-[1px] after:absolute after:top-[29px] after:md:top-[24px] after:bottom-0 after:left-0 after:w-2/4 after:h-[2px] after:bg-black-900 ${
-                      router.pathname == "https://canopas.com/portfolio"
-                        ? ""
-                        : "after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                    href={`${CANOPAS_URL}/contact`}
+                    className={`relative lg:mb-0 lg:ml-[0.5rem] lg:rounded-full lg:border-[1px] lg:border-solid lg:border-transparent lg:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:lg:shadow-[inset_2px_1000px_1px_#fff] lg:py-[0.8rem] lg:font-bold lg:text-white ${
+                      router.pathname == `${CANOPAS_URL}/contact`
+                        ? "lg:bg-clip-border canopas-gradient-text"
+                        : ""
                     }`}
                   >
-                    Portfolio
-                  </Link>
-                </li>
-
-                <li className="ml-0 my-2 sm:my-0 p-0">
-                  <Link
-                    href="https://canopas.com/contact"
-                    className={`relative lg:rounded-full lg:border border-1 border-black-900 lg:bg-black-900 lg:shadow-[0_4px_4px_rgba(0,0,0,0.5)] lg:py-2.5 lg:px-6 text-[1rem] md:text-[1.0625rem] lg:text-[1.125rem] font-normal leading-[1.125rem] md:leading-[1.5rem] lg:leading-[1.875rem] tracking-[1px] lg:text-white hover:lg:border hover:lg:border-1 hover:border-black-900 hover:bg-white hover:text-black-900 after:absolute after:top-[29px] after:md:top-[24px] after:bottom-0 after:left-0 after:w-2/4 after:h-[2px] after:lg:h-[0px] after:bg-black-900 ${
-                      router.pathname == "https://canopas.com/contact"
-                        ? ""
-                        : "after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
-                    }`}
-                  >
-                    Let&apos;s talk
+                    <span className="lg:py-[1rem] lg:px-[1rem] gradient-text lg:inline-block hidden">
+                      Get Free Consulation
+                    </span>
+                    <span className="inline-block lg:hidden gradient-text">
+                      Let&apos;s talk
+                    </span>
                   </Link>
                 </li>
               </ul>

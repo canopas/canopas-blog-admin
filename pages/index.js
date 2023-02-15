@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import ServerError from "../components/errors/serverError";
-import Avatar from "../assets/images/user.png";
 import config from "../config";
 import axios from "axios";
 import Seo from "./seo";
@@ -73,10 +72,8 @@ export default function Home({ posts, status }) {
                   }`}
                 >
                   <div
-                    className={`my-4 w-auto h-60 border border-1 border-gray-300 bg-white transition-all aspect-auto hover:scale-105 ${
-                      i === 0 && count % 3 === 1
-                        ? "md:w-2/4 md:h-auto"
-                        : "md:h-48 lg:h-60"
+                    className={`my-4 w-auto h-auto border border-1 border-gray-300 bg-white transition-all aspect-auto hover:scale-105 ${
+                      i === 0 && count % 3 === 1 ? "md:w-3/5 lg:w-2/4" : ""
                     }`}
                   >
                     <Link href={"/post/" + post.slug}>
@@ -96,7 +93,7 @@ export default function Home({ posts, status }) {
                     }`}
                   >
                     <div
-                      className={`text-[1.375rem] font-semibold leading-7 tracking-wider text-black-900 ${
+                      className={`text-[1.375rem] font-semibold leading-7 tracking-wider text-black-900 hover:underline underline-offset-4 ${
                         i === 0 && count % 3 === 1
                           ? "md:text-[1.5rem] lg:text-[1.875rem] md:font-bold md:leading-8 lg:leading-10"
                           : "lg:text-[1.5rem] lg:leading-8"
@@ -111,25 +108,29 @@ export default function Home({ posts, status }) {
                     </div>
                     <div className="flex flex-row items-center pt-3 text-[0.875rem] lg:text-[1.125rem] text-gray-500">
                       <div className="relative w-[38px] h-[38px]">
-                        <Image
-                          width={200}
-                          height={200}
-                          className="absolute h-full w-full rounded-full object-cover inset-0"
-                          src={post.authorImage}
-                          alt={post.authorAltText}
-                        />
+                        <Link href={"/post/" + post.slug}>
+                          <Image
+                            width={200}
+                            height={200}
+                            className="absolute h-full w-full rounded-full object-cover inset-0"
+                            src={post.authorImage}
+                            alt={post.authorAltText}
+                          />
+                        </Link>
                       </div>
-                      <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wider">
-                        <span className="text-green-700">
-                          {post.authorName}
-                        </span>
+                      <Link href={"/post/" + post.slug}>
+                        <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wider">
+                          <span className="text-green-700">
+                            {post.authorName}
+                          </span>
 
-                        <div>
-                          <span>{post.published_on}</span>
-                          <span className="after:content-['\00B7'] after:mx-1"></span>
-                          <span>{post.readingTime} min read</span>
+                          <div>
+                            <span>{post.published_on}</span>
+                            <span className="after:content-['\00B7'] after:mx-1"></span>
+                            <span>{post.readingTime} min read</span>
+                          </div>
                         </div>
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 </div>

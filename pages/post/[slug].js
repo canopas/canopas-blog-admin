@@ -51,7 +51,7 @@ export default function Post({ post, status }) {
 
       if (element) {
         window.scrollTo({
-          top: element.offsetTop,
+          top: element.offsetTop - 90,
           behavior: "smooth",
         });
       }
@@ -63,7 +63,7 @@ export default function Post({ post, status }) {
     for (let i = 0; i < content.length; i++) {
       const element = content[i];
       const id = element.id;
-      if (element.offsetTop - window.scrollY <= 0) {
+      if (element.offsetTop - window.scrollY <= 90) {
         newActiveId = id;
       }
     }
@@ -137,7 +137,7 @@ export default function Post({ post, status }) {
                       <div className="w-5 h-5">
                         <FontAwesomeIcon
                           icon={faClock}
-                          className="w-full h-full text-sm "
+                          className="w-full h-full text-sm"
                         />
                       </div>
                       <div>{published_on},</div>

@@ -15,6 +15,7 @@ module.exports = {
       },
       fontFamily: {
         "product-sans": ["Product Sans"],
+        "inter-medium": ["Inter Medium"],
       },
       colors: {
         black: {

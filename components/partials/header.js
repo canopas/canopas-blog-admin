@@ -31,7 +31,7 @@ export default function Header() {
         className={`sticky w-full top-0 z-10 bg-white duration-500 ${
           showHeader
             ? `${lastScrollPos > 0 ? "drop-shadow-lg" : ""}`
-            : "-top-28"
+            : "-top-36"
         }`}
       >
         <nav className="lg:mt-3 py-5 px-[2%] lg:px-0 font-inter-medium">
@@ -96,7 +96,7 @@ export default function Header() {
                         : ""
                     }`}
                   >
-                    <span className="lg:py-[1rem] lg:px-[1rem] gradient-text lg:inline-block hidden">
+                    <span className="lg:py-[1rem] lg:px-[1.05rem] gradient-text lg:inline-block hidden">
                       Get Free Consulation
                     </span>
                     <span className="inline-block lg:hidden gradient-text">

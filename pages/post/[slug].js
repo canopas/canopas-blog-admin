@@ -164,42 +164,47 @@ export default function Post({ post, status }) {
                 </div>
 
                 <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 rounded-3xl text-[1.125rem]">
-                  <div className="xl:sticky top-24 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
-                    <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4 pr-10 ">
-                      Contents
+                  {indexContent != null ? (
+                    <div className="xl:sticky top-24 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
+                      <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4 pr-10 ">
+                        Contents
+                      </div>
+                      <div className="m-4 text-gray-800 font-light tracking-wider">
+                        <div className="my-3 text-[1.125rem] md:text-[1.25rem]">
+                          {post.title}
+                        </div>
+                        <div className="my-3 text-[0.875rem]">
+                          {post.readingTime} mins
+                        </div>
+                        <div className="mt-4 text-[1rem] md:text-[1.010rem] list-none">
+                          {indexContent.map((content, index) => {
+                            var href = content
+                              .match(/href="#(.*?)"/g)[0]
+                              .slice(7, -1);
+                            content = content.replace(
+                              /<a /,
+                              `<a class="hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text ${
+                                activeId === href
+                                  ? "relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gradient-to-r from-pink-300 to-orange-300"
+                                  : ""
+                              }" `
+                            );
+                            return (
+                              <div
+                                className="my-3"
+                                key={index}
+                                onClick={handleClick}
+                                dangerouslySetInnerHTML={{ __html: content }}
+                              />
+                            );
+                          })}
+                        </div>
+                      </div>
                     </div>
-                    <div className="m-4 text-gray-800 font-light tracking-wider">
-                      <div className="my-3 text-[1.125rem] md:text-[1.25rem]">
-                        {post.title}
-                      </div>
-                      <div className="my-3 text-[0.875rem]">
-                        {post.readingTime} mins
-                      </div>
-                      <div className="mt-4 text-[1rem] md:text-[1.010rem] list-none">
-                        {indexContent.map((content, index) => {
-                          var href = content
-                            .match(/href="#(.*?)"/g)[0]
-                            .slice(7, -1);
-                          content = content.replace(
-                            /<a /,
-                            `<a class="hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text ${
-                              activeId === href
-                                ? "relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gradient-to-r from-pink-300 to-orange-300"
-                                : ""
-                            }" `
-                          );
-                          return (
-                            <div
-                              className="my-3"
-                              key={index}
-                              onClick={handleClick}
-                              dangerouslySetInnerHTML={{ __html: content }}
-                            />
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </div>
+                  ) : (
+                    ""
+                  )}
+
                   <div className="prose lg:prose-lg tracking-wider">
                     <div
                       ref={contentRef}

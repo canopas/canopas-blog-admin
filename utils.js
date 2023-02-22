@@ -29,10 +29,12 @@ function formateDate(date) {
 }
 
 function setPostFields(post) {
-  var [date, _] = formateDate(post.attributes.publishedAt);
+  var [date, _] = formateDate(post.attributes.published_on);
   post.attributes.published_on = date;
   post.attributes.readingTime = getReadingTime(post.attributes.content);
-  post.attributes.image_url = post.attributes.image.data.attributes.url;
+  if (post.attributes.image.data != null) {
+    post.attributes.image_url = post.attributes.image.data.attributes.url;
+  }
   const author = post.attributes.author_id.data.attributes;
   post.attributes.authorName = author.username;
   const authorImage = author.image_url;

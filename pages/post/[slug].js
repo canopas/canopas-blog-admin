@@ -8,6 +8,7 @@ import axios from "axios";
 import { setPostFields } from "../../utils";
 import DOMPurify from "isomorphic-dompurify";
 import Seo from "../seo";
+import Comment from "../../components/comments/index";
 
 export async function getServerSideProps(context) {
   const slug = context.params.slug;
@@ -15,12 +16,12 @@ export async function getServerSideProps(context) {
     config.STRAPI_URL + "/v1/posts/" + slug + "?populate=deep"
   );
   const status = response.status;
-  const post = response.data.data;
-  setPostFields(post);
-  return { props: { post, status } };
+  const postData = response.data.data;
+  setPostFields(postData);
+  return { props: { postData, status } };
 }
 
-export default function Post({ post, status }) {
+export default function Post({ postData, status }) {
   const [loaded, setLoaded] = useState(false);
   const [activeId, setActiveId] = useState(0);
   const contentRef = useRef(null);
@@ -29,8 +30,8 @@ export default function Post({ post, status }) {
     setLoaded(true);
   };
 
-  if (post) {
-    post = post.attributes;
+  if (postData) {
+    var post = postData.attributes;
     var published_on = post.published_on.replace(",", "");
     var published_time = new Date(post.publishedAt).toLocaleTimeString();
     var tags = post.tags.data.map((tag) => {
@@ -218,6 +219,7 @@ export default function Post({ post, status }) {
             </>
           )}
         </div>
+        <Comment post={postData} />
       </section>
     </>
   );

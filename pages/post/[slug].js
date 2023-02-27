@@ -60,19 +60,28 @@ export default function Post({ postData, status }) {
     };
   }
   const handleScroll = () => {
-    let newActiveId = null;
-    const content = contentRef.current.querySelectorAll("[id^='mcetoc_']");
-    for (let i = 0; i < content.length; i++) {
-      const element = content[i];
-      const id = element.id;
-      if (element.offsetTop - window.scrollY <= 90) {
-        newActiveId = id;
+    if (contentRef.current != null) {
+      let newActiveId = null;
+      const content = contentRef.current.querySelectorAll("[id^='mcetoc_']");
+      for (let i = 0; i < content.length; i++) {
+        const element = content[i];
+        const id = element.id;
+        if (element.offsetTop - window.scrollY <= 90) {
+          newActiveId = id;
+        }
       }
+      setActiveId(newActiveId);
     }
-    setActiveId(newActiveId);
   };
 
   useEffect(() => {
+    const parser = new DOMParser();
+    const parsedContent = parser.parseFromString(modifiedContent, "text/html");
+    const codeBlocks = parsedContent.querySelectorAll("pre code");
+    codeBlocks.forEach((codeBlock) => {
+      hljs.highlightElement(codeBlock);
+    });
+    contentRef.current.innerHTML = parsedContent.documentElement.innerHTML;
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);

@@ -9,6 +9,7 @@ import { setPostFields } from "../../utils";
 import DOMPurify from "isomorphic-dompurify";
 import Seo from "../seo";
 import Comment from "../../components/comments/index";
+import hljs from "highlight.js";
 
 export async function getServerSideProps(context) {
   const slug = context.params.slug;

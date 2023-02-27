@@ -2,141 +2,161 @@ import Image from "next/image";
 import UserImage from "../../assets/images/user.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import CommentForm from "./commentForm";
+import { formateDate } from "../../utils";
 
 export default function Comment({ post }) {
-  let [description, setDescription] = useState(true);
+  let [comments, setComments] = useState(post);
   let [reviews, setReviews] = useState(false);
   let [currentIndex, setcurrentIndex] = useState(0);
-  let [previousIndex, setpreviousIndex] = useState(0);
-  let threadComments = post.attributes.comments.data;
+  let fullFormRef = useRef(null);
+  let threadComments = comments.attributes.comments.data;
 
   const handleSubmit = (id) => () => {
-    if (previousIndex == id) {
-      setDescription(false);
-      setReviews(true);
-    } else {
-      setDescription(false);
-      setReviews(true);
-    }
+    setReviews(true);
     setcurrentIndex(id);
-    setpreviousIndex(currentIndex);
   };
 
+  const handleNewComment = (comment) => {
+    setComments(comment);
+  };
+
+  useEffect(() => {
+    const handleClick = (event) => {
+      if (fullFormRef.current && !fullFormRef.current.contains(event.target)) {
+        setReviews(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClick);
+  }, [fullFormRef]);
+
   return (
-    <div className="py-10">
-      {post.attributes.comments.data.map((comment) => {
-        {
-          return (
-            <ol key={comment.attributes.id} className="px-10 py-2">
-              {comment && comment.attributes.parentId == null ? (
-                <li className="px-5 py-5 bg-white border border-solid border-gray-300 rounded">
-                  <div className="flex justify-between items-center">
-                    <div className="flex items-center">
-                      <div className="relative w-[40px] h-[40px] mb-2 md:mb-0">
-                        <Image
-                          className="rounded-full h-full w-full object-cover absolute inset-0"
-                          layout="fill"
-                          objectFit="cover"
-                          src={UserImage}
-                          alt={"user-avatar"}
-                        />
+    <div className="container py-20">
+      {comments.attributes.comments.data.map((comment) => {
+        if (comment.attributes.publishedAt != null) {
+          var [date, _] = formateDate(comment.attributes.publishedAt);
+          {
+            return (
+              <ol key={comment.id} className="md:px-8 py-2">
+                {comment && comment.attributes.parent_id === null ? (
+                  <li
+                    className="px-5 py-5 bg-white border border-solid border-gray-300 rounded-[15px]"
+                    ref={fullFormRef}
+                  >
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center">
+                        <div className="relative w-[40px] h-[40px] mb-2 md:mb-0">
+                          <Image
+                            className="rounded-full h-full w-full object-cover absolute inset-0"
+                            layout="fill"
+                            objectFit="cover"
+                            src={UserImage}
+                            alt={"user-avatar"}
+                          />
+                        </div>
+                        {comment.attributes.user_id.data.map((user) => {
+                          return (
+                            <div
+                              key={user.id}
+                              className="pl-3 bg-gradient-to-r from-pink-300 to-orange-300 text-transparent bg-clip-text"
+                            >
+                              {user.attributes.username}
+                            </div>
+                          );
+                        })}
                       </div>
-                      {comment.attributes.commentators.data.map((user) => {
-                        user = user.attributes;
+                      <div
+                        onClick={handleSubmit(comment.id)}
+                        className="cursor-pointer"
+                      >
+                        <FontAwesomeIcon
+                          icon={faReply}
+                          className="pr-1 text-sm text-pink-300"
+                        />
+                        <span className="bg-gradient-to-r from-pink-300 to-orange-300 text-transparent bg-clip-text">
+                          Reply
+                        </span>
+                      </div>
+                    </div>
+                    <p className="mt-2 text-sm text-gray-500">{date}</p>
+                    <div className="pt-4">{comment.attributes.comment}</div>
+
+                    {/* Thread comments */}
+
+                    {threadComments.map((threadComment) => {
+                      if (threadComment.attributes.publishedAt != null) {
+                        var [date, _] = formateDate(
+                          threadComment.attributes.publishedAt
+                        );
                         return (
-                          <div key={user.id} className="pl-3">
-                            {user.username}
+                          <div key={threadComment.id}>
+                            {threadComment.attributes.parent_id &&
+                            threadComment.attributes.parent_id == comment.id ? (
+                              <ol className="pt-3">
+                                <li className="px-5 py-5 bg-white border border-solid border-gray-300 rounded-[15px]">
+                                  <div className="flex justify-between items-center">
+                                    <div className="flex items-center">
+                                      <div className="relative w-[40px] h-[40px] mb-2 md:mb-0">
+                                        <Image
+                                          className="rounded-full h-full w-full object-cover absolute inset-0"
+                                          layout="fill"
+                                          objectFit="cover"
+                                          src={UserImage}
+                                          alt={"user-avatar"}
+                                        />
+                                      </div>
+                                      {threadComment.attributes.user_id.data.map(
+                                        (user) => {
+                                          return (
+                                            <div
+                                              key={user.id}
+                                              className="pl-3 bg-gradient-to-r from-pink-300 to-orange-300 text-transparent bg-clip-text "
+                                            >
+                                              {user.attributes.username}
+                                            </div>
+                                          );
+                                        }
+                                      )}
+                                    </div>
+                                  </div>
+                                  <p className="mt-2 text-sm text-gray-500">
+                                    {date}
+                                  </p>
+                                  <div className="pt-4">
+                                    {threadComment.attributes.comment}
+                                  </div>
+                                </li>
+                              </ol>
+                            ) : (
+                              ""
+                            )}
                           </div>
                         );
-                      })}
-                    </div>
-                    <div
-                      onClick={handleSubmit(comment.id)}
-                      className="text-gray-500 cursor-pointer"
-                    >
-                      <FontAwesomeIcon
-                        icon={faReply}
-                        className="pr-1 text-sm"
+                      }
+                    })}
+
+                    {reviews && comment.id === currentIndex ? (
+                      <CommentForm
+                        post={[post.id, comment.id]}
+                        onNewComment={handleNewComment}
                       />
-                      Reply
-                    </div>
-                  </div>
-                  <p
-                    style={{ ["font-size"]: "14px" }}
-                    className="text-gray-500"
-                  >
-                    {comment.attributes.publishedAt}
-                  </p>
-                  <div className="pt-4">{comment.attributes.comment}</div>
-
-                  {/* Thread comments */}
-
-                  {threadComments.map((threadComment) => {
-                    return (
-                      <div key={threadComment.attributes.id}>
-                        {threadComment.attributes.parentId &&
-                        threadComment.attributes.parentId == comment.id ? (
-                          <ol className="pt-2">
-                            <li className="px-5 py-5 bg-white border border-solid border-gray-300 rounded">
-                              <div className="flex justify-between items-center">
-                                <div className="flex items-center">
-                                  <div className="relative w-[40px] h-[40px] mb-2 md:mb-0">
-                                    <Image
-                                      className="rounded-full h-full w-full object-cover absolute inset-0"
-                                      layout="fill"
-                                      objectFit="cover"
-                                      src={UserImage}
-                                      alt={"user-avatar"}
-                                    />
-                                  </div>
-                                  {threadComment.attributes.commentators.data.map(
-                                    (user) => {
-                                      user = user.attributes;
-                                      return (
-                                        <div key={user.id} className="pl-3">
-                                          {user.username}
-                                        </div>
-                                      );
-                                    }
-                                  )}
-                                </div>
-                              </div>
-                              <p
-                                style={{ ["font-size"]: "14px" }}
-                                className="text-gray-500"
-                              >
-                                {threadComment.attributes.publishedAt}
-                              </p>
-                              <div className="pt-4">
-                                {threadComment.attributes.comment}
-                              </div>
-                            </li>
-                          </ol>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    );
-                  })}
-
-                  {reviews && comment.id === currentIndex ? (
-                    <CommentForm post={[post.id, comment.id]} />
-                  ) : (
-                    ""
-                  )}
-                </li>
-              ) : (
-                ""
-              )}
-            </ol>
-          );
+                    ) : (
+                      ""
+                    )}
+                  </li>
+                ) : (
+                  ""
+                )}
+              </ol>
+            );
+          }
         }
       })}
 
       {/* comments form */}
-      {description ? <CommentForm post={[post.id, null]} /> : ""}
+      <CommentForm post={[post.id, null]} onNewComment={handleNewComment} />
     </div>
   );
 }

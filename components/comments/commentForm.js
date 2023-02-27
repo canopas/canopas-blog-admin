@@ -1,94 +1,96 @@
-import { useState } from "react";
-import { addComment, addCommentator, updateComment } from "../../lib/comment";
+import { useState, useRef, useEffect } from "react";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import config from "../../config";
+const STRAPI_URL = config.STRAPI_URL;
 
-export default function CommentForm({ post }) {
-  const [postId, commentId] = post;
-
-  let [showComment, setShowResults] = useState(false);
-  const onClick = () => setShowResults(true);
-
-  const [title, setTitle] = useState("");
+export default function CommentForm({ post, onNewComment }) {
+  const [showForm, setShowForm] = useState(false);
+  const formRef = useRef(null);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [comment, setComment] = useState("");
+  const [message, setMessage] = useState("");
+  const [postId, parentId] = post;
 
-  async function handleSubmit() {
+  async function handleSubmit(event) {
+    event.preventDefault();
+
     const commentData = {
       data: {
-        comment: comment,
+        comment: message,
         post: postId,
-        parentId: commentId ? commentId : null,
+        parent_id: parentId ? parentId : null,
+        username: name,
+        email: email,
       },
     };
 
-    const [status, comments] = await addComment(commentData);
-    if (status === 200) {
-      const userData = {
-        data: {
-          username: title,
-          email: email,
-          comments: comments.data.id,
-        },
-      };
-
-      const [userStatus, users] = await addCommentator(userData);
-      if (userStatus === 200) {
-        const commentatorData = {
-          data: {
-            commentators: users.data.id,
-          },
-        };
-        await updateComment(postId, commentatorData);
-      }
-    }
+    const response = await axios.post(
+      `${STRAPI_URL}/v1/comments?populate=deep`,
+      commentData
+    );
+    onNewComment(response.data.data.attributes.post.data);
+    setName("");
+    setEmail("");
+    setMessage("");
   }
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (formRef.current && !formRef.current.contains(event.target)) {
+        setShowForm(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+  }, [formRef]);
+
   return (
-    <div className="py-5">
-      <div className="pb-3 font-bold">
-        <FontAwesomeIcon icon={faMessage} className="pr-1 text-sm" /> Leave
-        comment
+    <div className="container py-20 tracking-wide">
+      <div className="flex items-center pb-5 font-semibold text-xl">
+        <FontAwesomeIcon icon={faMessage} className="pr-2 text-pink-300" />{" "}
+        <span className="bg-gradient-to-r from-pink-300 to-orange-300 text-transparent bg-clip-text">
+          Leave comment
+        </span>
       </div>
       <form onSubmit={handleSubmit}>
         <textarea
           id="comment"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          style={{ ["height"]: "96px" }}
-          onClick={onClick}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onClick={() => setShowForm(true)}
           className="form-control block w-full h-24"
           placeholder="Your comment"
-        ></textarea>
-        <div
-          style={{
-            display: showComment ? "block" : "none",
-          }}
-          className="pt-4"
-        >
-          <label className="mb-3">Name</label>
-          <span style={{ ["color"]: "red" }}>*</span>
+          required
+        />
+        <div className={`pt-4 ${showForm ? "block" : "hidden"}`} ref={formRef}>
+          <label className="mb-3 text-lg text-gray-700">Name</label>
+          <span className="ml-1 text-red-600">*</span>
           <input
-            id="title"
+            id="name"
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             className="form-control block w-full h-full"
-            placeholder="Your name"
+            placeholder="Your Name"
             required
           />
-          <label className="mb-3">Email</label>
-          <span style={{ ["color"]: "red" }}>*</span>
+          <label className="mb-3 text-lg text-gray-700">Email</label>
+          <span className="ml-1 text-red-600">*</span>
           <input
             id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="form-control block w-full h-full "
-            placeholder="Your email address"
+            placeholder="Your E-mail Address"
             required
           />
-          <input type="submit" value="Post Comment" />
+          <button className="relative mt-7 rounded-[12px] border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.8rem] font-bold text-white">
+            <span className="py-[1.25rem] px-3 gradient-text text-lg">
+              Post Comment
+            </span>
+          </button>
         </div>
       </form>
     </div>

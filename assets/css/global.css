@@ -107,3 +107,101 @@ code::after {
 .pw-post-body-paragraph {
   @apply break-words;
 }
+
+pre[class*="language-"] {
+  @apply my-2 overflow-auto bg-[#333];
+}
+
+code.hljs {
+  @apply py-[3px] px-[5px];
+}
+
+.hljs-doctag,
+.hljs-meta-keyword,
+.hljs-name,
+.hljs-strong {
+  @apply font-bold;
+}
+
+.hljs-code,
+.hljs-emphasis {
+  @apply italic;
+}
+
+.hljs-section,
+.hljs-tag {
+  @apply text-[#62c8f3];
+}
+
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-template-variable,
+.hljs-variable {
+  @apply text-[#ade5fc];
+}
+
+.hljs-meta-string,
+.hljs-string {
+  @apply text-[#a2fca2];
+}
+
+.hljs-attr,
+.hljs-quote,
+.hljs-selector-attr {
+  @apply text-[#8cb0fcea];
+}
+
+.hljs-tag.hljs-attr {
+  @apply text-inherit;
+}
+
+.hljs-attribute,
+.hljs-title,
+.hljs-type {
+  @apply text-[#ffa];
+}
+
+.hljs-number,
+.hljs-symbol {
+  @apply text-[#d36363];
+}
+
+.hljs-bullet,
+.hljs-template-tag {
+  @apply text-[#b8d8a2];
+}
+
+.hljs-built_in,
+.hljs-keyword,
+.hljs-literal,
+.hljs-selector-tag {
+  @apply text-[#fcc28c];
+}
+
+.hljs-code,
+.hljs-comment,
+.hljs-formula {
+  @apply text-[#888];
+}
+
+.hljs-link,
+.hljs-regexp,
+.hljs-selector-pseudo {
+  @apply text-[#c6b4f0];
+}
+
+.hljs-meta {
+  @apply text-[#fc9b9b];
+}
+
+.hljs-deletion {
+  @apply bg-[#fc9b9b] text-[#333];
+}
+
+.hljs-addition {
+  @apply bg-[#a2fca2] text-[#333];
+}
+
+.hljs-subst {
+  @apply text-[#fff];
+}

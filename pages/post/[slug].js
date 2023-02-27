@@ -76,7 +76,7 @@ export default function Post({ postData, status }) {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [modifiedContent]);
 
   return (
     <>

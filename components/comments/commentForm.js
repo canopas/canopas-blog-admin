@@ -5,35 +5,44 @@ import axios from "axios";
 import config from "../../config";
 const STRAPI_URL = config.STRAPI_URL;
 
-export default function CommentForm({ post, onNewComment }) {
+export default function CommentForm({ post, onNewComment, recaptchaRef }) {
   const [showForm, setShowForm] = useState(false);
   const formRef = useRef(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const [postId, parentId] = post;
 
   async function handleSubmit(event) {
     event.preventDefault();
 
-    const commentData = {
-      data: {
-        comment: message,
-        post: postId,
-        parent_id: parentId ? parentId : null,
-        username: name,
-        email: email,
-      },
-    };
+    recaptchaRef.current.executeAsync().then(() => {
+      const commentData = {
+        data: {
+          comment: message,
+          post: postId,
+          parent_id: parentId ? parentId : null,
+          username: name,
+          email: email,
+        },
+      };
 
-    const response = await axios.post(
-      `${STRAPI_URL}/v1/comments?populate=deep`,
-      commentData
-    );
-    onNewComment(response.data.data.attributes.post.data);
-    setName("");
-    setEmail("");
-    setMessage("");
+      axios
+        .post(`${STRAPI_URL}/v1/comments?populate=deep`, commentData)
+        .then((response) => {
+          onNewComment(response.data.data.attributes.post.data);
+        })
+        .catch(() => {
+          setError("Please Enter Your Email & UserName are Correct!!");
+        });
+
+      setName("");
+      setEmail("");
+      setMessage("");
+      setError("");
+      recaptchaRef.current.reset();
+    });
   }
 
   useEffect(() => {
@@ -91,6 +100,7 @@ export default function CommentForm({ post, onNewComment }) {
               Post Comment
             </span>
           </button>
+          {error && <p className="mt-3 text-lg text-red-600">{error}</p>}
         </div>
       </form>
     </div>

@@ -33,8 +33,8 @@ export default function CommentForm({ post, onNewComment, recaptchaRef }) {
         .then((response) => {
           onNewComment(response.data.data.attributes.post.data);
         })
-        .catch(() => {
-          setError("Please Enter Your Email & UserName are Correct!!");
+        .catch((error) => {
+          setError(error.response.data.error.message);
         });
 
       setName("");

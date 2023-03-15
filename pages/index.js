@@ -43,23 +43,28 @@ export default function Home({ posts, status }) {
           </div>
         </div>
         <hr className="mb-10" />
-        <div
-          className={`grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 ${
-            count % 3 === 1 ? "md:col-span-1" : ""
-          }`}
-        >
-          {status == 0 ? (
-            ""
-          ) : status != config.SUCCESS ? (
-            status == config.NOT_FOUND ? (
-              <div className="text-[1.25rem] text-center">
-                There is no any posts.
-              </div>
-            ) : (
-              <ServerError />
-            )
+
+        {count == 0 ? (
+          <div className="mt-20 text-[1.4rem] text-center text-black-900 ">
+            Stay tuned, we have some exciting posts in the works that we&apos;ll
+            be sharing with you shortly.
+          </div>
+        ) : status != config.SUCCESS ? (
+          status == config.NOT_FOUND ? (
+            <div className="mt-20 text-[1.25rem] text-center text-black-900">
+              Stay tuned, we have some exciting posts in the works that
+              we&apos;ll be sharing with you shortly.
+            </div>
           ) : (
-            posts.map((post, i) => {
+            <ServerError />
+          )
+        ) : (
+          <div
+            className={`grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 ${
+              count % 3 === 1 ? "md:col-span-1" : ""
+            }`}
+          >
+            {posts.map((post, i) => {
               post = post.attributes;
 
               return (
@@ -135,9 +140,9 @@ export default function Home({ posts, status }) {
                   </div>
                 </div>
               );
-            })
-          )}
-        </div>
+            })}
+          </div>
+        )}
       </section>
     </>
   );

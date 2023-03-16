@@ -7,12 +7,19 @@ import Seo from "./seo";
 import { setPostFields } from "../utils";
 
 export async function getServerSideProps() {
-  const response = await axios.get(
-    config.STRAPI_URL + "/v1/posts?populate=deep&status=published"
-  );
-  const status = response.status;
-  const posts = response.data.data;
-  posts.forEach((post) => setPostFields(post));
+  var response = null;
+  var posts = [];
+  try {
+    response = await axios.get(
+      config.STRAPI_URL + "/v1/posts?populate=deep&status=published"
+    );
+    posts = response.data.data;
+    posts.forEach((post) => setPostFields(post));
+  } catch (err) {
+    response = err.response;
+  }
+
+  const status = response ? response.status : config.NOT_FOUND;
   return { props: { posts, status } };
 }
 
@@ -44,20 +51,12 @@ export default function Home({ posts, status }) {
         </div>
         <hr className="mb-10" />
 
-        {count == 0 ? (
+        {count == 0 || status == config.NOT_FOUND ? (
           <div className="mt-20 text-[1.4rem] text-center text-black-900 ">
-            Stay tuned, we have some exciting posts in the works that we&apos;ll
-            be sharing with you shortly.
+            {config.POST_NOT_FOUND_MESSAGE}
           </div>
         ) : status != config.SUCCESS ? (
-          status == config.NOT_FOUND ? (
-            <div className="mt-20 text-[1.25rem] text-center text-black-900">
-              Stay tuned, we have some exciting posts in the works that
-              we&apos;ll be sharing with you shortly.
-            </div>
-          ) : (
-            <ServerError />
-          )
+          <ServerError />
         ) : (
           <div
             className={`grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 ${
@@ -98,7 +97,7 @@ export default function Home({ posts, status }) {
                     }`}
                   >
                     <div
-                      className={`text-[1.375rem] font-semibold leading-7 tracking-wider text-black-900 hover:underline underline-offset-4 ${
+                      className={`text-[1.375rem] font-semibold leading-7 tracking-wider text-black-900 hover:underline underline-offset-4 transition-all hover:scale-[0.96] ${
                         i === 0 && count % 3 === 1
                           ? "md:text-[1.5rem] lg:text-[1.875rem] md:font-bold md:leading-8 lg:leading-10"
                           : "lg:text-[1.5rem] lg:leading-8"

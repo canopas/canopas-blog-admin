@@ -71,41 +71,12 @@ code::after {
   @apply content-none !important;
 }
 
-.ephox-summary-card {
-  @apply flex flex-row-reverse items-center !max-w-full h-44 md:h-48 border-solid border border-slate-200;
-}
-
-.ephox-summary-card > a {
-  @apply flex justify-center h-full no-underline;
-}
-
-.ephox-summary-card-link {
-  @apply flex-col basis-2/4 sm:basis-3/5 lg:basis-[70%] px-4;
-}
-
-.ephox-summary-card-title {
-  @apply line-clamp-2;
-}
-
-.ephox-summary-card-description {
-  @apply line-clamp-2 md:line-clamp-3 text-[1rem] text-slate-400;
-}
-
-.ephox-summary-card-link-thumbnail {
-  @apply h-full basis-2/4 sm:basis-2/5 lg:basis-[30%] border-solid border-l border-slate-200;
-}
-
-.ephox-summary-card-link-thumbnail > img {
-  @apply my-0 object-cover;
-}
-
-.ephox-summary-card-author,
-.ephox-summary-card-website {
-  @apply mt-4 text-[1rem] text-slate-400;
-}
-
 .pw-post-body-paragraph {
   @apply break-words;
+}
+
+ul {
+  @apply pl-4;
 }
 
 pre[class*="language-"] {

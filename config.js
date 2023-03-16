@@ -8,4 +8,6 @@ export default Object.freeze({
   SUCCESS: 200,
   NOT_FOUND: 404,
   SERVER_ERROR: 500,
+
+  POST_NOT_FOUND_MESSAGE: `Stay tuned, we have some exciting posts in the works that we'll be sharing with you shortly.`,
 });

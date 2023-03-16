@@ -1,30 +1,38 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClock } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import Script from "next/script";
-import config from "../../config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { setPostFields } from "../../utils";
-import DOMPurify from "isomorphic-dompurify";
+import config from "../../config";
 import Seo from "../seo";
+import NotFound from "../404";
 import Comment from "../../components/comments/index";
+import { setPostFields } from "../../utils";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
 import hljs from "highlight.js";
 
 export async function getServerSideProps(context) {
   const slug = context.params.slug;
-  const response = await axios.get(
-    config.STRAPI_URL + "/v1/posts/" + slug + "?populate=deep"
-  );
-  const status = response.status;
-  const postData = response.data.data;
-  setPostFields(postData);
+  var response,
+    postData = null;
+
+  try {
+    response = await axios.get(
+      config.STRAPI_URL + "/v1/posts/" + slug + "?populate=deep"
+    );
+    postData = response.data.data;
+    setPostFields(postData);
+  } catch (err) {
+    response = err.response;
+  }
+
+  const status = response ? response.status : config.NOT_FOUND;
   return { props: { postData, status } };
 }
 
 export default function Post({ postData, status }) {
   const [loaded, setLoaded] = useState(false);
-  const [activeId, setActiveId] = useState(0);
+  const [activeId, setActiveId] = useState(null);
   const contentRef = useRef(null);
 
   const handleLoad = () => {
@@ -39,18 +47,27 @@ export default function Post({ postData, status }) {
       return tag.attributes.name;
     });
     var tagsString = tags.join(", ");
-    var indexContent = post.content.match(
-      /<li><a href="#mcetoc_([\s\S]*?)">([\s\S]*?)<\/a><\/li>/g
-    );
-    var modifiedContent = post.content.replace(
-      /<div class="mce-toc">([\s\S]*?)<\/div>/,
-      ""
-    );
+
+    var indexContent = null;
+    var blogContent = post.content;
+
+    // table of contents formation
+    if (post.toc) {
+      indexContent = post.toc.replace(/<a\s+href="(.*?)"/g, (match, href) => {
+        let classes =
+          "text-ellipsis whitespace-nowrap hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text";
+        if (href === activeId) {
+          classes +=
+            " relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:left-0 after:bottom-0 after:w-full after:h-[1px] after:bg-gradient-to-r";
+        }
+        return `<a href="${href}" class="${classes}"`;
+      });
+    }
+
     var handleClick = (event) => {
       event.preventDefault();
       var linkHref = event.target.getAttribute("href");
       var element = contentRef.current.querySelector(linkHref);
-
       if (element) {
         window.scrollTo({
           top: element.offsetTop - 90,
@@ -59,40 +76,44 @@ export default function Post({ postData, status }) {
       }
     };
   }
+
   const handleScroll = () => {
-    if (contentRef.current != null) {
-      let newActiveId = null;
-      const content = contentRef.current.querySelectorAll("[id^='mcetoc_']");
-      for (let i = 0; i < content.length; i++) {
-        const element = content[i];
-        const id = element.id;
-        if (element.offsetTop - window.scrollY <= 90) {
-          newActiveId = id;
+    const headers = contentRef.current.querySelectorAll("h1, h2");
+    headers.forEach((header, index) => {
+      const documentHeight = document.body.scrollHeight;
+      const currentScroll = window.scrollY + window.innerHeight;
+      if (currentScroll > documentHeight) {
+        setActiveId("#" + header.id);
+      } else {
+        if (header.offsetTop - window.pageYOffset <= 200) {
+          setActiveId("#" + header.id);
         }
       }
-      setActiveId(newActiveId);
-    }
+    });
   };
 
   useEffect(() => {
-    const parser = new DOMParser();
-    const parsedContent = parser.parseFromString(modifiedContent, "text/html");
-    const codeBlocks = parsedContent.querySelectorAll("pre code");
-    codeBlocks.forEach((codeBlock) => {
-      hljs.highlightElement(codeBlock);
-    });
-    contentRef.current.innerHTML = parsedContent.documentElement.innerHTML;
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [modifiedContent]);
+    if (postData) {
+      const parser = new DOMParser();
+      const parsedContent = parser.parseFromString(blogContent, "text/html");
+      const codeBlocks = parsedContent.querySelectorAll("pre code");
+      codeBlocks.forEach((codeBlock) => {
+        hljs.highlightElement(codeBlock);
+      });
+      contentRef.current.innerHTML = parsedContent.documentElement.innerHTML;
+      window.addEventListener("scroll", handleScroll);
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }
+  }, [blogContent]);
 
   return (
     <>
       <Script
         src={
-          "//cdn.iframe.ly/embed.js?key=" + process.env.NEXT_PUBLIC_IFRAMELY_KEY
+          "//cdn.iframe.ly/embed.js?card=small&key=" +
+          process.env.NEXT_PUBLIC_IFRAMELY_KEY
         }
         onLoad={() => {
           // Load media preview
@@ -104,12 +125,8 @@ export default function Post({ postData, status }) {
 
       <section className="container my-16 font-product-sans">
         <div>
-          {post == null ? (
-            ""
-          ) : status == config.NOT_FOUND ? (
-            <div className="text-[1.25rem] text-center">
-              There is no any posts.
-            </div>
+          {status == config.NOT_FOUND || post == null ? (
+            <NotFound />
           ) : (
             <>
               <Seo
@@ -125,6 +142,7 @@ export default function Post({ postData, status }) {
                 article={true}
               />
               <div key={post.id} className="flex flex-col space-y-20 ">
+                {/* Header */}
                 <div className="grid grid-flow-row xl:grid-flow-col gap-10 xl:gap-8 w-90 h-90 rounded-3xl md:bg-[#14161E] md:py-20 md:px-10 xl:py-14 xl:px-8 ">
                   <div className="md:container w-full xl:w-[35rem] 2xl:w-[42rem] h-auto sm:h-[18rem] md:h-[21rem] lg:h-[30rem] xl:h-[19rem] 2xl:h-[23rem] ">
                     <Image
@@ -174,6 +192,7 @@ export default function Post({ postData, status }) {
                   </div>
                 </div>
 
+                {/* Table of Contents */}
                 <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 rounded-3xl text-[1.125rem]">
                   {indexContent != null ? (
                     <div className="xl:sticky top-24 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
@@ -188,27 +207,11 @@ export default function Post({ postData, status }) {
                           {post.readingTime} mins
                         </div>
                         <div className="mt-4 text-[1rem] md:text-[1.010rem] list-none">
-                          {indexContent.map((content, index) => {
-                            var href = content
-                              .match(/href="#(.*?)"/g)[0]
-                              .slice(7, -1);
-                            content = content.replace(
-                              /<a /,
-                              `<a class="hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text ${
-                                activeId === href
-                                  ? "relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-gradient-to-r from-pink-300 to-orange-300"
-                                  : ""
-                              }" `
-                            );
-                            return (
-                              <div
-                                className="my-3"
-                                key={index}
-                                onClick={handleClick}
-                                dangerouslySetInnerHTML={{ __html: content }}
-                              />
-                            );
-                          })}
+                          <div
+                            className="my-3"
+                            onClick={handleClick}
+                            dangerouslySetInnerHTML={{ __html: indexContent }}
+                          />
                         </div>
                       </div>
                     </div>
@@ -216,20 +219,22 @@ export default function Post({ postData, status }) {
                     ""
                   )}
 
+                  {/* main article */}
                   <div className="prose lg:prose-lg tracking-wider">
                     <div
                       ref={contentRef}
                       dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(modifiedContent),
+                        __html: post.content,
                       }}
                     ></div>
                   </div>
                 </div>
               </div>
+              {/* comments */}
+              <Comment post={postData} />
             </>
           )}
         </div>
-        <Comment post={postData} />
       </section>
     </>
   );

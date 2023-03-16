@@ -19,7 +19,7 @@
 }
 
 body {
-  @apply font-sans;
+  @apply font-product-sans;
 }
 
 .content > p {
@@ -63,7 +63,7 @@ input[type="submit"] {
 }
 
 code {
-  @apply rounded bg-slate-100 px-4 py-2 text-sm;
+  @apply rounded bg-slate-100 p-1 text-sm;
 }
 
 code::before,
@@ -71,7 +71,15 @@ code::after {
   @apply content-none !important;
 }
 
-.pw-post-body-paragraph {
+h1 strong {
+  @apply text-[2.4rem] tracking-wider;
+}
+
+h2 strong {
+  @apply text-[2rem] tracking-wider;
+}
+
+p {
   @apply break-words;
 }
 
@@ -79,12 +87,8 @@ ul {
   @apply pl-4;
 }
 
-pre[class*="language-"] {
-  @apply my-2 overflow-auto bg-[#333];
-}
-
 code.hljs {
-  @apply py-[3px] px-[5px];
+  @apply py-[3px] px-[5px] font-product-sans tracking-widest text-base;
 }
 
 .hljs-doctag,

@@ -55,7 +55,7 @@ export default function Post({ postData, status }) {
     if (post.toc) {
       indexContent = post.toc.replace(/<a\s+href="(.*?)"/g, (match, href) => {
         let classes =
-          "text-ellipsis whitespace-nowrap hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text";
+          "text-ellipsis hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text";
         if (href === activeId) {
           classes +=
             " relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:left-0 after:bottom-0 after:w-full after:h-[1px] after:bg-gradient-to-r";
@@ -94,13 +94,7 @@ export default function Post({ postData, status }) {
 
   useEffect(() => {
     if (postData) {
-      const parser = new DOMParser();
-      const parsedContent = parser.parseFromString(blogContent, "text/html");
-      const codeBlocks = parsedContent.querySelectorAll("pre code");
-      codeBlocks.forEach((codeBlock) => {
-        hljs.highlightElement(codeBlock);
-      });
-      contentRef.current.innerHTML = parsedContent.documentElement.innerHTML;
+      hljs.highlightAll();
       window.addEventListener("scroll", handleScroll);
       return () => {
         window.removeEventListener("scroll", handleScroll);

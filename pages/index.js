@@ -33,7 +33,7 @@ export default function Home({ posts, status }) {
         description="Canopas blogs will help you to become a better software developer. We are sharing knowledge on Web, Backend, iOS, Android, and Flutter development"
         authorName="canopas"
       />
-      <section className="container my-16 mx-2 sm:mx-auto font-product-sans">
+      <section className="container my-16 mx-2 sm:mx-auto">
         <div className="my-16 w-full bg-black-900">
           <div className="flex flex-col space-y-2 py-4 px-14 md:px-28 xl:px-44">
             <div className="w-20 md:w-1/5 ">

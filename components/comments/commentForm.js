@@ -21,7 +21,7 @@ export default function CommentForm({ post, onNewComment, recaptchaRef }) {
       const commentData = {
         data: {
           comment: message,
-          post: postId,
+          postId: postId,
           parent_id: parentId ? parentId : null,
           username: name,
           email: email,

@@ -26,6 +26,10 @@ body {
   @apply pb-8;
 }
 
+.prose > * {
+  @apply text-[18px] md:text-[21px] leading-[1.58] tracking-wide;
+}
+
 input[type="text"],
 input[type="email"],
 textarea {
@@ -62,121 +66,104 @@ input[type="submit"] {
   @apply text-white;
 }
 
-code {
-  @apply rounded bg-slate-100 p-1 text-sm;
-}
-
-code::before,
-code::after {
-  @apply content-none !important;
-}
-
-h1 strong {
-  @apply text-[2.4rem] tracking-wider;
-}
-
-h2 strong {
-  @apply text-[2rem] tracking-wider;
+ul {
+  @apply pl-4;
 }
 
 p {
   @apply break-words;
 }
 
-ul {
-  @apply pl-4;
+h1 strong {
+  @apply text-[2.4rem] tracking-wide;
 }
 
-code.hljs {
-  @apply py-[3px] px-[5px] font-product-sans tracking-widest text-base;
+h2 strong {
+  @apply text-[2rem] tracking-wide;
 }
 
-.hljs-doctag,
-.hljs-meta-keyword,
-.hljs-name,
-.hljs-strong {
-  @apply font-bold;
+/* HighlightJS */
+/* Tomorrow Night Theme */
+/* https://jmblog.github.io/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+/* https://jmblog.github.io/color-themes-for-google-code-highlightjs */
+.tomorrow-comment,
+pre .hljs-comment,
+pre .hljs-title {
+  @apply text-[#969896];
 }
 
-.hljs-code,
-.hljs-emphasis {
-  @apply italic;
+.tomorrow-red,
+pre .hljs-variable,
+pre .hljs-attribute,
+pre .hljs-tag,
+pre .hljs-regexp,
+pre .ruby .hljs-constant,
+pre .xml .hljs-tag .hljs-title,
+pre .xml .hljs-pi,
+pre .xml .hljs-doctype,
+pre .html .hljs-doctype,
+pre .css .id,
+pre .css .hljs-class,
+pre .css .hljs-pseudo {
+  @apply text-[#cc6666];
 }
 
-.hljs-section,
-.hljs-tag {
-  @apply text-[#62c8f3];
+.tomorrow-orange,
+pre .hljs-number,
+pre .hljs-preprocessor,
+pre .hljs-built_in,
+pre .hljs-literal,
+pre .hljs-params,
+pre .hljs-constant {
+  @apply text-[#de935f];
 }
 
-.hljs-selector-class,
-.hljs-selector-id,
-.hljs-template-variable,
-.hljs-variable {
-  @apply text-[#ade5fc];
+.tomorrow-yellow,
+pre .hljs-class,
+pre .ruby .hljs-class .hljs-title,
+pre .css .hljs-rules .hljs-attribute {
+  @apply text-[#f0c674];
 }
 
-.hljs-meta-string,
-.hljs-string {
-  @apply text-[#a2fca2];
+.tomorrow-green,
+pre .hljs-string,
+pre .hljs-value,
+pre .hljs-inheritance,
+pre .hljs-header,
+pre .ruby .hljs-symbol,
+pre .xml .hljs-cdata {
+  @apply text-[#b5bd68];
 }
 
-.hljs-attr,
-.hljs-quote,
-.hljs-selector-attr {
-  @apply text-[#8cb0fcea];
+.tomorrow-aqua,
+pre .css .hljs-hexcolor {
+  @apply text-[#8abeb7];
 }
 
-.hljs-tag.hljs-attr {
-  @apply text-inherit;
+.tomorrow-blue,
+pre .hljs-function,
+pre .python .hljs-decorator,
+pre .python .hljs-title,
+pre .ruby .hljs-function .hljs-title,
+pre .ruby .hljs-title .hljs-keyword,
+pre .perl .hljs-sub,
+pre .javascript .hljs-title,
+pre .coffeescript .hljs-title {
+  @apply text-[#81a2be];
 }
 
-.hljs-attribute,
-.hljs-title,
-.hljs-type {
-  @apply text-[#ffa];
+.tomorrow-purple,
+pre .hljs-keyword,
+pre .javascript .hljs-function {
+  @apply text-[#b294bb];
 }
 
-.hljs-number,
-.hljs-symbol {
-  @apply text-[#d36363];
+pre code {
+  @apply block bg-[#1d1f21] p-[10px] text-[#c5c8c6] leading-normal border border-solid border-[#ccc];
 }
 
-.hljs-bullet,
-.hljs-template-tag {
-  @apply text-[#b8d8a2];
-}
-
-.hljs-built_in,
-.hljs-keyword,
-.hljs-literal,
-.hljs-selector-tag {
-  @apply text-[#fcc28c];
-}
-
-.hljs-code,
-.hljs-comment,
-.hljs-formula {
-  @apply text-[#888];
-}
-
-.hljs-link,
-.hljs-regexp,
-.hljs-selector-pseudo {
-  @apply text-[#c6b4f0];
-}
-
-.hljs-meta {
-  @apply text-[#fc9b9b];
-}
-
-.hljs-deletion {
-  @apply bg-[#fc9b9b] text-[#333];
-}
-
-.hljs-addition {
-  @apply bg-[#a2fca2] text-[#333];
-}
-
-.hljs-subst {
-  @apply text-[#fff];
+code::before,
+code::after {
+  @apply content-none !important;
 }

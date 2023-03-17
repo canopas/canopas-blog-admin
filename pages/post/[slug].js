@@ -9,6 +9,7 @@ import NotFound from "../404";
 import Comment from "../../components/comments/index";
 import { setPostFields } from "../../utils";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { faTags } from "@fortawesome/free-solid-svg-icons";
 import hljs from "highlight.js";
 
 export async function getServerSideProps(context) {
@@ -117,7 +118,7 @@ export default function Post({ postData, status }) {
         }}
       />
 
-      <section className="container my-16 font-product-sans">
+      <section className="container my-16">
         <div>
           {status == config.NOT_FOUND || post == null ? (
             <NotFound />
@@ -156,17 +157,32 @@ export default function Post({ postData, status }) {
                     <div className="text-[2.20rem] lg:text-[2.50rem] xl:text-[2.80rem] font-normal leading-10 lg:leading-tight tracking-wide">
                       {post.title}
                     </div>
-                    <div className="flex flex-row space-x-4 text-[1rem] leading-6 tracking-wide">
+                    <div className="flex flex-row items-center space-x-4 text-[1rem] leading-6 tracking-wide">
                       <div className="w-5 h-5">
                         <FontAwesomeIcon
                           icon={faClock}
                           className="w-full h-full text-sm"
                         />
                       </div>
-                      <div>{published_on},</div>
-                      <div>{tagsString}</div>
+                      <div>
+                        <span>{published_on}</span> ·{" "}
+                        <span> {post.readingTime} min read</span>
+                      </div>
                     </div>
-                    <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-6 md:leading-7 tracking-wider">
+                    {tagsString ? (
+                      <div className="flex flex-row items-center space-x-4 text-[1rem] leading-6 tracking-wide">
+                        <div className="w-5 h-5">
+                          <FontAwesomeIcon
+                            icon={faTags}
+                            className="w-full h-full text-sm"
+                          />
+                        </div>
+                        <div>{tagsString}</div>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                    <div className="text-slate-200 text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-6 md:leading-7 tracking-wide">
                       {post.summary}
                     </div>
                     <div className="flex flex-row space-x-4 items-center text-sm">
@@ -179,7 +195,7 @@ export default function Post({ postData, status }) {
                           alt={post.authorAltText}
                         />
                       </div>
-                      <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-5 tracking-wider">
+                      <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-5 tracking-wide">
                         {post.authorName}
                       </div>
                     </div>
@@ -190,17 +206,11 @@ export default function Post({ postData, status }) {
                 <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 rounded-3xl text-[1.125rem]">
                   {indexContent != null ? (
                     <div className="xl:sticky top-24 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
-                      <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4 pr-10 ">
-                        Contents
+                      <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4">
+                        Table of contents
                       </div>
-                      <div className="m-4 text-gray-800 font-light tracking-wider">
-                        <div className="my-3 text-[1.125rem] md:text-[1.25rem]">
-                          {post.title}
-                        </div>
-                        <div className="my-3 text-[0.875rem]">
-                          {post.readingTime} mins
-                        </div>
-                        <div className="mt-4 text-[1rem] md:text-[1.010rem] list-none">
+                      <div className="pl-5 pr-12 text-gray-800 font-light tracking-wide leading-relaxed">
+                        <div className="mt-4 text-[1rem] md:text-[1.125rem] list-none ">
                           <div
                             className="my-3"
                             onClick={handleClick}
@@ -214,7 +224,7 @@ export default function Post({ postData, status }) {
                   )}
 
                   {/* main article */}
-                  <div className="prose lg:prose-lg tracking-wider">
+                  <div className="prose lg:prose-lg">
                     <div
                       ref={contentRef}
                       dangerouslySetInnerHTML={{

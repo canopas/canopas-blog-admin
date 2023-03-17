@@ -39,7 +39,7 @@ export default function Home({ posts, status }) {
             <div className="w-20 md:w-1/5 ">
               <hr className="border-1 border-[#ff9472]" />
             </div>
-            <div className="text-[1.5rem] md:text-[1.60rem] xl:text-[1.67rem] text-white font-semibold leading-tight md:leading-snug text-left tracking-wider">
+            <div className="text-[1.5rem] md:text-[1.60rem] xl:text-[1.67rem] text-white font-semibold leading-tight md:leading-snug text-left tracking-wide">
               On a mission to help you become a better{" "}
               <span className="text-[#ff9472]">Software Engineer</span>. Sharing
               knowlegde on{" "}
@@ -97,7 +97,7 @@ export default function Home({ posts, status }) {
                     }`}
                   >
                     <div
-                      className={`text-[1.375rem] font-semibold leading-7 tracking-wider text-black-900 hover:underline underline-offset-4 transition-all hover:scale-[0.96] ${
+                      className={`text-[1.375rem] font-semibold leading-7 tracking-wide text-black-900 hover:underline underline-offset-4 transition-all hover:scale-[0.96] ${
                         i === 0 && count % 3 === 1
                           ? "md:text-[1.5rem] lg:text-[1.875rem] md:font-bold md:leading-8 lg:leading-10"
                           : "lg:text-[1.5rem] lg:leading-8"
@@ -105,7 +105,7 @@ export default function Home({ posts, status }) {
                     >
                       <Link href={"/post/" + post.slug}>{post.title}</Link>
                     </div>
-                    <div className="text-[1.0625rem] md:text-[1.125rem] lg:text-[1.13rem] lg:leading-7 tracking-wider text-gray-500">
+                    <div className="text-[1.0625rem] md:text-[1.125rem] lg:text-[1.13rem] lg:leading-7 tracking-wide text-gray-500">
                       <Link href={"/post/" + post.slug}>
                         <p className="line-clamp-3">{post.summary}</p>
                       </Link>
@@ -123,7 +123,7 @@ export default function Home({ posts, status }) {
                         </Link>
                       </div>
                       <Link href={"/post/" + post.slug}>
-                        <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wider">
+                        <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wide">
                           <span className="text-green-700">
                             {post.authorName}
                           </span>

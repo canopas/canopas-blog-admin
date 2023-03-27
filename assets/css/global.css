@@ -7,7 +7,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(./../fonts/Product-sans-regular.ttf);
+  src: url(./../fonts/Product-sans-regular.woff2);
 }
 
 @font-face {
@@ -15,11 +15,35 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(./../fonts/Inter-Medium.ttf);
+  src: url(./../fonts/Inter-Medium.woff2);
+}
+
+@font-face {
+  font-family: "Inter ExtraLight";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Inter-ExtraLight.woff2);
+}
+
+@font-face {
+  font-family: "Source SerifPro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Source-serifPro-regular.woff2);
+}
+
+@font-face {
+  font-family: "Source CodePro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Source-codePro.woff2);
 }
 
 body {
-  @apply font-product-sans;
+  @apply font-product-sans break-words;
 }
 
 .content > p {
@@ -27,7 +51,7 @@ body {
 }
 
 .prose > * {
-  @apply text-[18px] md:text-[21px] leading-[1.58] tracking-wide;
+  @apply text-[#292929] text-[18px] md:text-[20px] leading-[2rem] tracking-[-0.003em] font-normal;
 }
 
 input[type="text"],
@@ -70,16 +94,18 @@ ul {
   @apply pl-4;
 }
 
-p {
-  @apply break-words;
+h1 strong,
+h2 strong,
+strong {
+  @apply font-inter-medium tracking-wide;
 }
 
 h1 strong {
-  @apply text-[2.4rem] tracking-wide;
+  @apply text-[1.8rem] lg:text-[2rem];
 }
 
 h2 strong {
-  @apply text-[2rem] tracking-wide;
+  @apply text-[1.5rem] lg:text-[1.7rem];
 }
 
 /* HighlightJS */
@@ -158,12 +184,20 @@ pre .hljs-keyword,
 pre .javascript .hljs-function {
   @apply text-[#b294bb];
 }
-
-pre code {
-  @apply block bg-[#1d1f21] p-[10px] text-[#c5c8c6] leading-normal border border-solid border-[#ccc];
-}
-
 code::before,
 code::after {
   @apply content-none !important;
+}
+
+.prose :where(code, code strong):not(:where([class~="not-prose"] *)) {
+  @apply bg-gray-200 py-0.5 px-1 rounded-[4px] font-[550] tracking-wide font-source-codepro;
+}
+
+.prose :where(pre code):not(:where([class~="not-prose"] *)) {
+  @apply bg-transparent text-[#dbe0e0] leading-normal font-source-codepro tracking-[-0.022em];
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"] *)),
+i {
+  @apply not-italic text-[1.4rem] lg:text-[1.775rem] leading-[2.3rem] text-[#757575] font-normal font-inter-light;
 }

@@ -35,16 +35,15 @@ function setPostFields(post) {
       : post.attributes.publishedAt;
   const [date, _] = formateDate(publishedDate);
   const author = post.attributes.author_id.data.attributes;
-
   post.attributes.published_on = date;
   post.attributes.readingTime = getReadingTime(post.attributes.content);
-  if (post.attributes.image.data != null) {
-    post.attributes.image_url = post.attributes.image.data.attributes.url;
-  }
+  post.attributes.image_url = post.attributes.image.data
+    ? post.attributes.image.data.attributes.url
+    : "https://canopas.com/apple-touch-icon.png";
   post.attributes.authorName = author.username;
   post.attributes.authorImage = author.image_url ? author.image_url : Avatar;
   post.attributes.authorAltText = author
-    ? author.username + "images"
+    ? author.username + " images"
     : "author";
 }
 

@@ -145,11 +145,15 @@ export default function Post({ postData, status }) {
                       height={200}
                       src={post.image_url || ""}
                       alt={post.alternativeText || ""}
-                      className={`rounded-2xl lg:rounded-3xl object-cover transition-all duration-[800ms] ease-out ${
-                        loaded
-                          ? "w-full h-full"
-                          : "mx-[2%] w-[95%] h-[95%] opacity-10"
-                      }`}
+                      className={`${
+                        post.image.data == null
+                          ? "w-[45%] h-4/5 mx-auto my-[5%]"
+                          : `rounded-2xl lg:rounded-3xl object-cover transition-all duration-[800ms] ease-out ${
+                              loaded
+                                ? "w-full h-full"
+                                : "mx-[2%] w-[95%] h-[95%] opacity-10"
+                            }`
+                      } `}
                       onLoad={handleLoad}
                     />
                   </div>
@@ -182,7 +186,7 @@ export default function Post({ postData, status }) {
                     ) : (
                       ""
                     )}
-                    <div className="text-slate-200 text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-6 md:leading-7 tracking-wide">
+                    <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-6 md:leading-7 tracking-wide">
                       {post.summary}
                     </div>
                     <div className="flex flex-row space-x-4 items-center text-sm">
@@ -203,13 +207,13 @@ export default function Post({ postData, status }) {
                 </div>
 
                 {/* Table of Contents */}
-                <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 rounded-3xl text-[1.125rem]">
+                <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 2xl:mx-10 rounded-3xl text-[1.125rem] font-source-serifpro">
                   {indexContent != null ? (
                     <div className="xl:sticky top-24 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
                       <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4">
                         Table of contents
                       </div>
-                      <div className="pl-5 pr-12 text-gray-800 font-light tracking-wide leading-relaxed">
+                      <div className="pl-5 pr-8 text-gray-700 font-normal tracking-[-0.003em] leading-relaxed">
                         <div className="mt-4 text-[1rem] md:text-[1.125rem] list-none ">
                           <div
                             className="my-3"
@@ -224,7 +228,7 @@ export default function Post({ postData, status }) {
                   )}
 
                   {/* main article */}
-                  <div className="prose lg:prose-lg">
+                  <div className="max-w-[45rem] prose lg:prose-lg ">
                     <div
                       ref={contentRef}
                       dangerouslySetInnerHTML={{

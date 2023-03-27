@@ -76,17 +76,31 @@ export default function Home({ posts, status }) {
                   }`}
                 >
                   <div
-                    className={`my-4 w-auto h-auto border border-1 border-gray-300 bg-white transition-all aspect-auto hover:scale-105 ${
-                      i === 0 && count % 3 === 1 ? "md:w-3/5 lg:w-2/4" : ""
+                    className={`my-4 w-auto h-auto border border-1 border-gray-300 transition-all aspect-auto hover:scale-105 ${
+                      i === 0 && count % 3 === 1
+                        ? `md:w-3/5 lg:w-2/4 ${
+                            post.image.data == null
+                              ? "md:h-[14.7rem] lg:h-[16.51rem] xl:h-[19.67rem] 2xl:h-[22.836rem] bg-black-900"
+                              : ""
+                          }`
+                        : `${
+                            post.image.data == null
+                              ? "md:h-[7.742rem] lg:h-[10.085rem] xl:h-[12.195rem] 2xl:h-[14.304em] bg-black-900"
+                              : ""
+                          } `
                     }`}
                   >
                     <Link href={"/post/" + post.slug}>
                       <Image
-                        width={200}
+                        width={100}
                         height={100}
                         src={post.image_url || ""}
                         alt={post.alternativeText || ""}
-                        className="w-full h-full object-cover"
+                        className={`${
+                          post.image.data == null
+                            ? "w-[45%] h-4/5 mx-auto my-[5%]"
+                            : "w-full h-full"
+                        } object-cover`}
                       />
                     </Link>
                   </div>

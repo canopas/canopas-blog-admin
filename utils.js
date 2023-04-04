@@ -1,5 +1,6 @@
 import config from "./config";
 import Avatar from "./assets/images/user.png";
+import canopasIcon from "./assets/images/canopas-icon.svg";
 
 // Calculate reading time
 function getReadingTime(content) {
@@ -39,7 +40,7 @@ function setPostFields(post) {
   post.attributes.readingTime = getReadingTime(post.attributes.content);
   post.attributes.image_url = post.attributes.image.data
     ? post.attributes.image.data.attributes.url
-    : "https://canopas.com/apple-touch-icon.png";
+    : canopasIcon;
   post.attributes.authorName = author.username;
   post.attributes.authorImage = author.image_url ? author.image_url : Avatar;
   post.attributes.authorAltText = author

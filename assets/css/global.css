@@ -27,14 +27,6 @@
 }
 
 @font-face {
-  font-family: "Source SerifPro";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(./../fonts/Source-serifPro-regular.woff2);
-}
-
-@font-face {
   font-family: "Source CodePro";
   font-style: normal;
   font-weight: 400;
@@ -51,7 +43,7 @@ body {
 }
 
 .prose > * {
-  @apply text-[#292929] text-[18px] md:text-[20px] leading-[2rem] tracking-[-0.003em] font-normal;
+  @apply text-gray-800 text-[18px] md:text-[20px] leading-[2rem] tracking-[0.03em] font-normal;
 }
 
 input[type="text"],
@@ -94,8 +86,6 @@ ul {
   @apply pl-4;
 }
 
-h1 strong,
-h2 strong,
 strong {
   @apply font-inter-medium tracking-wide;
 }
@@ -132,7 +122,7 @@ pre .html .hljs-doctype,
 pre .css .id,
 pre .css .hljs-class,
 pre .css .hljs-pseudo {
-  @apply text-[#cc6666];
+  @apply text-[#e49176];
 }
 
 .tomorrow-orange,
@@ -184,12 +174,14 @@ pre .hljs-keyword,
 pre .javascript .hljs-function {
   @apply text-[#b294bb];
 }
+
 code::before,
 code::after {
   @apply content-none !important;
 }
 
-.prose :where(code, code strong):not(:where([class~="not-prose"] *)) {
+.prose
+  :where(code, code strong):not(:where([class~="not-prose"], blockquote code)) {
   @apply bg-gray-200 py-0.5 px-1 rounded-[4px] font-[550] tracking-wide font-source-codepro;
 }
 
@@ -197,7 +189,6 @@ code::after {
   @apply bg-transparent text-[#dbe0e0] leading-normal font-source-codepro tracking-[-0.022em];
 }
 
-.prose :where(blockquote):not(:where([class~="not-prose"] *)),
-i {
-  @apply not-italic text-[1.4rem] lg:text-[1.775rem] leading-[2.3rem] text-[#757575] font-normal font-inter-light;
+.prose :where(blockquote, blockquote i):not(:where([class~="not-prose"] *)) {
+  @apply not-italic text-[1.4rem] lg:text-[1.755rem] leading-[2.3rem] text-[#757575] font-normal font-inter-light;
 }

@@ -17,7 +17,6 @@ module.exports = {
         "product-sans": ["Product Sans"],
         "inter-medium": ["Inter Medium"],
         "inter-light": ["Inter ExtraLight"],
-        "source-serifpro": ["Source SerifPro"],
         "source-codepro": ["Source CodePro"],
       },
       colors: {
@@ -44,10 +43,12 @@ module.exports = {
   },
   corePlugins: {
     container: false,
+    aspectRatio: false,
   },
   plugins: [
     require("@tailwindcss/line-clamp"),
     require("@tailwindcss/typography"),
+    require("@tailwindcss/aspect-ratio"),
     function ({ addComponents }) {
       addComponents({
         ".container": {

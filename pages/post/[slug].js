@@ -50,7 +50,10 @@ export default function Post({ postData, status }) {
     var tagsString = tags.join(", ");
 
     var indexContent = null;
-    var blogContent = post.content;
+    var blogContent = post.content.replace(
+      /<img/g,
+      '<img class="mx-auto aspect-w-2 aspect-w-1 object-cover" style="width:min-content;height:min-content"'
+    );
 
     // table of contents formation
     if (post.toc) {
@@ -126,7 +129,7 @@ export default function Post({ postData, status }) {
             <>
               <Seo
                 title={post.title}
-                description={post.description}
+                description={post.meta_description}
                 authorName={post.authorName}
                 url={`https://articles.canopas.com/post/${post.slug}`}
                 date={post.published_on}
@@ -145,6 +148,7 @@ export default function Post({ postData, status }) {
                       height={200}
                       src={post.image_url || ""}
                       alt={post.alternativeText || ""}
+                      loading="eager"
                       className={`${
                         post.image.data == null
                           ? "w-[45%] h-4/5 mx-auto my-[5%]"
@@ -207,14 +211,14 @@ export default function Post({ postData, status }) {
                 </div>
 
                 {/* Table of Contents */}
-                <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 2xl:mx-10 rounded-3xl text-[1.125rem] font-source-serifpro">
+                <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 2xl:mx-10 rounded-3xl text-[1.125rem]">
                   {indexContent != null ? (
                     <div className="xl:sticky top-24 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
                       <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4">
                         Table of contents
                       </div>
-                      <div className="pl-5 pr-8 text-gray-700 font-normal tracking-[-0.003em] leading-relaxed">
-                        <div className="mt-4 text-[1rem] md:text-[1.125rem] list-none ">
+                      <div className="pl-5 pr-8 text-gray-800 font-normal tracking-[0.02em] leading-relaxed">
+                        <div className="mt-4 text-[1.125rem] list-none ">
                           <div
                             className="my-3"
                             onClick={handleClick}
@@ -228,11 +232,11 @@ export default function Post({ postData, status }) {
                   )}
 
                   {/* main article */}
-                  <div className="max-w-[45rem] prose lg:prose-lg ">
+                  <div className="prose lg:prose-lg ">
                     <div
                       ref={contentRef}
                       dangerouslySetInnerHTML={{
-                        __html: post.content,
+                        __html: blogContent,
                       }}
                     ></div>
                   </div>

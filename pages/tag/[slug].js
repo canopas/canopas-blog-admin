@@ -16,7 +16,7 @@ export async function getServerSideProps(context) {
       config.STRAPI_URL + "/v1/tag/" + slug + "?populate=deep&status=published"
     );
     posts = response.data.data;
-    posts.forEach((post) => setPostFields(post));
+    posts.forEach((post) => setPostFields(post, slug));
   } catch (err) {
     response = err.response;
   }
@@ -26,7 +26,9 @@ export async function getServerSideProps(context) {
 
 export default function Home({ posts, status, slug }) {
   const count = posts.length;
-  const tagName = posts[0].tagName;
+  if (count != 0) {
+    var tagName = posts[0].tagName;
+  }
 
   return (
     <>
@@ -35,7 +37,7 @@ export default function Home({ posts, status, slug }) {
         description="Canopas blogs will help you to become a better software developer. We are sharing knowledge on Web, Backend, iOS, Android, and Flutter development"
         authorName="canopas"
       />
-      <section className="container my-16 mx-2 sm:mx-auto text-[#292929]">
+      <section className="container my-10 md:my-16 mx-2 sm:mx-auto text-[#292929]">
         {count == 0 || status == config.NOT_FOUND ? (
           <div className="mt-20 text-[1.4rem] text-center">
             {config.POST_NOT_FOUND_MESSAGE}
@@ -78,7 +80,7 @@ export default function Home({ posts, status, slug }) {
                           {post.published_on}
                         </span>
                       </div>
-                      <div className="grid grid-cols-3 gap-10 md:gap-12 xl:gap-16 mt-2 lg:mt-4">
+                      <div className="grid grid-cols-3 gap-10 md:gap-12 xl:gap-16 mt-4">
                         <div className="col-span-2">
                           <div className="mb-2 lg:mb-3 text-[1.2rem] md:text-[1.4rem] xl:text-[1.7rem] font-semibold leading-7 md:leading-tight tracking-wide line-clamp-2 lg:line-clamp-4">
                             {post.title}
@@ -87,14 +89,24 @@ export default function Home({ posts, status, slug }) {
                             {post.summary}
                           </div>
                         </div>
-                        <div className="aspect-w-2 aspect-h-1 max-w-xs h-auto border border-1">
+                        <div
+                          className={`h-auto max-w-xs ${
+                            post.image.data == null
+                              ? "h-[6.125rem] md:h-[8.125rem] lg:h-[8.0831rem] xl:h-[8.75rem] 2xl:h-[10.5em] bg-black-900"
+                              : "aspect-w-2 aspect-h-1 border border-1"
+                          }`}
+                        >
                           <Image
                             width={100}
                             height={100}
                             src={post.image_url || ""}
                             alt={post.alternativeText || ""}
                             loading="eager"
-                            className="w-full h-full object-cover"
+                            className={`${
+                              post.image.data == null
+                                ? "w-auto h-4/5 mx-auto my-[7%] lg:my-[5%]"
+                                : "w-full h-full"
+                            } object-cover`}
                           />
                         </div>
                       </div>

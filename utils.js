@@ -29,8 +29,7 @@ function formateDate(date) {
   return [formattedDate, formattedTime];
 }
 
-function setPostFields(post) {
-  post.tagName = post.attributes.tags.data[0].attributes.name;
+function setPostFields(post, slug) {
   const publishedDate =
     post.attributes.published_on !== null
       ? post.attributes.published_on
@@ -47,6 +46,14 @@ function setPostFields(post) {
   post.attributes.authorAltText = author
     ? author.username + " images"
     : "author";
+
+  if (slug && post.attributes.tags.data[0]) {
+    post.attributes.tags.data.map((tag) => {
+      if (tag.attributes.slug == slug) {
+        post.tagName = tag.attributes.name;
+      }
+    });
+  }
 }
 
 export { getReadingTime, formateDate, setPostFields };

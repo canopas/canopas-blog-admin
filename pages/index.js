@@ -90,12 +90,16 @@ export default function Home({ posts, status }) {
                           } `
                     }`}
                   >
-                    <Link href={"/post/" + post.slug}>
+                    <Link
+                      href={"/post/" + post.slug}
+                      aria-label={"Read more about " + post.title}
+                    >
                       <Image
                         width={100}
                         height={100}
                         src={post.image_url || ""}
                         alt={post.alternativeText || ""}
+                        loading="eager"
                         className={`${
                           post.image.data == null
                             ? "w-[45%] h-4/5 mx-auto my-[5%]"

@@ -30,6 +30,7 @@ function formateDate(date) {
 }
 
 function setPostFields(post) {
+  post.tagName = post.attributes.tags.data[0].attributes.name;
   const publishedDate =
     post.attributes.published_on !== null
       ? post.attributes.published_on

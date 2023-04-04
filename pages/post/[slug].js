@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Script from "next/script";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -52,7 +53,7 @@ export default function Post({ postData, status }) {
     var indexContent = null;
     var blogContent = post.content.replace(
       /<img/g,
-      '<img class="mx-auto aspect-w-2 aspect-w-1 object-cover" style="width:min-content;height:min-content"'
+      '<img class="mx-auto aspect-w-2 aspect-h-1 object-cover" style="width:min-content;height:min-content"'
     );
 
     // table of contents formation
@@ -139,7 +140,7 @@ export default function Post({ postData, status }) {
                 readingTime={post.readingTime}
                 article={true}
               />
-              <div key={post.id} className="flex flex-col space-y-20 ">
+              <div key={post.id} className="flex flex-col space-y-20">
                 {/* Header */}
                 <div className="grid grid-flow-row xl:grid-flow-col gap-10 xl:gap-8 w-90 h-90 rounded-3xl md:bg-[#14161E] md:py-20 md:px-10 xl:py-14 xl:px-8 ">
                   <div className="md:container w-full xl:w-[35rem] 2xl:w-[42rem] h-auto sm:h-[18rem] md:h-[21rem] lg:h-[30rem] xl:h-[19rem] 2xl:h-[23rem] ">
@@ -239,6 +240,20 @@ export default function Post({ postData, status }) {
                         __html: blogContent,
                       }}
                     ></div>
+                    <div className="flex flex-row flex-wrap mt-20">
+                      {post.tags.data.map((tag) => {
+                        return (
+                          <div className="my-4 mr-4" key={tag.id}>
+                            <Link
+                              href={"/tag/" + tag.attributes.slug}
+                              className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize"
+                            >
+                              {tag.attributes.name}
+                            </Link>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>

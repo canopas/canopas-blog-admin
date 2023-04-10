@@ -100,6 +100,17 @@ export default function Post({ postData, status }) {
   useEffect(() => {
     if (postData) {
       hljs.highlightAll();
+
+      document.querySelectorAll("oembed[url]").forEach((element) => {
+        if (
+          typeof iframely !== "undefined" &&
+          !element.getAttribute("data-loaded")
+        ) {
+          iframely.load(element, element.attributes.url.value);
+          element.setAttribute("data-loaded", true);
+        }
+      });
+
       window.addEventListener("scroll", handleScroll);
       return () => {
         window.removeEventListener("scroll", handleScroll);
@@ -162,7 +173,7 @@ export default function Post({ postData, status }) {
                       onLoad={handleLoad}
                     />
                   </div>
-                  <div className="flex flex-col space-y-5 text-black-900 md:text-white ">
+                  <div className="flex flex-col space-y-5 md:text-white ">
                     <div className="text-[2.20rem] lg:text-[2.50rem] xl:text-[2.80rem] font-normal leading-10 lg:leading-tight tracking-wide">
                       {post.title}
                     </div>
@@ -218,8 +229,8 @@ export default function Post({ postData, status }) {
                       <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4">
                         Table of contents
                       </div>
-                      <div className="pl-5 pr-8 text-gray-800 font-normal tracking-[0.02em] leading-relaxed">
-                        <div className="mt-4 text-[1.125rem] list-none ">
+                      <div className="pl-5 pr-8 tracking-[0.02em] leading-relaxed">
+                        <div className="mt-4 text-[1.125rem] text-[#374151] list-none ">
                           <div
                             className="my-3"
                             onClick={handleClick}
@@ -233,7 +244,7 @@ export default function Post({ postData, status }) {
                   )}
 
                   {/* main article */}
-                  <div className="prose lg:prose-lg ">
+                  <div className="prose lg:prose-lg">
                     <div
                       ref={contentRef}
                       dangerouslySetInnerHTML={{

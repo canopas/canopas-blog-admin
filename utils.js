@@ -35,7 +35,7 @@ function setPostFields(post, slug) {
       ? post.attributes.published_on
       : post.attributes.publishedAt;
   const [date, _] = formateDate(publishedDate);
-  const author = post.attributes.author_id.data.attributes;
+  const author = post.attributes.author.data.attributes;
   post.attributes.published_on = date;
   post.attributes.readingTime = getReadingTime(post.attributes.content);
   post.attributes.image_url = post.attributes.image.data
@@ -56,4 +56,32 @@ function setPostFields(post, slug) {
   }
 }
 
-export { getReadingTime, formateDate, setPostFields };
+function calculateWeight(post, keyword) {
+  let weight = 0;
+  if (post.attributes.title.toLowerCase().includes(keyword.toLowerCase())) {
+    weight = post.attributes.title
+      .toLowerCase()
+      .match(new RegExp(keyword.toLowerCase(), "g")).length;
+    weight *= 5;
+  }
+  if (post.attributes.content.toLowerCase().includes(keyword.toLowerCase())) {
+    weight = post.attributes.content
+      .toLowerCase()
+      .match(new RegExp(keyword.toLowerCase(), "g")).length;
+    weight *= 2;
+  }
+  {
+    post.attributes.tags.data.map((tag) => {
+      if (tag.attributes.name.toLowerCase().includes(keyword.toLowerCase())) {
+        weight = tag.attributes.name
+          .toLowerCase()
+          .match(new RegExp(keyword.toLowerCase(), "g")).length;
+        weight *= 1;
+      }
+    });
+  }
+
+  return weight;
+}
+
+export { getReadingTime, formateDate, setPostFields, calculateWeight };

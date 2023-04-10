@@ -59,7 +59,7 @@ export default function Comment({ post }) {
                               alt={"user-avatar"}
                             />
                           </div>
-                          {comment.attributes.user_id.data.map((user) => {
+                          {comment.attributes.user.data.map((user) => {
                             return (
                               <div
                                 key={user.id}
@@ -111,7 +111,7 @@ export default function Comment({ post }) {
                                             alt={"user-avatar"}
                                           />
                                         </div>
-                                        {threadComment.attributes.user_id.data.map(
+                                        {threadComment.attributes.user.data.map(
                                           (user) => {
                                             return (
                                               <div

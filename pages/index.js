@@ -3,7 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import ServerError from "../components/errors/serverError";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 import config from "../config";
 import axios from "axios";
 import Seo from "./seo";
@@ -12,6 +15,8 @@ import { setPostFields, calculateWeight } from "../utils";
 export async function getServerSideProps() {
   var response = null;
   var posts = [];
+  var categories = [];
+
   try {
     response = await axios.get(
       config.STRAPI_URL + "/v1/posts?populate=deep&status=published"
@@ -23,7 +28,18 @@ export async function getServerSideProps() {
   }
 
   const status = response ? response.status : config.NOT_FOUND;
-  return { props: { posts, status } };
+
+  // fetch All Categories
+  try {
+    response = await axios.get(
+      config.STRAPI_URL + "/v1/categories?populate=deep"
+    );
+    categories = response.data.data;
+  } catch (err) {
+    response = err.response;
+  }
+
+  return { props: { posts, status, categories } };
 }
 
 function searchBlogs(posts, keyword) {
@@ -39,10 +55,28 @@ function searchBlogs(posts, keyword) {
   return results.map((result) => result.post);
 }
 
-export default function Home({ posts, status }) {
+export default function Home({ posts, status, categories }) {
+  var [results, setResults] = useState(posts);
   const [keyword, setKeyword] = useState("");
-  const [results, setResults] = useState(posts);
-  const count = posts.length;
+  const [category, setCategory] = useState("Categories");
+  const [dropdownOpen, setdropdownOpen] = useState(false);
+  const count = results.length;
+
+  const filterBlogs = (event) => {
+    setCategory(event.target.innerText);
+    if (event.target.innerText == "Categories") {
+      setResults(posts);
+    } else {
+      results = posts.filter(
+        (result) =>
+          result.attributes.category.data != null &&
+          result.attributes.category.data.attributes.name ==
+            event.target.innerText
+      );
+      setResults(results);
+    }
+    setdropdownOpen(false);
+  };
 
   return (
     <>
@@ -67,26 +101,76 @@ export default function Home({ posts, status }) {
             </div>
           </div>
         </div>
+
         <hr className="mb-10" />
-        <div className="pl-3 my-10 !w-80  rounded-[10px] !bg-gray-100">
-          <span>
-            <i className="w-16 h-16 rounded-full text-gray-500 cursor-pointer">
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className="pr-1 text-sm"
-              />
-            </i>
-          </span>
-          <input
-            className="!border-0 !bg-gray-100"
-            placeholder="Search Blogs"
-            type="text"
-            value={keyword}
-            onChange={(e) => {
-              setKeyword(e.target.value);
-              setResults(searchBlogs(posts, e.target.value));
-            }}
-          />
+
+        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:justify-between md:items-center mb-20">
+          <div className="pl-3 w-72 rounded-[10px] !bg-gray-100">
+            <span>
+              <i className="w-16 h-16 rounded-full text-gray-500 cursor-pointer">
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  className="pr-1 text-sm"
+                />
+              </i>
+            </span>
+            <input
+              className="!border-0 !bg-gray-100"
+              placeholder="Search Blogs"
+              type="text"
+              value={keyword}
+              onChange={(e) => {
+                setKeyword(e.target.value);
+                setResults(searchBlogs(posts, e.target.value));
+              }}
+            />
+          </div>
+
+          {categories.length != 0 ? (
+            <div
+              className="order-last w-72 rounded-[10px] !bg-gray-100"
+              onMouseEnter={() => setdropdownOpen(true)}
+              onMouseLeave={() => setdropdownOpen(false)}
+            >
+              <div
+                className="grid grid-cols-3 justify-items-stretch items-center bg-transparent p-1.5 lg:text-md text-gray-600 outline-none
+                            hover:cursor-pointer"
+              >
+                <span className="col-span-2 p-2 line-clamp-1">{category}</span>
+
+                <span className="justify-self-end mr-4 w-2">
+                  <FontAwesomeIcon icon={faChevronDown} className="text-sm" />
+                </span>
+              </div>
+
+              <div
+                className={`${
+                  dropdownOpen ? `opacity-100 visible` : "opacity-0 invisible"
+                } absolute mt-1 rounded-[10px] drop-shadow-md bg-white py-1 transition-all`}
+              >
+                <div
+                  onClick={filterBlogs}
+                  className="block my-3 pl-4 w-72 text-base lg:text-[1.06rem] text-slate-600 hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text hover:cursor-pointer"
+                >
+                  Categories
+                </div>
+
+                {categories.map((category) => {
+                  return (
+                    <div
+                      key={category.id}
+                      onClick={filterBlogs}
+                      className="block my-3 pl-4 w-72 text-base lg:text-[1.06rem] text-slate-600 hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text hover:cursor-pointer"
+                    >
+                      {category.attributes.name}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         {count == 0 || status == config.NOT_FOUND ? (

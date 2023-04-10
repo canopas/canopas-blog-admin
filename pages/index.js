@@ -1,10 +1,13 @@
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import ServerError from "../components/errors/serverError";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import config from "../config";
 import axios from "axios";
 import Seo from "./seo";
-import { setPostFields } from "../utils";
+import { setPostFields, calculateWeight } from "../utils";
 
 export async function getServerSideProps() {
   var response = null;
@@ -23,14 +26,29 @@ export async function getServerSideProps() {
   return { props: { posts, status } };
 }
 
+function searchBlogs(posts, keyword) {
+  const results = posts
+    .map((post) => ({
+      post,
+      weight: calculateWeight(post, keyword),
+    }))
+    .filter((result) => result.weight > 0);
+
+  results.sort((a, b) => b.weight - a.weight);
+
+  return results.map((result) => result.post);
+}
+
 export default function Home({ posts, status }) {
+  const [keyword, setKeyword] = useState("");
+  const [results, setResults] = useState(posts);
   const count = posts.length;
 
   return (
     <>
       <Seo
-        title="Canopas blogs"
-        description="Canopas blogs will help you to become a better software developer. We are sharing knowledge on Web, Backend, iOS, Android, and Flutter development"
+        title="Canopas Blogs"
+        description="Canopas Blogs will help you to become a better software developer. We are sharing knowledge on Web, Backend, iOS, Android, and Flutter development"
         authorName="canopas"
       />
       <section className="container my-16 mx-2 sm:mx-auto">
@@ -50,6 +68,26 @@ export default function Home({ posts, status }) {
           </div>
         </div>
         <hr className="mb-10" />
+        <div className="pl-3 my-10 !w-80  rounded-[10px] !bg-gray-100">
+          <span>
+            <i className="w-16 h-16 rounded-full text-gray-500 cursor-pointer">
+              <FontAwesomeIcon
+                icon={faMagnifyingGlass}
+                className="pr-1 text-sm"
+              />
+            </i>
+          </span>
+          <input
+            className="!border-0 !bg-gray-100"
+            placeholder="Search Blogs"
+            type="text"
+            value={keyword}
+            onChange={(e) => {
+              setKeyword(e.target.value);
+              setResults(searchBlogs(posts, e.target.value));
+            }}
+          />
+        </div>
 
         {count == 0 || status == config.NOT_FOUND ? (
           <div className="mt-20 text-[1.4rem] text-center text-black-900 ">
@@ -63,7 +101,7 @@ export default function Home({ posts, status }) {
               count % 3 === 1 ? "md:col-span-1" : ""
             }`}
           >
-            {posts.map((post, i) => {
+            {results.map((post, i) => {
               post = post.attributes;
 
               return (
@@ -115,7 +153,7 @@ export default function Home({ posts, status }) {
                     }`}
                   >
                     <div
-                      className={`text-[1.375rem] font-semibold leading-7 tracking-wide text-black-900 hover:underline underline-offset-4 transition-all hover:scale-[0.96] ${
+                      className={`text-[1.375rem] font-semibold leading-7 tracking-wide text-[#000000d6] hover:underline underline-offset-4 transition-all hover:scale-[0.96] ${
                         i === 0 && count % 3 === 1
                           ? "md:text-[1.5rem] lg:text-[1.875rem] md:font-bold md:leading-8 lg:leading-10"
                           : "lg:text-[1.5rem] lg:leading-8"
@@ -142,7 +180,7 @@ export default function Home({ posts, status }) {
                       </div>
                       <Link href={"/post/" + post.slug}>
                         <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wide">
-                          <span className="text-green-700">
+                          <span className="text-green-700 capitalize">
                             {post.authorName}
                           </span>
 

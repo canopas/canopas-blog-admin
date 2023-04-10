@@ -14,7 +14,8 @@ module.exports = {
         "2xl": "1400px",
       },
       fontFamily: {
-        "product-sans": ["Product Sans"],
+        "product-black": ["Product Sans Black"],
+        "product-regular": ["Product Sans Regular"],
         "inter-medium": ["Inter Medium"],
         "inter-light": ["Inter ExtraLight"],
         "source-codepro": ["Source CodePro"],

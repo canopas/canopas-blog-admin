@@ -3,14 +3,6 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Product Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(./../fonts/Product-sans-regular.woff2);
-}
-
-@font-face {
   font-family: "Inter Medium";
   font-style: normal;
   font-weight: 400;
@@ -34,8 +26,24 @@
   src: url(./../fonts/Source-codePro.woff2);
 }
 
+@font-face {
+  font-family: "Product Sans Regular";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/ProductSans-Regular.woff2);
+}
+
+@font-face {
+  font-family: "Product Sans Black";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./../fonts/ProductSans-Black.woff2);
+}
+
 body {
-  @apply font-product-sans break-words;
+  @apply font-product-regular break-words text-[#000000d6];
 }
 
 .content > p {
@@ -43,7 +51,7 @@ body {
 }
 
 .prose > * {
-  @apply text-gray-800 text-[18px] md:text-[20px] leading-[2rem] tracking-[0.03em] font-normal;
+  @apply text-[1.125rem] md:text-[1.27rem] md:leading-[2rem] tracking-[0.04em];
 }
 
 input[type="text"],
@@ -87,7 +95,7 @@ ul {
 }
 
 strong {
-  @apply font-inter-medium tracking-wide;
+  @apply font-product-black tracking-wide;
 }
 
 h1 strong {
@@ -186,7 +194,7 @@ code::after {
 }
 
 .prose :where(pre code):not(:where([class~="not-prose"] *)) {
-  @apply bg-transparent text-[#dbe0e0] leading-normal font-source-codepro tracking-[-0.022em];
+  @apply bg-transparent text-[#dbe0e0] leading-normal tracking-[-0.022em];
 }
 
 .prose :where(blockquote, blockquote i):not(:where([class~="not-prose"] *)) {

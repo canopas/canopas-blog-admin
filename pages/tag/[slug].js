@@ -37,7 +37,7 @@ export default function Home({ posts, status, slug }) {
         description="Canopas blogs will help you to become a better software developer. We are sharing knowledge on Web, Backend, iOS, Android, and Flutter development"
         authorName="canopas"
       />
-      <section className="container my-10 md:my-16 mx-2 sm:mx-auto text-[#292929]">
+      <section className="container my-10 md:my-16 mx-2 sm:mx-auto">
         {count == 0 || status == config.NOT_FOUND ? (
           <div className="mt-20 text-[1.4rem] text-center">
             {config.POST_NOT_FOUND_MESSAGE}
@@ -50,7 +50,7 @@ export default function Home({ posts, status, slug }) {
               <div className="w-6 h-6 md:w-7 md:h-7">
                 <FontAwesomeIcon icon={faTags} className="w-full h-full" />
               </div>
-              <div className="my-6 md:my-10 text-[1.5rem] md:text-[1.8rem] xl:text-[2.2rem] font-semibold leading-7 tracking-wide">
+              <div className="my-6 md:my-10 text-[1.5rem] md:text-[1.8rem] xl:text-[2.2rem] font-semibold leading-7 tracking-wide capitalize">
                 {tagName}
               </div>
             </div>
@@ -74,18 +74,18 @@ export default function Home({ posts, status, slug }) {
                             alt={post.authorAltText}
                           />
                         </div>
-                        <span>{post.authorName}</span>
+                        <span className="font-medium">{post.authorName}</span>
                         <span className="after:content-['\00B7']"></span>
-                        <span className="text-[#757575]">
+                        <span className="text-gray-600">
                           {post.published_on}
                         </span>
                       </div>
                       <div className="grid grid-cols-3 gap-10 md:gap-12 xl:gap-16 mt-4">
                         <div className="col-span-2">
-                          <div className="mb-2 lg:mb-3 text-[1.2rem] md:text-[1.4rem] xl:text-[1.7rem] font-semibold leading-7 md:leading-tight tracking-wide line-clamp-2 lg:line-clamp-4">
+                          <div className="mb-2 lg:mb-3.5 text-[1.2rem] md:text-[1.4rem] xl:text-[1.7rem] font-semibold leading-7 md:leading-tight tracking-wide line-clamp-2 lg:line-clamp-4">
                             {post.title}
                           </div>
-                          <div className="mb-3 text-[1rem] md:text-[1.06rem] xl:text-[1.12rem] leading-6 md:leading-7 tracking-wide line-clamp-1 md:line-clamp-2 xl:line-clamp-3">
+                          <div className="mb-3 text-gray-600 text-[1rem] md:text-[1.06rem] xl:text-[1.12rem] leading-6 md:leading-7 tracking-wide line-clamp-1 md:line-clamp-2 xl:line-clamp-3">
                             {post.summary}
                           </div>
                         </div>
@@ -115,11 +115,11 @@ export default function Home({ posts, status, slug }) {
                     <div className="flex flex-row flex-wrap space-x-2 items-center mb-10 md:mb-14 w-[60%] ">
                       <Link
                         href={"/tag/" + slug}
-                        className="my-1 rounded-full bg-[#f2f2f2] px-2.5 py-1 no-underline capitalize"
+                        className="my-1 rounded-full bg-[#f2f2f2] px-2.5 py-1 font-medium no-underline capitalize"
                       >
                         {tagName}
                       </Link>
-                      <span className="text-[#757575]">
+                      <span className="text-gray-600">
                         {post.readingTime} min read
                       </span>
                     </div>

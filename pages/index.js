@@ -213,7 +213,7 @@ export default function Home({ posts, status, categories }) {
                     }`}
                   >
                     <Link
-                      href={"/post/" + post.slug}
+                      href={"/resources/" + post.slug}
                       aria-label={"Read more about " + post.title}
                     >
                       <Image
@@ -243,16 +243,16 @@ export default function Home({ posts, status, categories }) {
                           : "lg:text-[1.5rem] lg:leading-8"
                       }`}
                     >
-                      <Link href={"/post/" + post.slug}>{post.title}</Link>
+                      <Link href={"/resources/" + post.slug}>{post.title}</Link>
                     </div>
                     <div className="text-[1.0625rem] md:text-[1.125rem] lg:text-[1.13rem] lg:leading-7 tracking-wide text-gray-500">
-                      <Link href={"/post/" + post.slug}>
+                      <Link href={"/resources/" + post.slug}>
                         <p className="line-clamp-3">{post.summary}</p>
                       </Link>
                     </div>
                     <div className="flex flex-row items-center pt-3 text-[0.875rem] lg:text-[1.125rem] text-gray-500">
                       <div className="relative w-[38px] h-[38px]">
-                        <Link href={"/post/" + post.slug}>
+                        <Link href={"/resources/" + post.slug}>
                           <Image
                             width={200}
                             height={200}
@@ -262,7 +262,7 @@ export default function Home({ posts, status, categories }) {
                           />
                         </Link>
                       </div>
-                      <Link href={"/post/" + post.slug}>
+                      <Link href={"/resources/" + post.slug}>
                         <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wide">
                           <span className="text-green-700 capitalize">
                             {post.authorName}

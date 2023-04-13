@@ -143,7 +143,7 @@ export default function Post({ postData, status }) {
                 title={post.title}
                 description={post.meta_description}
                 authorName={post.authorName}
-                url={`https://articles.canopas.com/post/${post.slug}`}
+                url={`https://articles.canopas.com/resources/${post.slug}`}
                 date={post.published_on}
                 image_url={post.image_url}
                 publishedAt={post.published_on}
@@ -256,7 +256,7 @@ export default function Post({ postData, status }) {
                         return (
                           <div className="my-4 mr-4" key={tag.id}>
                             <Link
-                              href={"/tag/" + tag.attributes.slug}
+                              href={"/resources/tag/" + tag.attributes.slug}
                               className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize"
                             >
                               {tag.attributes.name}

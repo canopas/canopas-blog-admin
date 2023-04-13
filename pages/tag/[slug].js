@@ -1,9 +1,9 @@
-import config from "../../../config";
+import config from "../../config";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import Seo from "../../seo";
-import { setPostFields } from "../../../utils";
+import Seo from "../seo";
+import { setPostFields } from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
 
@@ -63,7 +63,7 @@ export default function Home({ posts, status, slug }) {
                     className="flex flex-col col-span-2 mb-8 lg:mb-10 border-b-2"
                     key={i}
                   >
-                    <Link href={"/resources/" + post.slug}>
+                    <Link href={"/" + post.slug}>
                       <div className="flex flex-row space-x-2 items-center text-[1rem] md:text-[1.03rem] leading-5 tracking-wide capitalize">
                         <div className="relative w-[30px] h-[30px] md:w-[35px] md:h-[35px]">
                           <Image
@@ -114,7 +114,7 @@ export default function Home({ posts, status, slug }) {
 
                     <div className="flex flex-row flex-wrap space-x-2 items-center mb-10 md:mb-14 w-[60%] ">
                       <Link
-                        href={"/resources/tag/" + slug}
+                        href={"/tag/" + slug}
                         className="my-1 rounded-full bg-[#f2f2f2] px-2.5 py-1 font-medium no-underline capitalize"
                       >
                         {tagName}

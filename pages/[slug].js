@@ -4,11 +4,11 @@ import Link from "next/link";
 import Script from "next/script";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import config from "../../config";
-import Seo from "../seo";
-import NotFound from "../404";
-import Comment from "../../components/comments/index";
-import { setPostFields } from "../../utils";
+import config from "../config";
+import Seo from "./seo";
+import NotFound from "./404";
+import Comment from "../components/comments/index";
+import { setPostFields } from "../utils";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
 import hljs from "highlight.js";
@@ -256,7 +256,7 @@ export default function Post({ postData, status }) {
                         return (
                           <div className="my-4 mr-4" key={tag.id}>
                             <Link
-                              href={"/resources/tag/" + tag.attributes.slug}
+                              href={"/tag/" + tag.attributes.slug}
                               className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize"
                             >
                               {tag.attributes.name}

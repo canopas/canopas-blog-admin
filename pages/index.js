@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import Link from "next/link";
 import ServerError from "../components/errors/serverError";
@@ -8,10 +9,16 @@ import config from "../config";
 import axios from "axios";
 import Seo from "./seo";
 import { setPostFields, calculateWeight } from "../utils";
+import "swiper/css";
+import "swiper/css/navigation";
+
+import { Navigation } from "swiper";
 
 export async function getServerSideProps() {
   var response = null;
   var posts = [];
+  var categories = [];
+
   try {
     response = await axios.get(
       config.STRAPI_URL + "/v1/posts?populate=deep&status=published"
@@ -23,26 +30,56 @@ export async function getServerSideProps() {
   }
 
   const status = response ? response.status : config.NOT_FOUND;
-  return { props: { posts, status } };
+
+  // fetch All Categories
+  try {
+    response = await axios.get(
+      config.STRAPI_URL + "/v1/categories?populate=deep"
+    );
+    categories = response.data.data;
+  } catch (err) {
+    response = err.response;
+  }
+
+  return { props: { posts, status, categories } };
 }
 
-function searchBlogs(posts, keyword) {
-  const results = posts
-    .map((post) => ({
-      post,
-      weight: calculateWeight(post, keyword),
-    }))
-    .filter((result) => result.weight > 0);
-
-  results.sort((a, b) => b.weight - a.weight);
-
-  return results.map((result) => result.post);
-}
-
-export default function Home({ posts, status }) {
+export default function Home({ posts, status, categories }) {
+  var [results, setResults] = useState(posts);
+  const [categoryPosts, setCategoryPosts] = useState(posts);
   const [keyword, setKeyword] = useState("");
-  const [results, setResults] = useState(posts);
-  const count = posts.length;
+  const [activeIndex, setActiveIndex] = useState("");
+  const count = results.length;
+  const category = "all";
+
+  const filterBlogs = (event) => {
+    if (event.target.innerHTML == category) {
+      setCategoryPosts(posts);
+      setResults(posts);
+    } else {
+      results = posts.filter(
+        (result) =>
+          result.attributes.category.data != null &&
+          result.attributes.category.data.attributes.name ==
+            event.target.innerHTML
+      );
+      setCategoryPosts(results);
+      setResults(results);
+    }
+  };
+
+  const searchBlogs = (keyword) => {
+    const result = categoryPosts
+      .map((post) => ({
+        post,
+        weight: calculateWeight(post, keyword),
+      }))
+      .filter((result) => result.weight > 0);
+
+    result.sort((a, b) => b.weight - a.weight);
+
+    return result.map((result) => result.post);
+  };
 
   return (
     <>
@@ -67,26 +104,74 @@ export default function Home({ posts, status }) {
             </div>
           </div>
         </div>
-        <hr className="mb-10" />
-        <div className="pl-3 my-10 !w-80  rounded-[10px] !bg-gray-100">
-          <span>
-            <i className="w-16 h-16 rounded-full text-gray-500 cursor-pointer">
-              <FontAwesomeIcon
-                icon={faMagnifyingGlass}
-                className="pr-1 text-sm"
-              />
-            </i>
-          </span>
-          <input
-            className="!border-0 !bg-gray-100"
-            placeholder="Search Blogs"
-            type="text"
-            value={keyword}
-            onChange={(e) => {
-              setKeyword(e.target.value);
-              setResults(searchBlogs(posts, e.target.value));
-            }}
-          />
+
+        <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:justify-between lg:items-center mb-16">
+          <div className="lg:basis-8/12 h-10 border-b border-[#e6e6e6]">
+            <Swiper
+              navigation={true}
+              onClick={(swiper) => setActiveIndex(swiper.clickedIndex)}
+              modules={[Navigation]}
+              breakpoints={{
+                0: {
+                  slidesPerView: 2,
+                },
+                576: {
+                  slidesPerView: 3,
+                },
+                1200: {
+                  slidesPerView: 5,
+                },
+              }}
+            >
+              <SwiperSlide
+                onClick={filterBlogs}
+                className={`pb-[0.9rem] capitalize ${
+                  activeIndex == "0"
+                    ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
+                    : ""
+                }`}
+              >
+                {category}
+              </SwiperSlide>
+
+              {categories.map((category, index) => {
+                return (
+                  <SwiperSlide
+                    key={category.id}
+                    onClick={filterBlogs}
+                    className={`pb-[0.9rem] capitalize ${
+                      activeIndex == index + 1
+                        ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
+                        : ""
+                    }`}
+                  >
+                    {category.attributes.name}
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+
+          <div className="flex flex-row items-center lg:basis-3/12 w-80 rounded-[10px] !bg-gray-100 pl-3">
+            <span>
+              <i className="w-16 h-16 rounded-full text-gray-500 cursor-pointer">
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                  className="pr-1 text-sm"
+                />
+              </i>
+            </span>
+            <input
+              className="!border-0 !bg-gray-100"
+              placeholder="Search Blogs"
+              type="text"
+              value={keyword}
+              onChange={(e) => {
+                setKeyword(e.target.value);
+                setResults(searchBlogs(e.target.value));
+              }}
+            />
+          </div>
         </div>
 
         {count == 0 || status == config.NOT_FOUND ? (

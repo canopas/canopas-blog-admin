@@ -4,11 +4,11 @@ import Link from "next/link";
 import Script from "next/script";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import config from "../../config";
-import Seo from "../seo";
-import NotFound from "../404";
-import Comment from "../../components/comments/index";
-import { setPostFields } from "../../utils";
+import config from "../config";
+import Seo from "./seo";
+import NotFound from "./404";
+import Comment from "../components/comments/index";
+import { setPostFields } from "../utils";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
 import hljs from "highlight.js";
@@ -143,7 +143,7 @@ export default function Post({ postData, status }) {
                 title={post.title}
                 description={post.meta_description}
                 authorName={post.authorName}
-                url={`https://articles.canopas.com/post/${post.slug}`}
+                url={`https://articles.canopas.com/resources/${post.slug}`}
                 date={post.published_on}
                 image_url={post.image_url}
                 publishedAt={post.published_on}

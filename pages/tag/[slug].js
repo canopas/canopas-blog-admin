@@ -63,7 +63,7 @@ export default function Home({ posts, status, slug }) {
                     className="flex flex-col col-span-2 mb-8 lg:mb-10 border-b-2"
                     key={i}
                   >
-                    <Link href={"/post/" + post.slug}>
+                    <Link href={"/" + post.slug}>
                       <div className="flex flex-row space-x-2 items-center text-[1rem] md:text-[1.03rem] leading-5 tracking-wide capitalize">
                         <div className="relative w-[30px] h-[30px] md:w-[35px] md:h-[35px]">
                           <Image

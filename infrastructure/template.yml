@@ -1,0 +1,53 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: An ECS with launchType EC2 frontend stack
+
+Parameters:
+  EnvName:
+    Type: String
+    Description: Name of an environment. 'dev', 'staging', 'prod' and any name.
+    AllowedPattern: ^.*[^0-9]$
+    ConstraintDescription: Must end with non-numeric character.
+  Region:
+    Type: String
+    Description: aws-region.
+  ClusterName:
+    Type: String
+    Description: Name of ECS cluster
+  ImageTag:
+    Type: String
+    Description: Website Docker frontend image tag
+
+Resources:
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family:
+        Fn::Sub: canopas-website-${EnvName}-full-stack-task-definition
+      ExecutionRoleArn:
+        Fn::Sub: arn:aws:iam::${AWS::AccountId}:role/ecsTaskExecutionRole
+      NetworkMode: "bridge"
+      ContainerDefinitions:
+        - Name: "canopas-website-blogs"
+          Memory: 512
+          Cpu: 512
+          Essential: true
+          Image:
+            Fn::Sub: ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/canopas-website-blogs:${ImageTag}
+          PortMappings:
+            - ContainerPort: 3000
+              HostPort: 3000
+              Protocol: tcp
+
+  ECSService:
+    Type: AWS::ECS::Service
+    Properties:
+      ServiceName: "canopas-website-full-stack"
+      LaunchType: EC2
+      Cluster:
+        Fn::Sub: ${ClusterName}
+      DesiredCount: 1
+      TaskDefinition:
+        Ref: "TaskDefinition"
+      DeploymentConfiguration:
+        MaximumPercent: 100
+        MinimumHealthyPercent: 0

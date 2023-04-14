@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import Link from "next/link";
 import ServerError from "../components/errors/serverError";
@@ -11,6 +12,10 @@ import config from "../config";
 import axios from "axios";
 import Seo from "./seo";
 import { setPostFields, calculateWeight } from "../utils";
+import "swiper/css";
+import "swiper/css/navigation";
+
+import { Navigation } from "swiper";
 
 export async function getServerSideProps() {
   var response = null;
@@ -42,40 +47,41 @@ export async function getServerSideProps() {
   return { props: { posts, status, categories } };
 }
 
-function searchBlogs(posts, keyword) {
-  const results = posts
-    .map((post) => ({
-      post,
-      weight: calculateWeight(post, keyword),
-    }))
-    .filter((result) => result.weight > 0);
-
-  results.sort((a, b) => b.weight - a.weight);
-
-  return results.map((result) => result.post);
-}
-
 export default function Home({ posts, status, categories }) {
   var [results, setResults] = useState(posts);
+  const [categoryPosts, setCategoryPosts] = useState(posts);
   const [keyword, setKeyword] = useState("");
-  const [category, setCategory] = useState("Categories");
-  const [dropdownOpen, setdropdownOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState("");
   const count = results.length;
+  const category = "all";
 
   const filterBlogs = (event) => {
-    setCategory(event.target.innerText);
-    if (event.target.innerText == "Categories") {
+    if (event.target.innerHTML == category) {
+      setCategoryPosts(posts);
       setResults(posts);
     } else {
       results = posts.filter(
         (result) =>
           result.attributes.category.data != null &&
           result.attributes.category.data.attributes.name ==
-            event.target.innerText
+            event.target.innerHTML
       );
+      setCategoryPosts(results);
       setResults(results);
     }
-    setdropdownOpen(false);
+  };
+
+  const searchBlogs = (keyword) => {
+    const result = categoryPosts
+      .map((post) => ({
+        post,
+        weight: calculateWeight(post, keyword),
+      }))
+      .filter((result) => result.weight > 0);
+
+    result.sort((a, b) => b.weight - a.weight);
+
+    return result.map((result) => result.post);
   };
 
   return (
@@ -102,10 +108,54 @@ export default function Home({ posts, status, categories }) {
           </div>
         </div>
 
-        <hr className="mb-10" />
+        <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:justify-between lg:items-center mb-16">
+          <div className="lg:basis-8/12 h-10 border-b border-[#e6e6e6]">
+            <Swiper
+              navigation={true}
+              onClick={(swiper) => setActiveIndex(swiper.clickedIndex)}
+              modules={[Navigation]}
+              breakpoints={{
+                0: {
+                  slidesPerView: 2,
+                },
+                576: {
+                  slidesPerView: 3,
+                },
+                1200: {
+                  slidesPerView: 5,
+                },
+              }}
+            >
+              <SwiperSlide
+                onClick={filterBlogs}
+                className={`pb-[0.9rem] capitalize ${
+                  activeIndex == "0"
+                    ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
+                    : ""
+                }`}
+              >
+                {category}
+              </SwiperSlide>
 
-        <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:justify-between md:items-center mb-20">
-          <div className="pl-3 w-72 rounded-[10px] !bg-gray-100">
+              {categories.map((category, index) => {
+                return (
+                  <SwiperSlide
+                    key={category.id}
+                    onClick={filterBlogs}
+                    className={`pb-[0.9rem] capitalize ${
+                      activeIndex == index + 1
+                        ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
+                        : ""
+                    }`}
+                  >
+                    {category.attributes.name}
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+
+          <div className="flex flex-row items-center lg:basis-3/12 w-80 rounded-[10px] !bg-gray-100 pl-3">
             <span>
               <i className="w-16 h-16 rounded-full text-gray-500 cursor-pointer">
                 <FontAwesomeIcon
@@ -121,56 +171,10 @@ export default function Home({ posts, status, categories }) {
               value={keyword}
               onChange={(e) => {
                 setKeyword(e.target.value);
-                setResults(searchBlogs(posts, e.target.value));
+                setResults(searchBlogs(e.target.value));
               }}
             />
           </div>
-
-          {categories.length != 0 ? (
-            <div
-              className="order-last w-72 rounded-[10px] !bg-gray-100"
-              onMouseEnter={() => setdropdownOpen(true)}
-              onMouseLeave={() => setdropdownOpen(false)}
-            >
-              <div
-                className="grid grid-cols-3 justify-items-stretch items-center bg-transparent p-1.5 lg:text-md text-gray-600 outline-none
-                            hover:cursor-pointer"
-              >
-                <span className="col-span-2 p-2 line-clamp-1">{category}</span>
-
-                <span className="justify-self-end mr-4 w-2">
-                  <FontAwesomeIcon icon={faChevronDown} className="text-sm" />
-                </span>
-              </div>
-
-              <div
-                className={`${
-                  dropdownOpen ? `opacity-100 visible` : "opacity-0 invisible"
-                } absolute mt-1 rounded-[10px] drop-shadow-md bg-white py-1 transition-all`}
-              >
-                <div
-                  onClick={filterBlogs}
-                  className="block my-3 pl-4 w-72 text-base lg:text-[1.06rem] text-slate-600 hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text hover:cursor-pointer"
-                >
-                  Categories
-                </div>
-
-                {categories.map((category) => {
-                  return (
-                    <div
-                      key={category.id}
-                      onClick={filterBlogs}
-                      className="block my-3 pl-4 w-72 text-base lg:text-[1.06rem] text-slate-600 hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text hover:cursor-pointer"
-                    >
-                      {category.attributes.name}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ) : (
-            ""
-          )}
         </div>
 
         {count == 0 || status == config.NOT_FOUND ? (

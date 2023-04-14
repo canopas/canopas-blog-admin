@@ -27,7 +27,7 @@ jobs:
         run: |
           echo NEXT_PUBLIC_IFRAMELY_KEY=${{ secrets.NEXT_PUBLIC_IFRAMELY_KEY }} >> .env
           echo NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }} >> .env
-          bash ./../deploy/deploy-ecr-image.sh dev-blogs ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/canopas-website-blogs
+          bash ./deploy/deploy-ecr-image.sh dev-blogs ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/canopas-website-blogs
 
       - name: Deploy cloudformation stack
         id: canopas-website-dev-ECS-EC2-stack

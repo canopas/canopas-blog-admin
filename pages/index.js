@@ -46,11 +46,12 @@ export async function getServerSideProps() {
 
 export default function Home({ posts, status, categories }) {
   var [results, setResults] = useState(posts);
+  const featurePosts = results.filter((post) => post.attributes.is_featured);
   const [categoryPosts, setCategoryPosts] = useState(posts);
   const [keyword, setKeyword] = useState("");
-  const [activeIndex, setActiveIndex] = useState("");
+  const [activeIndex, setActiveIndex] = useState("0");
   const count = results.length;
-  const category = "all";
+  const category = "home";
 
   const filterBlogs = (event) => {
     if (event.target.innerHTML == category) {
@@ -84,9 +85,9 @@ export default function Home({ posts, status, categories }) {
   return (
     <>
       <Seo
-        title="Canopas Blogs"
-        description="Canopas Blogs will help you to become a better software developer. We are sharing knowledge on Web, Backend, iOS, Android, and Flutter development"
-        authorName="canopas"
+        title={config.SEO_META_DATA.title}
+        description={config.SEO_META_DATA.description}
+        authorName={config.SEO_META_DATA.authorName}
       />
       <section className="container my-16 mx-2 sm:mx-auto">
         <div className="my-16 w-full bg-black-900">
@@ -105,8 +106,8 @@ export default function Home({ posts, status, categories }) {
           </div>
         </div>
 
-        <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:justify-between lg:items-center mb-16">
-          <div className="lg:basis-8/12 h-10 border-b border-[#e6e6e6]">
+        <div className="flex flex-col xl:flex-row space-y-8 xl:space-y-0 xl:justify-between xl:items-center mb-16">
+          <div className="xl:basis-8/12 h-10 border-b border-[#e6e6e6]">
             <Swiper
               navigation={true}
               onClick={(swiper) => setActiveIndex(swiper.clickedIndex)}
@@ -119,7 +120,7 @@ export default function Home({ posts, status, categories }) {
                   slidesPerView: 3,
                 },
                 1200: {
-                  slidesPerView: 5,
+                  slidesPerView: 4,
                 },
               }}
             >
@@ -152,7 +153,7 @@ export default function Home({ posts, status, categories }) {
             </Swiper>
           </div>
 
-          <div className="flex flex-row items-center lg:basis-3/12 w-80 rounded-[10px] !bg-gray-100 pl-3">
+          <div className="flex flex-row items-center xl:basis-3/12 w-80 rounded-[10px] !bg-gray-100 pl-3">
             <span>
               <i className="w-16 h-16 rounded-full text-gray-500 cursor-pointer">
                 <FontAwesomeIcon
@@ -181,107 +182,197 @@ export default function Home({ posts, status, categories }) {
         ) : status != config.SUCCESS ? (
           <ServerError />
         ) : (
-          <div
-            className={`grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 ${
-              count % 3 === 1 ? "md:col-span-1" : ""
-            }`}
-          >
-            {results.map((post, i) => {
-              post = post.attributes;
-
-              return (
-                <div
-                  key={i}
-                  className={`space-y-5 ${
-                    i === 0 && count % 3 === 1
-                      ? "md:flex md:space-x-6 md:col-span-3"
-                      : ""
-                  }`}
-                >
-                  <div
-                    className={`my-4 w-auto h-auto border border-1 border-gray-300 transition-all aspect-auto hover:scale-105 ${
-                      i === 0 && count % 3 === 1
-                        ? `md:w-3/5 lg:w-2/4 ${
-                            post.image.data == null
-                              ? "md:h-[14.7rem] lg:h-[16.51rem] xl:h-[19.67rem] 2xl:h-[22.836rem] bg-black-900"
-                              : ""
-                          }`
-                        : `${
-                            post.image.data == null
-                              ? "md:h-[7.742rem] lg:h-[10.085rem] xl:h-[12.195rem] 2xl:h-[14.304em] bg-black-900"
-                              : ""
-                          } `
-                    }`}
-                  >
+          <>
+            {/* Featured Posts Section */}
+            {featurePosts.length != 0 ? (
+              <>
+                <span className="text-[2.5rem] font-semibold tracking-wide">
+                  Featured
+                </span>
+                <div className="grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 mt-8">
+                  {featurePosts.map((featurePost, i) => {
+                    featurePost = featurePost.attributes;
+                    if (i < 6) {
+                      return (
+                        <div key={i} className="space-y-2">
+                          <div
+                            className={`w-auto h-auto border border-1 border-gray-300 transition-all aspect-auto hover:scale-105 ${
+                              featurePost.image.data == null
+                                ? "md:h-[7.742rem] lg:h-[10.085rem] xl:h-[12.195rem] 2xl:h-[14.304em] bg-black-900"
+                                : ""
+                            } `}
+                          >
+                            <Link
+                              href={"/" + featurePost.slug}
+                              aria-label={
+                                "Read more about " + featurePost.title
+                              }
+                            >
+                              <Image
+                                width={100}
+                                height={100}
+                                src={featurePost.image_url || ""}
+                                alt={featurePost.alternativeText || ""}
+                                loading="eager"
+                                className={`${
+                                  featurePost.image.data == null
+                                    ? "w-[45%] h-4/5 mx-auto my-[5%]"
+                                    : "w-full h-full"
+                                } object-cover`}
+                              />
+                            </Link>
+                          </div>
+                          <div className="items-center text-[0.875rem] lg:text-[1.125rem] text-gray-500">
+                            <Link href={"/" + featurePost.slug}>
+                              <div className="flex flex-row justify-between text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wide">
+                                <div>
+                                  <span>{featurePost.published_on}</span>
+                                  <span className="after:content-['\00B7'] after:mx-1"></span>
+                                  <span>
+                                    {featurePost.readingTime} min read
+                                  </span>
+                                </div>
+                                <span className="text-green-700 capitalize">
+                                  {featurePost.authorName}
+                                </span>
+                              </div>
+                              <div
+                                className="my-2 text-[1.375rem] font-semibold leading-7 tracking-wide text-[#000000d6] hover:underline underline-offset-4 transition-all hover:scale-[0.96] 
+                        lg:text-[1.5rem] lg:leading-8"
+                              >
+                                {featurePost.title}
+                              </div>
+                            </Link>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+                {featurePosts.length > 6 ? (
+                  <div className="flex justify-end mt-10">
                     <Link
-                      href={"/" + post.slug}
-                      aria-label={"Read more about " + post.title}
+                      href="/featured"
+                      className="relative rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.5rem] font-bold text-white"
                     >
-                      <Image
-                        width={100}
-                        height={100}
-                        src={post.image_url || ""}
-                        alt={post.alternativeText || ""}
-                        loading="eager"
-                        className={`${
-                          post.image.data == null
-                            ? "w-[45%] h-4/5 mx-auto my-[5%]"
-                            : "w-full h-full"
-                        } object-cover`}
-                      />
+                      <span className="py-[1rem] px-[1.05rem] tracking-wide gradient-text">
+                        Read More Featured
+                      </span>
                     </Link>
                   </div>
+                ) : (
+                  ""
+                )}
+                <hr className="my-10" />
+                <span className="text-[2.5rem] font-semibold tracking-wide">
+                  Blogs
+                </span>
+              </>
+            ) : (
+              ""
+            )}
+            <div
+              className={`grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 ${
+                count % 3 === 1 ? "md:col-span-1" : ""
+              }`}
+            >
+              {results.map((post, i) => {
+                post = post.attributes;
 
+                return (
                   <div
-                    className={`flex flex-col flex-[1_0_0%] space-y-2 ${
-                      i === 0 && count % 3 === 1 ? "" : "justify-between"
+                    key={i}
+                    className={`space-y-5 ${
+                      i === 0 && count % 3 === 1
+                        ? "md:flex md:space-x-6 md:col-span-3"
+                        : ""
                     }`}
                   >
                     <div
-                      className={`text-[1.375rem] font-semibold leading-7 tracking-wide text-[#000000d6] hover:underline underline-offset-4 transition-all hover:scale-[0.96] ${
+                      className={`my-4 w-auto h-auto border border-1 border-gray-300 transition-all aspect-auto hover:scale-105 ${
                         i === 0 && count % 3 === 1
-                          ? "md:text-[1.5rem] lg:text-[1.875rem] md:font-bold md:leading-8 lg:leading-10"
-                          : "lg:text-[1.5rem] lg:leading-8"
+                          ? `md:w-3/5 lg:w-2/4 ${
+                              post.image.data == null
+                                ? "md:h-[14.7rem] lg:h-[16.51rem] xl:h-[19.67rem] 2xl:h-[22.836rem] bg-black-900"
+                                : ""
+                            }`
+                          : `${
+                              post.image.data == null
+                                ? "md:h-[7.742rem] lg:h-[10.085rem] xl:h-[12.195rem] 2xl:h-[14.304em] bg-black-900"
+                                : ""
+                            } `
                       }`}
                     >
-                      <Link href={"/" + post.slug}>{post.title}</Link>
-                    </div>
-                    <div className="text-[1.0625rem] md:text-[1.125rem] lg:text-[1.13rem] lg:leading-7 tracking-wide text-gray-500">
-                      <Link href={"/" + post.slug}>
-                        <p className="line-clamp-3">{post.summary}</p>
+                      <Link
+                        href={"/" + post.slug}
+                        aria-label={"Read more about " + post.title}
+                      >
+                        <Image
+                          width={100}
+                          height={100}
+                          src={post.image_url || ""}
+                          alt={post.alternativeText || ""}
+                          loading="eager"
+                          className={`${
+                            post.image.data == null
+                              ? "w-[45%] h-4/5 mx-auto my-[5%]"
+                              : "w-full h-full"
+                          } object-cover`}
+                        />
                       </Link>
                     </div>
-                    <div className="flex flex-row items-center pt-3 text-[0.875rem] lg:text-[1.125rem] text-gray-500">
-                      <div className="relative w-[38px] h-[38px]">
+
+                    <div
+                      className={`flex flex-col flex-[1_0_0%] space-y-2 ${
+                        i === 0 && count % 3 === 1 ? "" : "justify-between"
+                      }`}
+                    >
+                      <div
+                        className={`text-[1.375rem] font-semibold leading-7 tracking-wide text-[#000000d6] hover:underline underline-offset-4 transition-all hover:scale-[0.96] ${
+                          i === 0 && count % 3 === 1
+                            ? "md:text-[1.5rem] lg:text-[1.875rem] md:font-bold md:leading-8 lg:leading-10"
+                            : "lg:text-[1.5rem] lg:leading-8"
+                        }`}
+                      >
+                        <Link href={"/" + post.slug}>{post.title}</Link>
+                      </div>
+                      <div className="text-[1.0625rem] md:text-[1.125rem] lg:text-[1.13rem] lg:leading-7 tracking-wide text-gray-500">
                         <Link href={"/" + post.slug}>
-                          <Image
-                            width={200}
-                            height={200}
-                            className="absolute h-full w-full rounded-full object-cover inset-0"
-                            src={post.authorImage}
-                            alt={post.authorAltText}
-                          />
+                          <p className="line-clamp-3">{post.summary}</p>
                         </Link>
                       </div>
-                      <Link href={"/" + post.slug}>
-                        <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wide">
-                          <span className="text-green-700 capitalize">
-                            {post.authorName}
-                          </span>
-
-                          <div>
-                            <span>{post.published_on}</span>
-                            <span className="after:content-['\00B7'] after:mx-1"></span>
-                            <span>{post.readingTime} min read</span>
-                          </div>
+                      <div className="flex flex-row items-center pt-3 text-[0.875rem] lg:text-[1.125rem] text-gray-500">
+                        <div className="relative w-[38px] h-[38px]">
+                          <Link href={"/" + post.slug}>
+                            <Image
+                              width={200}
+                              height={200}
+                              className="absolute h-full w-full rounded-full object-cover inset-0"
+                              src={post.authorImage}
+                              alt={post.authorAltText}
+                            />
+                          </Link>
                         </div>
-                      </Link>
+                        <Link href={"/" + post.slug}>
+                          <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wide">
+                            <span className="text-green-700 capitalize">
+                              {post.authorName}
+                            </span>
+
+                            <div>
+                              <span>{post.published_on}</span>
+                              <span className="after:content-['\00B7'] after:mx-1"></span>
+                              <span>{post.readingTime} min read</span>
+                            </div>
+                          </div>
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          </>
         )}
       </section>
     </>

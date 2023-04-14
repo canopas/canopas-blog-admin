@@ -53,7 +53,7 @@ export default function Post({ postData, status }) {
     var indexContent = null;
     var blogContent = post.content.replace(
       /<img/g,
-      '<img class="mx-auto aspect-w-2 aspect-h-1 object-cover" style="width:min-content;height:min-content"'
+      '<img class="mx-auto aspect-w-2 object-cover" style="width:min-content;height:min-content"'
     );
 
     // table of contents formation

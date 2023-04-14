@@ -207,7 +207,7 @@ code::after {
 
 .swiper-button-next:after,
 .swiper-button-prev:after {
-  @apply px-7 pb-3 pt-1 text-black-900 !text-[12px];
+  @apply px-7 pb-[1rem] pt-1 text-black-900 !text-[12px];
 }
 
 .swiper-button-prev:after {

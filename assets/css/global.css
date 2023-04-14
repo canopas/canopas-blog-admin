@@ -200,3 +200,28 @@ code::after {
 .prose :where(blockquote, blockquote i):not(:where([class~="not-prose"] *)) {
   @apply not-italic text-[1.4rem] lg:text-[1.755rem] leading-[2.3rem] text-[#757575] font-normal font-inter-light;
 }
+
+.swiper-slide {
+  @apply !w-auto text-[1.04rem] gradient-text hover:cursor-pointer;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  @apply px-7 pb-3 pt-1 text-black-900 !text-[12px];
+}
+
+.swiper-button-prev:after {
+  @apply bg-gradient-to-r from-white via-white to-[#ffffff82];
+}
+
+.swiper-button-next:after {
+  @apply bg-gradient-to-r from-[#ffffff82] via-white to-white;
+}
+
+.swiper-button-disabled:after {
+  @apply opacity-0;
+}
+
+.swiper-wrapper {
+  @apply !flex !flex-row space-x-14 md:space-x-20 !transition-all !duration-1000;
+}

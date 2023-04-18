@@ -8,6 +8,7 @@ import config from "../config";
 import Seo from "./seo";
 import NotFound from "./404";
 import Comment from "../components/comments/index";
+import RecommandedPosts from "../components/posts/recommandedPosts";
 import { setPostFields } from "../utils";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +18,7 @@ export async function getServerSideProps(context) {
   const slug = context.params.slug;
   var response,
     postData = null;
+  var categoryPosts = [];
 
   try {
     response = await axios.get(
@@ -29,17 +31,29 @@ export async function getServerSideProps(context) {
   }
 
   const status = response ? response.status : config.NOT_FOUND;
-  return { props: { postData, status } };
+
+  // fetch posts other than this post by category name
+  try {
+    response = await axios.get(
+      config.STRAPI_URL +
+        "/v1/posts?filters[category][name][$eq]=" +
+        postData.attributes.category.data.attributes.name +
+        "&filters[slug][$ne]=" +
+        slug
+    );
+    categoryPosts = response.data.data;
+    categoryPosts.forEach((post) => setPostFields(post));
+  } catch (err) {
+    response = err.response;
+  }
+
+  return { props: { postData, status, categoryPosts } };
 }
 
-export default function Post({ postData, status }) {
+export default function Post({ postData, status, categoryPosts }) {
   const [loaded, setLoaded] = useState(false);
   const [activeId, setActiveId] = useState(null);
   const contentRef = useRef(null);
-
-  const handleLoad = () => {
-    setLoaded(true);
-  };
 
   if (postData) {
     var post = postData.attributes;
@@ -99,6 +113,7 @@ export default function Post({ postData, status }) {
 
   useEffect(() => {
     if (postData) {
+      setLoaded(false);
       hljs.highlightAll();
 
       document.querySelectorAll("oembed[url]").forEach((element) => {
@@ -110,7 +125,6 @@ export default function Post({ postData, status }) {
           element.setAttribute("data-loaded", true);
         }
       });
-
       window.addEventListener("scroll", handleScroll);
       return () => {
         window.removeEventListener("scroll", handleScroll);
@@ -164,13 +178,13 @@ export default function Post({ postData, status }) {
                       className={`${
                         post.image.data == null
                           ? "w-[45%] h-4/5 mx-auto my-[5%]"
-                          : `rounded-2xl lg:rounded-3xl object-cover transition-all duration-[800ms] ease-out ${
+                          : `rounded-2xl lg:rounded-3xl object-cover ${
                               loaded
-                                ? "w-full h-full"
+                                ? "w-full h-full transition-all duration-[800ms] ease-out"
                                 : "mx-[2%] w-[95%] h-[95%] opacity-10"
                             }`
                       } `}
-                      onLoad={handleLoad}
+                      onLoad={() => setLoaded(true)}
                     />
                   </div>
                   <div className="flex flex-col space-y-5 md:text-white ">
@@ -224,24 +238,40 @@ export default function Post({ postData, status }) {
 
                 {/* Table of Contents */}
                 <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 2xl:mx-10 rounded-3xl text-[1.125rem]">
-                  {indexContent != null ? (
-                    <div className="xl:sticky top-24 w-auto h-60 xl:h-fit w-[100%] xl:w-[30%] border border-1 border-black-900 rounded-[12px] overflow-y-auto">
-                      <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4">
-                        Table of contents
-                      </div>
-                      <div className="pl-5 pr-8 tracking-[0.02em] leading-relaxed">
-                        <div className="mt-4 text-[1.125rem] text-[#374151] list-none ">
-                          <div
-                            className="my-3"
-                            onClick={handleClick}
-                            dangerouslySetInnerHTML={{ __html: indexContent }}
-                          />
+                  <div className="realtive w-full xl:w-[30%]">
+                    <div className="xl:sticky top-24 flex flex-col">
+                      {indexContent != null ? (
+                        <div className="w-full h-60 xl:h-fit border border-1 border-black-900 rounded-[12px] overflow-y-auto">
+                          <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4">
+                            Table of contents
+                          </div>
+                          <div className="pl-5 pr-8 tracking-[0.02em] leading-relaxed">
+                            <div className="mt-4 text-[1.125rem] text-[#374151] list-none ">
+                              <div
+                                className="my-3"
+                                onClick={handleClick}
+                                dangerouslySetInnerHTML={{
+                                  __html: indexContent,
+                                }}
+                              />
+                            </div>
+                          </div>
                         </div>
-                      </div>
+                      ) : (
+                        ""
+                      )}
+
+                      {/* Recommended Posts Section Desktop View */}
+
+                      {categoryPosts.length == 0 ? (
+                        ""
+                      ) : (
+                        <div className="hidden xl:inline-block mt-10">
+                          <RecommandedPosts categoryPosts={categoryPosts} />
+                        </div>
+                      )}
                     </div>
-                  ) : (
-                    ""
-                  )}
+                  </div>
 
                   {/* main article */}
                   <div className="prose lg:prose-lg">
@@ -268,6 +298,17 @@ export default function Post({ postData, status }) {
                   </div>
                 </div>
               </div>
+
+              {/* Recommended Posts Section Mobile,Tablet View*/}
+              {categoryPosts.length == 0 ? (
+                ""
+              ) : (
+                <div className="container inline-block xl:hidden mt-10 lg:mx-4">
+                  <hr className="mb-10" />
+                  <RecommandedPosts categoryPosts={categoryPosts} />
+                </div>
+              )}
+
               {/* comments */}
               <Comment post={postData} />
             </>

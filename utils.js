@@ -84,4 +84,18 @@ function calculateWeight(post, keyword) {
   return weight;
 }
 
-export { getReadingTime, formateDate, setPostFields, calculateWeight };
+function filterPostsByCategory(post, keyword) {
+  return post.filter(
+    (result) =>
+      result.attributes.category.data != null &&
+      result.attributes.category.data.attributes.name == keyword
+  );
+}
+
+export {
+  getReadingTime,
+  formateDate,
+  setPostFields,
+  calculateWeight,
+  filterPostsByCategory,
+};

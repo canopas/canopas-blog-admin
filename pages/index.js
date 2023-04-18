@@ -8,7 +8,11 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import config from "../config";
 import axios from "axios";
 import Seo from "./seo";
-import { setPostFields, calculateWeight } from "../utils";
+import {
+  setPostFields,
+  calculateWeight,
+  filterPostsByCategory,
+} from "../utils";
 import "swiper/css";
 import "swiper/css/navigation";
 
@@ -58,12 +62,7 @@ export default function Home({ posts, status, categories }) {
       setCategoryPosts(posts);
       setResults(posts);
     } else {
-      results = posts.filter(
-        (result) =>
-          result.attributes.category.data != null &&
-          result.attributes.category.data.attributes.name ==
-            event.target.innerHTML
-      );
+      results = filterPostsByCategory(posts, event.target.innerHTML);
       setCategoryPosts(results);
       setResults(results);
     }

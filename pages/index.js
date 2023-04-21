@@ -106,51 +106,55 @@ export default function Home({ posts, status, categories }) {
         </div>
 
         <div className="flex flex-col xl:flex-row space-y-8 xl:space-y-0 xl:justify-between xl:items-center mb-16">
-          <div className="xl:basis-8/12 h-10 border-b border-[#e6e6e6]">
-            <Swiper
-              navigation={true}
-              onClick={(swiper) => setActiveIndex(swiper.clickedIndex)}
-              modules={[Navigation]}
-              breakpoints={{
-                0: {
-                  slidesPerView: 2,
-                },
-                576: {
-                  slidesPerView: 3,
-                },
-                1200: {
-                  slidesPerView: 4,
-                },
-              }}
-            >
-              <SwiperSlide
-                onClick={filterBlogs}
-                className={`pb-[0.9rem] capitalize ${
-                  activeIndex == "0"
-                    ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
-                    : ""
-                }`}
+          {categories.length != 0 ? (
+            <div className="xl:basis-8/12 h-10 border-b border-[#e6e6e6]">
+              <Swiper
+                navigation={true}
+                onClick={(swiper) => setActiveIndex(swiper.clickedIndex)}
+                modules={[Navigation]}
+                breakpoints={{
+                  0: {
+                    slidesPerView: 2,
+                  },
+                  576: {
+                    slidesPerView: 3,
+                  },
+                  1200: {
+                    slidesPerView: 4,
+                  },
+                }}
               >
-                {category}
-              </SwiperSlide>
+                <SwiperSlide
+                  onClick={filterBlogs}
+                  className={`pb-[0.9rem] capitalize ${
+                    activeIndex == "0"
+                      ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
+                      : ""
+                  }`}
+                >
+                  {category}
+                </SwiperSlide>
 
-              {categories.map((category, index) => {
-                return (
-                  <SwiperSlide
-                    key={category.id}
-                    onClick={filterBlogs}
-                    className={`pb-[0.9rem] capitalize ${
-                      activeIndex == index + 1
-                        ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
-                        : ""
-                    }`}
-                  >
-                    {category.attributes.name}
-                  </SwiperSlide>
-                );
-              })}
-            </Swiper>
-          </div>
+                {categories.map((category, index) => {
+                  return (
+                    <SwiperSlide
+                      key={category.id}
+                      onClick={filterBlogs}
+                      className={`pb-[0.9rem] capitalize ${
+                        activeIndex == index + 1
+                          ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
+                          : ""
+                      }`}
+                    >
+                      {category.attributes.name}
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+            </div>
+          ) : (
+            ""
+          )}
 
           <div className="flex flex-row items-center xl:basis-3/12 w-80 rounded-[10px] !bg-gray-100 pl-3">
             <span>

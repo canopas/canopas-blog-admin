@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Script from "next/script";
@@ -55,6 +55,10 @@ export default function Post({ postData, status, categoryPosts }) {
   const [activeId, setActiveId] = useState(null);
   const contentRef = useRef(null);
 
+  setTimeout(() => {
+    setLoaded(true);
+  }, 50);
+
   if (postData) {
     var post = postData.attributes;
     var published_on = post.published_on.replace(",", "");
@@ -67,7 +71,7 @@ export default function Post({ postData, status, categoryPosts }) {
     var indexContent = null;
     var blogContent = post.content.replace(
       /<img/g,
-      '<img class="mx-auto aspect-w-2 object-cover" style="width:min-content;height:min-content"'
+      '<img class="mx-auto aspect-w-2 sm:object-cover" style="width:min-content;height:min-content"'
     );
 
     // table of contents formation
@@ -113,7 +117,6 @@ export default function Post({ postData, status, categoryPosts }) {
 
   useEffect(() => {
     if (postData) {
-      setLoaded(false);
       hljs.highlightAll();
 
       document.querySelectorAll("oembed[url]").forEach((element) => {
@@ -131,6 +134,16 @@ export default function Post({ postData, status, categoryPosts }) {
       };
     }
   }, [blogContent]);
+
+  useLayoutEffect(() => {
+    import("smoothscroll-polyfill").then(({ default: smoothscroll }) => {
+      smoothscroll.polyfill();
+    });
+
+    window.__forceSmoothScrollPolyfill__ = true;
+
+    setLoaded(false);
+  }, [post.image_url]);
 
   return (
     <>
@@ -168,7 +181,7 @@ export default function Post({ postData, status, categoryPosts }) {
               <div key={post.id} className="flex flex-col space-y-20">
                 {/* Header */}
                 <div className="grid grid-flow-row xl:grid-flow-col gap-10 xl:gap-8 w-90 h-90 rounded-3xl md:bg-[#14161E] md:py-20 md:px-10 xl:py-14 xl:px-8 ">
-                  <div className="md:container w-full xl:w-[35rem] 2xl:w-[42rem] h-auto sm:h-[18rem] md:h-[21rem] lg:h-[30rem] xl:h-[19rem] 2xl:h-[23rem] ">
+                  <div className="md:container w-full xl:w-[35rem] 2xl:w-[42rem] h-auto sm:h-[18rem] md:h-[21rem] lg:h-[30rem] xl:h-[19rem] 2xl:h-[23rem]">
                     <Image
                       width={200}
                       height={200}
@@ -178,15 +191,15 @@ export default function Post({ postData, status, categoryPosts }) {
                       className={`${
                         post.image.data == null
                           ? "w-[45%] h-4/5 mx-auto my-[5%]"
-                          : `rounded-2xl lg:rounded-3xl object-cover ${
+                          : `mx-auto rounded-2xl lg:rounded-3xl object-cover ${
                               loaded
                                 ? "w-full h-full transition-all duration-[800ms] ease-out"
-                                : "mx-[2%] w-[95%] h-[95%] opacity-10"
+                                : "w-[95%] h-[95%] opacity-10"
                             }`
                       } `}
-                      onLoad={() => setLoaded(true)}
                     />
                   </div>
+
                   <div className="flex flex-col space-y-5 md:text-white ">
                     <div className="text-[2.20rem] lg:text-[2.50rem] xl:text-[2.80rem] font-normal leading-10 lg:leading-tight tracking-wide">
                       {post.title}
@@ -241,7 +254,7 @@ export default function Post({ postData, status, categoryPosts }) {
                   <div className="realtive w-full xl:w-[30%]">
                     <div className="xl:sticky top-24 flex flex-col">
                       {indexContent != null ? (
-                        <div className="w-full h-60 xl:h-fit border border-1 border-black-900 rounded-[12px] overflow-y-auto">
+                        <div className="w-full h-fit border border-1 border-black-900 rounded-[12px]">
                           <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4">
                             Table of contents
                           </div>

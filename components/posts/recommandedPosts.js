@@ -25,7 +25,7 @@ export default function RecommandedPosts({ categoryPosts }) {
                           alt={categoryPost.authorAltText}
                         />
                       </div>
-                      <span className="font-medium line-clamp-1">
+                      <span className="font-medium">
                         {categoryPost.authorName}
                       </span>
                     </div>
@@ -43,7 +43,7 @@ export default function RecommandedPosts({ categoryPosts }) {
                     className={`mt-4 xl:mt-2 max-w-xs xl:h-[4rem] ${
                       categoryPost.image.data == null
                         ? "h-[5.084rem] md:h-[6.96rem] lg:h-[8.9rem] bg-black-900"
-                        : "aspect-w-2 aspect-h-1 border border-1"
+                        : "aspect-w-2 md:aspect-h-1 h-[5.084rem] border border-1"
                     }`}
                   >
                     <Image

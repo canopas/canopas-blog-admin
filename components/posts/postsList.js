@@ -42,7 +42,7 @@ export default function PostsList({ postData }) {
                   className={`h-auto max-w-xs ${
                     post.image.data == null
                       ? "h-[6.125rem] md:h-[8.125rem] lg:h-[8.0831rem] xl:h-[8.75rem] 2xl:h-[10.5em] bg-black-900"
-                      : "aspect-w-2 aspect-h-1 border border-1"
+                      : "aspect-w-2 lg:aspect-h-1 h-[6.125rem] md:h-[8.125rem] border border-1"
                   }`}
                 >
                   <Image

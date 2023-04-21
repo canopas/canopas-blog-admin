@@ -47,7 +47,7 @@ export default function Header() {
             </div>
 
             <div className="flex grow items-center mt-2 lg:mt-0">
-              <ul className="flex flex-row flex-wrap items-center justify-start lg:ml-auto text-[1rem] md:text-[1.09375rem] lg:text-[1.1875rem] leading-[1.125rem] md:leading-[1.28125rem] lg:leading-[1.4375rem]">
+              <ul className="flex flex-row flex-wrap items-center justify-start lg:ml-auto pl-0 text-[1rem] md:text-[1.09375rem] lg:text-[1.1875rem] leading-[1.125rem] md:leading-[1.28125rem] lg:leading-[1.4375rem]">
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
                     href={`${CANOPAS_URL}/portfolio`}

@@ -223,15 +223,15 @@ export default function Home({ posts, status, categories }) {
                           </div>
                           <div className="items-center text-[0.875rem] lg:text-[1.125rem] text-gray-500">
                             <Link href={"/" + featurePost.slug}>
-                              <div className="flex flex-row justify-between text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wide">
+                              <div className="flex flex-row justify-between text-[0.922rem] leading-5 tracking-wide">
                                 <div>
                                   <span>{featurePost.published_on}</span>
-                                  <span className="after:content-['\00B7'] after:mx-1"></span>
-                                  <span>
+                                  <span className="hidden lg:inline-block after:content-['\00B7'] after:mx-1"></span>
+                                  <span className="hidden lg:inline-block">
                                     {featurePost.readingTime} min read
                                   </span>
                                 </div>
-                                <span className="text-green-700 capitalize">
+                                <span className="text-green-700 capitalize line-clamp-1">
                                   {featurePost.authorName}
                                 </span>
                               </div>
@@ -271,7 +271,7 @@ export default function Home({ posts, status, categories }) {
               ""
             )}
             <div
-              className={`grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 ${
+              className={`grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 mt-5 ${
                 count % 3 === 1 ? "md:col-span-1" : ""
               }`}
             >

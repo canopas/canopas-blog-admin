@@ -1,12 +1,29 @@
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function PostsList({ postData }) {
   const [posts, slug, tagName] = postData;
+  const [displayedPosts, setDisplayedPosts] = useState(10);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 100
+      ) {
+        setDisplayedPosts((prev) => prev + 5);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <div className="mt-4 md:mt-6 xl:mt-8">
-      {posts.map((post, i) => {
+      {posts.slice(0, displayedPosts).map((post, i) => {
         post = post.attributes;
 
         return (

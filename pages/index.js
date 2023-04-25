@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -50,14 +50,16 @@ export async function getServerSideProps() {
 
 export default function Home({ posts, status, categories }) {
   var [results, setResults] = useState(posts);
+  const [displayedPosts, setDisplayedPosts] = useState(10);
   const featurePosts = results.filter((post) => post.attributes.is_featured);
   const [categoryPosts, setCategoryPosts] = useState(posts);
   const [keyword, setKeyword] = useState("");
-  const [activeIndex, setActiveIndex] = useState("0");
+  const [activeIndex, setActiveIndex] = useState(0);
   const count = results.length;
   const category = "home";
 
   const filterBlogs = (event) => {
+    setDisplayedPosts(10);
     if (event.target.innerHTML == category) {
       setCategoryPosts(posts);
       setResults(posts);
@@ -80,6 +82,21 @@ export default function Home({ posts, status, categories }) {
 
     return result.map((result) => result.post);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 100
+      ) {
+        setDisplayedPosts((prev) => prev + 5);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -240,7 +257,7 @@ export default function Home({ posts, status, categories }) {
                                 </span>
                               </div>
                               <div
-                                className="my-2 text-[1.375rem] font-semibold leading-7 tracking-wide text-[#000000d6] hover:underline underline-offset-4 transition-all hover:scale-[0.96] 
+                                className="my-2 text-[1.375rem] font-semibold leading-7 tracking-wide text-[#000000d6] hover:underline underline-offset-4 transition-all hover:scale-[0.96]
                         lg:text-[1.5rem] lg:leading-8"
                               >
                                 {featurePost.title}
@@ -279,7 +296,7 @@ export default function Home({ posts, status, categories }) {
                 count % 3 === 1 ? "md:col-span-1" : ""
               }`}
             >
-              {results.map((post, i) => {
+              {results.slice(0, displayedPosts).map((post, i) => {
                 post = post.attributes;
 
                 return (

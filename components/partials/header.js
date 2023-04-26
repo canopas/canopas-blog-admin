@@ -63,9 +63,9 @@ export default function Header() {
 
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
-                    href={`${HOST_URL}/portfolio`}
+                    href={`${HOST_URL}/about`}
                     className={`relative mr-[20px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
-                      router.pathname == `${HOST_URL}/portfolio`
+                      router.pathname == `${HOST_URL}/about`
                         ? "canopas-gradient-text"
                         : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                     }`}
@@ -89,9 +89,9 @@ export default function Header() {
 
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
-                    href="/"
-                    className={`relative mr-[20px] lg:mr-[50px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
-                      router.pathname == "/"
+                    href="https://blog.canopas.com/"
+                    className={`relative mr-[20px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
+                      router.pathname == "https://blog.canopas.com/"
                         ? "canopas-gradient-text"
                         : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                     }`}
@@ -99,10 +99,11 @@ export default function Header() {
                     Blog
                   </Link>
                 </li>
-                <li className="ml-0 my-2 sm:my-0 p-0">
+
+                <li className="lg:order-last ml-0 my-2 sm:my-0 p-0">
                   <Link
                     href={`${HOST_URL}/contact`}
-                    className={`relative lg:mb-0 lg:ml-[0.5rem] lg:rounded-full lg:border-[1px] lg:border-solid lg:border-transparent lg:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:lg:shadow-[inset_2px_1000px_1px_#fff] lg:py-[0.75rem] lg:font-bold lg:text-white ${
+                    className={`relative lg:mb-0 mr-[20px] lg:mr-0 lg:ml-[20px] lg:rounded-full lg:border-[1px] lg:border-solid lg:border-transparent lg:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:lg:shadow-[inset_2px_1000px_1px_#fff] lg:py-[0.75rem] lg:font-bold lg:text-white ${
                       router.pathname == `${HOST_URL}/contact`
                         ? "lg:bg-clip-border canopas-gradient-text"
                         : ""

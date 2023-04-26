@@ -100,6 +100,15 @@ export default function Header() {
                   </Link>
                 </li>
 
+                <li className="ml-0 my-2 sm:my-0">
+                  <Link
+                    href={`${HOST_URL}/resources`}
+                    className={`relative mr-[20px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text`}
+                  >
+                    Resources
+                  </Link>
+                </li>
+
                 <li className="lg:order-last ml-0 my-2 sm:my-0 p-0">
                   <Link
                     href={`${HOST_URL}/contact`}

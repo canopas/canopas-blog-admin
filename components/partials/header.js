@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
 export default function Header() {
-  const HOST_URL = config.HOST_URL;
+  const HOST_URL = config.CANOPAS_URL;
   const router = useRouter();
   const [showHeader, setShowHeader] = useState(true);
   var [lastScrollPos, setLastScrollPos] = useState(0);

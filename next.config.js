@@ -1,14 +1,7 @@
 const path = require("path");
 
 module.exports = {
-  async rewrites() {
-    return [
-      {
-        source: "/resources",
-        destination: "/",
-      },
-    ];
-  },
+  basePath: "/resources",
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.join(__dirname, "assets")],

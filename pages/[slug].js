@@ -170,7 +170,7 @@ export default function Post({ postData, status, categoryPosts }) {
                 title={post.title}
                 description={post.meta_description}
                 authorName={post.authorName}
-                url={`${config.HOST_URL}/${post.slug}`}
+                url={`${config.CANOPAS_URL}/${post.slug}`}
                 date={post.published_on}
                 image_url={post.image_url}
                 publishedAt={post.published_on}

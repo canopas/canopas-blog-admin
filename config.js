@@ -1,10 +1,9 @@
 export default Object.freeze({
   STRAPI_URL: "https://blog-admin.canopas.com",
-  CANOPAS_URL: "https://canopas.com",
-  HOST_URL:
-    typeof window !== "undefined"
-      ? window.location.protocol + "//" + window.location.host
-      : "",
+  CANOPAS_URL:
+    typeof window == "undefined" || window.location.host.includes("dev")
+      ? "https://dev-stack.canopas.com"
+      : "https://canopas.com",
 
   WORDS_PER_MINUTE: 200,
 

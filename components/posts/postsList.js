@@ -94,14 +94,14 @@ export default function PostsList({ postData }) {
               </>
             ) : (
               <div className="flex flex-row flex-wrap mb-10">
-                {post.tags.data.map((tag) => {
+                {post.tags.map((tag) => {
                   return (
                     <div className="my-4 mr-2" key={tag.id}>
                       <Link
-                        href={"/tag/" + tag.attributes.slug}
+                        href={"/tag/" + tag.slug}
                         className="my-1 rounded-full bg-[#f2f2f2] px-3 py-1.5 font-medium no-underline capitalize"
                       >
-                        {tag.attributes.name}
+                        {tag.name}
                       </Link>
                     </div>
                   );

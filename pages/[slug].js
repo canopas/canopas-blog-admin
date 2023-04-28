@@ -63,8 +63,8 @@ export default function Post({ postData, status, categoryPosts }) {
     var post = postData.attributes;
     var published_on = post.published_on.replace(",", "");
     var published_time = new Date(post.publishedAt).toLocaleTimeString();
-    var tags = post.tags.data.map((tag) => {
-      return tag.attributes.name;
+    var tags = post.tags.map((tag) => {
+      return tag.name;
     });
     var tagsString = tags.join(", ");
 
@@ -143,7 +143,7 @@ export default function Post({ postData, status, categoryPosts }) {
     window.__forceSmoothScrollPolyfill__ = true;
 
     setLoaded(false);
-  }, [post.image_url]);
+  }, []);
 
   return (
     <>
@@ -295,14 +295,14 @@ export default function Post({ postData, status, categoryPosts }) {
                       }}
                     ></div>
                     <div className="flex flex-row flex-wrap mt-20">
-                      {post.tags.data.map((tag) => {
+                      {post.tags.map((tag) => {
                         return (
                           <div className="my-4 mr-4" key={tag.id}>
                             <Link
-                              href={"/tag/" + tag.attributes.slug}
+                              href={"/tag/" + tag.slug}
                               className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize"
                             >
-                              {tag.attributes.name}
+                              {tag.name}
                             </Link>
                           </div>
                         );

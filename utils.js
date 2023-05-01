@@ -47,10 +47,10 @@ function setPostFields(post, slug) {
     ? author.username + " images"
     : "author";
 
-  if (slug && post.attributes.tags.data[0]) {
-    post.attributes.tags.data.map((tag) => {
-      if (tag.attributes.slug == slug) {
-        post.tagName = tag.attributes.name;
+  if (slug && post.attributes.tags[0]) {
+    post.attributes.tags.map((tag) => {
+      if (tag.slug == slug) {
+        post.tagName = tag.name;
       }
     });
   }

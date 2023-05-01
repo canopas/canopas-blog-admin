@@ -61,43 +61,51 @@ export default function Post({ postData, status, categoryPosts }) {
 
   if (postData) {
     var post = postData.attributes;
-    var published_on = post.published_on.replace(",", "");
-    var published_time = new Date(post.publishedAt).toLocaleTimeString();
-    var tags = post.tags.map((tag) => {
-      return tag.name;
-    });
-    var tagsString = tags.join(", ");
-
-    var indexContent = null;
-    var blogContent = post.content.replace(
-      /<img/g,
-      '<img class="mx-auto aspect-w-2 sm:object-cover" style="width:min-content;height:min-content"'
-    );
-
-    // table of contents formation
-    if (post.toc) {
-      indexContent = post.toc.replace(/<a\s+href="(.*?)"/g, (match, href) => {
-        let classes =
-          "text-ellipsis hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text";
-        if (href === activeId) {
-          classes +=
-            " relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:left-0 after:bottom-0 after:w-full after:h-[1px] after:bg-gradient-to-r";
-        }
-        return `<a href="${href}" class="${classes}"`;
-      });
-    }
-
-    var handleClick = (event) => {
-      event.preventDefault();
-      var linkHref = event.target.getAttribute("href");
-      var element = contentRef.current.querySelector(linkHref);
-      if (element) {
-        window.scrollTo({
-          top: element.offsetTop - 90,
-          behavior: "smooth",
+    if (post.published_on == "Draft" && !config.SHOW_DRAFT_POSTS) {
+      status = config.NOT_FOUND;
+    } else {
+      var published_on = post.published_on.replace(",", "");
+      var published_time = new Date(post.publishedAt).toLocaleTimeString();
+      var tags = [];
+      if (post.tags) {
+        tags = post.tags.map((tag) => {
+          return tag.name;
         });
       }
-    };
+
+      var tagsString = tags.join(", ");
+
+      var indexContent = null;
+      var blogContent = post.content.replace(
+        /<img/g,
+        '<img class="mx-auto aspect-w-2 sm:object-cover" style="width:min-content;height:min-content"'
+      );
+
+      // table of contents formation
+      if (post.toc) {
+        indexContent = post.toc.replace(/<a\s+href="(.*?)"/g, (match, href) => {
+          let classes =
+            "text-ellipsis hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text";
+          if (href === activeId) {
+            classes +=
+              " relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:left-0 after:bottom-0 after:w-full after:h-[1px] after:bg-gradient-to-r";
+          }
+          return `<a href="${href}" class="${classes}"`;
+        });
+      }
+
+      var handleClick = (event) => {
+        event.preventDefault();
+        var linkHref = event.target.getAttribute("href");
+        var element = contentRef.current.querySelector(linkHref);
+        if (element) {
+          window.scrollTo({
+            top: element.offsetTop - 90,
+            behavior: "smooth",
+          });
+        }
+      };
+    }
   }
 
   const handleScroll = () => {
@@ -295,18 +303,20 @@ export default function Post({ postData, status, categoryPosts }) {
                       }}
                     ></div>
                     <div className="flex flex-row flex-wrap mt-20">
-                      {post.tags.map((tag) => {
-                        return (
-                          <div className="my-4 mr-4" key={tag.id}>
-                            <Link
-                              href={"/tag/" + tag.slug}
-                              className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize"
-                            >
-                              {tag.name}
-                            </Link>
-                          </div>
-                        );
-                      })}
+                      {post.tags
+                        ? post.tags.map((tag) => {
+                            return (
+                              <div className="my-4 mr-4" key={tag.id}>
+                                <Link
+                                  href={"/tag/" + tag.slug}
+                                  className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize"
+                                >
+                                  {tag.name}
+                                </Link>
+                              </div>
+                            );
+                          })
+                        : ""}
                     </div>
                   </div>
                 </div>

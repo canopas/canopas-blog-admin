@@ -13,7 +13,7 @@ function getReadingTime(content) {
 
 // Formate date and time from millis
 function formateDate(date) {
-  if (!date) return;
+  if (!date) return [null, null];
   const newDate = new Date(date);
   const formattedDate = newDate.toLocaleDateString("en-US", {
     month: "short",
@@ -36,11 +36,12 @@ function setPostFields(post, slug) {
       : post.attributes.publishedAt;
   const [date, _] = formateDate(publishedDate);
   const author = post.attributes.author.data.attributes;
-  post.attributes.published_on = date;
+  post.attributes.published_on = date || "Draft";
   post.attributes.readingTime = getReadingTime(post.attributes.content);
-  post.attributes.image_url = post.attributes.image.data
-    ? post.attributes.image.data.attributes.url
-    : canopasIcon;
+  post.attributes.image_url =
+    post.attributes.image.data && post.attributes.image.data.attributes.url
+      ? post.attributes.image.data.attributes.url
+      : canopasIcon;
   post.attributes.authorName = author.username;
   post.attributes.authorImage = author.image_url ? author.image_url : Avatar;
   post.attributes.authorAltText = author

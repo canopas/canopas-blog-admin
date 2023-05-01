@@ -24,9 +24,11 @@ export async function getServerSideProps() {
   var categories = [];
 
   try {
-    response = await axios.get(
-      config.STRAPI_URL + "/v1/posts?populate=deep&status=published"
-    );
+    let published = config.SHOW_DRAFT_POSTS
+      ? "&publicationState=preview"
+      : "&publicationState=live";
+    let url = config.STRAPI_URL + "/v1/posts?populate=deep" + published;
+    response = await axios.get(url);
     posts = response.data.data;
     posts.forEach((post) => setPostFields(post));
   } catch (err) {

@@ -1,6 +1,6 @@
 export default Object.freeze({
   STRAPI_URL: "https://blog-admin.canopas.com",
-  CANOPAS_URL: "https://dev-stack.canopas.com",
+  CANOPAS_URL: "https://canopas.com",
 
   WORDS_PER_MINUTE: 200,
 
@@ -17,5 +17,5 @@ export default Object.freeze({
     authorName: "canopas",
   },
 
-  SHOW_DRAFT_POSTS: true,
+  SHOW_DRAFT_POSTS: false,
 });

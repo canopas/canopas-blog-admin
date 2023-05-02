@@ -1,0 +1,20 @@
+name: Deploy to Dev
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy_to_dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Deploy to dev
+        run: |
+          git fetch origin
+          git checkout -b development
+          git merge ${GITHUB_REF#refs/heads/}
+          git push origin development

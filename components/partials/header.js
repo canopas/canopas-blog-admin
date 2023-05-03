@@ -41,7 +41,7 @@ export default function Header() {
               }`
         }`}
       >
-        <nav className="lg:mt-3 py-5 px-[2%] lg:px-0 font-inter-medium">
+        <nav className="mt-2.5 py-5 md:py-[1.75rem] px-[2%] lg:px-0 font-inter-medium">
           <div className="container flex flex-row flex-wrap justify-start items-center">
             <div className="mr-4 py-[0.3125rem] text-[1.25rem] text-black no-underline whitespace-nowrap">
               <Link href={HOST_URL}>
@@ -59,7 +59,7 @@ export default function Header() {
                   <li className="ml-0 my-2 sm:my-0">
                     <Link
                       href={`${HOST_URL}/services`}
-                      className={`relative mr-[14px] xl:mr-[20px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
+                      className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
                         router.pathname == `${HOST_URL}/services`
                           ? "canopas-gradient-text"
                           : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
@@ -75,7 +75,7 @@ export default function Header() {
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
                     href={`${HOST_URL}/portfolio`}
-                    className={`relative mr-[14px] xl:mr-[20px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
+                    className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
                       router.pathname == `${HOST_URL}/portfolio`
                         ? "canopas-gradient-text"
                         : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
@@ -88,7 +88,7 @@ export default function Header() {
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
                     href={`${HOST_URL}/resources`}
-                    className={`relative mr-[14px] xl:mr-[20px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text`}
+                    className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text`}
                   >
                     Resources
                   </Link>
@@ -97,11 +97,12 @@ export default function Header() {
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
                     href="https://blog.canopas.com/"
-                    className={`relative mr-[14px] xl:mr-[20px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
+                    className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
                       router.pathname == "https://blog.canopas.com/"
                         ? "canopas-gradient-text"
                         : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                     }`}
+                    target="_blank"
                   >
                     Blog
                   </Link>
@@ -110,7 +111,7 @@ export default function Header() {
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
                     href={`${HOST_URL}/jobs`}
-                    className={`relative mr-[14px] xl:mr-[20px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
+                    className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
                       router.pathname == `${HOST_URL}/jobs`
                         ? "canopas-gradient-text"
                         : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
@@ -123,7 +124,7 @@ export default function Header() {
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
                     href={`${HOST_URL}/about`}
-                    className={`relative mr-[14px] xl:mr-[20px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
+                    className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
                       router.pathname == `${HOST_URL}/about`
                         ? "canopas-gradient-text"
                         : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
@@ -136,14 +137,14 @@ export default function Header() {
                 <li className="order-last ml-0 my-2 sm:my-0 p-0">
                   <Link
                     href={`${HOST_URL}/contact`}
-                    className={`relative mb-0 mr-0 lg:ml-[10px] xl:ml-[20px] rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.75rem] font-bold text-white ${
+                    className={`relative mb-0 mr-[14px] xl:mr-[25px] rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff835b] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.75rem] font-bold text-white ${
                       router.pathname == `${HOST_URL}/contact`
                         ? "bg-clip-border canopas-gradient-text"
                         : ""
                     }`}
                   >
                     <span className="py-[1rem] px-[0.7rem] xl:px-[1.05rem] gradient-text inline-block ">
-                      Get Free Consulation
+                      Get Free Consultation
                     </span>
                   </Link>
                 </li>
@@ -255,7 +256,7 @@ export default function Header() {
                       className="relative justify-self-center rounded-[8px] border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] font-bold text-white "
                     >
                       <div className="py-[0.8rem] px-[2.5rem] text-lg gradient-text inline-block">
-                        Get Free Consulation
+                        Get Free Consultation
                       </div>
                     </Link>
                   </div>

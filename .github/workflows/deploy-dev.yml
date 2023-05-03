@@ -16,7 +16,7 @@ jobs:
         run: |
           git fetch origin
           git checkout main
-          git pull origin main
           git checkout -b development
+          git merge main --ff
           git merge ${GITHUB_REF#refs/heads/}
-          git push origin development
+          git push origin development -f

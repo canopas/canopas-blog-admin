@@ -15,6 +15,8 @@ jobs:
       - name: Deploy to dev
         run: |
           git fetch origin
+          git checkout main
+          git pull origin main
           git checkout -b development
           git merge ${GITHUB_REF#refs/heads/}
           git push origin development

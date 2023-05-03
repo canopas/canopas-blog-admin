@@ -162,7 +162,7 @@ export default function Header() {
                   isMenuOpen ? "translate-x-0" : "translate-x-full"
                 }`}
               >
-                <div className="sticky top-0 w-full py-6">
+                <div className="sticky top-0 w-full py-3">
                   <div className="flex justify-between items-center">
                     <div className="text-[1.25rem] text-black no-undurline whitespace-nowrap">
                       <Link href={HOST_URL}>

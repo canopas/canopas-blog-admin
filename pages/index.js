@@ -108,25 +108,29 @@ export default function Home({ posts, status, categories }) {
         authorName={config.SEO_META_DATA.authorName}
       />
       <section className="container my-16 mx-2 sm:mx-auto">
-        <div className="my-16 w-full bg-black-900">
-          <div className="flex flex-col space-y-2 py-4 px-14 md:px-28 xl:px-44">
-            <div className="w-20 md:w-1/5 ">
-              <hr className="border-1 border-[#ff9472]" />
-            </div>
-            <div className="text-[1.5rem] md:text-[1.60rem] xl:text-[1.67rem] text-white font-semibold leading-tight md:leading-snug text-left tracking-wide">
-              On a mission to help you become a better{" "}
-              <span className="text-[#ff9472]">Software Engineer</span>. Sharing
-              knowlegde on{" "}
-              <span className="text-[#ff9472]">
-                #android, #iOS, #web, & #programming.
-              </span>
+        {config.SHOW_HEADER_TITLE ? (
+          <div className="my-16 w-full bg-black-900">
+            <div className="flex flex-col space-y-2 py-4 px-14 md:px-28 xl:px-44">
+              <div className="w-20 md:w-1/5 ">
+                <hr className="border-1 border-[#ff9472]" />
+              </div>
+              <div className="text-[1.5rem] md:text-[1.60rem] xl:text-[1.67rem] text-white font-semibold leading-tight md:leading-snug text-left tracking-wide">
+                On a mission to help you become a better{" "}
+                <span className="text-[#ff9472]">Software Engineer</span>.
+                Sharing knowlegde on{" "}
+                <span className="text-[#ff9472]">
+                  #android, #iOS, #web, & #programming.
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          ""
+        )}
 
-        <div className="flex flex-col xl:flex-row space-y-8 xl:space-y-0 xl:justify-between xl:items-center mb-16">
+        <div className="flex flex-col 2xl:flex-row space-y-8 2xl:space-y-0 2xl:justify-between 2xl:items-center mb-16">
           {categories.length != 0 ? (
-            <div className="xl:basis-8/12 h-10 border-b border-[#e6e6e6]">
+            <div className="2xl:basis-8/12 h-10 border-b border-[#e6e6e6]">
               <Swiper
                 navigation={true}
                 onClick={(swiper) => setActiveIndex(swiper.clickedIndex)}
@@ -175,26 +179,30 @@ export default function Home({ posts, status, categories }) {
             ""
           )}
 
-          <div className="flex flex-row items-center xl:basis-3/12 w-80 rounded-[10px] !bg-gray-100 pl-3">
-            <span>
-              <i className="w-16 h-16 rounded-full text-gray-500 cursor-pointer">
-                <FontAwesomeIcon
-                  icon={faMagnifyingGlass}
-                  className="pr-1 text-sm"
-                />
-              </i>
-            </span>
-            <input
-              className="!border-0 !bg-gray-100"
-              placeholder="Search Blogs"
-              type="text"
-              value={keyword}
-              onChange={(e) => {
-                setKeyword(e.target.value);
-                setResults(searchBlogs(e.target.value));
-              }}
-            />
-          </div>
+          {config.SHOW_SEARCH_POSTS ? (
+            <div className="flex flex-row items-center 2xl:basis-3/12 w-80 rounded-[10px] !bg-gray-100 pl-3">
+              <span>
+                <i className="rounded-full text-gray-500 cursor-pointer">
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    className="w-[1.1rem] h-5 pr-1 text-sm"
+                  />
+                </i>
+              </span>
+              <input
+                className="!border-0 !bg-gray-100"
+                placeholder="Search Blogs"
+                type="text"
+                value={keyword}
+                onChange={(e) => {
+                  setKeyword(e.target.value);
+                  setResults(searchBlogs(e.target.value));
+                }}
+              />
+            </div>
+          ) : (
+            ""
+          )}
         </div>
 
         {count == 0 || status == config.NOT_FOUND ? (

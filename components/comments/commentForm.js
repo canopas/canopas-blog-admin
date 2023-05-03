@@ -57,7 +57,10 @@ export default function CommentForm({ post, onNewComment, recaptchaRef }) {
   return (
     <div className="container py-20 tracking-wide">
       <div className="flex items-center pb-5 font-semibold text-xl">
-        <FontAwesomeIcon icon={faMessage} className="pr-2 text-pink-300" />{" "}
+        <FontAwesomeIcon
+          icon={faMessage}
+          className="w-7 h-7 pr-2 text-pink-300"
+        />
         <span className="bg-gradient-to-r from-pink-300 to-orange-300 text-transparent bg-clip-text">
           Leave comment
         </span>

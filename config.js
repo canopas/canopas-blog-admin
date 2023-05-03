@@ -18,4 +18,7 @@ export default Object.freeze({
   },
 
   SHOW_DRAFT_POSTS: true,
+  SHOW_SEARCH_POSTS: true,
+  SHOW_HEADER_TITLE: true,
+  SHOW_SERVICES_PAGE: true,
 });

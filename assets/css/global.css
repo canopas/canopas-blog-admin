@@ -225,3 +225,7 @@ code::after {
 .swiper-wrapper {
   @apply !flex !flex-row space-x-14 md:space-x-20 !transition-all !duration-1000;
 }
+
+.grecaptcha-badge {
+  @apply !hidden;
+}

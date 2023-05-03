@@ -26,7 +26,11 @@ export default function Comment({ post }) {
 
   useEffect(() => {
     const handleClick = (event) => {
-      if (fullFormRef.current && !fullFormRef.current.contains(event.target)) {
+      if (
+        event.target.localName != "textarea" &&
+        fullFormRef.current &&
+        !fullFormRef.current.contains(event.target)
+      ) {
         setReviews(false);
       }
     };

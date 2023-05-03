@@ -71,7 +71,7 @@ function calculateWeight(post, keyword) {
       .match(new RegExp(keyword.toLowerCase(), "g")).length;
     weight *= 2;
   }
-  {
+  if (post.attributes.tags) {
     post.attributes.tags.data.map((tag) => {
       if (tag.attributes.name.toLowerCase().includes(keyword.toLowerCase())) {
         weight = tag.attributes.name

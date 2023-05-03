@@ -232,7 +232,7 @@ export default function Post({ postData, status, categoryPosts }) {
                             className="w-full h-full text-sm"
                           />
                         </div>
-                        <div>{tagsString}</div>
+                        <div className="capitalize">{tagsString}</div>
                       </div>
                     ) : (
                       ""

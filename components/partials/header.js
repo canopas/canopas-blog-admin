@@ -159,7 +159,7 @@ export default function Header() {
               </div>
 
               <div
-                className={`fixed top-0 right-0 w-full h-screen bg-white p-4 md:px-10 duration-500 ease-in-out overflow-y-hidden ${
+                className={`fixed top-0 right-0 w-full h-screen bg-white p-4 md:px-10 duration-500 ease-in-out ${
                   isMenuOpen ? "translate-x-0" : "translate-x-full"
                 }`}
               >
@@ -186,7 +186,7 @@ export default function Header() {
                   </div>
                 </div>
 
-                <ul className="flex flex-col justify-start mt-5 text-[1rem] text-[1.09375rem] leading-[1.125rem] overflow-y-auto">
+                <ul className="flex flex-col justify-start h-[50%] sm:h-[45%] mt-5 text-[1rem] text-[1.09375rem] leading-[1.125rem] overflow-y-scroll">
                   {config.SHOW_SERVICES_PAGE ? (
                     <li className="my-5">
                       <Link
@@ -245,15 +245,11 @@ export default function Header() {
                     </Link>
                   </li>
                 </ul>
-                <div
-                  className={`fixed bottom-0 left-0 w-full h-auto bg-white p-4 ${
-                    isMenuOpen ? "shadow-[0_25px_50px_-12px_rgb(0,0,0)]" : ""
-                  }`}
-                >
+                <div className="w-full h-auto bg-white p-4">
                   <div className="grid p-3 pb-5">
                     <Link
                       href={`${HOST_URL}/contact`}
-                      className="relative justify-self-center rounded-[8px] border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] font-bold text-white "
+                      className="relative justify-self-center rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] font-bold text-white "
                     >
                       <div className="py-[0.8rem] px-[2.5rem] text-lg gradient-text inline-block">
                         Get Free Consultation

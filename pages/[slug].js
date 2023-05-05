@@ -11,7 +11,13 @@ import Comment from "../components/comments/index";
 import RecommandedPosts from "../components/posts/recommandedPosts";
 import { setPostFields } from "../utils";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
-import { faTags } from "@fortawesome/free-solid-svg-icons";
+import { faTags, faLink, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFacebook,
+  faTwitter,
+  faReddit,
+  faLinkedinIn,
+} from "@fortawesome/free-brands-svg-icons";
 import hljs from "highlight.js";
 
 export async function getServerSideProps(context) {
@@ -53,11 +59,18 @@ export async function getServerSideProps(context) {
 export default function Post({ postData, status, categoryPosts }) {
   const [loaded, setLoaded] = useState(false);
   const [activeId, setActiveId] = useState(null);
+  const [copied, setCopied] = useState(false);
   const contentRef = useRef(null);
 
   setTimeout(() => {
     setLoaded(true);
   }, 50);
+
+  if (copied) {
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  }
 
   if (postData) {
     var post = postData.attributes;
@@ -121,6 +134,16 @@ export default function Post({ postData, status, categoryPosts }) {
         }
       }
     });
+  };
+
+  const copyLink = () => {
+    const el = document.createElement("input");
+    el.value = window.location.href;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand("copy");
+    document.body.removeChild(el);
+    setCopied(true);
   };
 
   useEffect(() => {
@@ -240,18 +263,78 @@ export default function Post({ postData, status, categoryPosts }) {
                     <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-6 md:leading-7 tracking-wide">
                       {post.summary}
                     </div>
-                    <div className="flex flex-row space-x-4 items-center text-sm">
-                      <div className="relative w-[45px] h-[45px]">
-                        <Image
-                          width={200}
-                          height={200}
-                          className="absolute w-full h-full rounded-full object-cover inset-0"
-                          src={post.authorImage}
-                          alt={post.authorAltText}
-                        />
+                    <div className="grid sm:grid-cols-2 items-center text-sm">
+                      <div className="flex flex-row items-center space-x-4">
+                        <div className="relative w-[45px] h-[45px]">
+                          <Image
+                            width={200}
+                            height={200}
+                            className="absolute w-full h-full rounded-full object-cover inset-0"
+                            src={post.authorImage}
+                            alt={post.authorAltText}
+                          />
+                        </div>
+                        <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-5 tracking-wide">
+                          {post.authorName}
+                        </div>
                       </div>
-                      <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-5 tracking-wide">
-                        {post.authorName}
+
+                      <div className="flex flex-row justify-self-end space-x-4 mt-1 sm:mt-0 mr-4">
+                        <FontAwesomeIcon
+                          icon={faFacebook}
+                          className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                          onClick={() => {
+                            window.open(
+                              `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                config.CANOPAS_URL + "/resources/" + post.slug
+                              )}`,
+                              "_blank"
+                            );
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          icon={faLinkedinIn}
+                          className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                          onClick={() => {
+                            window.open(
+                              `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                                config.CANOPAS_URL + "/resources/" + post.slug
+                              )}`,
+                              "_blank"
+                            );
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          icon={faTwitter}
+                          className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                          onClick={() => {
+                            window.open(
+                              `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                                post.title
+                              )}&url=${encodeURIComponent(
+                                config.CANOPAS_URL + "/resources/" + post.slug
+                              )}`,
+                              "_blank"
+                            );
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          icon={faReddit}
+                          className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                          onClick={() => {
+                            window.open(
+                              `https://www.reddit.com/submit?url=${encodeURIComponent(
+                                config.CANOPAS_URL + "/resources/" + post.slug
+                              )}`,
+                              "_blank"
+                            );
+                          }}
+                        />
+                        <FontAwesomeIcon
+                          icon={faLink}
+                          className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                          onClick={copyLink}
+                        />
                       </div>
                     </div>
                   </div>
@@ -337,6 +420,22 @@ export default function Post({ postData, status, categoryPosts }) {
             </>
           )}
         </div>
+        {copied ? (
+          <div className="sticky bottom-8 inset-x-[7%] sm:inset-x-1/4 xl:inset-x-1/3 flex flex-rows justify-between items-center w-[90%] sm:w-7/12 xl:w-5/12 z-10 rounded-[10px] bg-gradient-to-r from-[#f2709c] to-[#ff9472] py-5 text-white">
+            <p className="mx-7 tracking-wider text-xl font-medium">
+              Link copied
+            </p>
+            <FontAwesomeIcon
+              icon={faXmark}
+              className="w-5 h-5 mr-5 hover:cursor-pointer"
+              onClick={() => {
+                setCopied(false);
+              }}
+            />
+          </div>
+        ) : (
+          ""
+        )}
       </section>
     </>
   );

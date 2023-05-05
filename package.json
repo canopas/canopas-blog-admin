@@ -9,6 +9,7 @@
     "lint": "prettier -c . && next lint"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@headlessui/react": "^1.7.4",
     "@reduxjs/toolkit": "^1.9.1",

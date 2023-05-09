@@ -41,8 +41,8 @@ export default function Header() {
               }`
         }`}
       >
-        <nav className="mt-2.5 py-5 md:py-[1.75rem] px-[2%] lg:px-0 font-inter-medium">
-          <div className="container flex flex-row flex-wrap justify-start items-center">
+        <nav className="mt-2.5 py-5 md:py-[1.75rem] font-inter-medium">
+          <div className="container flex flex-row flex-wrap justify-start items-center 3xl:px-24">
             <div className="mr-4 py-[0.3125rem] text-[1.25rem] text-black no-underline whitespace-nowrap">
               <Link href={HOST_URL}>
                 <Image

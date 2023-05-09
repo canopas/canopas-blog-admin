@@ -36,7 +36,7 @@ export default function Home({ posts, status, slug }) {
         description={config.SEO_META_DATA.description}
         authorName={config.SEO_META_DATA.authorName}
       />
-      <section className="container my-10 md:my-16 mx-2 sm:mx-auto">
+      <section className="container my-10 md:my-16 sm:mx-auto 3xl:px-24">
         {count == 0 || status == config.NOT_FOUND ? (
           <div className="mt-20 text-[1.4rem] text-center">
             {config.POST_NOT_FOUND_MESSAGE}

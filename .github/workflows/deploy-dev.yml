@@ -14,9 +14,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Deploy to dev
         run: |
-          git fetch origin
-          git checkout main
           git checkout -b development
-          git merge main --ff
           git merge ${GITHUB_REF#refs/heads/}
           git push origin development -f

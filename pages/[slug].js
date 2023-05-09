@@ -11,7 +11,12 @@ import Comment from "../components/comments/index";
 import RecommandedPosts from "../components/posts/recommandedPosts";
 import { setPostFields } from "../utils";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
-import { faTags, faLink, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faTags,
+  faLink,
+  faXmark,
+  faArrowUpRightFromSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   faFacebook,
   faTwitter,
@@ -146,6 +151,16 @@ export default function Post({ postData, status, categoryPosts }) {
     setCopied(true);
   };
 
+  const shareUrl = async () => {
+    try {
+      await navigator.share({
+        title: post.title,
+        text: post.meta_description,
+        url: config.CANOPAS_URL + "/resources/" + post.slug,
+      });
+    } catch (err) {}
+  };
+
   useEffect(() => {
     if (postData) {
       hljs.highlightAll();
@@ -263,7 +278,7 @@ export default function Post({ postData, status, categoryPosts }) {
                     <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-6 md:leading-7 tracking-wide">
                       {post.summary}
                     </div>
-                    <div className="grid sm:grid-cols-2 items-center text-sm">
+                    <div className="grid grid-cols-2 items-center text-sm">
                       <div className="flex flex-row items-center space-x-4">
                         <div className="relative w-[45px] h-[45px]">
                           <Image
@@ -279,62 +294,72 @@ export default function Post({ postData, status, categoryPosts }) {
                         </div>
                       </div>
 
-                      <div className="flex flex-row justify-self-end space-x-4 mt-1 sm:mt-0 mr-4">
-                        <FontAwesomeIcon
-                          icon={faFacebook}
-                          className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
-                          onClick={() => {
-                            window.open(
-                              `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                config.CANOPAS_URL + "/resources/" + post.slug
-                              )}`,
-                              "_blank"
-                            );
-                          }}
-                        />
-                        <FontAwesomeIcon
-                          icon={faLinkedinIn}
-                          className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
-                          onClick={() => {
-                            window.open(
-                              `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-                                config.CANOPAS_URL + "/resources/" + post.slug
-                              )}`,
-                              "_blank"
-                            );
-                          }}
-                        />
-                        <FontAwesomeIcon
-                          icon={faTwitter}
-                          className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
-                          onClick={() => {
-                            window.open(
-                              `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                                post.title
-                              )}&url=${encodeURIComponent(
-                                config.CANOPAS_URL + "/resources/" + post.slug
-                              )}`,
-                              "_blank"
-                            );
-                          }}
-                        />
-                        <FontAwesomeIcon
-                          icon={faReddit}
-                          className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
-                          onClick={() => {
-                            window.open(
-                              `https://www.reddit.com/submit?url=${encodeURIComponent(
-                                config.CANOPAS_URL + "/resources/" + post.slug
-                              )}`,
-                              "_blank"
-                            );
-                          }}
-                        />
-                        <FontAwesomeIcon
-                          icon={faLink}
-                          className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
-                          onClick={copyLink}
-                        />
+                      <div className="justify-self-end">
+                        <div className="mr-4 lg:hidden">
+                          <FontAwesomeIcon
+                            icon={faArrowUpRightFromSquare}
+                            className="w-6 h-6 sm:w-7 sm:h-7 hover:cursor-pointer"
+                            onClick={shareUrl}
+                          />
+                        </div>
+
+                        <div className="hidden lg:flex flex-row space-x-4 mr-4">
+                          <FontAwesomeIcon
+                            icon={faFacebook}
+                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                            onClick={() => {
+                              window.open(
+                                `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                                  config.CANOPAS_URL + "/resources/" + post.slug
+                                )}`,
+                                "_blank"
+                              );
+                            }}
+                          />
+                          <FontAwesomeIcon
+                            icon={faLinkedinIn}
+                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                            onClick={() => {
+                              window.open(
+                                `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                                  config.CANOPAS_URL + "/resources/" + post.slug
+                                )}`,
+                                "_blank"
+                              );
+                            }}
+                          />
+                          <FontAwesomeIcon
+                            icon={faTwitter}
+                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                            onClick={() => {
+                              window.open(
+                                `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                                  post.title
+                                )}&url=${encodeURIComponent(
+                                  config.CANOPAS_URL + "/resources/" + post.slug
+                                )}`,
+                                "_blank"
+                              );
+                            }}
+                          />
+                          <FontAwesomeIcon
+                            icon={faReddit}
+                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                            onClick={() => {
+                              window.open(
+                                `https://www.reddit.com/submit?url=${encodeURIComponent(
+                                  config.CANOPAS_URL + "/resources/" + post.slug
+                                )}`,
+                                "_blank"
+                              );
+                            }}
+                          />
+                          <FontAwesomeIcon
+                            icon={faLink}
+                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                            onClick={copyLink}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

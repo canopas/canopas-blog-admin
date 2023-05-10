@@ -12,6 +12,7 @@ module.exports = {
         lg: "992px",
         xl: "1200px",
         "2xl": "1400px",
+        "3xl": "1600px",
       },
       fontFamily: {
         "product-black": ["Product Sans Black"],
@@ -70,6 +71,9 @@ module.exports = {
           },
           "@screen 2xl": {
             maxWidth: "1320px",
+          },
+          "@screen 3xl": {
+            maxWidth: "1470px",
           },
         },
       });

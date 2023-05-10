@@ -366,15 +366,21 @@ export default function Post({ postData, status, categoryPosts }) {
                 </div>
 
                 {/* Table of Contents */}
-                <div className="container flex flex-col xl:flex-row space-y-20 xl:space-y-0 xl:space-x-20 2xl:mx-10 rounded-3xl text-[1.125rem]">
-                  <div className="realtive w-full xl:w-[30%]">
+                <div
+                  className={`flex flex-col xl:flex-row space-y-20 xl:space-y-0 ${
+                    categoryPosts.length != 0 && config.SHOW_RECOMMANDED_POSTS
+                      ? "xl:space-x-6 2xl:space-x-8 3xl:space-x-12 xl:mx-0"
+                      : "xl:space-x-10 2xl:space-x-20 xl:mx-8 2xl:mx-20 3xl:mx-32"
+                  }  mx-2 lg:mx-24 rounded-3xl text-[1.125rem]`}
+                >
+                  <div className="relative w-full xl:w-[40%]">
                     <div className="xl:sticky top-24 flex flex-col">
                       {indexContent != null ? (
                         <div className="w-full h-fit border border-1 border-black-900 rounded-[12px]">
                           <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4">
                             Table of contents
                           </div>
-                          <div className="pl-5 pr-8 tracking-[0.02em] leading-relaxed">
+                          <div className="pl-5 pr-6 tracking-[0.02em] leading-relaxed">
                             <div className="mt-4 text-[1.125rem] text-[#374151] list-none ">
                               <div
                                 className="my-3"
@@ -389,21 +395,11 @@ export default function Post({ postData, status, categoryPosts }) {
                       ) : (
                         ""
                       )}
-
-                      {/* Recommended Posts Section Desktop View */}
-
-                      {categoryPosts.length == 0 ? (
-                        ""
-                      ) : (
-                        <div className="hidden xl:inline-block mt-10">
-                          <RecommandedPosts categoryPosts={categoryPosts} />
-                        </div>
-                      )}
                     </div>
                   </div>
 
                   {/* main article */}
-                  <div className="prose lg:prose-lg">
+                  <div className="prose lg:prose-lg xl:w-full 2xl:w-auto">
                     <div
                       ref={contentRef}
                       dangerouslySetInnerHTML={{
@@ -427,17 +423,31 @@ export default function Post({ postData, status, categoryPosts }) {
                         : ""}
                     </div>
                   </div>
+                  {/* Recommended Posts Section Desktop View */}
+
+                  {categoryPosts.length != 0 &&
+                  config.SHOW_RECOMMANDED_POSTS ? (
+                    <div className="relative w-[40%]">
+                      <div className="xl:sticky top-28">
+                        <div className="hidden xl:block w-full h-fit">
+                          <RecommandedPosts categoryPosts={categoryPosts} />
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
 
               {/* Recommended Posts Section Mobile,Tablet View*/}
-              {categoryPosts.length == 0 ? (
-                ""
-              ) : (
+              {categoryPosts.length != 0 && config.SHOW_RECOMMANDED_POSTS ? (
                 <div className="container inline-block xl:hidden mt-10 lg:mx-4">
                   <hr className="mb-10" />
                   <RecommandedPosts categoryPosts={categoryPosts} />
                 </div>
+              ) : (
+                ""
               )}
 
               {/* comments */}

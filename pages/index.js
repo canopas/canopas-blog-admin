@@ -107,7 +107,7 @@ export default function Home({ posts, status, categories }) {
         description={config.SEO_META_DATA.description}
         authorName={config.SEO_META_DATA.authorName}
       />
-      <section className="container my-16 mx-2 sm:mx-auto">
+      <section className="container my-16 mx-2 sm:mx-auto 3xl:px-24">
         {config.SHOW_HEADER_TITLE ? (
           <div className="my-16 w-full bg-black-900">
             <div className="flex flex-col space-y-2 py-4 px-14 md:px-28 xl:px-44">

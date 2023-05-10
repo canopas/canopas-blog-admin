@@ -39,7 +39,7 @@ export default function Post({ featurePosts, status }) {
         ) : status != config.SUCCESS ? (
           <></>
         ) : (
-          <div className="md:mx-8 xl:mx-20">
+          <div className="md:mx-8 xl:mx-20 3xl:px-24">
             <div className="my-6 md:my-10 text-[1.5rem] md:text-[1.8rem] xl:text-[2.2rem] font-semibold leading-7 tracking-wide capitalize">
               Featured Blogs
             </div>

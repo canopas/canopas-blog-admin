@@ -13,7 +13,7 @@ export default function RecommandedPosts({ categoryPosts }) {
           if (i < 3) {
             return (
               <Link href={"/" + categoryPost.slug} key={i}>
-                <div className="grid grid-cols-3 gap-5 mb-10">
+                <div className="grid grid-cols-3 gap-5 xl:gap-2 2xl:gap-5 mb-10 xl:mb-6 2xl:mb-10">
                   <div className="flex flex-col col-span-2 space-y-1">
                     <div className="flex flex-row space-x-2 items-center text-[0.8rem] md:text-[1rem] xl:text-[0.8rem] tracking-wider capitalize">
                       <div className="relative w-[30px] h-[30px] p-3">

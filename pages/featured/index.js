@@ -21,9 +21,8 @@ export async function getServerSideProps() {
   return { props: { featurePosts, status } };
 }
 
-export default function Post({ featurePosts, status }) {
+export default function Post({ featurePosts, status, mixpanel }) {
   const count = featurePosts.length;
-
   return (
     <>
       <Seo
@@ -45,7 +44,7 @@ export default function Post({ featurePosts, status }) {
             </div>
 
             <div className="mt-6 md:mt-10 xl:mt-20">
-              <PostsList postData={[featurePosts]} />
+              <PostsList postData={[featurePosts]} mixpanel={mixpanel} />
             </div>
           </div>
         )}

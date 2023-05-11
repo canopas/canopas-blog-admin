@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function RecommandedPosts({ categoryPosts }) {
+export default function RecommandedPosts({ postData }) {
+  const [categoryPosts, mixpanel] = postData;
   return (
     <>
       <span className="text-[1.7rem] lg:text-[2rem] xl:text-[1.6rem] font-semibold tracking-wide capitalize">
@@ -30,7 +31,14 @@ export default function RecommandedPosts({ categoryPosts }) {
                       </span>
                     </div>
 
-                    <div className="text-[1rem] sm:text-[1.1rem] md:text-[1.4rem] xl:text-[1rem] font-bold leading-5 md:leading-7 xl:leading-5 tracking-wider xl:line-clamp-2">
+                    <div
+                      className="text-[1rem] sm:text-[1.1rem] md:text-[1.4rem] xl:text-[1rem] font-bold leading-5 md:leading-7 xl:leading-5 tracking-wider xl:line-clamp-2"
+                      onClick={() => {
+                        mixpanel.track("tap_blog_title", {
+                          Title: categoryPost.title,
+                        });
+                      }}
+                    >
                       {categoryPost.title}
                     </div>
                     <div className="text-gray-600 text-[1rem] md:text-[1.06rem] leading-6 md:leading-7 tracking-wide">

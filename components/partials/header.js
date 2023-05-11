@@ -7,12 +7,16 @@ import config from "../../config";
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 
-export default function Header() {
+export default function Header({ mixpanel }) {
   const HOST_URL = config.CANOPAS_URL;
   const router = useRouter();
   const [showHeader, setShowHeader] = useState(true);
   var [lastScrollPos, setLastScrollPos] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleMenuClick = (Menu) => {
+    mixpanel.track(Menu);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,6 +68,9 @@ export default function Header() {
                           ? "canopas-gradient-text"
                           : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                       }`}
+                      onClick={() => {
+                        handleMenuClick("tap_header_services");
+                      }}
                     >
                       Services
                     </Link>
@@ -80,6 +87,9 @@ export default function Header() {
                         ? "canopas-gradient-text"
                         : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                     }`}
+                    onClick={() => {
+                      handleMenuClick("tap_header_portfolio");
+                    }}
                   >
                     Portfolio
                   </Link>
@@ -89,6 +99,9 @@ export default function Header() {
                   <Link
                     href={`${HOST_URL}/resources`}
                     className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text`}
+                    onClick={() => {
+                      handleMenuClick("tap_header_resources");
+                    }}
                   >
                     Resources
                   </Link>
@@ -102,6 +115,9 @@ export default function Header() {
                         ? "canopas-gradient-text"
                         : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                     }`}
+                    onClick={() => {
+                      handleMenuClick("tap_header_blog");
+                    }}
                     target="_blank"
                   >
                     Blog
@@ -116,6 +132,9 @@ export default function Header() {
                         ? "canopas-gradient-text"
                         : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                     }`}
+                    onClick={() => {
+                      handleMenuClick("tap_header_career");
+                    }}
                   >
                     Career
                   </Link>
@@ -129,6 +148,9 @@ export default function Header() {
                         ? "canopas-gradient-text"
                         : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                     }`}
+                    onClick={() => {
+                      handleMenuClick("tap_header_about");
+                    }}
                   >
                     About
                   </Link>
@@ -142,6 +164,9 @@ export default function Header() {
                         ? "bg-clip-border canopas-gradient-text"
                         : ""
                     }`}
+                    onClick={() => {
+                      handleMenuClick("tap_header_cta");
+                    }}
                   >
                     <span className="py-[1rem] px-[0.7rem] xl:px-[1.05rem] gradient-text inline-block ">
                       Get Free Consultation
@@ -192,6 +217,9 @@ export default function Header() {
                       <Link
                         href={`${HOST_URL}/services`}
                         className="relative hover:bg-gradient-to-r after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left gradient-text"
+                        onClick={() => {
+                          handleMenuClick("tap_header_services");
+                        }}
                       >
                         Services
                       </Link>
@@ -204,6 +232,9 @@ export default function Header() {
                     <Link
                       href={`${HOST_URL}/portfolio`}
                       className="relative hover:bg-gradient-to-r after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left gradient-text"
+                      onClick={() => {
+                        handleMenuClick("tap_header_portfolio");
+                      }}
                     >
                       Portfolio
                     </Link>
@@ -213,6 +244,9 @@ export default function Header() {
                     <Link
                       href={`${HOST_URL}/resources`}
                       className={`relative after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text`}
+                      onClick={() => {
+                        handleMenuClick("tap_header_resources");
+                      }}
                     >
                       Resources
                     </Link>
@@ -222,6 +256,9 @@ export default function Header() {
                     <Link
                       href="https://blog.canopas.com/"
                       className="relative hover:bg-gradient-to-r after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left gradient-text"
+                      onClick={() => {
+                        handleMenuClick("tap_header_blog");
+                      }}
                     >
                       Blog
                     </Link>
@@ -231,6 +268,9 @@ export default function Header() {
                     <Link
                       href={`${HOST_URL}/jobs`}
                       className="relative hover:bg-gradient-to-r after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left gradient-text"
+                      onClick={() => {
+                        handleMenuClick("tap_header_career");
+                      }}
                     >
                       Career
                     </Link>
@@ -240,6 +280,9 @@ export default function Header() {
                     <Link
                       href={`${HOST_URL}/about`}
                       className="relative hover:bg-gradient-to-r after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left gradient-text"
+                      onClick={() => {
+                        handleMenuClick("tap_header_about");
+                      }}
                     >
                       About
                     </Link>
@@ -250,6 +293,9 @@ export default function Header() {
                     <Link
                       href={`${HOST_URL}/contact`}
                       className="relative justify-self-center rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] font-bold text-white "
+                      onClick={() => {
+                        handleMenuClick("tap_header_cta");
+                      }}
                     >
                       <div className="py-[0.8rem] px-[2.5rem] text-lg gradient-text inline-block">
                         Get Free Consultation

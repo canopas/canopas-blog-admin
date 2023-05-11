@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function PostsList({ postData }) {
+export default function PostsList({ postData, mixpanel }) {
   const [posts, slug, tagName] = postData;
   const [displayedPosts, setDisplayedPosts] = useState(10);
 
@@ -48,7 +48,14 @@ export default function PostsList({ postData }) {
               </div>
               <div className="grid grid-cols-3 gap-10 md:gap-12 xl:gap-16 mt-4">
                 <div className="col-span-2">
-                  <div className="mb-2 lg:mb-3.5 text-[1.2rem] md:text-[1.4rem] xl:text-[1.7rem] font-semibold leading-7 md:leading-tight tracking-wide line-clamp-2 lg:line-clamp-4">
+                  <div
+                    className="mb-2 lg:mb-3.5 text-[1.2rem] md:text-[1.4rem] xl:text-[1.7rem] font-semibold leading-7 md:leading-tight tracking-wide line-clamp-2 lg:line-clamp-4"
+                    onClick={() => {
+                      mixpanel.track("tap_blog_title", {
+                        Title: post.title,
+                      });
+                    }}
+                  >
                     {post.title}
                   </div>
                   <div className="mb-3 text-gray-600 text-[1rem] md:text-[1.06rem] xl:text-[1.12rem] leading-6 md:leading-7 tracking-wide line-clamp-1 md:line-clamp-2 xl:line-clamp-3">

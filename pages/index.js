@@ -50,7 +50,7 @@ export async function getServerSideProps() {
   return { props: { posts, status, categories } };
 }
 
-export default function Home({ posts, status, categories }) {
+export default function Home({ posts, status, categories, mixpanel }) {
   var [results, setResults] = useState(posts);
   const [displayedPosts, setDisplayedPosts] = useState(10);
   const featurePosts = results.filter((post) => post.attributes.is_featured);
@@ -269,6 +269,11 @@ export default function Home({ posts, status, categories }) {
                               <div
                                 className="my-2 text-[1.375rem] font-semibold leading-7 tracking-wide text-[#000000d6] hover:underline underline-offset-4 transition-all hover:scale-[0.96]
                         lg:text-[1.5rem] lg:leading-8"
+                                onClick={() => {
+                                  mixpanel.track("tap_blog_title", {
+                                    Title: featurePost.title,
+                                  });
+                                }}
                               >
                                 {featurePost.title}
                               </div>
@@ -364,7 +369,16 @@ export default function Home({ posts, status, categories }) {
                             : "lg:text-[1.5rem] lg:leading-8"
                         }`}
                       >
-                        <Link href={"/" + post.slug}>{post.title}</Link>
+                        <Link
+                          href={"/" + post.slug}
+                          onClick={() => {
+                            mixpanel.track("tap_blog_title", {
+                              Title: post.title,
+                            });
+                          }}
+                        >
+                          {post.title}
+                        </Link>
                       </div>
                       <div className="text-[1.0625rem] md:text-[1.125rem] lg:text-[1.13rem] lg:leading-7 tracking-wide text-gray-500">
                         <Link href={"/" + post.slug}>

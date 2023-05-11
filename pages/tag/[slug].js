@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
   return { props: { posts, status, slug } };
 }
 
-export default function Home({ posts, status, slug }) {
+export default function Home({ posts, status, slug, mixpanel }) {
   const count = posts.length;
   if (count != 0) {
     var tagName = posts[0].tagName;
@@ -54,7 +54,10 @@ export default function Home({ posts, status, slug }) {
               </div>
             </div>
             <div className="mt-4 md:mt-6 xl:mt-8">
-              <PostsList postData={[posts, slug, tagName]} />
+              <PostsList
+                postData={[posts, slug, tagName]}
+                mixpanel={mixpanel}
+              />
             </div>
           </div>
         )}

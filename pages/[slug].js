@@ -61,7 +61,7 @@ export async function getServerSideProps(context) {
   return { props: { postData, status, categoryPosts } };
 }
 
-export default function Post({ postData, status, categoryPosts }) {
+export default function Post({ postData, status, categoryPosts, mixpanel }) {
   const [loaded, setLoaded] = useState(false);
   const [activeId, setActiveId] = useState(null);
   const [copied, setCopied] = useState(false);
@@ -151,7 +151,7 @@ export default function Post({ postData, status, categoryPosts }) {
     setCopied(true);
   };
 
-  const shareUrl = async () => {
+  const shareBlog = async () => {
     try {
       await navigator.share({
         title: post.title,
@@ -164,6 +164,7 @@ export default function Post({ postData, status, categoryPosts }) {
   useEffect(() => {
     if (postData) {
       hljs.highlightAll();
+      setLoaded(false);
 
       document.querySelectorAll("oembed[url]").forEach((element) => {
         if (
@@ -187,8 +188,6 @@ export default function Post({ postData, status, categoryPosts }) {
     });
 
     window.__forceSmoothScrollPolyfill__ = true;
-
-    setLoaded(false);
   }, []);
 
   return (
@@ -247,9 +246,9 @@ export default function Post({ postData, status, categoryPosts }) {
                   </div>
 
                   <div className="flex flex-col space-y-5 md:text-white ">
-                    <div className="text-[2.20rem] lg:text-[2.50rem] xl:text-[2.80rem] font-normal leading-10 lg:leading-tight tracking-wide">
+                    <h1 className="text-[2.20rem] lg:text-[2.50rem] xl:text-[2.80rem] font-normal leading-10 lg:leading-tight tracking-wide">
                       {post.title}
-                    </div>
+                    </h1>
                     <div className="flex flex-row items-center space-x-4 text-[1rem] leading-6 tracking-wide">
                       <div className="w-5 h-5">
                         <FontAwesomeIcon
@@ -299,7 +298,9 @@ export default function Post({ postData, status, categoryPosts }) {
                           <FontAwesomeIcon
                             icon={faArrowUpRightFromSquare}
                             className="w-6 h-6 sm:w-7 sm:h-7 hover:cursor-pointer"
-                            onClick={shareUrl}
+                            onClick={() => {
+                              mixpanel.track("tap_share_mobile"), shareBlog();
+                            }}
                           />
                         </div>
 
@@ -308,6 +309,7 @@ export default function Post({ postData, status, categoryPosts }) {
                             icon={faFacebook}
                             className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
                             onClick={() => {
+                              mixpanel.track("tap_share_facebook");
                               window.open(
                                 `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
                                   config.CANOPAS_URL + "/resources/" + post.slug
@@ -320,6 +322,7 @@ export default function Post({ postData, status, categoryPosts }) {
                             icon={faLinkedinIn}
                             className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
                             onClick={() => {
+                              mixpanel.track("tap_share_linkedin");
                               window.open(
                                 `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
                                   config.CANOPAS_URL + "/resources/" + post.slug
@@ -332,6 +335,7 @@ export default function Post({ postData, status, categoryPosts }) {
                             icon={faTwitter}
                             className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
                             onClick={() => {
+                              mixpanel.track("tap_share_twitter");
                               window.open(
                                 `https://twitter.com/intent/tweet?text=${encodeURIComponent(
                                   post.title
@@ -346,6 +350,7 @@ export default function Post({ postData, status, categoryPosts }) {
                             icon={faReddit}
                             className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
                             onClick={() => {
+                              mixpanel.track("tap_share_reddit");
                               window.open(
                                 `https://www.reddit.com/submit?url=${encodeURIComponent(
                                   config.CANOPAS_URL + "/resources/" + post.slug
@@ -357,7 +362,9 @@ export default function Post({ postData, status, categoryPosts }) {
                           <FontAwesomeIcon
                             icon={faLink}
                             className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
-                            onClick={copyLink}
+                            onClick={() => {
+                              mixpanel.track("tap_copy_link"), copyLink();
+                            }}
                           />
                         </div>
                       </div>
@@ -414,6 +421,11 @@ export default function Post({ postData, status, categoryPosts }) {
                                 <Link
                                   href={"/tag/" + tag.slug}
                                   className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize"
+                                  onClick={() => {
+                                    mixpanel.track(
+                                      "tap_tag_" + tag.slug.replace("-", "_")
+                                    );
+                                  }}
                                 >
                                   {tag.name}
                                 </Link>
@@ -430,7 +442,9 @@ export default function Post({ postData, status, categoryPosts }) {
                     <div className="relative w-[40%]">
                       <div className="xl:sticky top-28">
                         <div className="hidden xl:block w-full h-fit">
-                          <RecommandedPosts categoryPosts={categoryPosts} />
+                          <RecommandedPosts
+                            postData={[categoryPosts, mixpanel]}
+                          />
                         </div>
                       </div>
                     </div>
@@ -444,7 +458,7 @@ export default function Post({ postData, status, categoryPosts }) {
               {categoryPosts.length != 0 && config.SHOW_RECOMMANDED_POSTS ? (
                 <div className="container inline-block xl:hidden mt-10 lg:mx-4">
                   <hr className="mb-10" />
-                  <RecommandedPosts categoryPosts={categoryPosts} />
+                  <RecommandedPosts postData={[categoryPosts, mixpanel]} />
                 </div>
               ) : (
                 ""

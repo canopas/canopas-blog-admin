@@ -20,11 +20,11 @@ export default function CommentForm({ post, onNewComment, recaptchaRef }) {
     recaptchaRef.current.executeAsync().then(() => {
       const commentData = {
         data: {
+          postId,
+          name,
+          email,
           comment: message,
-          postId: postId,
           parent_id: parentId ? parentId : null,
-          username: name,
-          email: email,
         },
       };
 

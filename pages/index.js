@@ -326,15 +326,11 @@ export default function Home({ posts, status, categories, mixpanel }) {
                     <div
                       className={`my-4 w-auto h-auto border border-1 border-gray-300 transition-all aspect-auto hover:scale-105 ${
                         i === 0 && count % 3 === 1
-                          ? `md:w-3/5 lg:w-2/4 ${
-                              post.image.data == null
-                                ? "md:h-[14.7rem] lg:h-[16.51rem] xl:h-[19.67rem] 2xl:h-[22.836rem] bg-black-900"
-                                : ""
+                          ? `md:w-3/5 lg:w-2/4 md:h-[14.7rem] lg:h-[16.51rem] xl:h-[19.67rem] 2xl:h-[22.836rem] ${
+                              post.image.data == null ? " bg-black-900" : ""
                             }`
-                          : `${
-                              post.image.data == null
-                                ? "md:h-[7.742rem] lg:h-[10.085rem] xl:h-[12.195rem] 2xl:h-[14.304em] bg-black-900"
-                                : ""
+                          : `md:h-[7.742rem] lg:h-[10.085rem] xl:h-[12.195rem] 2xl:h-[14.304em] ${
+                              post.image.data == null ? " bg-black-900" : ""
                             } `
                       }`}
                     >

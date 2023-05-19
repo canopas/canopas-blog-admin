@@ -173,7 +173,7 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
     document.execCommand("copy");
     document.body.removeChild(el);
     setAlerts(true);
-    setMessage("Link alerts");
+    setMessage("Link Copied");
   };
 
   const shareBlog = async () => {

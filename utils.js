@@ -35,18 +35,24 @@ function setPostFields(post, slug) {
       ? post.attributes.published_on
       : post.attributes.publishedAt;
   const [date, _] = formateDate(publishedDate);
-  const author = post.attributes.author.data.attributes;
   post.attributes.published_on = date || "Draft";
   post.attributes.readingTime = getReadingTime(post.attributes.content);
   post.attributes.image_url =
     post.attributes.image.data && post.attributes.image.data.attributes.url
       ? post.attributes.image.data.attributes.url
       : canopasIcon;
-  post.attributes.authorName = author.username;
-  post.attributes.authorImage = author.image
-    ? author.image.data.attributes.url
-    : Avatar;
-  post.attributes.authorAltText = author ? author.name + " images" : "author";
+  if (post.attributes.author.data != null) {
+    const author = post.attributes.author.data.attributes;
+    post.attributes.authorName = author.username ? author.username : "author";
+    post.attributes.authorImage = author.image_url ? author.image_url : Avatar;
+    post.attributes.authorAltText = author
+      ? author.username + " images"
+      : "author";
+  } else {
+    post.attributes.authorName = "author";
+    post.attributes.authorImage = Avatar;
+    post.attributes.authorAltText = "author";
+  }
 
   if (slug && post.attributes.tags[0]) {
     post.attributes.tags.map((tag) => {

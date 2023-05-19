@@ -22,4 +22,5 @@ export default Object.freeze({
   SHOW_HEADER_TITLE: false,
   SHOW_SERVICES_PAGE: false,
   SHOW_RECOMMANDED_POSTS: false,
+  SHOW_SUBSCRIBE_BUTTON: false,
 });

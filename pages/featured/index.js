@@ -7,10 +7,14 @@ import PostsList from "../../components/posts/postsList";
 export async function getServerSideProps() {
   var response = null;
   var featurePosts = [];
+  let published = config.SHOW_DRAFT_POSTS
+    ? "&publicationState=preview"
+    : "&publicationState=live";
   try {
     response = await axios.get(
-      config.STRAPI_URL + "/v1/posts?filters[is_featured][$eq]=true"
+      config.STRAPI_URL + "/v1/posts?filters[is_featured][$eq]=true" + published
     );
+
     featurePosts = response.data.data;
     featurePosts.forEach((post) => setPostFields(post));
   } catch (err) {
@@ -23,6 +27,7 @@ export async function getServerSideProps() {
 
 export default function Post({ featurePosts, status, mixpanel }) {
   const count = featurePosts.length;
+
   return (
     <>
       <Seo

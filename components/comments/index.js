@@ -39,7 +39,7 @@ export default function Comment({ post }) {
   }, [fullFormRef]);
 
   return (
-    <div className="container py-20">
+    <div className="container pt-20 2xl:mx-12">
       <div ref={fullFormRef}>
         {comments.attributes.comments.data.map((comment) => {
           if (comment.attributes.publishedAt != null) {
@@ -69,18 +69,18 @@ export default function Comment({ post }) {
                                 key={user.id}
                                 className="pl-3 bg-gradient-to-r from-pink-300 to-orange-300 text-transparent bg-clip-text"
                               >
-                                {user.attributes.username}
+                                {user.attributes.name}
                               </div>
                             );
                           })}
                         </div>
                         <div
                           onClick={handleSubmit(comment.id)}
-                          className="cursor-pointer"
+                          className="flex items-center cursor-pointer"
                         >
                           <FontAwesomeIcon
                             icon={faReply}
-                            className="pr-1 text-sm text-pink-300"
+                            className="w-5 h-5 pr-1 text-sm text-pink-300"
                           />
                           <span className="bg-gradient-to-r from-pink-300 to-orange-300 text-transparent bg-clip-text">
                             Reply
@@ -122,7 +122,7 @@ export default function Comment({ post }) {
                                                 key={user.id}
                                                 className="pl-3 bg-gradient-to-r from-pink-300 to-orange-300 text-transparent bg-clip-text "
                                               >
-                                                {user.attributes.username}
+                                                {user.attributes.name}
                                               </div>
                                             );
                                           }

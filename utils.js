@@ -43,10 +43,10 @@ function setPostFields(post, slug) {
       ? post.attributes.image.data.attributes.url
       : canopasIcon;
   post.attributes.authorName = author.username;
-  post.attributes.authorImage = author.image_url ? author.image_url : Avatar;
-  post.attributes.authorAltText = author
-    ? author.username + " images"
-    : "author";
+  post.attributes.authorImage = author.image
+    ? author.image.data.attributes.url
+    : Avatar;
+  post.attributes.authorAltText = author ? author.name + " images" : "author";
 
   if (slug && post.attributes.tags[0]) {
     post.attributes.tags.map((tag) => {

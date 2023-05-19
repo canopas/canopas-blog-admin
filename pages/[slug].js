@@ -7,6 +7,7 @@ import axios from "axios";
 import config from "../config";
 import Seo from "./seo";
 import NotFound from "./404";
+import canopasIcon from "../assets/images/canopas-icon.svg";
 import Comment from "../components/comments/index";
 import RecommandedPosts from "../components/posts/recommandedPosts";
 import { setPostFields } from "../utils";
@@ -44,13 +45,17 @@ export async function getServerSideProps(context) {
   const status = response ? response.status : config.NOT_FOUND;
 
   // fetch posts other than this post by category name
+  let published = config.SHOW_DRAFT_POSTS
+    ? "&publicationState=preview"
+    : "&publicationState=live";
   try {
     response = await axios.get(
       config.STRAPI_URL +
         "/v1/posts?filters[category][name][$eq]=" +
         postData.attributes.category.data.attributes.name +
         "&filters[slug][$ne]=" +
-        slug
+        slug +
+        published
     );
     categoryPosts = response.data.data;
     categoryPosts.forEach((post) => setPostFields(post));
@@ -64,16 +69,18 @@ export async function getServerSideProps(context) {
 export default function Post({ postData, status, categoryPosts, mixpanel }) {
   const [loaded, setLoaded] = useState(false);
   const [activeId, setActiveId] = useState(null);
-  const [copied, setCopied] = useState(false);
+  const [alerts, setAlerts] = useState(false);
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
   const contentRef = useRef(null);
 
   setTimeout(() => {
     setLoaded(true);
   }, 50);
 
-  if (copied) {
+  if (alerts) {
     setTimeout(() => {
-      setCopied(false);
+      setAlerts(false);
     }, 2000);
   }
 
@@ -126,6 +133,23 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
     }
   }
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    await axios
+      .post(`${config.STRAPI_URL}/v1/user/subscribeUser?populate=deep`, {
+        email,
+      })
+      .then((response) => {
+        setAlerts(true);
+        if (response.data.is_subscribed) {
+          setMessage("Subscribe Successfully!");
+        }
+      });
+
+    setEmail("");
+  };
+
   const handleScroll = () => {
     const headers = contentRef.current.querySelectorAll("h1, h2");
     headers.forEach((header, index) => {
@@ -148,7 +172,8 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
     el.select();
     document.execCommand("copy");
     document.body.removeChild(el);
-    setCopied(true);
+    setAlerts(true);
+    setMessage("Link Copied");
   };
 
   const shareBlog = async () => {
@@ -466,25 +491,67 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
 
               {/* comments */}
               <Comment post={postData} />
+              {config.SHOW_SUBSCRIBE_BUTTON ? (
+                <div className="container w-[90%] lg:w-[70%] xl:w-[60%] 2xl:w-[50%] mt-5 rounded-[14px] bg-black-900 shadow-2xl py-6 md:py-12 px-7 md:px-10">
+                  <div className="grid md:grid-cols-2 gap-y-10 md:gap-y-0 md:gap-x-16 xl:gap-x-0">
+                    <form className="space-y-6" onSubmit={handleSubmit}>
+                      <span className="text-[2.4rem] text-white">
+                        Subscribe
+                      </span>
+                      <div className="w-64 sm:w-80">
+                        <input
+                          className="w-full !m-0 !rounded-[10px] !border-0 !bg-gray-100 !py-3 "
+                          placeholder="Enter Your E-mail"
+                          id="email"
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          required
+                        />
+                      </div>
+
+                      <button className="w-auto rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] text-[1.1rem] font-semibold text-white hover:shadow-[inset_2px_1000px_1px_#fff] hover:cursor-pointer">
+                        <div className="px-[1.35rem] py-[0.5rem] align-middle text-center tracking-wide gradient-text">
+                          Subscribe
+                        </div>
+                      </button>
+                    </form>
+
+                    <div className="hidden md:inline-block md:justify-self-end md:w-8/12 xl:w-7/12">
+                      <Image
+                        width={200}
+                        height={200}
+                        src={canopasIcon}
+                        alt="canopasIcon"
+                        loading="eager"
+                        className="w-full h-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
+
+              {alerts ? (
+                <div className="sticky bottom-8 inset-x-[7%] sm:inset-x-1/4 xl:inset-x-1/3 flex flex-rows justify-between items-center w-[90%] sm:w-7/12 xl:w-5/12 z-10 rounded-[10px] bg-gradient-to-r from-[#f2709c] to-[#ff9472] py-5 text-white">
+                  <p className="mx-7 tracking-wider md:text-xl font-medium">
+                    {message}
+                  </p>
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    className="w-5 h-5 mr-5 hover:cursor-pointer"
+                    onClick={() => {
+                      setAlerts(false);
+                    }}
+                  />
+                </div>
+              ) : (
+                ""
+              )}
             </>
           )}
         </div>
-        {copied ? (
-          <div className="sticky bottom-8 inset-x-[7%] sm:inset-x-1/4 xl:inset-x-1/3 flex flex-rows justify-between items-center w-[90%] sm:w-7/12 xl:w-5/12 z-10 rounded-[10px] bg-gradient-to-r from-[#f2709c] to-[#ff9472] py-5 text-white">
-            <p className="mx-7 tracking-wider text-xl font-medium">
-              Link copied
-            </p>
-            <FontAwesomeIcon
-              icon={faXmark}
-              className="w-5 h-5 mr-5 hover:cursor-pointer"
-              onClick={() => {
-                setCopied(false);
-              }}
-            />
-          </div>
-        ) : (
-          ""
-        )}
       </section>
     </>
   );

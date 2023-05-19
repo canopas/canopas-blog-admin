@@ -492,42 +492,30 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
               {/* comments */}
               <Comment post={postData} />
               {config.SHOW_SUBSCRIBE_BUTTON ? (
-                <div className="container w-[90%] lg:w-[70%] xl:w-[60%] 2xl:w-[50%] mt-5 rounded-[14px] bg-black-900 shadow-2xl py-6 md:py-12 px-7 md:px-10">
-                  <div className="grid md:grid-cols-2 gap-y-10 md:gap-y-0 md:gap-x-16 xl:gap-x-0">
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                      <span className="text-[2.4rem] text-white">
-                        Subscribe
-                      </span>
-                      <div className="w-64 sm:w-80">
-                        <input
-                          className="w-full !m-0 !rounded-[10px] !border-0 !bg-gray-100 !py-3 "
-                          placeholder="Enter Your E-mail"
-                          id="email"
-                          type="email"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          required
-                        />
-                      </div>
-
-                      <button className="w-auto rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] text-[1.1rem] font-semibold text-white hover:shadow-[inset_2px_1000px_1px_#fff] hover:cursor-pointer">
-                        <div className="px-[1.35rem] py-[0.5rem] align-middle text-center tracking-wide gradient-text">
-                          Subscribe
-                        </div>
-                      </button>
-                    </form>
-
-                    <div className="hidden md:inline-block md:justify-self-end md:w-8/12 xl:w-7/12">
-                      <Image
-                        width={200}
-                        height={200}
-                        src={canopasIcon}
-                        alt="canopasIcon"
-                        loading="eager"
-                        className="w-full h-full"
+                <div className="container w-[90%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%] mt-5 rounded-[14px] bg-black-900 shadow-2xl py-6 md:py-12 px-7 md:px-10">
+                  <span className="text-[2.4rem] text-white">Subscribe</span>
+                  <form
+                    className="flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 mt-6"
+                    onSubmit={handleSubmit}
+                  >
+                    <div className="w-72 sm:w-80">
+                      <input
+                        className="w-full !m-0 !rounded-[10px] !border-0 !bg-gray-100 !py-3 "
+                        placeholder="Enter Your E-mail"
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
                       />
                     </div>
-                  </div>
+
+                    <button className="w-32 md:w-auto rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] text-[1.1rem] font-semibold text-white hover:shadow-[inset_2px_1000px_1px_#fff] hover:cursor-pointer">
+                      <div className="px-[1.35rem] py-[0.5rem] align-middle text-center tracking-wide gradient-text">
+                        Subscribe
+                      </div>
+                    </button>
+                  </form>
                 </div>
               ) : (
                 ""

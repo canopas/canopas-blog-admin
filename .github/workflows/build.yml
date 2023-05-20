@@ -5,17 +5,45 @@ on: push
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Setup Node
-        uses: actions/setup-node@v1
+      - name: Set up SSH connection
+        uses: webfactory/ssh-agent@v0.5.1
         with:
-          node-version: "18.x"
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-      - name: Build
+      - name: Copy files to EC2 instance
         run: |
-          yarn add prettier
-          yarn lint
           yarn build
+          scp -r ./.next ${{ secrets.EC2_USER }}@${{ secrets.DEV_HOST_DNS }}:/
+
+      - name: SSH into EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEV_HOST_DNS }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Run Docker commands to build and run the container
+            docker cp .next canopas-website-frontend:/dist/client
+            docker cp .next canopas-website-frontend:/dist/server
+
+    # deploy:
+    #   runs-on: ubuntu-latest
+    #   steps:
+    #     - name: Checkout
+    #       uses: actions/checkout@v3
+
+    #     - name: Setup Node
+    #       uses: actions/setup-node@v1
+    #       with:
+    #         node-version: "18.x"
+
+    #     - name: Build
+    #       run: |
+    #         yarn add prettier
+    #         yarn lint
+    #         yarn build

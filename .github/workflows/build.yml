@@ -14,6 +14,7 @@ jobs:
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+          known_hosts: github.com
 
       - name: Copy files to EC2 instance
         run: |

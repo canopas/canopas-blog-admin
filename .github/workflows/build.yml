@@ -17,6 +17,7 @@ jobs:
 
       - name: Copy files to EC2 instance
         run: |
+          yarn install
           yarn build
           scp -r ./.next ${{ secrets.EC2_USER }}@${{ secrets.DEV_HOST_DNS }}:/
 

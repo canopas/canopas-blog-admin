@@ -62,4 +62,4 @@ Following are dependencies used by the project
 
 ## Licence
 
-This repository is released under the [BSD 3-Clause](https://github.com/canopas/canopas-blog/blob/master/LICENSE).
+This repository is released under the [MIT](https://github.com/canopas/canopas-blog/blob/master/LICENSE).

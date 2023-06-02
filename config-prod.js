@@ -11,9 +11,10 @@ export default Object.freeze({
 
   POST_NOT_FOUND_MESSAGE: `Stay tuned, we have some exciting posts in the works that we'll be sharing with you shortly.`,
   SEO_META_DATA: {
-    title: "Software Solutions & Trends | Canopas Blog",
+    title:
+      "Web and Mobile app development resources to help you make an informed decision",
     description:
-      "Canopas blogs will help you to become a better software developer. We are sharing knowledge on Web, Backend, iOS, Android, and Flutter development",
+      "Explore our Web and Mobile app development resources to equip yourself with the software development process.",
     authorName: "canopas",
   },
 

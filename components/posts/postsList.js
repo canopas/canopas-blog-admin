@@ -33,11 +33,11 @@ export default function PostsList({ postData, mixpanel }) {
           >
             <Link href={"/" + post.slug}>
               <div className="flex flex-row space-x-2 items-center text-[1rem] md:text-[1.03rem] leading-5 tracking-wide capitalize">
-                <div className="relative w-[30px] h-[30px] md:w-[35px] md:h-[35px]">
+                <div className="relative w-[30px] md:w-[31px] h-[30px] max-w-full max-h-full overflow-hidden">
                   <Image
-                    width={100}
-                    height={100}
-                    className="absolute w-full h-full rounded-full object-cover inset-0"
+                    width={30}
+                    height={30}
+                    className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
                     src={post.authorImage}
                     alt={post.authorAltText}
                   />

@@ -17,11 +17,11 @@ export default function RecommandedPosts({ postData }) {
                 <div className="grid grid-cols-3 gap-5 xl:gap-2 2xl:gap-5 mb-10 xl:mb-6 2xl:mb-10">
                   <div className="flex flex-col col-span-2 space-y-1">
                     <div className="flex flex-row space-x-2 items-center text-[0.8rem] md:text-[1rem] xl:text-[0.8rem] tracking-wider capitalize">
-                      <div className="relative w-[30px] h-[30px] p-3">
+                      <div className="relative w-[30px] md:w-[31px] h-[30px] max-w-full max-h-full overflow-hidden">
                         <Image
-                          width={100}
-                          height={100}
-                          className="absolute w-full h-full rounded-full object-cover inset-0"
+                          width={30}
+                          height={30}
+                          className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
                           src={categoryPost.authorImage}
                           alt={categoryPost.authorAltText}
                         />

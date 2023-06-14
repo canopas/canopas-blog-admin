@@ -304,11 +304,11 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
                     </div>
                     <div className="grid grid-cols-2 items-center text-sm">
                       <div className="flex flex-row items-center space-x-4">
-                        <div className="relative w-[45px] h-[45px]">
+                        <div className="relative w-[46px] md:w-[47px] h-[46px] max-w-full max-h-full overflow-hidden">
                           <Image
-                            width={200}
-                            height={200}
-                            className="absolute w-full h-full rounded-full object-cover inset-0"
+                            width={45}
+                            height={45}
+                            className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
                             src={post.authorImage}
                             alt={post.authorAltText}
                           />

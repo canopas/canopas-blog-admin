@@ -382,12 +382,12 @@ export default function Home({ posts, status, categories, mixpanel }) {
                         </Link>
                       </div>
                       <div className="flex flex-row items-center pt-3 text-[0.875rem] lg:text-[1.125rem] text-gray-500">
-                        <div className="relative w-[38px] h-[38px]">
+                        <div className="relative w-[40px] h-[40px] max-w-full max-h-full overflow-hidden">
                           <Link href={"/" + post.slug}>
                             <Image
-                              width={200}
-                              height={200}
-                              className="absolute h-full w-full rounded-full object-cover inset-0"
+                              width={40}
+                              height={40}
+                              className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
                               src={post.authorImage}
                               alt={post.authorAltText}
                             />

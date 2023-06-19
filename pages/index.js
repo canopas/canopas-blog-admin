@@ -107,7 +107,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
         description={config.SEO_META_DATA.description}
         authorName={config.SEO_META_DATA.authorName}
       />
-      <section className="container my-16 mx-2 sm:mx-auto 3xl:px-24">
+      <section className="container my-14 mx-2 sm:mx-auto 3xl:px-24">
         {config.SHOW_HEADER_TITLE ? (
           <div className="my-16 w-full bg-black-900">
             <div className="flex flex-col space-y-2 py-4 px-14 md:px-28 xl:px-44">
@@ -128,82 +128,86 @@ export default function Home({ posts, status, categories, mixpanel }) {
           ""
         )}
 
-        <div className="flex flex-col 2xl:flex-row space-y-8 2xl:space-y-0 2xl:justify-between 2xl:items-center mb-16">
-          {categories.length != 0 ? (
-            <div className="2xl:basis-8/12 h-10 border-b border-[#e6e6e6]">
-              <Swiper
-                navigation={true}
-                onClick={(swiper) => setActiveIndex(swiper.clickedIndex)}
-                modules={[Navigation]}
-                breakpoints={{
-                  0: {
-                    slidesPerView: 2,
-                  },
-                  576: {
-                    slidesPerView: 3,
-                  },
-                  1200: {
-                    slidesPerView: 4,
-                  },
-                }}
-              >
-                <SwiperSlide
-                  onClick={filterBlogs}
-                  className={`pb-[0.9rem] capitalize ${
-                    activeIndex == "0"
-                      ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
-                      : ""
-                  }`}
+        {config.SHOW_CATEGORY_POSTS || config.SHOW_SEARCH_POSTS ? (
+          <div className="flex flex-col 2xl:flex-row space-y-8 2xl:space-y-0 2xl:justify-between 2xl:items-center my-14 category-swiper">
+            {categories.length != 0 ? (
+              <div className="2xl:basis-8/12 h-10 border-b border-[#e6e6e6]">
+                <Swiper
+                  navigation={true}
+                  onClick={(swiper) => setActiveIndex(swiper.clickedIndex)}
+                  modules={[Navigation]}
+                  breakpoints={{
+                    0: {
+                      slidesPerView: 2,
+                    },
+                    576: {
+                      slidesPerView: 3,
+                    },
+                    1200: {
+                      slidesPerView: 4,
+                    },
+                  }}
                 >
-                  {category}
-                </SwiperSlide>
+                  <SwiperSlide
+                    onClick={filterBlogs}
+                    className={`pb-[0.9rem] capitalize ${
+                      activeIndex == "0"
+                        ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
+                        : ""
+                    }`}
+                  >
+                    {category}
+                  </SwiperSlide>
 
-                {categories.map((category, index) => {
-                  return (
-                    <SwiperSlide
-                      key={category.id}
-                      onClick={filterBlogs}
-                      className={`pb-[0.9rem] capitalize ${
-                        activeIndex == index + 1
-                          ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
-                          : ""
-                      }`}
-                    >
-                      {category.attributes.name}
-                    </SwiperSlide>
-                  );
-                })}
-              </Swiper>
-            </div>
-          ) : (
-            ""
-          )}
+                  {categories.map((category, index) => {
+                    return (
+                      <SwiperSlide
+                        key={category.id}
+                        onClick={filterBlogs}
+                        className={`pb-[0.9rem] capitalize ${
+                          activeIndex == index + 1
+                            ? "after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text "
+                            : ""
+                        }`}
+                      >
+                        {category.attributes.name}
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+              </div>
+            ) : (
+              ""
+            )}
 
-          {config.SHOW_SEARCH_POSTS ? (
-            <div className="flex flex-row items-center 2xl:basis-3/12 w-80 rounded-[10px] !bg-gray-100 pl-3">
-              <span>
-                <i className="rounded-full text-gray-500 cursor-pointer">
-                  <FontAwesomeIcon
-                    icon={faMagnifyingGlass}
-                    className="w-[1.1rem] h-5 pr-1 text-sm"
-                  />
-                </i>
-              </span>
-              <input
-                className="!border-0 !bg-gray-100"
-                placeholder="Search Blogs"
-                type="text"
-                value={keyword}
-                onChange={(e) => {
-                  setKeyword(e.target.value);
-                  setResults(searchBlogs(e.target.value));
-                }}
-              />
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
+            {config.SHOW_SEARCH_POSTS ? (
+              <div className="flex flex-row items-center 2xl:basis-3/12 w-80 rounded-[10px] !bg-gray-100 pl-3">
+                <span>
+                  <i className="rounded-full text-gray-500 cursor-pointer">
+                    <FontAwesomeIcon
+                      icon={faMagnifyingGlass}
+                      className="w-[1.1rem] h-5 pr-1 text-sm"
+                    />
+                  </i>
+                </span>
+                <input
+                  className="!border-0 !bg-gray-100"
+                  placeholder="Search Blogs"
+                  type="text"
+                  value={keyword}
+                  onChange={(e) => {
+                    setKeyword(e.target.value);
+                    setResults(searchBlogs(e.target.value));
+                  }}
+                />
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        ) : (
+          ""
+        )}
 
         {count == 0 || status == config.NOT_FOUND ? (
           <div className="mt-20 text-[1.4rem] text-center text-black-900 ">

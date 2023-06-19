@@ -18,6 +18,8 @@ module.exports = {
         "product-black": ["Product Sans Black"],
         "product-regular": ["Product Sans Regular"],
         "inter-medium": ["Inter Medium"],
+        "inter-bold": ["Inter Bold"],
+        "inter-semibold": ["Inter SemiBold"],
         "inter-light": ["Inter ExtraLight"],
         "source-codepro": ["Source CodePro"],
       },

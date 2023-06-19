@@ -20,8 +20,8 @@ export default Object.freeze({
 
   SHOW_DRAFT_POSTS: false,
   SHOW_SEARCH_POSTS: false,
+  SHOW_CATEGORY_POSTS: false,
   SHOW_HEADER_TITLE: false,
-  SHOW_SERVICES_PAGE: true,
   SHOW_RECOMMANDED_POSTS: false,
-  SHOW_SUBSCRIBE_BUTTON: false,
+  SHOW_COMMENT_SECTION: false,
 });

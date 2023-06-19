@@ -7,7 +7,6 @@ import axios from "axios";
 import config from "../config";
 import Seo from "./seo";
 import NotFound from "./404";
-import canopasIcon from "../assets/images/canopas-icon.svg";
 import Comment from "../components/comments/index";
 import RecommandedPosts from "../components/posts/recommandedPosts";
 import { setPostFields } from "../utils";
@@ -71,7 +70,6 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
   const [activeId, setActiveId] = useState(null);
   const [alerts, setAlerts] = useState(false);
   const [message, setMessage] = useState("");
-  const [email, setEmail] = useState("");
   const contentRef = useRef(null);
 
   setTimeout(() => {
@@ -132,23 +130,6 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
       };
     }
   }
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    await axios
-      .post(`${config.STRAPI_URL}/v1/user/subscribeUser?populate=deep`, {
-        email,
-      })
-      .then((response) => {
-        setAlerts(true);
-        if (response.data.is_subscribed) {
-          setMessage("Subscribe Successfully!");
-        }
-      });
-
-    setEmail("");
-  };
 
   const handleScroll = () => {
     const headers = contentRef.current.querySelectorAll("h1, h2");
@@ -438,7 +419,7 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
                         __html: blogContent,
                       }}
                     ></div>
-                    <div className="flex flex-row flex-wrap mt-20">
+                    <div className="flex flex-row flex-wrap mt-16">
                       {post.tags
                         ? post.tags.map((tag) => {
                             return (
@@ -490,36 +471,7 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
               )}
 
               {/* comments */}
-              <Comment post={postData} />
-              {config.SHOW_SUBSCRIBE_BUTTON ? (
-                <div className="container w-[90%] md:w-[70%] lg:w-[60%] xl:w-[50%] 2xl:w-[40%] mt-5 rounded-[14px] bg-black-900 shadow-2xl py-6 md:py-12 px-7 md:px-10">
-                  <span className="text-[2.4rem] text-white">Subscribe</span>
-                  <form
-                    className="flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 mt-6"
-                    onSubmit={handleSubmit}
-                  >
-                    <div className="w-72 sm:w-80">
-                      <input
-                        className="w-full !m-0 !rounded-[10px] !border-0 !bg-gray-100 !py-3 "
-                        placeholder="Enter Your E-mail"
-                        id="email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
-                      />
-                    </div>
-
-                    <button className="w-32 md:w-auto rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] text-[1.1rem] font-semibold text-white hover:shadow-[inset_2px_1000px_1px_#fff] hover:cursor-pointer">
-                      <div className="px-[1.35rem] py-[0.5rem] align-middle text-center tracking-wide gradient-text">
-                        Subscribe
-                      </div>
-                    </button>
-                  </form>
-                </div>
-              ) : (
-                ""
-              )}
+              {config.SHOW_COMMENT_SECTION ? <Comment post={postData} /> : ""}
 
               {alerts ? (
                 <div className="sticky bottom-8 inset-x-[7%] sm:inset-x-1/4 xl:inset-x-1/3 flex flex-rows justify-between items-center w-[90%] sm:w-7/12 xl:w-5/12 z-10 rounded-[10px] bg-gradient-to-r from-[#f2709c] to-[#ff9472] py-5 text-white">

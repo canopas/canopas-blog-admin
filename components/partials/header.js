@@ -59,25 +59,21 @@ export default function Header({ mixpanel }) {
 
             <div className="grid grow items-center mt-2 lg:mt-0">
               <ul className="hidden lg:flex flex-row flex-wrap items-center justify-start lg:ml-auto pl-0 text-[1rem] md:text-[1.10375rem] xl:text-[1.1875rem] leading-[1.125rem] md:leading-[1.28125rem] lg:leading-[1.4375rem]">
-                {config.SHOW_SERVICES_PAGE ? (
-                  <li className="ml-0 my-2 sm:my-0">
-                    <Link
-                      href={`${HOST_URL}/services`}
-                      className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
-                        router.pathname == `${HOST_URL}/services`
-                          ? "canopas-gradient-text"
-                          : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
-                      }`}
-                      onClick={() => {
-                        handleMenuClick("tap_header_services");
-                      }}
-                    >
-                      Services
-                    </Link>
-                  </li>
-                ) : (
-                  ""
-                )}
+                <li className="ml-0 my-2 sm:my-0">
+                  <Link
+                    href={`${HOST_URL}/services`}
+                    className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
+                      router.pathname == `${HOST_URL}/services`
+                        ? "canopas-gradient-text"
+                        : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                    }`}
+                    onClick={() => {
+                      handleMenuClick("tap_header_services");
+                    }}
+                  >
+                    Services
+                  </Link>
+                </li>
 
                 <li className="ml-0 my-2 sm:my-0">
                   <Link

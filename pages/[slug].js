@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import Script from "next/script";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,8 +8,6 @@ import axios from "axios";
 import config from "../config";
 import Seo from "./seo";
 import NotFound from "./404";
-import Comment from "../components/comments/index";
-import RecommandedPosts from "../components/posts/recommandedPosts";
 import { setPostFields } from "../utils";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -24,6 +23,11 @@ import {
   faLinkedinIn,
 } from "@fortawesome/free-brands-svg-icons";
 import hljs from "highlight.js";
+
+const Comment = dynamic(() => import("../components/comments/index"));
+const RecommandedPosts = dynamic(() =>
+  import("../components/posts/recommandedPosts")
+);
 
 export async function getServerSideProps(context) {
   const slug = context.params.slug;
@@ -62,6 +66,7 @@ export async function getServerSideProps(context) {
     response = err.response;
   }
 
+  context.res.setHeader("Cache-Control", "public, max-age=3600");
   return { props: { postData, status, categoryPosts } };
 }
 

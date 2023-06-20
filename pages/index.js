@@ -18,7 +18,7 @@ import "swiper/css/navigation";
 
 import { Navigation } from "swiper";
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ req, res }) {
   var response = null;
   var posts = [];
   var categories = [];
@@ -47,6 +47,7 @@ export async function getServerSideProps() {
     response = err.response;
   }
 
+  res.setHeader("Cache-Control", "public, max-age=3600");
   return { props: { posts, status, categories } };
 }
 
@@ -347,7 +348,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                           height={100}
                           src={post.image_url || ""}
                           alt={post.alternativeText || ""}
-                          loading="eager"
+                          loading="lazy"
                           className={`${
                             post.image.data == null
                               ? "w-[45%] h-4/5 mx-auto my-[5%]"
@@ -394,6 +395,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                               className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
                               src={post.authorImage}
                               alt={post.authorAltText}
+                              loading="lazy"
                             />
                           </Link>
                         </div>

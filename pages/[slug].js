@@ -5,6 +5,7 @@ import Script from "next/script";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import config from "../config";
+import CTA from "../components/cta/CTA2";
 import Seo from "./seo";
 import NotFound from "./404";
 import Comment from "../components/comments/index";
@@ -211,12 +212,12 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
         }}
       />
 
-      <section className="container my-16">
-        <div>
-          {status == config.NOT_FOUND || post == null ? (
-            <NotFound />
-          ) : (
-            <>
+      <section>
+        {status == config.NOT_FOUND || post == null ? (
+          <NotFound />
+        ) : (
+          <>
+            <div className="container my-16">
               <Seo
                 title={post.title}
                 description={post.meta_description}
@@ -489,9 +490,10 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
               ) : (
                 ""
               )}
-            </>
-          )}
-        </div>
+            </div>
+            <CTA />
+          </>
+        )}
       </section>
     </>
   );

@@ -65,7 +65,7 @@ export default function CommentForm({ post, onNewComment, recaptchaRef }) {
           Leave comment
         </span>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="comment">
         <textarea
           id="comment"
           value={message}

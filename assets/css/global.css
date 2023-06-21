@@ -58,6 +58,20 @@
   src: url(./../fonts/ProductSans-Black.woff2);
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s !important;
+}
+
+.floating-input:-webkit-autofill,
+.floating-input:-webkit-autofill:hover,
+.floating-input:-webkit-autofill:focus,
+.floating-input:-webkit-autofill:active {
+  -webkit-text-fill-color: #ffffff !important;
+}
+
 body {
   @apply font-product-regular break-words text-[#000000d6];
 }
@@ -70,13 +84,13 @@ body {
   @apply text-[1.125rem] md:text-[1.27rem] md:leading-[2rem] tracking-[0.04em];
 }
 
-input[type="text"],
-input[type="email"],
-textarea {
+.comment input[type="text"],
+.comment input[type="email"],
+.comment textarea {
   @apply my-2 border border-solid border-gray-300 rounded bg-white bg-clip-padding px-3 py-1.5 font-normal text-base text-gray-700 transition ease-in-out focus:border-gray-300 focus:outline-none focus:bg-white focus:text-gray-700;
 }
 
-input[type="submit"] {
+.comment input[type="submit"] {
   @apply mt-3 rounded bg-blue-500 py-2 px-4 text-white font-bold hover:bg-blue-700;
 }
 
@@ -215,6 +229,13 @@ code::after {
 
 .prose :where(blockquote, blockquote i):not(:where([class~="not-prose"] *)) {
   @apply not-italic text-[1.4rem] lg:text-[1.755rem] leading-[2.3rem] text-[#757575] font-normal font-inter-light;
+}
+
+.prose
+  :where(blockquote p:first-of-type):not(
+    :where([class~="not-prose"] *)
+  )::before {
+  @apply content-none;
 }
 
 .category-swiper .swiper-slide {

@@ -409,6 +409,16 @@ export default function Home({ posts, status, categories, mixpanel }) {
                               <span>{post.published_on}</span>
                               <span className="after:content-['\00B7'] after:mx-1"></span>
                               <span>{post.readingTime} min read</span>
+                              {!post.is_published ? (
+                                <>
+                                  <span className="after:content-['\00B7'] after:mx-1"></span>
+                                  <span className="text-green-700 capitalize">
+                                    draft
+                                  </span>
+                                </>
+                              ) : (
+                                ""
+                              )}
                             </div>
                           </div>
                         </Link>

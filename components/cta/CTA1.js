@@ -4,10 +4,10 @@ import { Autoplay } from "swiper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import ctabg400w from "../../assets/images/cta/cta-bg-400w.webp";
-import ctabg800w from "../../assets/images/cta/cta-bg-800w.webp";
-import cta400w from "../../assets/images/cta/cta-400w.webp";
-import cta800w from "../../assets/images/cta/cta-800w.webp";
+import ctabg400w from "../../assets/images/cta1/cta-bg-400w.webp";
+import ctabg800w from "../../assets/images/cta1/cta-bg-800w.webp";
+import cta400w from "../../assets/images/cta1/cta-400w.webp";
+import cta800w from "../../assets/images/cta1/cta-800w.webp";
 import Link from "next/link";
 import config from "../../config";
 import "swiper/css";
@@ -36,7 +36,7 @@ export default function CTA() {
   };
 
   return (
-    <section className="relative mt-32 xl:mt-44 mb-20 xl:mb-0 font-inter-medium 3xl:px-8">
+    <section className="container relative mt-32 xl:mt-44 mb-20 xl:mb-0 font-inter-medium 3xl:px-12">
       <div className="xl:hidden">
         <Image
           src={ctabg400w}

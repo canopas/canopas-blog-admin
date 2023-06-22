@@ -13,11 +13,25 @@ export default function Header({ mixpanel }) {
   const [showHeader, setShowHeader] = useState(true);
   var [lastScrollPos, setLastScrollPos] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showContributionMenu, setShowContributionMenu] = useState(false);
+  const [submenuTimeout, setSubmenuTimeout] = useState(null);
 
   const handleMenuClick = (Menu) => {
     mixpanel.track(Menu);
   };
 
+  const handleMouseEnter = () => {
+    clearTimeout(submenuTimeout);
+    setShowContributionMenu(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setShowContributionMenu(false);
+    }, 100);
+
+    setSubmenuTimeout(timeout);
+  };
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
@@ -29,8 +43,9 @@ export default function Header({ mixpanel }) {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      clearTimeout(submenuTimeout);
     };
-  }, [showHeader, lastScrollPos]);
+  }, [showHeader, lastScrollPos, submenuTimeout]);
 
   return (
     <>
@@ -93,31 +108,81 @@ export default function Header({ mixpanel }) {
 
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
-                    href={`${HOST_URL}/resources`}
-                    className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text`}
-                    onClick={() => {
-                      handleMenuClick("tap_header_resources");
-                    }}
+                    href={``}
+                    className="relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                   >
-                    Resources
+                    Contribution
                   </Link>
-                </li>
-
-                <li className="ml-0 my-2 sm:my-0">
-                  <Link
-                    href="https://blog.canopas.com/"
-                    className={`relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
-                      router.pathname == "https://blog.canopas.com/"
-                        ? "canopas-gradient-text"
-                        : "gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
-                    }`}
-                    onClick={() => {
-                      handleMenuClick("tap_header_blog");
-                    }}
-                    target="_blank"
+                  <ul
+                    className={`${
+                      showContributionMenu
+                        ? "block absolute left-auto   top-[5.5rem] flex-col space-y-6   w-max border rounded-[5px] bg-white shadow-md  pb-[1.5rem]"
+                        : "hidden"
+                    } ${
+                      config.SHOW_CONTRIBUTION_PAGE
+                        ? "ml-[-1.3rem] xl:ml-[-2rem] py-[1.5rem]"
+                        : "ml-[-1rem]"
+                    }
+                    `}
+                    onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
                   >
-                    Blog
-                  </Link>
+                    <li
+                      className={`relative ml-0 my-2 sm:my-0  group ${
+                        config.SHOW_CONTRIBUTION_PAGE ? "block" : "hidden"
+                      }`}
+                    >
+                      <Link
+                        href={`${HOST_URL}/contributions`}
+                        className={`relative group mr-[14px] xl:mr-[30px] py-[1rem] px-2 font-inter-medium text-black-core/[0.6] group-hover:text-white group-hover:z-[1]`}
+                        onClick={() => {
+                          handleMenuClick("tap_header_contributions");
+                        }}
+                      >
+                        Open Source
+                        <div className="absolute left-[-17px] top-[0] w-0  h-[100%] from-[#FF835B] to-[#F2709C] bg-gradient-to-r transition-all duration-300 ease   group-hover:h-[100%] z-[-1] group-hover:w-[156px] group-hover:xl:w-[181px]"></div>
+                      </Link>
+                    </li>
+                    <li className="ml-0 my-2 sm:my-0 relative group">
+                      <Link
+                        href="https://blog.canopas.com/"
+                        className="relative group mr-[14px] xl:mr-[30px] py-[1rem] px-2 font-inter-medium text-black-core/[0.6] group-hover:text-white group-hover:z-[1]"
+                        onClick={() => {
+                          handleMenuClick("tap_header_blog");
+                        }}
+                        target="_blank"
+                      >
+                        Blog
+                        <div
+                          className={`absolute left-[-17px] top-[0] w-0  h-[100%] from-[#FF835B] to-[#F2709C] bg-gradient-to-r transition-all duration-300 ease   group-hover:h-[100%] z-[-1] ${
+                            config.SHOW_CONTRIBUTION_PAGE
+                              ? "group-hover:w-[156px] group-hover:xl:w-[181px]"
+                              : "group-hover:w-[136px] group-hover:xl:w-[158px]"
+                          }`}
+                        ></div>{" "}
+                      </Link>
+                    </li>
+                    <li className="ml-0 my-2 sm:my-0 relative group">
+                      <Link
+                        href={`${HOST_URL}/resources`}
+                        className={`relative group mr-[14px] xl:mr-[30px] py-[1rem] px-2 font-inter-medium text-black-core/[0.6] group-hover:text-white group-hover:z-[1]`}
+                        onClick={() => {
+                          handleMenuClick("tap_header_resources");
+                        }}
+                      >
+                        Resources
+                        <div
+                          className={`absolute left-[-17px] top-[0] w-0  h-[100%] from-[#FF835B] to-[#F2709C] bg-gradient-to-r transition-all duration-300 ease   group-hover:h-[100%] z-[-1] ${
+                            config.SHOW_CONTRIBUTION_PAGE
+                              ? "group-hover:w-[156px] group-hover:xl:w-[181px]"
+                              : "group-hover:w-[136px] group-hover:xl:w-[158px]"
+                          }`}
+                        ></div>{" "}
+                      </Link>
+                    </li>
+                  </ul>
                 </li>
 
                 <li className="ml-0 my-2 sm:my-0">
@@ -238,26 +303,60 @@ export default function Header({ mixpanel }) {
 
                   <li className="my-5">
                     <Link
-                      href={`${HOST_URL}/resources`}
-                      className={`relative after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] canopas-gradient-text`}
-                      onClick={() => {
-                        handleMenuClick("tap_header_resources");
-                      }}
+                      href={``}
+                      className="relative mr-[14px] xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] gradient-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                      onClick={() => setShowContributionMenu((prev) => !prev)}
                     >
-                      Resources
+                      Contribution
                     </Link>
-                  </li>
-
-                  <li className="my-5">
-                    <Link
-                      href="https://blog.canopas.com/"
-                      className="relative hover:bg-gradient-to-r after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left gradient-text"
-                      onClick={() => {
-                        handleMenuClick("tap_header_blog");
-                      }}
+                    <ul
+                      className={`flex-col space-y-6 ${
+                        showContributionMenu
+                          ? "mt-8 w-full px-6 bg-white"
+                          : "hidden overflow-hidden"
+                      }`}
                     >
-                      Blog
-                    </Link>
+                      <li
+                        className={`relative group ${
+                          config.SHOW_CONTRIBUTION_PAGE ? "block" : "hidden"
+                        }`}
+                      >
+                        <Link
+                          href={`${HOST_URL}/contributions`}
+                          className={`relative group py-[0.5rem] font-inter-medium text-black-core/[0.6] group-hover:text-white group-hover:z-[1]`}
+                          onClick={() => {
+                            handleMenuClick("tap_header_contributions");
+                          }}
+                        >
+                          Open Source
+                          <div className="fixed mt-[-31px] left-0 w-0 from-[#F2709C] to-[#FF835B] bg-gradient-to-r transition-all duration-100 ease group-hover:w-screen group-hover:h-[5%] z-[-1]"></div>{" "}
+                        </Link>
+                      </li>
+                      <li className="relative group">
+                        <Link
+                          href="https://blog.canopas.com/"
+                          className={`relative group py-[0.5rem] font-inter-medium text-black-core/[0.6] group-hover:text-white group-hover:z-[1]`}
+                          onClick={() => {
+                            handleMenuClick("tap_header_blog");
+                          }}
+                        >
+                          Blog
+                          <div className="fixed mt-[-31px] left-0 w-0 from-[#F2709C] to-[#FF835B] bg-gradient-to-r transition-all duration-100 ease group-hover:w-screen group-hover:h-[5%] z-[-1]"></div>
+                        </Link>
+                      </li>
+                      <li className="relative group">
+                        <Link
+                          href={`${HOST_URL}/resources`}
+                          className={`relative group py-[0.5rem] font-inter-medium text-black-core/[0.6] group-hover:text-white group-hover:z-[1]`}
+                          onClick={() => {
+                            handleMenuClick("tap_header_resources");
+                          }}
+                        >
+                          Resources
+                          <div className="fixed mt-[-31px] left-0 w-0 from-[#F2709C] to-[#FF835B] bg-gradient-to-r transition-all duration-100 ease group-hover:w-screen group-hover:h-[5%] z-[-1]"></div>
+                        </Link>
+                      </li>
+                    </ul>
                   </li>
 
                   <li className="my-5">

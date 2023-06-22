@@ -6,6 +6,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+      display: ["group-hover"],
       screens: {
         sm: "576px",
         md: "768px",

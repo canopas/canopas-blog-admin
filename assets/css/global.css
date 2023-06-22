@@ -106,6 +106,10 @@ body {
   @apply border-[1px] border-solid border-transparent rounded-[0.6rem] bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] shadow-[inset_2px_1000px_1px_#fff] p-[1rem] text-center hover:border-[1px] hover:border-solid hover:border-transparent hover:from-[#f2709c] hover:to-[#ff9472] hover:shadow-none active:scale-[0.98];
 }
 
+.gradient-border-btn > a > .fab {
+  @apply text-[#f2709c];
+}
+
 .gradient-border-btn > span {
   @apply my-0 mx-[6px] text-[#3d3d3d];
 }
@@ -116,8 +120,19 @@ body {
 }
 
 .gradient-border-btn:hover > .fa,
+.gradient-border-btn:hover > a > .fab,
 .gradient-border-btn:hover > .arrow {
   @apply text-white;
+}
+
+.footer-icon > path,
+button:hover > div > .footer-icon > path {
+  fill: url("#lgrad");
+}
+
+.gradient-border-btn:hover > a > .footer-icon > path,
+button > div > .footer-icon > path {
+  fill: #ffffff;
 }
 
 ul {

@@ -1,5 +1,6 @@
 import "../assets/css/global.css";
 import Header from "../components/partials/header";
+import Footer from "../components/partials/footer";
 import Head from "next/head";
 import mixpanel from "mixpanel-browser";
 
@@ -15,6 +16,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       <Header mixpanel={mixpanel} />
       <Component {...pageProps} mixpanel={mixpanel} />
+      <Footer mixpanel={mixpanel} />
     </div>
   );
 }

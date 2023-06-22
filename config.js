@@ -24,4 +24,11 @@ export default Object.freeze({
   SHOW_HEADER_TITLE: false,
   SHOW_RECOMMANDED_POSTS: true,
   SHOW_COMMENT_SECTION: false,
+  FACEBOOK_URL: "https://www.facebook.com/canopassoftware",
+  INSTAGRAM_URL: "https://www.instagram.com/canopassoftware/",
+  TWITTER_URL: "https://twitter.com/canopassoftware",
+  BLOG_URL: "https://blog.canopas.com/",
+  LINKEDIN_URL: "https://www.linkedin.com/company/canopasinc",
+  YOUTUBE_URL:
+    "https://www.youtube.com/channel/UC77VyeTVJ45HiUS_o2GNcBA/videos",
 });

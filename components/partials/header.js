@@ -41,7 +41,7 @@ export default function Header({ mixpanel }) {
             : `${
                 showHeader
                   ? `${lastScrollPos > 0 ? "drop-shadow-lg" : ""}`
-                  : "-top-44"
+                  : "!-top-44"
               }`
         }`}
       >
@@ -288,7 +288,7 @@ export default function Header({ mixpanel }) {
                   <div className="grid p-3 pb-5">
                     <Link
                       href={`${HOST_URL}/contact`}
-                      className="relative justify-self-center rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] font-bold text-white "
+                      className="relative justify-self-center rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] font-inter-bold text-white "
                       onClick={() => {
                         handleMenuClick("tap_header_cta");
                       }}

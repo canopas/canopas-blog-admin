@@ -129,8 +129,8 @@ export default function CTA() {
   };
 
   return (
-    <div className="relative overflow-hidden -mt-10 sm:mt-20 xl:mt-32 px-0 font-inter-medium z-[1]">
-      <div className="absolute w-full h-[8%] bg-white sm:hidden"></div>
+    <div className="relative -bottom-5 sm:-bottom-2 overflow-hidden xl:mt-32 px-0 font-inter-medium z-[1]">
+      <div className="absolute w-full h-[8%] sm:h-[6%] bg-white md:hidden"></div>
       {width < 600 ? (
         <Image
           src={bg400}
@@ -146,11 +146,11 @@ export default function CTA() {
         />
       )}
 
-      <div className="mt-20 sm:mt-10 text-center canopas-gradient-text text-3xl md:text-[3rem] md:leading-[3.625rem] lg:text-[4.0625rem] lg:leading-[4.9375rem] font-inter-bold">
+      <div className="mt-20 sm:mt-14 text-center canopas-gradient-text text-3xl md:text-[3rem] md:leading-[3.625rem] lg:text-[4.0625rem] lg:leading-[4.9375rem] font-inter-bold">
         Say Hello!
       </div>
       <div className="container text-center">
-        <div className="mb-4 md:mb-14">
+        <div>
           <form onSubmit={submitForm} method="POST">
             <div className="py-5 px-8 lg:px-20 xl:px-44">
               <ReCAPTCHA

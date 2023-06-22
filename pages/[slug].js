@@ -75,7 +75,9 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
   const [activeId, setActiveId] = useState(null);
   const [alerts, setAlerts] = useState(false);
   const [message, setMessage] = useState("");
+  const [headerHeight, setHeaderHeight] = useState("");
   const contentRef = useRef(null);
+  var firstHeadingId;
 
   setTimeout(() => {
     setLoaded(true);
@@ -112,12 +114,18 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
       // table of contents formation
       if (post.toc) {
         indexContent = post.toc.replace(/<a\s+href="(.*?)"/g, (match, href) => {
+          var pattern = /#([^-\n]+-0)\b/g;
+          match = pattern.exec(href);
+
           let classes =
             "text-ellipsis hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text";
           if (href === activeId) {
             classes +=
               " relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:left-0 after:bottom-0 after:w-full after:h-[1px] after:bg-gradient-to-r";
+          } else if (match && match[1]) {
+            firstHeadingId = match[1].replace("#", "");
           }
+
           return `<a href="${href}" class="${classes}"`;
         });
       }
@@ -128,7 +136,7 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
         var element = contentRef.current.querySelector(linkHref);
         if (element) {
           window.scrollTo({
-            top: element.offsetTop - 90,
+            top: element.offsetTop - headerHeight,
             behavior: "smooth",
           });
         }
@@ -137,18 +145,20 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
   }
 
   const handleScroll = () => {
-    const headers = contentRef.current.querySelectorAll("h1, h2");
-    headers.forEach((header, index) => {
-      const documentHeight = document.body.scrollHeight;
-      const currentScroll = window.scrollY + window.innerHeight;
-      if (currentScroll > documentHeight) {
-        setActiveId("#" + header.id);
-      } else {
-        if (header.offsetTop - window.pageYOffset <= 200) {
+    if (contentRef.current) {
+      const headers = contentRef.current.querySelectorAll("h1, h2");
+      headers.forEach((header, index) => {
+        const documentHeight = document.body.scrollHeight;
+        const currentScroll = window.scrollY + window.innerHeight;
+        if (currentScroll > documentHeight) {
           setActiveId("#" + header.id);
+        } else {
+          if (header.offsetTop - window.pageYOffset <= 200) {
+            setActiveId("#" + header.id);
+          }
         }
-      }
-    });
+      });
+    }
   };
 
   const copyLink = () => {
@@ -176,6 +186,15 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
     if (postData) {
       hljs.highlightAll();
       setLoaded(false);
+
+      var element = document.getElementById(firstHeadingId);
+      if (element) {
+        element.style.marginTop = "0";
+      }
+
+      setHeaderHeight(
+        document.getElementsByTagName("header")["0"].clientHeight
+      );
 
       document.querySelectorAll("oembed[url]").forEach((element) => {
         if (
@@ -221,7 +240,7 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
           <NotFound />
         ) : (
           <>
-            <div className="container my-16">
+            <div className="container mt-16 mb-10 md:mb-24">
               <Seo
                 title={post.title}
                 description={post.meta_description}
@@ -402,7 +421,7 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
                   }  mx-2 lg:mx-24 rounded-3xl text-[1.125rem]`}
                 >
                   <div className="relative w-full xl:w-[40%]">
-                    <div className="xl:sticky top-24 flex flex-col">
+                    <div className="xl:sticky top-[7.5rem] flex flex-col">
                       {indexContent != null ? (
                         <div className="w-full h-fit border border-1 border-black-900 rounded-[12px]">
                           <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4">

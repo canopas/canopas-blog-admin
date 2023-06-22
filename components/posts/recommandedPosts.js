@@ -42,7 +42,7 @@ export default function RecommandedPosts({ postData }) {
                       {categoryPost.title}
                     </div>
                     <div className="text-gray-600 text-[1rem] md:text-[1.06rem] leading-6 md:leading-7 tracking-wide">
-                      <span className="inline-block xl:hidden line-clamp-1 lg:line-clamp-2">
+                      <span className="xl:hidden line-clamp-1 lg:line-clamp-2">
                         {categoryPost.summary}
                       </span>
                     </div>

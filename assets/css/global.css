@@ -58,6 +58,30 @@
   src: url(./../fonts/ProductSans-Black.woff2);
 }
 
+@font-face {
+  font-family: "Poppins Light";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./../fonts/Poppins-Light.woff2);
+}
+
+@font-face {
+  font-family: "Poppins Regular";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Poppins-Regular.woff2);
+}
+
+@font-face {
+  font-family: "Poppins Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(./../fonts/Poppins-Medium.woff2);
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -70,6 +94,12 @@ input:-webkit-autofill:active {
 .floating-input:-webkit-autofill:focus,
 .floating-input:-webkit-autofill:active {
   -webkit-text-fill-color: #ffffff !important;
+}
+
+.cta-box-shadow {
+  -webkit-appearance: none;
+  -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
 }
 
 body {

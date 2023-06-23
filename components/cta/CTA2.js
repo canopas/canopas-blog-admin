@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import axios from "axios";
-import config from "../../config";
 import bg400 from "../../assets/images/cta2/400.svg";
 import bg800 from "../../assets/images/cta2/800.svg";
 import bg1200 from "../../assets/images/cta2/1200.svg";
 import bg2400 from "../../assets/images/cta2/2400.svg";
 import ReCAPTCHA from "react-google-recaptcha";
 import loaderImage from "../../assets/images/small-loader.svg";
+import { isValidEmail, isValidPhoneNumber } from "../../utils";
+import { submitFormData } from "./api";
 
 export default function CTA() {
   const width = 680;
@@ -32,18 +32,6 @@ export default function CTA() {
   const [showLoader, setShowLoader] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-
-  const isValidEmail = () => {
-    var emailRegx =
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return !emailRegx.test(email);
-  };
-
-  const isValidPhoneNumber = () => {
-    var NumberRegx =
-      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-    return !NumberRegx.test(phoneNumber);
-  };
 
   const validateForm = () => {
     setShowNameValidationError(name.trim().length === 0);
@@ -72,7 +60,6 @@ export default function CTA() {
 
     recaptchaRef.current
       .executeAsync()
-
       .then((token) => {
         if (!validateForm()) {
           let formData = {
@@ -85,30 +72,14 @@ export default function CTA() {
             token,
           };
 
-          // Add your axios post request here to submit the form data
-          axios
-            .post(config.API_BASE + "/api/send-contact-mail", formData)
-            .then((res) => {
-              setShowSuccessMessage(true);
-              resetForm();
-
-              setTimeout(() => {
-                setShowSuccessMessage(false);
-              }, 3000);
-            })
-            .catch((err) => {
-              if (err.response.status === 401) {
-                setErrorMessage("Invalid recaptcha score");
-
-                setShowErrorMessage(true);
-                setTimeout(() => {
-                  setShowErrorMessage(false);
-                }, 3000);
-              }
-            })
-            .finally(() => {
-              setShowLoader(false);
-            });
+          submitFormData(
+            formData,
+            setShowSuccessMessage,
+            resetForm,
+            setShowLoader,
+            setShowErrorMessage,
+            setErrorMessage
+          );
         }
       })
       .catch(() => {
@@ -197,7 +168,7 @@ export default function CTA() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     onBlur={() => {
-                      setShowValidEmailError(isValidEmail());
+                      setShowValidEmailError(isValidEmail(email));
                     }}
                     placeholder=" "
                   />
@@ -233,7 +204,9 @@ export default function CTA() {
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     onBlur={() => {
-                      setShowValidPhoneNumberError(isValidPhoneNumber());
+                      setShowValidPhoneNumberError(
+                        isValidPhoneNumber(phoneNumber)
+                      );
                     }}
                     placeholder=" "
                   />

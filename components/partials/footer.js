@@ -52,7 +52,7 @@ export default function Footer({ mixpanel }) {
           src={bg}
           alt="canopas-footer"
         />
-        <div className="container text-center lg:px-20 2xl:px-32">
+        <div className="container lg:px-20 2xl:px-32">
           <div className="grid grid-rows-2 xl:grid-rows-none xl:grid-cols-2 justify-items-stretch mt-7 md:mt-11 mb-8 md:mb-12 xl:mb-[60px]">
             <div className="justify-self-center xl:justify-self-end xl:order-last">
               <div className="mt-5 text-[1.375rem] leading-[1.6875rem] md:text-[1.5rem] md:leading-[1.8125rem] lg:text-[1.75rem] lg:leading-[1.9375rem] text-white/[.87] font-inter-bold">
@@ -66,7 +66,7 @@ export default function Footer({ mixpanel }) {
                   <input
                     className="w-full rounded-full border border-white bg-transparent py-2 md:py-3 pl-3 text-white floating-input focus:outline-none"
                     placeholder="Enter Your E-mail"
-                    id="email"
+                    id="subscribeEmail"
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -94,7 +94,7 @@ export default function Footer({ mixpanel }) {
                 Follow us on
               </div>
               <ul className="flex flex-wrap justify-center w-full m-auto mt-[1.5rem] xl:mt-[2rem] pl-0 cursor-pointer list-none">
-                <li className="flex justify-center !items-center w-[40px] h-[40px] md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
+                <li className="flex justify-center !items-center w-[40px] h-[40px] md:w-[62px] md:h-[62px] mr-1 md:mr-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
                     href={config.FACEBOOK_URL}
                     target="_blank"

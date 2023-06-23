@@ -220,7 +220,7 @@ export default function Header({ mixpanel }) {
                 <li className="order-last ml-0 my-2 sm:my-0 p-0">
                   <Link
                     href={`${HOST_URL}/contact`}
-                    className={`relative mb-0 mr-[14px] xl:mr-[25px] rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff835b] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.75rem] font-bold text-white ${
+                    className={`relative mb-0 mr-[14px] xl:mr-[25px] rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff835b] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.75rem] font-inter-bold text-white ${
                       router.pathname == `${HOST_URL}/contact`
                         ? "bg-clip-border canopas-gradient-text"
                         : ""
@@ -392,7 +392,7 @@ export default function Header({ mixpanel }) {
                         handleMenuClick("tap_header_cta");
                       }}
                     >
-                      <div className="py-[0.8rem] px-[2.5rem] text-lg gradient-text inline-block">
+                      <div className="py-[0.8rem] px-[1.05rem] sm:px-[2rem] text-lg gradient-text inline-block">
                         Get Free Consultation
                       </div>
                     </Link>

@@ -23,6 +23,9 @@ module.exports = {
         "inter-semibold": ["Inter SemiBold"],
         "inter-light": ["Inter ExtraLight"],
         "source-codepro": ["Source CodePro"],
+        "poppins-light": ["Poppins Light"],
+        "poppins-regular": ["Poppins Regular"],
+        "poppins-medium": ["Poppins Medium"],
       },
       colors: {
         black: {

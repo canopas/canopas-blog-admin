@@ -14,6 +14,7 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { faBell, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCopyright } from "@fortawesome/free-regular-svg-icons";
 
 export default function Footer({ mixpanel }) {
   const [email, setEmail] = useState("");
@@ -187,8 +188,15 @@ export default function Footer({ mixpanel }) {
             </div>
           </div>
 
-          <div className="mb-8 md:mb-9 text-[0.75rem] leading-[0.9375rem] md:text-[0.84375rem] md:leading-[1.03125rem] lg:text-[0.9375rem] lg:leading-[1.125rem] text-white/[.87]">
-            Canopas Software LLP. All rights reserved.
+          <div className="mb-8 md:mb-9 text-[0.75rem] leading-[0.9375rem] md:text-[0.84375rem] md:leading-[1.03125rem] lg:text-[0.9375rem] lg:leading-[1.125rem] text-white/[.87] text-center">
+            <div className="w-3 h-3 md:w-4 md:h-4 mr-1 inline-block">
+              <FontAwesomeIcon
+                icon={faCopyright}
+                className="w-full h-full mt-0.5"
+              />
+            </div>
+            {new Date().getFullYear()} Canopas Software LLP. All rights
+            reserved.
           </div>
           <svg width="0" height="0">
             <linearGradient id="lgrad" x1="100%" y1="100%" x2="0%" y2="0%">

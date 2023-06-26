@@ -10,6 +10,9 @@ import Seo from "./seo";
 import NotFound from "./404";
 import { setPostFields } from "../utils";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
+import CTA1 from "../components/cta/CTA1";
+import CTA2 from "../components/cta/CTA2";
+import CTA3 from "../components/cta/CTA3";
 import {
   faTags,
   faLink,
@@ -91,6 +94,7 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
 
   if (postData) {
     var post = postData.attributes;
+    var CTAData = post.cta.data;
     if (post.published_on == "Draft" && !config.SHOW_DRAFT_POSTS) {
       status = config.NOT_FOUND;
     } else {
@@ -524,6 +528,19 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
                 ""
               )}
             </div>
+            {CTAData ? (
+              CTAData.attributes.component_name === "CTA1" ? (
+                <CTA1 />
+              ) : CTAData.attributes.component_name === "CTA2" ? (
+                <CTA2 />
+              ) : CTAData.attributes.component_name === "CTA3" ? (
+                <CTA3 />
+              ) : (
+                ""
+              )
+            ) : (
+              ""
+            )}
           </>
         )}
       </section>

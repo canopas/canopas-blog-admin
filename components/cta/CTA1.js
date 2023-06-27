@@ -4,10 +4,8 @@ import { Autoplay } from "swiper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
-import ctabg400w from "../../assets/images/cta1/cta-bg-400w.webp";
-import ctabg800w from "../../assets/images/cta1/cta-bg-800w.webp";
-import cta400w from "../../assets/images/cta1/cta-400w.webp";
-import cta800w from "../../assets/images/cta1/cta-800w.webp";
+import ctabg400w from "../../assets/images/cta/first-cta-bg400w.webp";
+import cta800w from "../../assets/images/cta/first-cta-800w.webp";
 import Link from "next/link";
 import config from "../../config";
 import "swiper/css";
@@ -40,7 +38,6 @@ export default function CTA() {
       <div className="xl:hidden">
         <Image
           src={ctabg400w}
-          srcSet={(ctabg400w, ctabg800w)}
           loading="lazy"
           alt="cta-bg-image"
           className="absolute top-[-6.5rem] sm:left-[4.5rem] md:left-[6.5rem] w-[100%] sm:w-[80%] object-content"
@@ -68,7 +65,6 @@ export default function CTA() {
         <div className="hidden xl:block relative w-[53%] xl:w-[40%] 2xl:w-[50%]">
           <Image
             src={cta800w}
-            srcSet={(cta400w, cta800w)}
             loading="lazy"
             className="absolute right-0 h-full object-contain z-[2] mr-[-50px]"
             alt="cta-image"

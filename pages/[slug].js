@@ -13,6 +13,7 @@ import { faClock } from "@fortawesome/free-regular-svg-icons";
 import CTA1 from "../components/cta/CTA1";
 import CTA2 from "../components/cta/CTA2";
 import CTA3 from "../components/cta/CTA3";
+import CTA4 from "../components/cta/CTA4";
 import {
   faTags,
   faLink,
@@ -535,6 +536,8 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
                 <CTA2 />
               ) : CTAData.attributes.component_name === "CTA3" ? (
                 <CTA3 />
+              ) : CTAData.attributes.component_name === "CTA4" ? (
+                <CTA4 />
               ) : (
                 ""
               )

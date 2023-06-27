@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import bg400 from "../../assets/images/cta2/400.svg";
-import bg800 from "../../assets/images/cta2/800.svg";
-import bg1200 from "../../assets/images/cta2/1200.svg";
-import bg2400 from "../../assets/images/cta2/2400.svg";
+import bg400 from "../../assets/images/cta/second-cta-400.svg";
+import bg2400 from "../../assets/images/cta/second-cta-2400.svg";
 import ReCAPTCHA from "react-google-recaptcha";
 import loaderImage from "../../assets/images/small-loader.svg";
 import { isValidEmail, isValidPhoneNumber } from "../../utils";
@@ -111,7 +109,6 @@ export default function CTA() {
       ) : (
         <Image
           src={bg2400}
-          srcSet={(bg400, bg800, bg1200, bg2400)}
           className="absolute top-0 left-0 w-full h-full xl2:h-[unset] -z-[1] object-cover xl2:object-fill"
           alt="canopas-contact-footer"
         />

@@ -118,33 +118,33 @@ export default function Header({ mixpanel }) {
                   <ul
                     className={`${
                       showContributionMenu
-                        ? "block absolute left-auto   top-[5.5rem] flex-col space-y-6   w-max border rounded-[5px] bg-white shadow-md  pb-[1.5rem]"
+                        ? "block absolute left-auto top-[5.5rem] flex-col space-y-6 w-max border rounded-[5px] bg-white shadow-md pb-[1.5rem]"
                         : "hidden"
                     } ${
                       config.SHOW_CONTRIBUTION_PAGE
                         ? "ml-[-1.3rem] xl:ml-[-2rem] py-[1.5rem]"
-                        : "ml-[-1rem]"
+                        : "ml-[-1rem] py-[1.5rem]"
                     }
                     `}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                   >
-                    <li
-                      className={`relative ml-0 my-2 sm:my-0  group ${
-                        config.SHOW_CONTRIBUTION_PAGE ? "block" : "hidden"
-                      }`}
-                    >
-                      <Link
-                        href={`${HOST_URL}/contributions`}
-                        className={`relative group mr-[14px] xl:mr-[30px] py-[1rem] px-2 font-inter-medium text-black-core/[0.6] group-hover:text-white group-hover:z-[1]`}
-                        onClick={() => {
-                          handleMenuClick("tap_header_contributions");
-                        }}
-                      >
-                        Open Source
-                        <div className="absolute left-[-17px] top-[0] w-0  h-[100%] from-[#FF835B] to-[#F2709C] bg-gradient-to-r transition-all duration-300 ease   group-hover:h-[100%] z-[-1] group-hover:w-[156px] group-hover:xl:w-[181px]"></div>
-                      </Link>
-                    </li>
+                    {config.SHOW_CONTRIBUTION_PAGE ? (
+                      <li className="relative ml-0 my-2 sm:my-0 group">
+                        <Link
+                          href={`${HOST_URL}/contributions`}
+                          className={`relative group mr-[14px] xl:mr-[30px] py-[1rem] px-2 font-inter-medium text-black-core/[0.6] group-hover:text-white group-hover:z-[1]`}
+                          onClick={() => {
+                            handleMenuClick("tap_header_contributions");
+                          }}
+                        >
+                          Open Source
+                          <div className="absolute left-[-17px] top-[0] w-0 h-[100%] from-[#FF835B] to-[#F2709C] bg-gradient-to-r transition-all duration-300 ease group-hover:h-[100%] z-[-1] group-hover:w-[156px] group-hover:xl:w-[181px]"></div>
+                        </Link>
+                      </li>
+                    ) : (
+                      ""
+                    )}
                     <li className="ml-0 my-2 sm:my-0 relative group">
                       <Link
                         href="https://blog.canopas.com/"

@@ -16,10 +16,7 @@ const Seo = ({
     <Head>
       {article ? (
         <>
-          <title>
-            {title} | by {authorName} | published at {publishedAt} | Canopas
-          </title>
-
+          <title>{title}</title>
           <meta property="og:site_name" content="Canopas blogs" />
           <meta property="og:type" content="article" />
           <meta property="article:published_time" content={publishedTime} />

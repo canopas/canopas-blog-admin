@@ -71,7 +71,6 @@ export async function getServerSideProps(context) {
     response = err.response;
   }
 
-  context.res.setHeader("Cache-Control", "public, max-age=3600");
   return { props: { postData, status, categoryPosts } };
 }
 
@@ -530,23 +529,36 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
                 ""
               )}
             </div>
-            {CTAData ? (
-              CTAData.attributes.component_name === "CTA1" ? (
-                <CTA1 />
-              ) : CTAData.attributes.component_name === "CTA2" ? (
-                <CTA2 />
-              ) : CTAData.attributes.component_name === "CTA3" ? (
-                <CTA3 />
-              ) : CTAData.attributes.component_name === "CTA4" ? (
-                <CTA4 />
-              ) : CTAData.attributes.component_name === "CTA5" ? (
-                <CTA5 />
-              ) : (
-                ""
-              )
-            ) : (
-              ""
-            )}
+            {CTAData
+              ? (() => {
+                  let CTAComponent = null;
+                  try {
+                    switch (CTAData.attributes.component_name) {
+                      case "CTA1":
+                        CTAComponent = <CTA1 />;
+                        break;
+                      case "CTA2":
+                        CTAComponent = <CTA2 />;
+                        break;
+                      case "CTA3":
+                        CTAComponent = <CTA3 />;
+                        break;
+                      case "CTA4":
+                        CTAComponent = <CTA4 />;
+                        break;
+                      case "CTA5":
+                        CTAComponent = <CTA5 />;
+                        break;
+                      default:
+                        break;
+                    }
+                  } catch (error) {
+                    console.error("Error rendering CTA component:", error);
+                  }
+
+                  return CTAComponent;
+                })()
+              : ""}
           </>
         )}
       </section>

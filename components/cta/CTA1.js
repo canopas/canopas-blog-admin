@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
@@ -9,7 +11,7 @@ import cta800w from "../../assets/images/cta/first-cta-800w.webp";
 import Link from "next/link";
 import config from "../../config";
 import "swiper/css";
-import "swiper/css/pagination";
+import "swiper/css/autoplay";
 
 export default function CTA() {
   const [swiper, setSwiper] = useState(null);
@@ -86,41 +88,43 @@ export default function CTA() {
                 setSwiper(swiper);
               }}
             >
-              {slides.map((slide, index) => (
-                <SwiperSlide
-                  key={index}
-                  onMouseOver={() => playSwiper(false)}
-                  onMouseLeave={() => playSwiper(true)}
-                  onTouchStart={() => playSwiper(false)}
-                  onTouchMove={() => playSwiper(true)}
-                  onTouchEnd={() => playSwiper(true)}
-                  className="cursor-pointer"
-                >
-                  <div
-                    className={`flex flex-col items-center rounded-[16px] bg-gradient-to-r from-[#FF835B]/[0.3] to-[#F2709C]/[0.3] w-[50%] p-[20px] h-[140px] ${
-                      slide.hasStar ? "justify-between" : "justify-center"
-                    }`}
+              {slides.map((slide, index) => {
+                return (
+                  <SwiperSlide
+                    key={index}
+                    onMouseOver={() => playSwiper(false)}
+                    onMouseLeave={() => playSwiper(true)}
+                    onTouchStart={() => playSwiper(false)}
+                    onTouchMove={() => playSwiper(true)}
+                    onTouchEnd={() => playSwiper(true)}
+                    className="cursor-pointer"
                   >
-                    <span className="font-inter-bold text-[1.5rem] leading-[2.25rem]">
-                      {slide.title}
-                    </span>
-                    <span className="font-inter-medium text-[1.1875rem] leading-[1.78125rem] text-black-core/[0.6]">
-                      {slide.content}
-                    </span>
-                    {slide.hasStar && (
-                      <div className="flex justify-between mt-[3px]">
-                        {[...Array(5)].map((_, i) => (
-                          <FontAwesomeIcon
-                            key={i}
-                            className="fa w-[15px] h-[15px] mr-[5px] text-[#F2709C]"
-                            icon={faStar}
-                          />
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </SwiperSlide>
-              ))}
+                    <div
+                      className={`flex flex-col items-center rounded-[16px] bg-gradient-to-r from-[#FF835B]/[0.3] to-[#F2709C]/[0.3] w-[50%] p-[20px] h-[140px] ${
+                        slide.hasStar ? "justify-between" : "justify-center"
+                      }`}
+                    >
+                      <span className="font-inter-bold text-[1.5rem] leading-[2.25rem]">
+                        {slide.title}
+                      </span>
+                      <span className="font-inter-medium text-[1.1875rem] leading-[1.78125rem] text-black-core/[0.6]">
+                        {slide.content}
+                      </span>
+                      {slide.hasStar && (
+                        <div className="flex justify-between mt-[3px]">
+                          {[...Array(5)].map((_, i) => (
+                            <FontAwesomeIcon
+                              key={i}
+                              className="fa w-[15px] h-[15px] mr-[5px] text-[#F2709C]"
+                              icon={faStar}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
             </Swiper>
           </div>
         </div>

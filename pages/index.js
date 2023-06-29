@@ -47,7 +47,6 @@ export async function getServerSideProps({ req, res }) {
     response = err.response;
   }
 
-  res.setHeader("Cache-Control", "public, max-age=3600");
   return { props: { posts, status, categories } };
 }
 

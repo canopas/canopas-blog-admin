@@ -24,7 +24,6 @@ export default Object.freeze({
   SHOW_HEADER_TITLE: false,
   SHOW_RECOMMANDED_POSTS: true,
   SHOW_COMMENT_SECTION: false,
-  SHOW_CONTRIBUTION_PAGE: true,
 
   FACEBOOK_URL: "https://www.facebook.com/canopassoftware",
   INSTAGRAM_URL: "https://www.instagram.com/canopassoftware/",

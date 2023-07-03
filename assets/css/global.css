@@ -140,6 +140,10 @@ body {
   @apply bg-clip-text bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] text-transparent;
 }
 
+.gradient-border {
+  border-image: linear-gradient(to bottom, #f2709c, #ff835b) 1;
+}
+
 .gradient-border-btn {
   @apply border-[1px] border-solid border-transparent rounded-[0.6rem] bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] shadow-[inset_2px_1000px_1px_#fff] p-[1rem] text-center hover:border-[1px] hover:border-solid hover:border-transparent hover:from-[#f2709c] hover:to-[#ff9472] hover:shadow-none active:scale-[0.98];
 }

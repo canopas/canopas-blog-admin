@@ -1,12 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import ReCAPTCHA from "react-google-recaptcha";
 import loaderImage from "../../assets/images/small-loader.svg";
 import { isValidEmail, isValidPhoneNumber } from "../../utils";
 import { submitFormData } from "./api";
 
 export default function CTA() {
-  const recaptchaRef = useRef(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [projectInfo, setProjectInfo] = useState("");
@@ -25,7 +23,6 @@ export default function CTA() {
     "Something went wrong on our side"
   );
   const [showLoader, setShowLoader] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const validateForm = () => {
@@ -51,40 +48,45 @@ export default function CTA() {
 
   const submitForm = (event) => {
     event.preventDefault();
-    setShowLoader(true);
+    if (!validateForm()) {
+      setShowLoader(true);
+    }
 
-    recaptchaRef.current
-      .executeAsync()
-      .then((token) => {
-        if (!validateForm()) {
-          let formData = {
-            name: name,
-            email: email,
-            project_info: projectInfo
-              ? projectInfo.replace(/\./g, ".\n")
-              : "NA",
-            phone_number: phoneNumber,
-            token,
-          };
+    grecaptcha.enterprise.ready(() => {
+      grecaptcha.enterprise
+        .execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {
+          action: "verify",
+        })
+        .then((token) => {
+          if (!validateForm()) {
+            let formData = {
+              name: name,
+              email: email,
+              project_info: projectInfo
+                ? projectInfo.replace(/\./g, ".\n")
+                : "NA",
+              phone_number: phoneNumber,
+              token,
+            };
 
-          submitFormData(
-            formData,
-            setShowSuccessMessage,
-            resetForm,
-            setShowLoader,
-            setShowErrorMessage,
-            setErrorMessage
-          );
-        }
-      })
-      .catch(() => {
-        setErrorMessage("Invalid recaptcha score");
+            submitFormData(
+              formData,
+              resetForm,
+              setShowLoader,
+              setShowErrorMessage,
+              setErrorMessage
+            );
+          }
+        })
+        .catch(() => {
+          setErrorMessage("Invalid recaptcha score");
 
-        setShowErrorMessage(true);
-        setTimeout(() => {
-          setShowErrorMessage(false);
-        }, 3000);
-      });
+          setShowErrorMessage(true);
+          setTimeout(() => {
+            setShowErrorMessage(false);
+          }, 3000);
+        });
+    });
   };
 
   const resetForm = () => {
@@ -98,7 +100,7 @@ export default function CTA() {
     <>
       <hr className="md:hidden" />
       <div className="relative top-5 md:top-0.5 w-full h-auto">
-        <div className="container flex flex-col md:flex-row md:space-x-6 lg:space-x-0 xl:px-20 3xl:px-32">
+        <div className="container flex flex-col md:flex-row md:space-x-6 lg:space-x-0 md:-mt-[60px] xl:px-20 3xl:px-32">
           <div className="mt-10 md:mt-40 basis-7/12 lg:basis-3/5">
             <div className="flex flex-col items-center md:items-stretch space-y-4 md:w-[16.2rem] lg:w-[20rem] 2xl:w-[22.23rem]">
               <div className="text-[1.2rem] lg:text-[1.5rem] 2xl:text-[1.75rem] leading-[1.75rem] lg:leading-[2rem] 2xl:leading-[2.3rem] font-poppins-regular">
@@ -117,11 +119,6 @@ export default function CTA() {
           <div className="relative top-14 lg:top-20 xl:top-[5.5rem] h-fit w-full bg-white cta-box-shadow text-center font-poppins-regular">
             <form onSubmit={submitForm} method="POST">
               <div className="pt-[3rem] md:pt-[5rem] lg:pt-[6rem] pb-10 lg:pb-14 px-8">
-                <ReCAPTCHA
-                  ref={recaptchaRef}
-                  size="invisible"
-                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-                />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="relative md:col-span-2 md:mb-5 pt-3 lg:pt-10 text-left">
                     <input
@@ -293,18 +290,6 @@ export default function CTA() {
           </div>
         </div>
         <div className="bg-black-900 w-full h-[84px] md:h-[70px] lg:h-[83px] xl:h-[94px]"></div>
-        {showSuccessMessage ? (
-          <div
-            className="fixed top-[10%] w-full z-[500] from-[#ff835b] to-[#f2709c] bg-gradient-to-r px-4 py-3 font-inter-semibold text-center text-white text-[1rem] md:text-[1.5rem] xl:text-[1.875rem] xl:leading-[2.813rem]"
-            role="alert"
-          >
-            <span className="block sm:inline">
-              Thank you for choosing us to make a difference in your business.
-            </span>
-          </div>
-        ) : (
-          ""
-        )}
       </div>
     </>
   );

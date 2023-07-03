@@ -13,13 +13,13 @@ export default function CTA() {
 
   return (
     <section>
-      <div className="mt-[20px] lg:mt-[150px] xl:mt-[170px] 2xl:mt-[250px] 3xl:mt-[350px] bg-[#F8F8F8] font-inter-regular">
-        <div className="container flex flex-col md:flex-row">
+      <div className="mt-[20px] lg:mt-[150px] xl:mt-[170px] 2xl:mt-[250px] 3xl:mt-[280px] bg-[#F8F8F8] font-inter-regular">
+        <div className="container flex flex-col md:flex-row 3xl:w-[82.5rem]">
           <div className="md:relative order-2 md:order-first md:w-[50%]">
             <Image
               src={cta2400}
               alt="fourth-cta-image"
-              className="-mb-[1.5rem] w-fit h-fit object-contain sm:-mb-[0.9rem] md:absolute md:right-[2rem] md:-top-[2.8rem] lg:right-[2.5rem] lg:-top-[3.3rem] xl:right-[1.5rem] xl:-top-[6.5rem] 2xl:right-[2.5rem] 2xl:-top-[10.5rem] 3xl:right-[3.5rem] 3xl:-top-[15rem]"
+              className="w-[85%] h-[85%] sm:w-[80%] sm:h-[80%] md:w-fit md:h-fit object-contain mx-[7.5%] sm:mx-[10%] md:mx-0 -mb-[1.5rem] sm:-mb-[0.9rem] md:absolute md:right-[2.5rem] md:-top-[2.6rem] lg:right-[2.5rem] lg:-top-[2.9rem] xl:right-[1.5rem] xl:-top-[7.6rem] 2xl:right-[2.5rem] 2xl:-top-[11.5rem] 3xl:right-[3.5rem]"
               loading="lazy"
             />
           </div>
@@ -44,7 +44,7 @@ export default function CTA() {
                 path to a sleek solution.
               </div>
               <Link href={`${config.CANOPAS_URL}/contact`} className="">
-                <div className="flex items-center mt-5 md:mt-4 lg:mt-5 xl:mb-5 mx-auto md:mx-0 w-max rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal text-[1rem] leading-[1.1875rem] md:text-[1.09375rem] md:leading-[1.3125rem] xl:text-[1.1875rem] xl:leading-[1.4375rem] font-inter-semibold !tracking-[0] text-white active:scale-[0.98]">
+                <div className="flex items-center mt-5 md:mt-4 lg:mt-5 mx-auto md:mx-0 w-max rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal text-[1rem] leading-[1.1875rem] md:text-[1.09375rem] md:leading-[1.3125rem] xl:text-[1.1875rem] xl:leading-[1.4375rem] font-inter-semibold !tracking-[0] text-white active:scale-[0.98]">
                   <span className="py-[0.7rem] px-[1.2rem] gradient-text inline-block">
                     Talk to our experts
                   </span>

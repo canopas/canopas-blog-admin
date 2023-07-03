@@ -48,6 +48,11 @@ module.exports = {
       transitionTimingFunction: {
         out: "cubic-bezier(0.9, 0.96, 1, 1)",
       },
+      backgroundImage: {
+        "gradient-L": "linear-gradient(178deg, #FFFFFF  68%, #f77783 40%);",
+        "gradient-W": "linear-gradient(257deg, #FFFFFF  65%, #f77783 68%);",
+        "gradient-T": "linear-gradient(540deg, #FFFFFF  30%, #f77783 10%);",
+      },
     },
   },
   corePlugins: {

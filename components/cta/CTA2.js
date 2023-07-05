@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import bg400 from "../../assets/images/cta/second-cta-400.svg";
 import bg2400 from "../../assets/images/cta/second-cta-2400.svg";
-import ReCAPTCHA from "react-google-recaptcha";
 import loaderImage from "../../assets/images/small-loader.svg";
 import { isValidEmail, isValidPhoneNumber } from "../../utils";
 import { submitFormData } from "./api";
 
 export default function CTA() {
   const width = 680;
-  const recaptchaRef = useRef(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [projectInfo, setProjectInfo] = useState("");
@@ -28,7 +26,6 @@ export default function CTA() {
     "Something went wrong on our side"
   );
   const [showLoader, setShowLoader] = useState(false);
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const validateForm = () => {
@@ -51,43 +48,47 @@ export default function CTA() {
     const myText = document.querySelector(".myTextarea");
     myText.style.minHeight = "100px";
   }, []);
-
   const submitForm = (event) => {
     event.preventDefault();
-    setShowLoader(true);
+    if (!validateForm()) {
+      setShowLoader(true);
+    }
 
-    recaptchaRef.current
-      .executeAsync()
-      .then((token) => {
-        if (!validateForm()) {
-          let formData = {
-            name: name,
-            email: email,
-            project_info: projectInfo
-              ? projectInfo.replace(/\./g, ".\n")
-              : "NA",
-            phone_number: phoneNumber,
-            token,
-          };
+    grecaptcha.enterprise.ready(() => {
+      grecaptcha.enterprise
+        .execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {
+          action: "verify",
+        })
+        .then((token) => {
+          if (!validateForm()) {
+            let formData = {
+              name: name,
+              email: email,
+              project_info: projectInfo
+                ? projectInfo.replace(/\./g, ".\n")
+                : "NA",
+              phone_number: phoneNumber,
+              token,
+            };
 
-          submitFormData(
-            formData,
-            setShowSuccessMessage,
-            resetForm,
-            setShowLoader,
-            setShowErrorMessage,
-            setErrorMessage
-          );
-        }
-      })
-      .catch(() => {
-        setErrorMessage("Invalid recaptcha score");
+            submitFormData(
+              formData,
+              resetForm,
+              setShowLoader,
+              setShowErrorMessage,
+              setErrorMessage
+            );
+          }
+        })
+        .catch(() => {
+          setErrorMessage("Invalid recaptcha score");
 
-        setShowErrorMessage(true);
-        setTimeout(() => {
-          setShowErrorMessage(false);
-        }, 3000);
-      });
+          setShowErrorMessage(true);
+          setTimeout(() => {
+            setShowErrorMessage(false);
+          }, 3000);
+        });
+    });
   };
 
   const resetForm = () => {
@@ -121,11 +122,6 @@ export default function CTA() {
         <div>
           <form onSubmit={submitForm} method="POST">
             <div className="py-5 px-8 lg:px-20 xl:px-44">
-              <ReCAPTCHA
-                ref={recaptchaRef}
-                size="invisible"
-                sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
-              />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="relative md:col-span-2 md:mb-5 pt-3 lg:pt-10 text-left">
                   <input
@@ -296,18 +292,6 @@ export default function CTA() {
           </form>
         </div>
       </div>
-      {showSuccessMessage ? (
-        <div
-          className="fixed top-[10%] w-full z-[500] from-[#ff835b] to-[#f2709c] bg-gradient-to-r px-4 py-3 font-inter-semibold text-center text-white text-[1rem] md:text-[1.5rem] xl:text-[1.875rem] xl:leading-[2.813rem]"
-          role="alert"
-        >
-          <span className="block sm:inline">
-            Thank you for choosing us to make a difference in your business.
-          </span>
-        </div>
-      ) : (
-        ""
-      )}
     </div>
   );
 }

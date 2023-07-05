@@ -11,8 +11,8 @@ export function submitFormData(
   axios
     .post(config.API_BASE + "/api/send-contact-mail", formData)
     .then(() => {
-      window.location.href = config.CANOPAS_URL + "/thank-you";
       localStorage.setItem("client-name", JSON.stringify(formData.name));
+      window.location.href = config.CANOPAS_URL + "/thank-you";
       resetForm();
     })
     .catch((err) => {

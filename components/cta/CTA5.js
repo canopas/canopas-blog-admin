@@ -1,58 +1,62 @@
 import React from "react";
 import Image from "next/image";
-import cta2400 from "../../assets/images/cta/fifth-cta-2400w.webp";
+import cta800 from "../../assets/images/cta/fifth-cta-800w.webp";
 import Link from "next/link";
 import config from "../../config";
 
 export default function CTA() {
-  const reasons = [
-    "High-performing mobile apps",
-    "Bulletproof cloud solutions",
-    "Custom solutions for your business.",
-  ];
-
   return (
     <section>
-      <div className="from-[#F98584] to-[#F47695] bg-gradient-to-b font-inter-regular">
-        <div className="container flex flex-col md:flex-row max-w-[1878px] -mb-[16px] sm:mb-[0px] 3xl:-mb-[1px]">
-          <div className="hidden md:block md:w-[45%] xl:w-[40%] 2xl:pl-[74px]">
+      <div className="relative -bottom-4 md:-bottom-1 bg-black-core/[0.85] py-[50px]">
+        <div className="absolute right-0 top-1 hidden h-[140px] border-l-[20px] border-[#F2709C] md:block lg:top-[2.25rem] xl:h-[185px] 2xl:top-[4.25rem]"></div>
+        <div className="absolute bottom-[6.25rem] left-0 hidden h-[115px] border-l-[20px] border-[#FF9472] md:block"></div>
+
+        <div className="container flex flex-col items-center md:flex-row md:flex-row-reverse 3xl:px-20">
+          <div className="flex flex-col md:relative md:items-end lg:basis-[55.49%]">
+            <p className="text-center font-inter-bold text-[2.625rem] leading-[3.125rem] text-white md:text-right md:text-[3.275rem] md:leading-[3.875rem] xl:text-[5.625rem] xl:leading-[6.125rem]">
+              <span className="bg-gradient-L bg-clip-text text-transparent">
+                L
+              </span>
+              et&apos;s
+              <span className="ml-3 md:ml-5 mr-[-0.2rem] bg-gradient-W bg-clip-text text-transparent">
+                W
+              </span>
+              ork
+              <br className="sm:hidden md:inline-block" />
+              <span className="ml-3 md:ml-0 mr-[-0.2rem] bg-gradient-T bg-clip-text text-transparent">
+                T
+              </span>
+              ogether
+            </p>
+            <p className="sm:w-[385px] mt-6 text-center font-inter-regular text-[1rem] leading-[1.5rem] text-white md:text-right md:text-[1.4rem] md:leading-[2rem] md:text-white/[0.75] xl:w-[82%] xl:text-[1.75rem] xl:leading-[2.625rem] 2xl:w-[68%]">
+              Not sure where to start? We also offer code and architecture
+              reviews, strategic planning, and more.
+            </p>
+            <Link href={`${config.CANOPAS_URL}/contact`} className="mt-10">
+              <div className="hidden md:flex items-center mx-auto md:mx-0 w-max rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal  text-[1.09375rem] leading-[1.3125rem] xl:text-[1.188rem] xl:leading-[1.188rem] font-inter-semibold !tracking-[0] text-white active:scale-[0.98]">
+                <span className="py-[1rem] px-[1.3rem] gradient-text inline-block">
+                  Get Free Consultation
+                </span>
+              </div>
+            </Link>
+          </div>
+          <div className="relative lg:basis-[44.51%]">
             <Image
-              src={cta2400}
-              alt="portfolio-cta-image"
-              className="w-full h-full object-cover"
-              loading="lazy"
+              src={cta800}
+              alt="cta-image"
+              className="mt-4 w-[85%] h-[85%] sm:w-[80%] sm:h-[80%] md:w-full md:h-full md:mt-0 mx-[7.5%] sm:mx-[10%] md:mx-0"
             />
+
+            <div className="gradient-border absolute bottom-4 left-[0.5rem] h-[55px] border-l-[13px] md:hidden"></div>
           </div>
 
-          <div className="flex md:w-[55%]">
-            <div className="m-auto md:ml-auto xl:m-auto w-[80%] sm:w-[60%] md:w-[80%] lg:w-[90%] 2xl:w-9/12 py-[20px] text-white">
-              <p className="text-white text-[1.5rem] leading-[1.813rem] md:text-[1.7rem] md:leading-[1.9rem] lg:text-[2.188rem] lg:leading-[2.625rem] xl:text-[3.125rem] xl:leading-[3.813rem] font-inter-bold">
-                Whether you need...
-              </p>
-              <ul className="pl-0 pt-6 md:pt-4 lg:pt-6 text-[1rem] text-white leading-[1.25rem] md:text-[1.05rem] md:leading-[1.34rem] lg:text-[1.188rem] lg:leading-[1.5rem] xl:text-[1.375rem] xl:leading-[1.8125rem] font-inter-semibold">
-                {reasons.map((reason, index) => {
-                  return (
-                    <li className="flex" key={index}>
-                      <span className="pr-1">*</span>
-                      <div className="sm:w-[90%]">{reason}</div>
-                    </li>
-                  );
-                })}
-              </ul>
-              <div className="pt-6 md:pt-4 lg:pt-6 text-white font-inter-regular text-[0.875rem] leading-[1.125rem] md:text-[0.9rem] md:leading-[1.15rem] lg:text-[1.125rem] lg:leading-[1.375rem] xl:text-[1.375rem] xl:leading-[1.813rem]">
-                Bring us your toughest challenge and we&apos;ll show you the
-                path to a sleek solution.
-              </div>
-              <Link
-                className="flex items-center mt-5 md:mt-4 lg:mt-5 xl:mb-5 mx-auto md:mx-0 w-max rounded-full text-center font-normal text-[1rem] leading-[1.1875rem] md:text-[1.09375rem] md:leading-[1.3125rem] lg:text-[1.1875rem] lg:leading-[1.4375rem] font-inter-medium !tracking-[0] border-[1px] border-solid border-white bg-white hover:bg-transparent"
-                href={`${config.CANOPAS_URL}/contact`}
-              >
-                <span className="bg-gradient-to-l bg-clip-text text-transparent from-[#ff9472] to-[#f2709c] py-[0.7rem] xl:py-[0.8rem] px-[1.2rem] font-inter-semibold hover:text-white">
-                  Talk to our experts
-                </span>
-              </Link>
+          <Link href={`${config.CANOPAS_URL}/contact`} className="mt-10">
+            <div className="flex md:hidden items-center mx-auto md:mx-0 w-max rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal text-[1.125rem] leading-[1.125rem] font-inter-semibold !tracking-[0] text-white active:scale-[0.98]">
+              <span className="py-[1rem] px-[1.2rem] gradient-text inline-block">
+                Get Free Consultation
+              </span>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </section>

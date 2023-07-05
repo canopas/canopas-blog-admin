@@ -3,7 +3,6 @@ import config from "../../config";
 
 export function submitFormData(
   formData,
-  setShowSuccessMessage,
   resetForm,
   setShowLoader,
   setShowErrorMessage,
@@ -12,12 +11,9 @@ export function submitFormData(
   axios
     .post(config.API_BASE + "/api/send-contact-mail", formData)
     .then(() => {
-      setShowSuccessMessage(true);
+      window.location.href = config.CANOPAS_URL + "/thank-you";
+      localStorage.setItem("client-name", JSON.stringify(formData.name));
       resetForm();
-
-      setTimeout(() => {
-        setShowSuccessMessage(false);
-      }, 3000);
     })
     .catch((err) => {
       if (err.response.status === 401) {

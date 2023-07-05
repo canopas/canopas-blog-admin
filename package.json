@@ -9,6 +9,7 @@
     "lint": "prettier -c . && next lint"
   },
   "dependencies": {
+    "@google-cloud/recaptcha-enterprise": "^3.4.1",
     "@headlessui/react": "^1.7.4",
     "@tailwindcss/line-clamp": "^0.4.2",
     "axios": "^1.2.2",

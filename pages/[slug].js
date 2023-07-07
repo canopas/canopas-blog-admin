@@ -8,7 +8,7 @@ import axios from "axios";
 import config from "../config";
 import Seo from "./seo";
 import NotFound from "./404";
-import { setPostFields } from "../utils";
+import { setPostFields, filterPostsByCategoryAndTag } from "../utils";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import CTA1 from "../components/cta/CTA1";
 import CTA2 from "../components/cta/CTA2";
@@ -38,7 +38,7 @@ export async function getServerSideProps(context) {
   const slug = context.params.slug;
   var response,
     postData = null;
-  var categoryPosts = [];
+  var posts = [];
 
   try {
     response = await axios.get(
@@ -58,29 +58,27 @@ export async function getServerSideProps(context) {
     : "&publicationState=live";
   try {
     response = await axios.get(
-      config.STRAPI_URL +
-        "/v1/posts?filters[category][name][$eq]=" +
-        postData.attributes.category.data.attributes.name +
-        "&filters[slug][$ne]=" +
-        slug +
-        published
+      config.STRAPI_URL + "/v1/posts?filters[slug][$ne]=" + slug + published
     );
-    categoryPosts = response.data.data;
-    categoryPosts.forEach((post) => setPostFields(post));
+    posts = response.data.data;
+    posts.forEach((post) => setPostFields(post));
   } catch (err) {
     response = err.response;
   }
 
-  return { props: { postData, status, categoryPosts } };
+  return {
+    props: { postData, status, posts },
+  };
 }
 
-export default function Post({ postData, status, categoryPosts, mixpanel }) {
+export default function Post({ postData, status, posts, mixpanel }) {
   const [loaded, setLoaded] = useState(false);
   const [activeId, setActiveId] = useState(null);
   const [alerts, setAlerts] = useState(false);
   const [message, setMessage] = useState("");
   const [headerHeight, setHeaderHeight] = useState("");
   const contentRef = useRef(null);
+  var relatedPosts = [];
   var firstHeadingId;
 
   setTimeout(() => {
@@ -146,6 +144,8 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
           });
         }
       };
+
+      relatedPosts = filterPostsByCategoryAndTag(post, posts);
     }
   }
 
@@ -420,7 +420,7 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
                 {/* Table of Contents */}
                 <div
                   className={`flex flex-col xl:flex-row space-y-20 xl:space-y-0 ${
-                    categoryPosts.length != 0 && config.SHOW_RECOMMANDED_POSTS
+                    relatedPosts.length != 0 && config.SHOW_RECOMMANDED_POSTS
                       ? "xl:space-x-6 2xl:space-x-8 3xl:space-x-12 xl:mx-0"
                       : "xl:space-x-10 2xl:space-x-20 xl:mx-8 2xl:mx-20 3xl:mx-32"
                   }  mx-2 lg:mx-24 rounded-3xl text-[1.125rem]`}
@@ -482,13 +482,12 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
                   </div>
                   {/* Recommended Posts Section Desktop View */}
 
-                  {categoryPosts.length != 0 &&
-                  config.SHOW_RECOMMANDED_POSTS ? (
+                  {relatedPosts.length != 0 && config.SHOW_RECOMMANDED_POSTS ? (
                     <div className="relative w-[40%]">
                       <div className="xl:sticky top-28">
                         <div className="hidden xl:block w-full h-fit">
                           <RecommandedPosts
-                            postData={[categoryPosts, mixpanel]}
+                            postData={[relatedPosts, mixpanel]}
                           />
                         </div>
                       </div>
@@ -500,10 +499,10 @@ export default function Post({ postData, status, categoryPosts, mixpanel }) {
               </div>
 
               {/* Recommended Posts Section Mobile,Tablet View*/}
-              {categoryPosts.length != 0 && config.SHOW_RECOMMANDED_POSTS ? (
+              {relatedPosts.length != 0 && config.SHOW_RECOMMANDED_POSTS ? (
                 <div className="container inline-block xl:hidden mt-10 lg:mx-4">
                   <hr className="mb-10" />
-                  <RecommandedPosts postData={[categoryPosts, mixpanel]} />
+                  <RecommandedPosts postData={[relatedPosts, mixpanel]} />
                 </div>
               ) : (
                 ""

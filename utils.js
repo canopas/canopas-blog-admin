@@ -112,6 +112,56 @@ function isValidPhoneNumber(phonenumber) {
   return !NumberRegx.test(phonenumber);
 }
 
+function filterPostsByCategoryAndTag(post, posts) {
+  const relatedPosts = [];
+  const postTags = post.tags.map((tag) => tag.name);
+
+  if (posts) {
+    const postCategoryName = post.category.data
+      ? post.category.data.attributes.name
+      : "";
+
+    if (postCategoryName || postTags.length > 0)
+      posts.forEach((post) => {
+        const relatedTags = post.attributes.tags.map((tag) => tag.name);
+        const relatedCategoryName = post.attributes.category.data
+          ? post.attributes.category.data.attributes.name
+          : "";
+
+        if (
+          JSON.stringify(postTags) === JSON.stringify(relatedTags) &&
+          relatedCategoryName &&
+          postCategoryName === relatedCategoryName
+        ) {
+          post.attributes.index = 1;
+          relatedPosts.push(post);
+        } else if (
+          postTags.some((tag) => relatedTags.includes(tag)) &&
+          relatedCategoryName &&
+          postCategoryName === relatedCategoryName
+        ) {
+          post.attributes.index = 2;
+          relatedPosts.push(post);
+        } else if (
+          relatedCategoryName &&
+          postCategoryName === relatedCategoryName
+        ) {
+          post.attributes.index = 3;
+          relatedPosts.push(post);
+        } else if (
+          postTags.length > 0 &&
+          (relatedTags.some((tag) => postTags.includes(tag)) ||
+            JSON.stringify(postTags) === JSON.stringify(relatedTags))
+        ) {
+          post.attributes.index = 4;
+          relatedPosts.push(post);
+        }
+      });
+  }
+
+  return relatedPosts;
+}
+
 export {
   getReadingTime,
   formateDate,
@@ -120,4 +170,5 @@ export {
   filterPostsByCategory,
   isValidEmail,
   isValidPhoneNumber,
+  filterPostsByCategoryAndTag,
 };

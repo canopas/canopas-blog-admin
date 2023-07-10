@@ -23,7 +23,7 @@ export default function CTA() {
   const [showValidPhoneNumberError, setShowValidPhoneNumberError] =
     useState(false);
   const [errorMessage, setErrorMessage] = useState(
-    "Something went wrong on our side"
+    "Something went wrong on our side",
   );
   const [showLoader, setShowLoader] = useState(false);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
@@ -76,7 +76,7 @@ export default function CTA() {
               resetForm,
               setShowLoader,
               setShowErrorMessage,
-              setErrorMessage
+              setErrorMessage,
             );
           }
         })
@@ -198,7 +198,7 @@ export default function CTA() {
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     onBlur={() => {
                       setShowValidPhoneNumberError(
-                        isValidPhoneNumber(phoneNumber)
+                        isValidPhoneNumber(phoneNumber),
                       );
                     }}
                     placeholder=" "

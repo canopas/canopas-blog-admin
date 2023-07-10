@@ -12,7 +12,9 @@ export async function getServerSideProps() {
     : "&publicationState=live";
   try {
     response = await axios.get(
-      config.STRAPI_URL + "/v1/posts?filters[is_featured][$eq]=true" + published
+      config.STRAPI_URL +
+        "/v1/posts?filters[is_featured][$eq]=true" +
+        published,
     );
 
     featurePosts = response.data.data;

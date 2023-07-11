@@ -33,14 +33,14 @@ export default function CTA() {
               reviews, strategic planning, and more.
             </p>
             <Link href={`${config.CANOPAS_URL}/contact`} className="mt-10">
-              <div className="hidden md:flex items-center mx-auto md:mx-0 w-max rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal  text-[1.09375rem] leading-[1.3125rem] xl:text-[1.188rem] xl:leading-[1.188rem] font-inter-semibold !tracking-[0] text-white active:scale-[0.98]">
-                <span className="py-[1rem] px-[1.3rem] gradient-text inline-block">
+              <div className="flex items-center mx-auto md:mx-0 w-max rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal  text-[1.09375rem] leading-[1.3125rem] xl:text-[1.188rem] xl:leading-[1.188rem] font-inter-semibold !tracking-[0] text-white active:scale-[0.98]">
+                <span className="py-[0.9rem] md:py-[1rem] px-[1.2rem] md:px-[1.3rem] gradient-text inline-block">
                   Get Free Consultation
                 </span>
               </div>
             </Link>
           </div>
-          <div className="relative lg:basis-[44.51%]">
+          <div className="relative lg:basis-[44.51%] mt-8 md:mt-0">
             <Image
               src={cta800}
               alt="cta-image"
@@ -49,14 +49,6 @@ export default function CTA() {
 
             <div className="gradient-border absolute bottom-4 left-[0.5rem] h-[55px] border-l-[13px] md:hidden"></div>
           </div>
-
-          <Link href={`${config.CANOPAS_URL}/contact`} className="mt-10">
-            <div className="flex md:hidden items-center mx-auto md:mx-0 w-max rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal text-[1.125rem] leading-[1.125rem] font-inter-semibold !tracking-[0] text-white active:scale-[0.98]">
-              <span className="py-[1rem] px-[1.2rem] gradient-text inline-block">
-                Get Free Consultation
-              </span>
-            </div>
-          </Link>
         </div>
       </div>
     </section>

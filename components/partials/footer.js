@@ -45,7 +45,7 @@ export default function Footer({ mixpanel }) {
   };
   return (
     <>
-      <div className="relative overflow-hidden px-0 font-inter-medium z-[1]">
+      <div className="relative overflow-hidden px-0 font-inter-medium z-[1] footer-section">
         <Image
           height={200}
           width={200}

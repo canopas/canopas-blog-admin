@@ -133,7 +133,8 @@ function filterPostsByCategoryAndTag(post, posts) {
           index += 3;
         }
         if (postTags.some((tag) => relatedTags.includes(tag))) {
-          index += 1 * getMatch(postTags, relatedTags);
+          index +=
+            1 * postTags.filter((tag) => relatedTags.includes(tag)).length;
         }
 
         if (index > 0) {
@@ -144,17 +145,6 @@ function filterPostsByCategoryAndTag(post, posts) {
     }
   }
   return relatedPosts;
-}
-
-function getMatch(postTags, relatedTags) {
-  var matches = [];
-
-  for (var i = 0; i < postTags.length; i++) {
-    for (var e = 0; e < relatedTags.length; e++) {
-      if (postTags[i] === relatedTags[e]) matches.push(postTags[i]);
-    }
-  }
-  return matches.length;
 }
 
 export {

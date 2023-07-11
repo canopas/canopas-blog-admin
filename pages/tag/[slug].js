@@ -12,7 +12,7 @@ export async function getServerSideProps(context) {
   const slug = context.params.slug;
   try {
     response = await axios.get(
-      config.STRAPI_URL + "/v1/tag/" + slug + "?populate=deep&status=published"
+      config.STRAPI_URL + "/v1/tag/" + slug + "?populate=deep&status=published",
     );
     posts = response.data.data;
     posts.forEach((post) => setPostFields(post, slug));

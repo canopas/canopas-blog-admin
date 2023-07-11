@@ -40,7 +40,7 @@ export async function getServerSideProps() {
   // fetch All Categories
   try {
     response = await axios.get(
-      config.STRAPI_URL + "/v1/categories?populate=deep"
+      config.STRAPI_URL + "/v1/categories?populate=deep",
     );
     categories = response.data.data;
   } catch (err) {

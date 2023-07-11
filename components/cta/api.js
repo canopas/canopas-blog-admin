@@ -6,7 +6,7 @@ export function submitFormData(
   resetForm,
   setShowLoader,
   setShowErrorMessage,
-  setErrorMessage
+  setErrorMessage,
 ) {
   axios
     .post(config.API_BASE + "/api/send-contact-mail", formData)

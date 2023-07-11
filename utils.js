@@ -97,7 +97,7 @@ function filterPostsByCategory(post, keyword) {
   return post.filter(
     (result) =>
       result.attributes.category.data != null &&
-      result.attributes.category.data.attributes.name == keyword
+      result.attributes.category.data.attributes.name == keyword,
   );
 }
 
@@ -112,6 +112,41 @@ function isValidPhoneNumber(phonenumber) {
   return !NumberRegx.test(phonenumber);
 }
 
+function filterPostsByCategoryAndTag(post, posts) {
+  const relatedPosts = [];
+  const postTags = post.tags.map((tag) => tag.name);
+
+  if (posts) {
+    const postCategoryName = post.category.data
+      ? post.category.data.attributes.name
+      : "";
+
+    if (postCategoryName || postTags.length > 0) {
+      posts.forEach((post) => {
+        var index = 0;
+        const relatedTags = post.attributes.tags.map((tag) => tag.name);
+        const relatedCategoryName = post.attributes.category.data
+          ? post.attributes.category.data.attributes.name
+          : "";
+
+        if (relatedCategoryName && postCategoryName === relatedCategoryName) {
+          index += 3;
+        }
+        if (postTags.some((tag) => relatedTags.includes(tag))) {
+          index +=
+            1 * postTags.filter((tag) => relatedTags.includes(tag)).length;
+        }
+
+        if (index > 0) {
+          post.attributes.index = index;
+          relatedPosts.push(post);
+        }
+      });
+    }
+  }
+  return relatedPosts;
+}
+
 export {
   getReadingTime,
   formateDate,
@@ -120,4 +155,5 @@ export {
   filterPostsByCategory,
   isValidEmail,
   isValidPhoneNumber,
+  filterPostsByCategoryAndTag,
 };

@@ -95,7 +95,7 @@ export default function Comment({ post }) {
                       {threadComments.map((threadComment) => {
                         if (threadComment.attributes.publishedAt != null) {
                           var [date, _] = formateDate(
-                            threadComment.attributes.publishedAt
+                            threadComment.attributes.publishedAt,
                           );
                           return (
                             <div key={threadComment.id}>
@@ -125,7 +125,7 @@ export default function Comment({ post }) {
                                                 {user.attributes.name}
                                               </div>
                                             );
-                                          }
+                                          },
                                         )}
                                       </div>
                                     </div>

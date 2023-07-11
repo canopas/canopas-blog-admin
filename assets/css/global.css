@@ -104,6 +104,13 @@ input:-webkit-autofill:active {
   -webkit-text-fill-color: #ffffff !important;
 }
 
+.cta-section,
+.header-section,
+.footer-section {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
 .cta-box-shadow {
   -webkit-appearance: none;
   -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);

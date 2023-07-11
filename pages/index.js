@@ -350,7 +350,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                           loading="lazy"
                           className={`${
                             post.image.data == null
-                              ? "w-[45%] h-4/5 mx-auto my-[5%]"
+                              ? "w-[46%] h-4/5 mx-auto my-[5%]"
                               : "w-full h-full"
                           } object-cover`}
                         />

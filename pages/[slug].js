@@ -533,36 +533,38 @@ export default function Post({ postData, status, posts, mixpanel }) {
                 ""
               )}
             </div>
-            {CTAData
-              ? (() => {
-                  let CTAComponent = null;
-                  try {
-                    switch (CTAData.attributes.component_name) {
-                      case "CTA1":
-                        CTAComponent = <CTA1 />;
-                        break;
-                      case "CTA2":
-                        CTAComponent = <CTA2 />;
-                        break;
-                      case "CTA3":
-                        CTAComponent = <CTA3 />;
-                        break;
-                      case "CTA4":
-                        CTAComponent = <CTA4 />;
-                        break;
-                      case "CTA5":
-                        CTAComponent = <CTA5 />;
-                        break;
-                      default:
-                        break;
+            <div className="cta-section">
+              {CTAData
+                ? (() => {
+                    let CTAComponent = null;
+                    try {
+                      switch (CTAData.attributes.component_name) {
+                        case "CTA1":
+                          CTAComponent = <CTA1 />;
+                          break;
+                        case "CTA2":
+                          CTAComponent = <CTA2 />;
+                          break;
+                        case "CTA3":
+                          CTAComponent = <CTA3 />;
+                          break;
+                        case "CTA4":
+                          CTAComponent = <CTA4 />;
+                          break;
+                        case "CTA5":
+                          CTAComponent = <CTA5 />;
+                          break;
+                        default:
+                          break;
+                      }
+                    } catch (error) {
+                      console.error("Error rendering CTA component:", error);
                     }
-                  } catch (error) {
-                    console.error("Error rendering CTA component:", error);
-                  }
 
-                  return CTAComponent;
-                })()
-              : ""}
+                    return CTAComponent;
+                  })()
+                : ""}
+            </div>
           </>
         )}
       </section>

@@ -58,7 +58,7 @@ export default function Header({ mixpanel }) {
                   ? `${lastScrollPos > 0 ? "drop-shadow-lg" : ""}`
                   : "!-top-44"
               }`
-        }`}
+        } header-section`}
       >
         <nav className="mt-2.5 py-5 md:py-[1.75rem] font-inter-medium">
           <div className="container flex flex-row flex-wrap justify-start items-center 3xl:px-24">

@@ -16,7 +16,7 @@ import {
 import "swiper/css";
 import "swiper/css/navigation";
 
-import { Navigation } from "swiper";
+import { Navigation } from "swiper/modules";
 
 export async function getServerSideProps() {
   var response = null;

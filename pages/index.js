@@ -16,7 +16,7 @@ import {
 import "swiper/css";
 import "swiper/css/navigation";
 
-import { Navigation } from "swiper";
+import { Navigation } from "swiper/modules";
 
 export async function getServerSideProps({ req, res }) {
   var response = null;
@@ -181,7 +181,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
             )}
 
             {config.SHOW_SEARCH_POSTS ? (
-              <div className="flex flex-row items-center 2xl:basis-3/12 w-80 rounded-[10px] !bg-gray-100 pl-3">
+              <div className="flex flex-row items-center 2xl:basis-3/12 w-80 h-12 rounded-[10px] !bg-gray-100 pl-3">
                 <span>
                   <i className="rounded-full text-gray-500 cursor-pointer">
                     <FontAwesomeIcon
@@ -191,7 +191,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                   </i>
                 </span>
                 <input
-                  className="!border-0 !bg-gray-100"
+                  className="!border-0 !bg-gray-100 ml-1.5 focus:outline-none"
                   placeholder="Search Blogs"
                   type="text"
                   value={keyword}

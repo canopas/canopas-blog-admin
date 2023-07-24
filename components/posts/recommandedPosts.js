@@ -26,7 +26,7 @@ export default function RecommandedPosts({ postData }) {
           if (i < 3) {
             return (
               <Link href={"/" + post.slug} key={i}>
-                <div className="grid grid-cols-3 xl:grid-cols-2 gap-5 xl:gap-2 2xl:gap-5 mb-10 xl:mb-6 2xl:mb-7">
+                <div className="grid grid-cols-3 xl:grid-cols-2 gap-5 xl:gap-2 2xl:gap-5 items-end mb-10 xl:mb-6 2xl:mb-7">
                   <div className="flex flex-col col-span-2 space-y-2">
                     <div className="flex flex-row space-x-2 items-center text-[0.8rem] md:text-[0.9rem] xl:text-[0.8rem] tracking-wider capitalize">
                       <div className="relative w-[24px] h-[24px] md:w-[30px] md:h-[30px] xl:w-[24px] xl:h-[24px] max-w-full max-h-full overflow-hidden">
@@ -42,7 +42,7 @@ export default function RecommandedPosts({ postData }) {
                     </div>
 
                     <div
-                      className="text-[1rem] sm:text-[1.1rem] md:text-[1.25rem] xl:text-[1rem] font-bold leading-5 md:leading-[1.7rem] xl:leading-5 tracking-wider xl:line-clamp-2"
+                      className="text-[1rem] sm:text-[1.1rem] md:text-[1.25rem] xl:text-[1rem] font-bold leading-[1.27rem] md:leading-[1.7rem] xl:leading-5 tracking-[0.06rem] xl:line-clamp-2"
                       onClick={() => {
                         mixpanel.track("tap_blog_title", {
                           Title: post.title,
@@ -63,7 +63,7 @@ export default function RecommandedPosts({ postData }) {
                     </div>
                   </div>
                   <div
-                    className={`xl:hidden mt-4 xl:mt-2 max-w-xs xl:h-[4rem] ${
+                    className={`xl:hidden mb-1.5 xl:mt-2 max-w-xs xl:h-[4rem] ${
                       post.image.data == null
                         ? "h-[5.084rem] md:h-[6.96rem] lg:h-[8.9rem] bg-black-900"
                         : "aspect-w-2 md:aspect-h-1 h-[5.084rem] border border-1"

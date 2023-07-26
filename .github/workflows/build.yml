@@ -30,7 +30,6 @@ jobs:
           NEXT_PUBLIC_WEBSITE_URL: https://dev-stack.canopas.com
           NEXT_PUBLIC_STRAPI_DOMAIN: ${{secrets.ADMIN_PANEL_URL}}
         run: |
-          cd frontend
           yarn add prettier
           yarn lint
           yarn build

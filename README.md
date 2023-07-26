@@ -97,8 +97,6 @@ yarn develop
 
 # Blogs website -- Frontend
 
-**Note:** Website code resides in `frontend` directory
-
 ## Requirements
 
 - Node.js: v20
@@ -107,7 +105,6 @@ yarn develop
 
 ### Setup environment variables
 
-- Go to `frontend` using `cd frontend`
 - Copy `.env.example` to `.env`
 - Add your variables and keys in `.env` file
 

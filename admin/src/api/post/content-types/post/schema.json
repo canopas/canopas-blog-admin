@@ -1,0 +1,91 @@
+{
+  "kind": "collectionType",
+  "collectionName": "posts",
+  "info": {
+    "singularName": "post",
+    "pluralName": "posts",
+    "displayName": "Post",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "text",
+      "required": true
+    },
+    "blog_content": {
+      "type": "richtext",
+      "required": true,
+      "private": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "author": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::author.author",
+      "required": true
+    },
+    "published_on": {
+      "type": "datetime"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false
+    },
+    "comments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::comment.comment",
+      "mappedBy": "post"
+    },
+    "tags": {
+      "type": "customField",
+      "customField": "plugin::tagsinput.tags",
+      "required": true
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "posts"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "summary": {
+      "type": "text",
+      "required": true
+    },
+    "meta_description": {
+      "type": "text",
+      "required": true
+    },
+    "content": {
+      "type": "text",
+      "required": true
+    },
+    "toc": {
+      "type": "text"
+    },
+    "is_published": {
+      "type": "boolean",
+      "default": false
+    },
+    "cta": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::cta.cta",
+      "inversedBy": "posts"
+    }
+  }
+}

@@ -16,3 +16,18 @@ yarn-error.log*
 
 # macOS-specific files
 .DS_Store
+
+node_modules
+/dist
+.tmp/
+.strapi-updater.json
+
+# local env files
+.env
+
+#build
+.cache
+build
+
+#images
+public/uploads

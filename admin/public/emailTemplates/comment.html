@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <style>
+      body {
+        margin: 0 auto !important;
+        padding: 0 !important;
+        height: 100% !important;
+        width: 100% !important;
+        background: #f1f1f1;
+        font-family: "Poppins", sans-serif;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 1.8;
+        color: rgba(0, 0, 0, 0.4);
+      }
+
+      table,
+      table {
+        border-spacing: 0 !important;
+        border-collapse: collapse !important;
+        table-layout: fixed !important;
+        margin: 0 auto !important;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Poppins", sans-serif;
+        color: #000000;
+        margin-top: 0;
+      }
+    </style>
+  </head>
+
+  <body width="100%" style="margin: 0; padding: 0 !important">
+    <center style="width: 100%; background-color: #f1f1f1; margin: 40px 0px">
+      <div
+        style="max-width: 600px; margin: 0 auto; padding: 40px"
+        class="email-container"
+      >
+        <table role="presentation" cellspacing="0" cellpadding="0" width="100%">
+          <tr>
+            <td style="background: #ffffff; border-radius: 12px">
+              <div style="padding: 30px">
+                <h1 style="font-size: x-large">{{emailTitle}}</h1>
+                <h3>Comment : {{comment}}</h3>
+                <hr />
+                <h1 style="font-size: x-large">Canopas blogs</h1>
+                <div
+                  style="
+                    background-color: #ffc9c985;
+                    border-radius: 8px;
+                    padding: 25px;
+                  "
+                >
+                  <h2 style="margin-top: 0">{{postTitle}}</h2>
+                  <p style="margin-bottom: 27px">{{summary}}</p>
+                  <a
+                    href="https://canopas.com/resources/{{slug}}"
+                    style="
+                      background-color: #3d3d3d;
+                      color: #fff;
+                      padding: 11px 20px;
+                      border-radius: 5px;
+                      text-decoration: none;
+                    "
+                    >Read More</a
+                  >
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </center>
+  </body>
+</html>

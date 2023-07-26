@@ -1,0 +1,332 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Inter Medium";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Inter-Medium.woff2);
+}
+
+@font-face {
+  font-family: "Inter Regular";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Inter-Regular.woff2);
+}
+
+@font-face {
+  font-family: "Inter Bold";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Inter-Bold.woff2);
+}
+
+@font-face {
+  font-family: "Inter SemiBold";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Inter-SemiBold.woff2);
+}
+
+@font-face {
+  font-family: "Inter ExtraLight";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Inter-ExtraLight.woff2);
+}
+
+@font-face {
+  font-family: "Source CodePro";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Source-codePro.woff2);
+}
+
+@font-face {
+  font-family: "Product Sans Regular";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/ProductSans-Regular.woff2);
+}
+
+@font-face {
+  font-family: "Product Sans Black";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./../fonts/ProductSans-Black.woff2);
+}
+
+@font-face {
+  font-family: "Poppins Light";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./../fonts/Poppins-Light.woff2);
+}
+
+@font-face {
+  font-family: "Poppins Regular";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Poppins-Regular.woff2);
+}
+
+@font-face {
+  font-family: "Poppins Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(./../fonts/Poppins-Medium.woff2);
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  transition: background-color 5000s !important;
+}
+
+.floating-input:-webkit-autofill,
+.floating-input:-webkit-autofill:hover,
+.floating-input:-webkit-autofill:focus,
+.floating-input:-webkit-autofill:active {
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+.cta-section,
+.header-section,
+.footer-section {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+.cta-box-shadow {
+  -webkit-appearance: none;
+  -webkit-box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.25);
+}
+
+body {
+  @apply font-product-regular break-words text-[#000000d6];
+}
+
+.content > p {
+  @apply pb-8;
+}
+
+.prose > * {
+  @apply text-[1.125rem] md:text-[1.27rem] md:leading-[2rem] tracking-[0.04em];
+}
+
+.comment input[type="text"],
+.comment input[type="email"],
+.comment textarea {
+  @apply my-2 border border-solid border-gray-300 rounded bg-white bg-clip-padding px-3 py-1.5 font-normal text-base text-gray-700 transition ease-in-out focus:border-gray-300 focus:outline-none focus:bg-white focus:text-gray-700;
+}
+
+.comment input[type="submit"] {
+  @apply mt-3 rounded bg-blue-500 py-2 px-4 text-white font-bold hover:bg-blue-700;
+}
+
+.gradient-text {
+  @apply bg-clip-text bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] text-transparent;
+}
+
+.hoverable-text:hover {
+  @apply bg-clip-text bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] text-transparent;
+}
+
+.gradient-border {
+  border-image: linear-gradient(to bottom, #f2709c, #ff835b) 1;
+}
+
+.gradient-border-btn {
+  @apply border-[1px] border-solid border-transparent rounded-[0.6rem] bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] shadow-[inset_2px_1000px_1px_#fff] p-[1rem] text-center hover:border-[1px] hover:border-solid hover:border-transparent hover:from-[#f2709c] hover:to-[#ff9472] hover:shadow-none active:scale-[0.98];
+}
+
+.gradient-border-btn > a > .fab {
+  @apply text-[#f2709c];
+}
+
+.gradient-border-btn > span {
+  @apply my-0 mx-[6px] text-[#3d3d3d];
+}
+
+.gradient-border-btn:hover > span,
+.gradient-border-btn:hover > span > span {
+  @apply text-[#fff];
+}
+
+.gradient-border-btn:hover > .fa,
+.gradient-border-btn:hover > a > .fab,
+.gradient-border-btn:hover > .arrow {
+  @apply text-white;
+}
+
+.footer-icon > path,
+button:hover > div > .footer-icon > path {
+  fill: url("#lgrad");
+}
+
+.gradient-border-btn:hover > a > .footer-icon > path,
+button > div > .footer-icon > path {
+  fill: #ffffff;
+}
+
+ul {
+  @apply pl-4;
+}
+
+strong {
+  @apply font-product-black tracking-wide;
+}
+
+h1 strong {
+  @apply text-[1.8rem] lg:text-[2rem];
+}
+
+h2 strong {
+  @apply text-[1.5rem] lg:text-[1.7rem];
+}
+
+/* HighlightJS */
+/* Tomorrow Night Theme */
+/* https://jmblog.github.io/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+/* https://jmblog.github.io/color-themes-for-google-code-highlightjs */
+.tomorrow-comment,
+pre .hljs-comment,
+pre .hljs-title {
+  @apply text-[#969896];
+}
+
+.tomorrow-red,
+pre .hljs-variable,
+pre .hljs-attribute,
+pre .hljs-tag,
+pre .hljs-regexp,
+pre .ruby .hljs-constant,
+pre .xml .hljs-tag .hljs-title,
+pre .xml .hljs-pi,
+pre .xml .hljs-doctype,
+pre .html .hljs-doctype,
+pre .css .id,
+pre .css .hljs-class,
+pre .css .hljs-pseudo {
+  @apply text-[#e49176];
+}
+
+.tomorrow-orange,
+pre .hljs-number,
+pre .hljs-preprocessor,
+pre .hljs-built_in,
+pre .hljs-literal,
+pre .hljs-params,
+pre .hljs-constant {
+  @apply text-[#de935f];
+}
+
+.tomorrow-yellow,
+pre .hljs-class,
+pre .ruby .hljs-class .hljs-title,
+pre .css .hljs-rules .hljs-attribute {
+  @apply text-[#f0c674];
+}
+
+.tomorrow-green,
+pre .hljs-string,
+pre .hljs-value,
+pre .hljs-inheritance,
+pre .hljs-header,
+pre .ruby .hljs-symbol,
+pre .xml .hljs-cdata {
+  @apply text-[#b5bd68];
+}
+
+.tomorrow-aqua,
+pre .css .hljs-hexcolor {
+  @apply text-[#8abeb7];
+}
+
+.tomorrow-blue,
+pre .hljs-function,
+pre .python .hljs-decorator,
+pre .python .hljs-title,
+pre .ruby .hljs-function .hljs-title,
+pre .ruby .hljs-title .hljs-keyword,
+pre .perl .hljs-sub,
+pre .javascript .hljs-title,
+pre .coffeescript .hljs-title {
+  @apply text-[#81a2be];
+}
+
+.tomorrow-purple,
+pre .hljs-keyword,
+pre .javascript .hljs-function {
+  @apply text-[#b294bb];
+}
+
+code::before,
+code::after {
+  @apply content-none !important;
+}
+
+.prose
+  :where(code, code strong):not(:where([class~="not-prose"], blockquote code)) {
+  @apply bg-gray-200 py-0.5 px-1 rounded-[4px] font-[550] tracking-wide font-source-codepro;
+}
+
+.prose :where(pre code):not(:where([class~="not-prose"] *)) {
+  @apply bg-transparent text-[#dbe0e0] leading-normal tracking-[-0.022em] !break-normal;
+}
+
+.prose :where(blockquote, blockquote i):not(:where([class~="not-prose"] *)) {
+  @apply not-italic text-[1.4rem] lg:text-[1.755rem] leading-[2.3rem] text-[#757575] font-normal font-inter-light;
+}
+
+.prose
+  :where(blockquote p:first-of-type):not(
+    :where([class~="not-prose"] *)
+  )::before {
+  @apply content-none;
+}
+
+.category-swiper .swiper-slide {
+  @apply !w-auto text-[1.04rem] hoverable-text hover:cursor-pointer;
+}
+
+.category-swiper .swiper-button-next:after,
+.category-swiper .swiper-button-prev:after {
+  @apply px-7 pb-[1rem] pt-1 text-black-900 !text-[12px];
+}
+
+.category-swiper .swiper-button-prev:after {
+  @apply bg-gradient-to-r from-white via-white to-[#ffffff82];
+}
+
+.category-swiper .swiper-button-next:after {
+  @apply bg-gradient-to-r from-[#ffffff82] via-white to-white;
+}
+
+.category-swiper .swiper-button-disabled:after {
+  @apply opacity-0;
+}
+
+.category-swiper .swiper-wrapper {
+  @apply !flex !flex-row space-x-14 md:space-x-20 !transition-all !duration-1000;
+}
+
+.grecaptcha-badge {
+  @apply !hidden;
+}

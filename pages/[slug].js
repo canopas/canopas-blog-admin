@@ -125,7 +125,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
         classes +=
           " relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:left-0 after:bottom-0 after:w-full after:h-[1px] after:bg-gradient-to-r";
       } else if (match2 && match2[1]) {
-        firstHeadingId = match[1].replace("#", "");
+        firstHeadingId = match2[1].replace("#", "");
       }
 
       return `<a href="${href}" class="${classes}"`;

@@ -68,18 +68,12 @@ async function modifyContentAndSetErrorMsg(event) {
     validateFields(result);
 
     // generate slug from title
-    event.params.data.slug = generateSlug(result.title, result.slug);
+    if (result.title) {
+      event.params.data.slug = generateSlug(result.title, result.slug);
+    }
 
     // generate table of contents
     generateTOC(result, event);
-
-    // get tags input
-    event.params.data.tags = await TagsInput(result.tags);
-
-    // set published on
-    if (!event.params.data.published_on) {
-      event.params.data.published_on = new Date();
-    }
   }
 }
 
@@ -151,7 +145,7 @@ function generateRandomNumber() {
 
 function validateFields(result) {
   // set required message for summary,tags and meta_description
-  if (result.tags && result.tags == null) {
+  if (result.tags && result.tags.length == 0) {
     const error = new YupValidationError({
       path: "tags",
       message: "This value is required.",
@@ -215,5 +209,11 @@ async function generateTOC(result, event) {
 
     event.params.data.content = dom.serialize();
     event.params.data.toc = toc += "</ul></li>";
+    event.params.data.tags = await TagsInput(result.tags);
+
+    // set published on
+    if (!event.params.data.published_on) {
+      event.params.data.published_on = new Date();
+    }
   }
 }

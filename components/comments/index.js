@@ -1,11 +1,13 @@
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import UserImage from "../../assets/images/user.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faReply } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useRef } from "react";
-import CommentForm from "./commentForm";
 import { formateDate } from "../../utils";
 import ReCAPTCHA from "react-google-recaptcha";
+
+const CommentForm = dynamic(() => import("./commentForm"));
 
 export default function Comment({ post }) {
   let [comments, setComments] = useState(post);

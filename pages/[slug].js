@@ -3,18 +3,13 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import Script from "next/script";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import config from "../config";
 import Seo from "./seo";
 import NotFound from "./404";
 import { setPostFields, filterPostsByCategoryAndTag } from "../utils";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
-import CTA1 from "../components/cta/CTA1";
-import CTA2 from "../components/cta/CTA2";
-import CTA3 from "../components/cta/CTA3";
-import CTA4 from "../components/cta/CTA4";
-import CTA5 from "../components/cta/CTA5";
 import {
   faTags,
   faLink,
@@ -27,11 +22,19 @@ import {
   faReddit,
   faLinkedinIn,
 } from "@fortawesome/free-brands-svg-icons";
-import hljs from "highlight.js";
+import hljs from "highlight.js/lib/common";
 
-const Comment = dynamic(() => import("../components/comments/index"));
-const RecommandedPosts = dynamic(() =>
-  import("../components/posts/recommandedPosts"),
+const CTA1 = dynamic(() => import("../components/cta/CTA1"), { ssr: false });
+const CTA2 = dynamic(() => import("../components/cta/CTA2"), { ssr: false });
+const CTA3 = dynamic(() => import("../components/cta/CTA3"), { ssr: false });
+const CTA4 = dynamic(() => import("../components/cta/CTA4"), { ssr: false });
+const CTA5 = dynamic(() => import("../components/cta/CTA5"), { ssr: false });
+const Comment = dynamic(() => import("../components/comments/index"), {
+  ssr: false,
+});
+const RecommandedPosts = dynamic(
+  () => import("../components/posts/recommandedPosts"),
+  { ssr: false },
 );
 
 export async function getServerSideProps(context) {
@@ -65,6 +68,11 @@ export async function getServerSideProps(context) {
   } catch (err) {
     console.log(err);
   }
+
+  context.res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59",
+  );
 
   return { props: { postData, status, posts } };
 }
@@ -255,6 +263,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                 publishedTime={published_time}
                 readingTime={post.readingTime}
                 article={true}
+                keywords={post.keywords || post.title}
               />
               <div key={post.id} className="flex flex-col space-y-20">
                 {/* Header */}
@@ -292,10 +301,10 @@ export default function Post({ postData, status, posts, mixpanel }) {
                       <div>
                         <span>{published_on}</span> ·{" "}
                         <span> {post.readingTime} min read</span>
-                        {!post.is_published ? (
+                        {post.publishedAt == null ? (
                           <>
                             <span className="after:content-['\00B7'] after:mx-1"></span>
-                            <span className="text-green-700 capitalize">
+                            <span className="text-green-600 capitalize">
                               draft
                             </span>
                           </>

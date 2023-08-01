@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
 import Link from "next/link";
-import ServerError from "../components/errors/serverError";
+import dynamic from "next/dynamic";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons/faMagnifyingGlass";
 import config from "../config";
 import axios from "axios";
 import Seo from "./seo";
@@ -17,6 +17,9 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { Navigation } from "swiper/modules";
+const ServerError = dynamic(() => import("../components/errors/serverError"), {
+  ssr: false,
+});
 
 export async function getServerSideProps({ req, res }) {
   var response = null;
@@ -38,14 +41,21 @@ export async function getServerSideProps({ req, res }) {
   const status = response ? response.status : config.NOT_FOUND;
 
   // fetch All Categories
-  try {
-    response = await axios.get(
-      config.STRAPI_URL + "/v1/categories?populate=deep",
-    );
-    categories = response.data.data;
-  } catch (err) {
-    console.log(err);
+  if (config.SHOW_CATEGORY_POSTS) {
+    try {
+      response = await axios.get(
+        config.STRAPI_URL + "/v1/categories?populate=deep",
+      );
+      categories = response.data.data;
+    } catch (err) {
+      console.log(err);
+    }
   }
+
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=10, stale-while-revalidate=59",
+  );
 
   return { props: { posts, status, categories } };
 }
@@ -107,7 +117,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
         description={config.SEO_META_DATA.description}
         authorName={config.SEO_META_DATA.authorName}
       />
-      <section className="container my-14 mx-2 sm:mx-auto 3xl:px-24">
+      <section className="container min-h-[50vh] my-14 mx-2 sm:mx-auto 3xl:px-24">
         {config.SHOW_HEADER_TITLE ? (
           <div className="my-16 w-full bg-black-900">
             <div className="flex flex-col space-y-2 py-4 px-14 md:px-28 xl:px-44">
@@ -210,7 +220,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
         )}
 
         {count == 0 || status == config.NOT_FOUND ? (
-          <div className="mt-20 text-[1.4rem] text-center text-black-900 ">
+          <div className="py-40 text-[1.4rem] text-center text-black-900 ">
             {config.POST_NOT_FOUND_MESSAGE}
           </div>
         ) : status != config.SUCCESS ? (
@@ -247,7 +257,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                                 height={100}
                                 src={featurePost.image_url || ""}
                                 alt={featurePost.alternativeText || ""}
-                                loading="eager"
+                                loading="lazy"
                                 className={`${
                                   featurePost.image.data == null
                                     ? "w-[45%] h-4/5 mx-auto my-[5%]"
@@ -320,7 +330,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
 
                 return (
                   <div
-                    key={post.id}
+                    key={i}
                     className={`space-y-5 ${
                       i === 0 && count % 3 === 1
                         ? "md:flex md:space-x-6 md:col-span-3"
@@ -347,7 +357,9 @@ export default function Home({ posts, status, categories, mixpanel }) {
                           height={100}
                           src={post.image_url || ""}
                           alt={post.alternativeText || ""}
-                          loading="lazy"
+                          loading={
+                            i === 0 && count % 3 === 1 ? "eager" : "lazy"
+                          }
                           className={`${
                             post.image.data == null
                               ? "w-[46%] h-4/5 mx-auto my-[5%]"
@@ -408,7 +420,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                               <span>{post.published_on}</span>
                               <span className="after:content-['\00B7'] after:mx-1"></span>
                               <span>{post.readingTime} min read</span>
-                              {!post.is_published ? (
+                              {post.publishedAt == null ? (
                                 <>
                                   <span className="after:content-['\00B7'] after:mx-1"></span>
                                   <span className="text-green-700 capitalize">

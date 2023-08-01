@@ -134,7 +134,7 @@ export default function CTA() {
                     />
                     <label
                       htmlFor="username"
-                      className="absolute top-1 lg:top-[1.6rem] left-0 mb-5 z-[2] text-black-900/[.6] text-[1.07rem] leading-[1.1875rem] lg:text-[1.35rem] md:leading-[1.6875rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-black-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                      className="absolute top-1 lg:top-[1.6rem] left-0 mb-5 z-[2] text-black-900/[.8] text-[1.07rem] leading-[1.1875rem] lg:text-[1.35rem] md:leading-[1.6875rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-black-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
                     >
                       Name*
                     </label>
@@ -164,7 +164,7 @@ export default function CTA() {
                     />
                     <label
                       htmlFor="email"
-                      className="absolute top-1 lg:top-[1.6rem] left-0 mb-5 z-[2] text-black-900/[.6] text-[1.07rem] leading-[1.1875rem] lg:text-[1.35rem] md:leading-[1.6875rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-black-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                      className="absolute top-1 lg:top-[1.6rem] left-0 mb-5 z-[2] text-black-900/[.8] text-[1.07rem] leading-[1.1875rem] lg:text-[1.35rem] md:leading-[1.6875rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-black-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
                     >
                       Email*
                     </label>
@@ -202,7 +202,7 @@ export default function CTA() {
                     />
                     <label
                       htmlFor="phonenumber"
-                      className="absolute top-1 lg:top-[1.6rem] left-0 mb-5 z-[2] text-black-900/[.6] text-[1.07rem] leading-[1.1875rem] lg:text-[1.35rem] md:leading-[1.6875rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-black-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                      className="absolute top-1 lg:top-[1.6rem] left-0 mb-5 z-[2] text-black-900/[.8] text-[1.07rem] leading-[1.1875rem] lg:text-[1.35rem] md:leading-[1.6875rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-black-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
                     >
                       Phone number*
                     </label>
@@ -236,7 +236,7 @@ export default function CTA() {
                     ></textarea>
                     <label
                       htmlFor="project"
-                      className="absolute top-1 lg:top-[1.6rem] left-0 mb-5 z-[2] text-black-900/[.6] text-[1.07rem] leading-[1.1875rem] lg:text-[1.35rem] md:leading-[1.6875rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-black-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                      className="absolute top-1 lg:top-[1.6rem] left-0 mb-5 z-[2] text-black-900/[.8] text-[1.07rem] leading-[1.1875rem] lg:text-[1.35rem] md:leading-[1.6875rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-black-900 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
                     >
                       Project detail*
                     </label>

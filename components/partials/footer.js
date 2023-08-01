@@ -80,7 +80,10 @@ export default function Footer({ mixpanel }) {
                     Subscribe
                   </div>
                 </button>
-                <button className="md:hidden w-[45px] h-[45px] rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff]">
+                <button
+                  className="md:hidden w-[45px] h-[45px] rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff]"
+                  aria-label="SubscribeBtn"
+                >
                   <div className="w-[21px] h-[21px] inline-block">
                     <FontAwesomeIcon
                       icon={faBell}
@@ -102,6 +105,7 @@ export default function Footer({ mixpanel }) {
                     onClick={() => {
                       handleIconClick("tap_footer_facebook");
                     }}
+                    aria-label="footerLink"
                   >
                     <FontAwesomeIcon
                       icon={faFacebookF}
@@ -117,6 +121,7 @@ export default function Footer({ mixpanel }) {
                     onClick={() => {
                       handleIconClick("tap_footer_instagram");
                     }}
+                    aria-label="footerLink"
                   >
                     <FontAwesomeIcon
                       icon={faInstagram}
@@ -132,6 +137,7 @@ export default function Footer({ mixpanel }) {
                     onClick={() => {
                       handleIconClick("tap_footer_twitter");
                     }}
+                    aria-label="footerLink"
                   >
                     <FontAwesomeIcon
                       icon={faTwitter}
@@ -147,6 +153,7 @@ export default function Footer({ mixpanel }) {
                     onClick={() => {
                       handleIconClick("tap_footer_medium");
                     }}
+                    aria-label="footerLink"
                   >
                     <FontAwesomeIcon
                       icon={faMediumM}
@@ -162,6 +169,7 @@ export default function Footer({ mixpanel }) {
                     onClick={() => {
                       handleIconClick("tap_footer_linkedin");
                     }}
+                    aria-label="footerLink"
                   >
                     <FontAwesomeIcon
                       icon={faLinkedinIn}
@@ -177,6 +185,7 @@ export default function Footer({ mixpanel }) {
                     onClick={() => {
                       handleIconClick("tap_footer_youtube");
                     }}
+                    aria-label="footerLink"
                   >
                     <FontAwesomeIcon
                       icon={faYoutube}

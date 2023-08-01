@@ -41,6 +41,9 @@ function setPostFields(post, slug) {
 
   post.attributes.image_url =
     post.attributes.image.data?.attributes.url || icon;
+  post.attributes.alternativeText =
+    post.attributes.image.data?.attributes.alternativeText ||
+    post.attributes.title;
 
   const author = post.attributes.author.data?.attributes;
   post.attributes.authorName = author?.username || "author";
@@ -48,7 +51,7 @@ function setPostFields(post, slug) {
     ? author.image.data?.attributes.url
     : Avatar;
   post.attributes.authorAltText = author
-    ? author.username + " images"
+    ? author.username + " image"
     : "author";
 
   if (slug && post.attributes.tags[0]) {

@@ -1,10 +1,12 @@
 import config from "../../config";
 import axios from "axios";
 import Seo from "../seo";
+import dynamic from "next/dynamic";
 import { setPostFields } from "../../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags } from "@fortawesome/free-solid-svg-icons";
-import PostsList from "../../components/posts/postsList";
+
+const PostsList = dynamic(() => import("../../components/posts/postsList"));
 
 export async function getServerSideProps(context) {
   let response = null;
@@ -34,9 +36,9 @@ export default function Home({ posts, status, slug, mixpanel }) {
         description={config.SEO_META_DATA.description}
         authorName={config.SEO_META_DATA.authorName}
       />
-      <section className="container my-10 md:my-16 sm:mx-auto 3xl:px-24">
+      <section className="container min-h-[50vh] my-10 md:my-16 sm:mx-auto 3xl:px-24">
         {count == 0 || status == config.NOT_FOUND ? (
-          <div className="mt-20 text-[1.4rem] text-center">
+          <div className="py-40 text-[1.4rem] text-center">
             {config.POST_NOT_FOUND_MESSAGE}
           </div>
         ) : status != config.SUCCESS ? (
@@ -47,9 +49,9 @@ export default function Home({ posts, status, slug, mixpanel }) {
               <div className="w-6 h-6 md:w-7 md:h-7">
                 <FontAwesomeIcon icon={faTags} className="w-full h-full" />
               </div>
-              <div className="my-6 md:my-10 text-[1.5rem] md:text-[1.8rem] xl:text-[2.2rem] font-semibold leading-7 tracking-wide capitalize">
+              <h1 className="my-6 md:my-10 text-[1.5rem] md:text-[1.8rem] xl:text-[2.2rem] font-semibold leading-7 tracking-wide capitalize">
                 {tagName}
-              </div>
+              </h1>
             </div>
             <div className="mt-4 md:mt-6 xl:mt-8">
               <PostsList

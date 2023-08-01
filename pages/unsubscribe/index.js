@@ -56,9 +56,9 @@ export default function Unsubscribe() {
 
   return (
     <>
-      <div className="container w-[90%] sm:w-[70%] lg:w-[50%] 2xl:w-[40%] h-fit-content my-16 rounded-[12px] bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] p-6">
+      <div className="container w-[90%] sm:w-[70%] lg:w-[50%] 2xl:w-[40%] h-fit-content min-h-[50vh] my-16 rounded-[12px] bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] p-6">
         <div className="text-center">
-          <h5 className="mb-3 text-3xl">Unsubscribe</h5>
+          <h1 className="mb-3 text-3xl">Unsubscribe</h1>
           <hr />
           <p className="my-3">{email}</p>
           <div className="w-[50%] h-auto mx-[24%]">

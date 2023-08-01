@@ -86,6 +86,9 @@
       "relation": "manyToOne",
       "target": "api::cta.cta",
       "inversedBy": "posts"
+    },
+    "keywords": {
+      "type": "string"
     }
   }
 }

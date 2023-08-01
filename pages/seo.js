@@ -11,6 +11,7 @@ const Seo = ({
   publishedTime,
   readingTime,
   article,
+  keywords,
 }) => {
   return (
     <Head>
@@ -41,26 +42,33 @@ const Seo = ({
           <meta property="twitter:tile:info2:icon" content="Calendar" />
           <meta property="twitter:tile:info2:text" content={publishedAt} />
           <meta property="twitter:cta" content="Read on Canopas" />
+          <meta property="keywords" content={keywords} />
           <script type="application/ld+json">
             {`
-          {
-            "@context": "https://schema.org",
-            "@type": "${article ? "Article" : "WebSite"}",
-            "mainEntityOfPage": {
-                "@type": "WebPage",
-                "url": "${url}"
-            },
-            "headline": "${title}",
-            "datePublished": "${publishedAt}",
-            "dateModified": "${publishedAt}",
-            "publisher": {
-                "@type": "Canopas",
-                "name": "Canopas",
-                "url": "https://canopas.com/"
-            },
-            "description": "${description}"           
-          }
-        `}
+              {
+                "@context": "https://schema.org",
+                "@type": "${article ? "Article" : "WebSite"}",
+                "headline": "${title}",
+                "image": "${image_url}",
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "Canopas",
+                  "url": "https://canopas.com/"
+                },
+                "url": "${url}",
+                "datePublished": "${publishedAt}",
+                "dateModified": "${publishedAt}",
+                "description": "${description}",
+                "author": {
+                  "@type": "Person",
+                  "name": "${authorName}",
+                }
+                "mainEntityOfPage": {
+                  "@type": "Blog Website",
+                  "@id": "https://canopas.com/resources"
+                }
+              }
+            `}
           </script>
         </>
       ) : (

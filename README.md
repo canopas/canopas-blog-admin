@@ -4,7 +4,7 @@ This is our open-source Next.js blog website of [canopas](https://canopas.com). 
 
 ## Showcase
 
-This repository contains working code of [our resources](https://articles.canopas.com/resources). You can checkout link to view live example of this repository.
+This repository contains the working code of [our resources](https://articles.canopas.com/resources). You can check out the link to view a live example of this repository.
 
 ---
 
@@ -51,7 +51,7 @@ This repository contains working code of [our resources](https://articles.canopa
 
 # Admin panel -- Backend
 
-**Note:** Admin panel code resides in `admin` directory
+**Note:** Admin panel code resides in the `admin` directory
 
 ## Requirements
 
@@ -62,17 +62,17 @@ This repository contains working code of [our resources](https://articles.canopa
 
 ### Database
 
-- Create database in postgres to store blogs data.
+- Create a database in postgres to store blog data.
 
 ### Setup environment variables
 
 - Go to `admin` using `cd admin`
 - Copy `.env.example` to `.env`
-- Add your variables and keys in `.env` file
+- Add your variables and keys in the `.env` file
 
 ### Install dependencies
 
-- Install all requied dependencies using,
+- Install all required dependencies using,
 
   ```
   yarn install
@@ -80,18 +80,18 @@ This repository contains working code of [our resources](https://articles.canopa
 
 ### Start admin panel using,
 
-```
-yarn develop
-```
+  ```
+  yarn develop
+  ```
 
-- Application will be start on http://localhost:1337/admin
+- Application will start on http://localhost:1337/admin
 
 ## Customization
 
-- All email templates resides in `admin/pubic/emailTemplates`. You can customize them as per your requirement.
-- You can update titles, description and logo of your admin panel from `admin/src/admin/app.js`.
+- All email templates reside in `admin/pubic/emailTemplates`. You can customize them as per your requirement.
+- You can update titles, descriptions, and logos of your admin panel from `admin/src/admin/app.js`.
 
-- Admin panel have its own guidelines to guide writers about adding contents. You can add/update guidelines for your admins or writers in `admin/src/plugins/guidelines/admin/src/pages/guidelines.md`.
+- The admin panel has its own guidelines to guide writers about adding content. You can add/update guidelines for your admins or writers in `admin/src/plugins/guidelines/admin/src/pages/guidelines.md`.
 
 ---
 
@@ -106,11 +106,11 @@ yarn develop
 ### Setup environment variables
 
 - Copy `.env.example` to `.env`
-- Add your variables and keys in `.env` file
+- Add your variables and keys in the `.env` file
 
 ### Install dependencies
 
-- Install all requied dependencies using,
+- Install all required dependencies using,
 
   ```
   yarn install
@@ -122,21 +122,21 @@ yarn develop
 yarn dev
 ```
 
-- Application will be start on http://localhost:3000
+- Application will start on http://localhost:3000
 
-### To Start website in production mode,
+### To Start the website in production mode,
 
 ```
 yarn build && yarn start
 ```
 
-- Application will be start on http://localhost:3000
+- Application will start on http://localhost:3000
 
 ---
 
 # Formatting and Linting
 
-Pre-commit hook will be automatically lint and format your code before commiting.
+The pre-commit hook will automatically lint and format your code before committing.
 
 ## To enable pre-commit hook
 
@@ -148,8 +148,8 @@ git config core.hooksPath .githooks
 
 # Deployment
 
-- NGINX has been used as proxy for admin panel. Find configuration at `admin/nginx`.
-- Both admin panel and website has been deployed on Amazon Web Services(AWS). You can find workflows in `.github/workflows`.
+- NGINX has been used as a proxy for the admin panel. Find configuration at `admin/nginx`.
+- Both the admin panel and website have been deployed on Amazon Web Services(AWS). You can find workflows in `.github/workflows`.
 
 - Deployment stacks:
 
@@ -160,7 +160,7 @@ git config core.hooksPath .githooks
 
 # Dependencies
 
-Following are main dependencies used by the project
+The following are main dependencies used by the project
 
 - [Strapi](https://github.com/strapi/strapi)
 - [NextJs](https://github.com/vercel/next.js/)

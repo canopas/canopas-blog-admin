@@ -15,10 +15,12 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faBell, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCopyright } from "@fortawesome/free-regular-svg-icons";
+import { isValidEmail } from "../../utils";
 
 export default function Footer({ mixpanel }) {
   const [email, setEmail] = useState("");
   const [alerts, setAlerts] = useState(false);
+  const [showValidEmailError, setShowValidEmailError] = useState(false);
 
   if (alerts) {
     setTimeout(() => {
@@ -33,15 +35,20 @@ export default function Footer({ mixpanel }) {
   const handleSubscription = async (event) => {
     event.preventDefault();
 
-    await axios
-      .post(`${config.STRAPI_URL}/v1/user/subscribeUser?populate=deep`, {
-        email,
-      })
-      .then(() => {
-        setAlerts(true);
-      });
+    if (!showValidEmailError) {
+      await axios
+        .post(`${config.STRAPI_URL}/v1/user/subscribeUser?populate=deep`, {
+          email,
+        })
+        .then(() => {
+          setAlerts(true);
+        })
+        .catch((err) => {
+          console.log("Error:", err);
+        });
 
-    setEmail("");
+      setEmail("");
+    }
   };
   return (
     <>
@@ -55,12 +62,12 @@ export default function Footer({ mixpanel }) {
         />
         <div className="container lg:px-20 2xl:px-32">
           <div className="grid grid-rows-2 xl:grid-rows-none xl:grid-cols-2 justify-items-stretch mt-7 md:mt-11 mb-8 md:mb-12 xl:mb-[60px]">
-            <div className="justify-self-center xl:justify-self-end xl:order-last">
+            <div className="max-h-1 justify-self-center xl:justify-self-end xl:order-last">
               <div className="mt-5 text-[1.375rem] leading-[1.6875rem] md:text-[1.5rem] md:leading-[1.8125rem] lg:text-[1.75rem] lg:leading-[1.9375rem] text-white/[.87] font-inter-bold">
                 Subscribe Here!
               </div>
               <form
-                className="flex flex-row space-x-2 m-auto mt-[1.5rem] xl:mt-[2rem] items-center"
+                className="flex flex-row space-x-2 m-auto mt-[1.5rem] xl:mt-8 items-center"
                 onSubmit={handleSubscription}
               >
                 <div className="w-56 md:w-72">
@@ -70,6 +77,9 @@ export default function Footer({ mixpanel }) {
                     id="subscribeEmail"
                     type="email"
                     value={email}
+                    onBlur={() => {
+                      setShowValidEmailError(isValidEmail(email));
+                    }}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
@@ -92,13 +102,20 @@ export default function Footer({ mixpanel }) {
                   </div>
                 </button>
               </form>
+              {email.trim().length != 0 && showValidEmailError ? (
+                <span className="error gradient-text">
+                  Please enter valid email address
+                </span>
+              ) : (
+                ""
+              )}
             </div>
             <div className="justify-self-center xl:justify-self-start">
               <div className="mt-8 xl:mt-5 text-[1.375rem] leading-[1.6875rem] md:text-[1.5rem] md:leading-[1.8125rem] lg:text-[1.75rem] lg:leading-[1.9375rem] text-white/[.87] font-inter-bold">
                 Follow us on
               </div>
-              <ul className="flex flex-wrap justify-center w-full m-auto mt-[1.5rem] xl:mt-[2rem] pl-0 cursor-pointer list-none">
-                <li className="flex justify-center !items-center w-[40px] h-[40px] md:w-[62px] md:h-[62px] mr-1 md:mr-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
+              <ul className="flex flex-wrap justify-center w-full m-auto mt-[1.5rem] xl:mt-8 pl-0 cursor-pointer list-none">
+                <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mr-1 md:mr-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
                     href={config.FACEBOOK_URL}
                     target="_blank"
@@ -106,15 +123,16 @@ export default function Footer({ mixpanel }) {
                       handleIconClick("tap_footer_facebook");
                     }}
                     aria-label="footerLink"
+                    className="w-5 h-5 md:w-8 md:h-8"
                   >
                     <FontAwesomeIcon
                       icon={faFacebookF}
-                      className="fab footer-icon w-[20px] h-[20px] md:w-[32px] md:h-[32px]"
+                      className="fab footer-icon w-5 h-5 md:w-8 md:h-8"
                     />
                   </Link>
                 </li>
 
-                <li className="flex justify-center !items-center w-[40px] h-[40px] md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
+                <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
                     href={config.INSTAGRAM_URL}
                     target="_blank"
@@ -122,15 +140,16 @@ export default function Footer({ mixpanel }) {
                       handleIconClick("tap_footer_instagram");
                     }}
                     aria-label="footerLink"
+                    className="w-5 h-5 md:w-8 md:h-8"
                   >
                     <FontAwesomeIcon
                       icon={faInstagram}
-                      className="fab footer-icon w-[20px] h-[20px] md:w-[32px] md:h-[32px]"
+                      className="fab footer-icon w-5 h-5 md:w-8 md:h-8"
                     />
                   </Link>
                 </li>
 
-                <li className="flex justify-center !items-center w-[40px] h-[40px] md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
+                <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
                     href={config.TWITTER_URL}
                     target="_blank"
@@ -138,15 +157,16 @@ export default function Footer({ mixpanel }) {
                       handleIconClick("tap_footer_twitter");
                     }}
                     aria-label="footerLink"
+                    className="w-5 h-5 md:w-8 md:h-8"
                   >
                     <FontAwesomeIcon
                       icon={faTwitter}
-                      className="fab footer-icon w-[20px] h-[20px] md:w-[32px] md:h-[32px]"
+                      className="fab footer-icon w-5 h-5 md:w-8 md:h-8"
                     />
                   </Link>
                 </li>
 
-                <li className="flex justify-center !items-center w-[40px] h-[40px] md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
+                <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
                     href={config.BLOG_URL}
                     target="_blank"
@@ -154,15 +174,16 @@ export default function Footer({ mixpanel }) {
                       handleIconClick("tap_footer_medium");
                     }}
                     aria-label="footerLink"
+                    className="w-5 h-5 md:w-8 md:h-8"
                   >
                     <FontAwesomeIcon
                       icon={faMediumM}
-                      className="fab footer-icon w-[20px] h-[20px] md:w-[32px] md:h-[32px]"
+                      className="fab footer-icon w-5 h-5 md:w-8 md:h-8"
                     />
                   </Link>
                 </li>
 
-                <li className="flex justify-center !items-center w-[40px] h-[40px] md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
+                <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
                     href={config.LINKEDIN_URL}
                     target="_blank"
@@ -170,15 +191,16 @@ export default function Footer({ mixpanel }) {
                       handleIconClick("tap_footer_linkedin");
                     }}
                     aria-label="footerLink"
+                    className="w-5 h-5 md:w-8 md:h-8"
                   >
                     <FontAwesomeIcon
                       icon={faLinkedinIn}
-                      className="fab footer-icon w-[20px] h-[20px] md:w-[32px] md:h-[32px]"
+                      className="fab footer-icon w-5 h-5 md:w-8 md:h-8"
                     />
                   </Link>
                 </li>
 
-                <li className="flex justify-center !items-center w-[40px] h-[40px] md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
+                <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
                     href={config.YOUTUBE_URL}
                     target="_blank"
@@ -186,10 +208,11 @@ export default function Footer({ mixpanel }) {
                       handleIconClick("tap_footer_youtube");
                     }}
                     aria-label="footerLink"
+                    className="w-5 h-5 md:w-8 md:h-8"
                   >
                     <FontAwesomeIcon
                       icon={faYoutube}
-                      className="fab footer-icon w-[20px] h-[20px] md:w-[32px] md:h-[32px]"
+                      className="fab footer-icon w-5 h-5 md:w-8 md:h-8"
                     />
                   </Link>
                 </li>

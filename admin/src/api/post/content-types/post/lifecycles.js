@@ -73,7 +73,7 @@ async function modifyContentAndSetErrorMsg(event) {
     }
 
     // generate table of contents
-    generateTOC(result, event);
+    await generateTOC(result, event);
   }
 }
 
@@ -113,9 +113,12 @@ async function TagsInput(tags) {
   for (i = 0; i < tags.length; i++) {
     let existingTag = await strapi.db.query("api::tag.tag").findOne({
       where: {
-        name: tags[i].name,
+        name: {
+          $eqi: tags[i].name,
+        },
       },
     });
+
     if (existingTag == null) {
       let slug = tags[i].name
         .replace(/\s/g, "-")

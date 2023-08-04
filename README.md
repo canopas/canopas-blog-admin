@@ -80,9 +80,9 @@ This repository contains the working code of [our resources](https://articles.ca
 
 ### Start admin panel using,
 
-  ```
-  yarn develop
-  ```
+```
+yarn develop
+```
 
 - Application will start on http://localhost:1337/admin
 

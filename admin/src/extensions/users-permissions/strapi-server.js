@@ -13,7 +13,8 @@ module.exports = (plugin) => {
       await strapi.plugins["users-permissions"].services.user
         .add({
           email,
-          password: "",
+          password: "Canopas",
+          username: email,
           role: 2,
           provider: "local",
           is_subscribed: true,

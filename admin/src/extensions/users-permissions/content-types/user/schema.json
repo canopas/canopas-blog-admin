@@ -40,7 +40,8 @@
       "type": "password",
       "minLength": 6,
       "configurable": false,
-      "private": true
+      "private": true,
+      "required": true
     },
     "resetPasswordToken": {
       "type": "string",
@@ -67,7 +68,8 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.role",
       "inversedBy": "users",
-      "configurable": false
+      "configurable": false,
+      "required": true
     },
     "is_subscribed": {
       "type": "boolean",

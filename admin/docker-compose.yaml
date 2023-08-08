@@ -27,6 +27,7 @@ services:
       AWS_REGION: ${AWS_REGION}
       AWS_BUCKET: ${AWS_BUCKET}
       AWS_BUCKET_URL: ${AWS_BUCKET_URL}
+      SENTRY_DSN: ${SENTRY_DSN}
 
   db:
     image: postgres:15.1-alpine

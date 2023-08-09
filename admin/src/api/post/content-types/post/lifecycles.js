@@ -49,7 +49,7 @@ module.exports = {
           });
           let emailData = {
             to: user[i].email,
-            from: env("HR_FROM_MAIL"),
+            from: process.env.HR_FROM_MAIL,
             subject: event.result.title,
             html: emailTemplate,
           };

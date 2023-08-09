@@ -36,6 +36,9 @@ const RecommandedPosts = dynamic(
   () => import("../components/posts/recommandedPosts"),
   { ssr: false },
 );
+const AuthorDetails = dynamic(() => import("../components/authorDetails"), {
+  ssr: false,
+});
 
 export async function getServerSideProps(context) {
   const slug = context.params.slug;
@@ -496,6 +499,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                           })
                         : ""}
                     </div>
+                    <AuthorDetails postData={post} />
                   </div>
                   {/* Recommended Posts Section Desktop View */}
 

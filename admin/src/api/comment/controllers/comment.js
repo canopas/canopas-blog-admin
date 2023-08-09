@@ -100,7 +100,7 @@ module.exports = createCoreController("api::comment.comment", ({ strapi }) => ({
     const authorEmail = newComment.post.author.email;
     let emailData = {
       to: authorEmail,
-      from: env("HR_FROM_MAIL"),
+      from: process.env.HR_FROM_MAIL,
       subject: `New comment: ${newComment.post.title}.`,
       html: emailTemplate,
     };

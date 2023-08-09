@@ -43,6 +43,15 @@
       "multiple": false,
       "required": false,
       "allowedTypes": ["images"]
+    },
+    "role": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "text",
+      "required": true,
+      "maxLength": 250,
+      "minLength": 30
     }
   }
 }

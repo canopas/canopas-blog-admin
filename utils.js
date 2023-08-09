@@ -53,6 +53,8 @@ function setPostFields(post, slug) {
   post.attributes.authorAltText = author
     ? author.username + " image"
     : "author";
+  post.attributes.authorBio = author?.bio || "";
+  post.attributes.authorRole = author?.role || "Editor for Canopas";
 
   if (slug && post.attributes.tags[0]) {
     post.attributes.tags.map((tag) => {

@@ -6,6 +6,20 @@ This is our open-source Next.js blog website of [canopas](https://canopas.com). 
 
 This repository contains the working code of [our resources](https://articles.canopas.com/resources). You can check out the link to view a live example of this repository.
 
+### Admin panel for handling content
+
+![Admin panel](https://github.com/canopas/canopas-blog/assets/69897605/5a61df91-94bd-4a09-bced-e811450a2873)
+
+### Blogs website 
+
+#### Blog Index page UI
+
+![Blog index page UI](https://github.com/canopas/canopas-blog/assets/69897605/10747407-ada8-40fc-b23c-fa965c0bc33a)
+
+#### Blog UI
+
+![Blog UI](https://github.com/canopas/canopas-blog/assets/69897605/bf24fbb5-9771-495a-a553-1c54e0b271d7)
+
 ---
 
 # Table of contents

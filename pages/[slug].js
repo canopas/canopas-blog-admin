@@ -499,7 +499,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                           })
                         : ""}
                     </div>
-                    <AuthorDetails postData={post} />
+                    {post.authorBio ? <AuthorDetails postData={post} /> : ""}
                   </div>
                   {/* Recommended Posts Section Desktop View */}
 

@@ -88,6 +88,14 @@ module.exports = ({ env }) => ({
       sendMetadata: true,
     },
   },
+  scheduler: {
+    enabled: true,
+    config: {
+      contentTypes: {
+        "api::post.post": {},
+      },
+    },
+  },
   upload: {
     config: {
       provider: "aws-s3",

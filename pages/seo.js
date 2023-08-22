@@ -61,8 +61,8 @@ const Seo = ({
                 "description": "${description}",
                 "author": {
                   "@type": "Person",
-                  "name": "${authorName}",
-                }
+                  "name": "${authorName}"
+                },
                 "mainEntityOfPage": {
                   "@type": "Blog Website",
                   "@id": "https://canopas.com/resources"

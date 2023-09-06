@@ -14,6 +14,7 @@ module.exports = {
         xl: "1200px",
         "2xl": "1400px",
         "3xl": "1600px",
+        "4xl": "2440px",
       },
       fontFamily: {
         "product-black": ["Product Sans Black"],
@@ -52,6 +53,8 @@ module.exports = {
         "gradient-L": "linear-gradient(178deg, #FFFFFF  68%, #f77783 40%);",
         "gradient-W": "linear-gradient(257deg, #FFFFFF  65%, #f77783 68%);",
         "gradient-T": "linear-gradient(540deg, #FFFFFF  30.5%, #f77783 10%);",
+        "gradient-background":
+          "linear-gradient(to bottom, #FFFFFF , #FDE0E2 23%, #FDE0E2 88%, #FFFFFF 100%);",
       },
     },
   },

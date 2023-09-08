@@ -115,7 +115,7 @@ export default function CTA() {
         />
       )}
 
-      <div className="mt-20 sm:mt-14 text-center gradient-text text-3xl md:text-[3rem] md:leading-[3.625rem] lg:text-[4.0625rem] lg:leading-[4.9375rem] font-inter-bold">
+      <div className="mt-20 sm:mt-14 text-center gradient-text text-3xl md:text-5xl md:leading-[3.625rem] lg:text-[4.0625rem] lg:leading-[4.9375rem] font-inter-bold">
         Say Hello!
       </div>
       <div className="container text-center">
@@ -137,7 +137,7 @@ export default function CTA() {
                   />
                   <label
                     htmlFor="username"
-                    className="absolute top-4 left-0 mb-5 z-[2] text-white/[.6] text-[1rem] leading-[1.1875rem] md:text-[1.375rem] md:leading-[1.6875rem] lg:text-[1.75rem] lg:leading-[2.125rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                    className="absolute top-4 left-0 mb-5 z-[2] text-white/[.6] text-base leading-[1.1875rem] md:text-[1.375rem] md:leading-[1.6875rem] lg:text-[1.75rem] lg:leading-[2.125rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
                   >
                     Your name
                   </label>
@@ -167,7 +167,7 @@ export default function CTA() {
                   />
                   <label
                     htmlFor="email"
-                    className="absolute top-4 left-0 mb-5 z-[2] text-white/[.6] text-[1rem] leading-[1.1875rem] md:text-[1.375rem] md:leading-[1.6875rem] lg:text-[1.75rem] lg:leading-[2.125rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                    className="absolute top-4 left-0 mb-5 z-[2] text-white/[.6] text-base leading-[1.1875rem] md:text-[1.375rem] md:leading-[1.6875rem] lg:text-[1.75rem] lg:leading-[2.125rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
                   >
                     Your email
                   </label>
@@ -205,7 +205,7 @@ export default function CTA() {
                   />
                   <label
                     htmlFor="phonenumber"
-                    className="absolute top-4 left-0 mb-5 z-[2] text-white/[.6] text-[1rem] leading-[1.1875rem] md:text-[1.375rem] md:leading-[1.6875rem] lg:text-[1.75rem] lg:leading-[2.125rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                    className="absolute top-4 left-0 mb-5 z-[2] text-white/[.6] text-base leading-[1.1875rem] md:text-[1.375rem] md:leading-[1.6875rem] lg:text-[1.75rem] lg:leading-[2.125rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
                   >
                     Phone number
                   </label>
@@ -239,7 +239,7 @@ export default function CTA() {
                   ></textarea>
                   <label
                     htmlFor="project"
-                    className="absolute top-4 left-0 mb-5 z-[2] text-white/[.6] text-[1rem] leading-[1.1875rem] md:text-[1.375rem] md:leading-[1.6875rem] lg:text-[1.75rem] lg:leading-[2.125rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
+                    className="absolute top-4 left-0 mb-5 z-[2] text-white/[.6] text-base leading-[1.1875rem] md:text-[1.375rem] md:leading-[1.6875rem] lg:text-[1.75rem] lg:leading-[2.125rem] transform -translate-y-4 origin-[0] scale-75 duration-300 peer-focus:text-white peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4"
                   >
                     Project detail
                   </label>
@@ -257,13 +257,13 @@ export default function CTA() {
                 {showLoader ? (
                   <Image
                     src={loaderImage}
-                    className="w-[64px] h-[64px]"
+                    className="w-16 h-16"
                     alt="loader-image"
                   />
                 ) : (
                   <div className="relative">
                     {showErrorMessage ? (
-                      <div className="absolute -top-[2rem] sm:-top-[1.875rem] md:-top-[2.875rem] text-center -right-[4rem] sm:-right-[11rem] md:-right-[15rem] lg:-right-[18rem] xl:-right-[18rem] 2xl:-right-[20.5rem] w-[190%] sm:w-max">
+                      <div className="absolute -top-8 sm:-top-[1.875rem] md:-top-[2.875rem] text-center -right-16 sm:-right-44 md:-right-60 lg:-right-72 xl:-right-72 2xl:-right-[20.5rem] w-[190%] sm:w-max">
                         <span
                           className={`flex text-center gradient-text ${
                             errorMessage === "Invalid Recaptcha score"
@@ -279,7 +279,7 @@ export default function CTA() {
                     )}
                     <button
                       id="submit"
-                      className="relative justify-self-center rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-white font-inter-bold"
+                      className="relative justify-self-center rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-white font-inter-bold"
                     >
                       <span className="py-[0.6rem] px-[1.8rem] md:py-[0.8rem] text-md lg:text-xl hoverable-text inline-block">
                         Get Free Consultation

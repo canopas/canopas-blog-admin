@@ -102,15 +102,15 @@ export default function CTA() {
       <div className="relative top-5 md:top-0.5 w-full h-auto">
         <div className="container flex flex-col md:flex-row md:space-x-6 lg:space-x-0 md:-mt-[60px] xl:px-20 3xl:px-32">
           <div className="mt-10 md:mt-40 basis-7/12 lg:basis-3/5">
-            <div className="flex flex-col items-center md:items-stretch space-y-4 md:w-[16.2rem] lg:w-[20rem] 2xl:w-[22.23rem]">
-              <div className="text-[1.2rem] lg:text-[1.5rem] 2xl:text-[1.75rem] leading-[1.75rem] lg:leading-[2rem] 2xl:leading-[2.3rem] font-poppins-regular">
+            <div className="flex flex-col items-center md:items-stretch space-y-4 md:w-[16.2rem] lg:w-80 2xl:w-[22.23rem]">
+              <div className="text-[1.2rem] lg:text-2xl 2xl:text-[1.75rem] leading-7 2xl:leading-[2.3rem] font-poppins-regular">
                 Talk to an expert
               </div>
-              <div className="md:grid grid-rows-2 justify-items-stretch text-[2.3rem] sm:text-[3rem] lg:text-[3.4rem] lg:text-[3.7rem] 2xl:text-[4.125rem] font-poppins-medium uppercase">
+              <div className="md:grid grid-rows-2 justify-items-stretch text-[2.3rem] sm:text-5xl lg:text-[3.4rem] lg:text-[3.7rem] 2xl:text-[4.125rem] font-poppins-medium uppercase">
                 <span className="mr-3 md:mr-0">get in</span>
                 <span className="md:justify-self-end">touch</span>
               </div>
-              <div className="text-center md:text-left text-[0.9rem] lg:text-[1rem] 2xl:text-[1.25rem] leading-[1.25rem] lg:leading-[1.5rem] 2xl:leading-[1.75rem] font-poppins-regular">
+              <div className="text-center md:text-left text-[0.9rem] lg:text-base 2xl:text-xl leading-5 font-poppins-regular">
                 Our team is happy to answer your questions. Fill out the form
                 and we’ll get back to you as soon as possible
               </div>
@@ -118,7 +118,7 @@ export default function CTA() {
           </div>
           <div className="relative top-14 lg:top-20 xl:top-[5.5rem] h-fit w-full bg-white cta-box-shadow text-center font-poppins-regular">
             <form onSubmit={submitForm} method="POST">
-              <div className="pt-[3rem] md:pt-[5rem] lg:pt-[6rem] pb-10 lg:pb-14 px-8">
+              <div className="pt-[3rem] md:pt-20 lg:pt-24 pb-10 lg:pb-14 px-8">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="relative md:col-span-2 md:mb-5 pt-3 lg:pt-10 text-left">
                     <input
@@ -254,17 +254,17 @@ export default function CTA() {
                   {showLoader ? (
                     <Image
                       src={loaderImage}
-                      className="w-[64px] h-[64px]"
+                      className="w-16 h-16"
                       alt="loader-image"
                     />
                   ) : (
                     <div className="relative">
                       {showErrorMessage ? (
-                        <div className="absolute -top-[2rem] sm:-top-[1.875rem] md:-top-[2.875rem] text-center -right-[4rem] sm:-right-[11rem] md:-right-[15rem] lg:-right-[18rem] xl:-right-[18rem] 2xl:-right-[20.5rem] w-[190%] sm:w-max">
+                        <div className="absolute -top-8 sm:-top-[1.875rem] md:-top-[2.875rem] text-center -right-16 sm:-right-44 md:-right-60 lg:-right-72 xl:-right-72 2xl:-right-[20.5rem] w-[190%] sm:w-max">
                           <span
                             className={`flex text-center gradient-text ${
                               errorMessage === "Invalid Recaptcha score"
-                                ? "sm:!mr-[7rem] md:!mr-[12rem] lg:!mr-[15rem] xl:!mr-[16rem] 2xl:!mr-[17rem] !text-[1.5rem]"
+                                ? "sm:!mr-[7rem] md:!mr-[12rem] lg:!mr-[15rem] xl:!mr-[16rem] 2xl:!mr-[17rem] !text-2xl"
                                 : ""
                             }`}
                           >
@@ -276,9 +276,9 @@ export default function CTA() {
                       )}
                       <button
                         id="submit"
-                        className="border-[2px] border-solid border-transparent bg-black-900 text-white hover:border-black-900 hover:bg-white hover:text-black-900 font-inter-bold"
+                        className="border-2 border-solid border-transparent bg-black-900 text-white hover:border-black-900 hover:bg-white hover:text-black-900 font-inter-bold"
                       >
-                        <span className="py-[0.6rem] px-[1rem] lg:px-[1.8rem] lg:py-[0.8rem] text-[1rem] lg:text-[1.1875rem] inline-block">
+                        <span className="py-[0.6rem] px-4 lg:px-[1.8rem] lg:py-[0.8rem] text-base lg:text-[1.1875rem] inline-block">
                           Get Free Consultation
                         </span>
                       </button>

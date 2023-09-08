@@ -55,8 +55,8 @@ export default function CommentForm({ post, onNewComment, recaptchaRef }) {
   }, [formRef]);
 
   return (
-    <div className="container py-20 tracking-wide">
-      <div className="flex items-center pb-5 font-semibold text-xl">
+    <div className="container py-20 tracking-normal">
+      <div className="flex items-center pb-5 font-inter-semibold text-xl">
         <FontAwesomeIcon
           icon={faMessage}
           className="w-7 h-7 pr-2 text-pink-300"
@@ -76,7 +76,7 @@ export default function CommentForm({ post, onNewComment, recaptchaRef }) {
           required
         />
         <div className={`pt-4 ${showForm ? "block" : "hidden"}`} ref={formRef}>
-          <label className="mb-3 text-lg text-gray-700">Name</label>
+          <label className="mb-3 text-lg text-black-core/[0.75]">Name</label>
           <span className="ml-1 text-red-600">*</span>
           <input
             id="name"
@@ -87,7 +87,7 @@ export default function CommentForm({ post, onNewComment, recaptchaRef }) {
             placeholder="Your Name"
             required
           />
-          <label className="mb-3 text-lg text-gray-700">Email</label>
+          <label className="mb-3 text-lg text-black-core/[0.75]">Email</label>
           <span className="ml-1 text-red-600">*</span>
           <input
             id="email"
@@ -98,8 +98,8 @@ export default function CommentForm({ post, onNewComment, recaptchaRef }) {
             placeholder="Your E-mail Address"
             required
           />
-          <button className="relative mt-7 rounded-[12px] border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.8rem] font-bold text-white">
-            <span className="py-[1.25rem] px-3 hoverable-text text-lg">
+          <button className="relative mt-7 rounded-xl border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.8rem] font-bold text-white">
+            <span className="py-5 px-3 hoverable-text text-lg">
               Post Comment
             </span>
           </button>

@@ -48,7 +48,7 @@ export default function Post({ featurePosts, status, mixpanel }) {
           <></>
         ) : (
           <div className="md:mx-8 xl:mx-20 3xl:px-24">
-            <h1 className="my-6 md:my-10 text-[1.5rem] md:text-[1.8rem] xl:text-[2.2rem] font-semibold leading-7 tracking-wide capitalize">
+            <h1 className="my-6 md:my-10 text-[1.5rem] md:text-[1.875rem] xl:text-[2.25rem] leading-7 tracking-none capitalize font-inter-semibold">
               Featured Blogs
             </h1>
 

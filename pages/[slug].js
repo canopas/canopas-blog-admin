@@ -113,28 +113,24 @@ export default function Post({ postData, status, posts, mixpanel }) {
     status = config.NOT_FOUND;
   }
 
-  const tagsString = post?.tags
-    .map((tag) => {
-      return tag.name;
-    })
-    .join(", ");
-
-  const blogContent = post?.content.replace(
-    /<img/g,
-    '<img class="mx-auto aspect-w-2 sm:object-cover" style="width:min-content;height:min-content"',
-  );
+  const blogContent = post?.content
+    .replace(
+      /<img/g,
+      '<img class="mx-auto aspect-w-2 sm:object-cover" style="width:min-content;height:min-content"',
+    )
+    .replace(/color:rgb\(14,16,26\);/g, "");
 
   // table of contents formation
   const indexContent = post?.toc?.replace(
     /<a\s+href="(.*?)"/g,
     (match, href) => {
-      let match2 = /#([^-\n]+-0)\b/g.exec(href);
+      let match2 = /#([^\n]+-0)\b/g.exec(href);
 
       let classes =
         "text-ellipsis hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text";
       if (href === activeId) {
         classes +=
-          " relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:left-0 after:bottom-0 after:w-full after:h-[1px] after:bg-gradient-to-r";
+          " relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:left-0 after:bottom-0 after:w-full after:h-px after:bg-gradient-to-r";
       } else if (match2 && match2[1]) {
         firstHeadingId = match2[1].replace("#", "");
       }
@@ -271,7 +267,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
               <div key={post.id} className="flex flex-col space-y-20">
                 {/* Header */}
                 <div className="grid grid-flow-row xl:grid-flow-col gap-10 xl:gap-8 w-90 h-90 rounded-3xl md:bg-[#14161E] md:py-20 md:px-10 xl:py-14 xl:px-8 ">
-                  <div className="md:container w-full xl:w-[35rem] 2xl:w-[42rem] h-auto sm:h-[18rem] md:h-[21rem] lg:h-[30rem] xl:h-[19rem] 2xl:h-[23rem]">
+                  <div className="md:container w-full xl:w-[35rem] 2xl:w-[42rem] h-auto sm:h-72 md:h-[21rem] lg:h-[30rem] xl:h-[19rem] 2xl:h-[23rem]">
                     <Image
                       width={200}
                       height={200}
@@ -290,49 +286,36 @@ export default function Post({ postData, status, posts, mixpanel }) {
                     />
                   </div>
 
-                  <div className="flex flex-col space-y-5 md:text-white ">
-                    <h1 className="text-[2.20rem] lg:text-[2.50rem] xl:text-[2.80rem] font-normal leading-10 lg:leading-tight tracking-wide">
-                      {post.title}
-                    </h1>
-                    <div className="flex flex-row items-center space-x-4 text-[1rem] leading-6 tracking-wide">
-                      <div className="w-5 h-5">
-                        <FontAwesomeIcon
-                          icon={faClock}
-                          className="w-full h-full text-sm"
-                        />
+                  <div className="flex flex-col justify-between space-y-5 md:text-white">
+                    <div className="flex flex-col space-y-5">
+                      <h1 className="text-[2rem] lg:text-[2.50rem] xl:text-[2.6875rem] font-normal leading-tight tracking-none">
+                        {post.title}
+                      </h1>
+                      <div className="md:text-white/[0.87] text-base md:text-[1.09rem] xl:text-[1.125rem] md:leading-7 tracking-wide">
+                        {post.summary}
                       </div>
-                      <div>
-                        <span>{published_on}</span> ·{" "}
-                        <span> {post.readingTime} min read</span>
-                        {post.publishedAt == null ? (
-                          <>
-                            <span className="after:content-['\00B7'] after:mx-1"></span>
-                            <span className="text-green-600 capitalize">
-                              draft
-                            </span>
-                          </>
-                        ) : (
-                          ""
-                        )}
-                      </div>
-                    </div>
-                    {tagsString ? (
-                      <div className="flex flex-row 3xl:items-center space-x-3 text-[1rem] leading-6 tracking-wide">
-                        <div className="sm:basis-6 w-5 h-5 mt-1.5 sm:mt-0.5 xl:mt-1.5 3xl:mt-0">
+                      <div className="flex flex-row items-center space-x-4 text-base tracking-wide md:text-white/[0.65]">
+                        <div className="w-5 h-5">
                           <FontAwesomeIcon
-                            icon={faTags}
+                            icon={faClock}
                             className="w-full h-full text-sm"
                           />
                         </div>
-                        <div className="basis-11/12 capitalize">
-                          {tagsString}
+                        <div>
+                          <span>{published_on}</span> ·{" "}
+                          <span> {post.readingTime} min read</span>
+                          {post.publishedAt == null ? (
+                            <>
+                              <span className="after:content-['\00B7'] after:mx-1"></span>
+                              <span className="text-green-600 capitalize">
+                                draft
+                              </span>
+                            </>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
-                    ) : (
-                      ""
-                    )}
-                    <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-6 md:leading-7 tracking-wide">
-                      {post.summary}
                     </div>
                     <div className="grid grid-cols-2 items-center text-sm">
                       <div className="flex flex-row items-center space-x-4">
@@ -340,12 +323,12 @@ export default function Post({ postData, status, posts, mixpanel }) {
                           <Image
                             width={45}
                             height={45}
-                            className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
+                            className="absolute top-2/4 left-2/4 translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
                             src={post.authorImage}
                             alt={post.authorAltText}
                           />
                         </div>
-                        <div className="text-[1rem] md:text-[1.09rem] xl:text-[1.13rem] leading-5 tracking-wide">
+                        <div className="text-base md:text-[1.09rem] xl:text-[1.125rem] tracking-wide">
                           {post.authorName}
                         </div>
                       </div>
@@ -361,10 +344,10 @@ export default function Post({ postData, status, posts, mixpanel }) {
                           />
                         </div>
 
-                        <div className="hidden lg:flex flex-row space-x-4 mr-4">
+                        <div className="hidden lg:flex flex-row space-x-4 mr-4 text-white/[0.60]">
                           <FontAwesomeIcon
                             icon={faFacebook}
-                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer hover:text-white"
                             onClick={() => {
                               mixpanel.track("tap_share_facebook");
                               window.open(
@@ -379,7 +362,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                           />
                           <FontAwesomeIcon
                             icon={faLinkedinIn}
-                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer hover:text-white"
                             onClick={() => {
                               mixpanel.track("tap_share_linkedin");
                               window.open(
@@ -394,7 +377,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                           />
                           <FontAwesomeIcon
                             icon={faTwitter}
-                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer hover:text-white"
                             onClick={() => {
                               mixpanel.track("tap_share_twitter");
                               window.open(
@@ -411,7 +394,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                           />
                           <FontAwesomeIcon
                             icon={faReddit}
-                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer hover:text-white"
                             onClick={() => {
                               mixpanel.track("tap_share_reddit");
                               window.open(
@@ -426,7 +409,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                           />
                           <FontAwesomeIcon
                             icon={faLink}
-                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer"
+                            className="w-7 h-7 sm:w-6 sm:h-6 hover:cursor-pointer hover:text-white"
                             onClick={() => {
                               copyLink();
                             }}
@@ -443,19 +426,19 @@ export default function Post({ postData, status, posts, mixpanel }) {
                     relatedPosts.length != 0
                       ? "xl:space-x-6 2xl:space-x-8 3xl:space-x-12 xl:mx-0"
                       : "xl:space-x-10 2xl:space-x-20 xl:mx-8 2xl:mx-20 3xl:mx-32"
-                  }  mx-2 lg:mx-24 rounded-3xl text-[1.125rem]`}
+                  }  mx-2 lg:mx-24 rounded-3xl text-lg`}
                 >
-                  <div className="relative w-full xl:w-[45%]">
+                  <div className="relative w-full xl:w-[45%] tracking-tight text-black-core/[0.87]">
                     <div className="xl:sticky top-[7.5rem] flex flex-col">
                       {indexContent != null ? (
                         <div className="w-full h-fit border border-1 border-black-900 rounded-[12px]">
                           <div className="rounded-t-[12px] bg-gray-100 py-5 pl-4">
                             Table of contents
                           </div>
-                          <div className="pl-5 pr-6 lg:pl-4 lg:pr-4 2xl:pl-5 2xl:pr-6 tracking-[0.02em] leading-relaxed">
-                            <div className="mt-4 text-[1.125rem] text-[#374151] list-none ">
+                          <div className="pl-5 pr-6 lg:pl-4 lg:pr-4 2xl:pl-5 2xl:pr-6 leading-relaxed">
+                            <div className="mt-4 text-[1.0625rem] list-none ">
                               <div
-                                className="my-3"
+                                className="my-3 !tracking-normal font-comme-light"
                                 onClick={handleClick}
                                 dangerouslySetInnerHTML={{
                                   __html: indexContent,
@@ -471,21 +454,22 @@ export default function Post({ postData, status, posts, mixpanel }) {
                   </div>
 
                   {/* main article */}
-                  <div className="prose lg:prose-lg xl:w-full 2xl:w-auto">
+                  <div className="prose lg:prose-lg xl:w-full 2xl:w-auto !font-comme-regular">
                     <div
                       ref={contentRef}
                       dangerouslySetInnerHTML={{
                         __html: blogContent,
                       }}
+                      className="!tracking-wide text-black-core/[0.80] font-comme-light"
                     ></div>
-                    <div className="flex flex-row flex-wrap mt-16">
+                    <div className="flex flex-row flex-wrap mt-11">
                       {post.tags
                         ? post.tags.map((tag) => {
                             return (
                               <div className="my-4 mr-4" key={tag.id}>
                                 <Link
                                   href={"/tag/" + tag.slug}
-                                  className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize"
+                                  className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize tracking-tight"
                                   onClick={() => {
                                     mixpanel.track(
                                       "tap_tag_" + tag.slug.replace("-", "_"),
@@ -504,7 +488,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                   {/* Recommended Posts Section Desktop View */}
 
                   {relatedPosts.length != 0 ? (
-                    <div className="relative w-[40%]">
+                    <div className="relative w-2/5">
                       <div className="xl:sticky top-28">
                         <div className="hidden xl:block w-full h-fit">
                           <RecommandedPosts

@@ -56,7 +56,7 @@ export default function Comment({ post }) {
                     >
                       <div className="flex justify-between items-center">
                         <div className="flex items-center">
-                          <div className="relative w-[40px] h-[40px] mb-2 md:mb-0">
+                          <div className="relative w-10 h-10 mb-2 md:mb-0">
                             <Image
                               className="rounded-full h-full w-full object-cover absolute inset-0"
                               layout="fill"
@@ -108,7 +108,7 @@ export default function Comment({ post }) {
                                   <li className="px-5 py-5 bg-white border border-solid border-gray-300 rounded-[15px]">
                                     <div className="flex justify-between items-center">
                                       <div className="flex items-center">
-                                        <div className="relative w-[40px] h-[40px] mb-2 md:mb-0">
+                                        <div className="relative w-10 h-10 mb-2 md:mb-0">
                                           <Image
                                             className="rounded-full h-full w-full object-cover absolute inset-0"
                                             layout="fill"

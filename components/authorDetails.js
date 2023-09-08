@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AuthorDetails({ postData }) {
   return (
-    <div className="w-full mt-16 bg-[#f7f7f7] py-0.5 text-[#374151]">
+    <div className="w-full mt-16 bg-[#f7f7f7] py-0.5 text-black-core/[0.75] font-inter-regular">
       <div className="sm:hidden container mx-5">
         <hr className="bg-gray-600 w-full py-[0.7px] !mt-2 mb-0" />
         <div className="flex flex-col items-center my-5">
@@ -16,23 +16,15 @@ export default function AuthorDetails({ postData }) {
             />
           </div>
           <div className="flex flex-col space-y-3 items-center">
-            <div className="text-[1.7rem] font-product-black tracking-wide text-[#000000d6]">
+            <div className="text-[1.6875rem] font-inter-semibold tracking-normal text-black-core/[0.87]">
               {postData.authorName}
             </div>
-            {postData.authorBio ? (
-              <>
-                <div className="text-[1rem] leading-snug tracking-wide text-center">
-                  {postData.authorBio}
-                </div>
-                <div className="!mt-7 text-[0.9rem] capitalize">
-                  {postData.authorRole}
-                </div>
-              </>
-            ) : (
-              <div className="text-[0.9rem] capitalize">
-                {postData.authorRole}
-              </div>
-            )}
+            <div className="text-base leading-normal tracking-normal text-center">
+              {postData.authorBio}
+            </div>
+            <div className="!mt-7 text-[0.8750rem] capitalize tracking-normal">
+              {postData.authorRole}
+            </div>
           </div>
         </div>
         <hr className="bg-gray-600 w-full py-[0.5px] !mb-3 mt-0" />
@@ -54,17 +46,13 @@ export default function AuthorDetails({ postData }) {
               postData.authorBio ? "space-y-4" : "space-y-1"
             } md:-ml-16 xl:-ml-10 2xl:-ml-16`}
           >
-            <div className="text-[1.7rem] font-product-black tracking-wide text-[#000000d6]">
+            <div className="text-[1.6875rem] font-inter-semibold tracking-normal text-black-core/[0.87]">
               {postData.authorName}
             </div>
-            {postData.authorBio ? (
-              <div className="text-[1rem] leading-snug tracking-wide">
-                {postData.authorBio}
-              </div>
-            ) : (
-              ""
-            )}
-            <div className="text-[0.9rem] capitalize">
+            <div className="text-base leading-normal tracking-normal">
+              {postData.authorBio}
+            </div>
+            <div className="text-[0.8750rem] capitalize tracking-normal">
               {postData.authorRole}
             </div>
           </div>

@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Inter Medium";
+  font-family: "Inter ExtraLight";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 200;
   font-display: swap;
-  src: url(./../fonts/Inter-Medium.woff2);
+  src: url(./../fonts/Inter-ExtraLight.woff2);
 }
 
 @font-face {
@@ -19,27 +19,27 @@
 }
 
 @font-face {
-  font-family: "Inter Bold";
+  font-family: "Inter Medium";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-display: swap;
-  src: url(./../fonts/Inter-Bold.woff2);
+  src: url(./../fonts/Inter-Medium.woff2);
 }
 
 @font-face {
   font-family: "Inter SemiBold";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 600;
   font-display: swap;
   src: url(./../fonts/Inter-SemiBold.woff2);
 }
 
 @font-face {
-  font-family: "Inter ExtraLight";
+  font-family: "Inter Bold";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   font-display: swap;
-  src: url(./../fonts/Inter-ExtraLight.woff2);
+  src: url(./../fonts/Inter-Bold.woff2);
 }
 
 @font-face {
@@ -48,30 +48,6 @@
   font-weight: 400;
   font-display: swap;
   src: url(./../fonts/Source-codePro.woff2);
-}
-
-@font-face {
-  font-family: "Product Sans Regular";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(./../fonts/ProductSans-Regular.woff2);
-}
-
-@font-face {
-  font-family: "Product Sans Black";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(./../fonts/ProductSans-Black.woff2);
-}
-
-@font-face {
-  font-family: "Poppins Light";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(./../fonts/Poppins-Light.woff2);
 }
 
 @font-face {
@@ -88,6 +64,38 @@
   font-weight: 500;
   font-display: swap;
   src: url(./../fonts/Poppins-Medium.woff2);
+}
+
+@font-face {
+  font-family: "Comme Light";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(./../fonts/Comme-Light.woff2);
+}
+
+@font-face {
+  font-family: "Comme Regular";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(./../fonts/Comme-Regular.woff2);
+}
+
+@font-face {
+  font-family: "Comme Medium";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(./../fonts/Comme-Medium.woff2);
+}
+
+@font-face {
+  font-family: "Comme SemiBold";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(./../fonts/Comme-SemiBold.woff2);
 }
 
 input:-webkit-autofill,
@@ -118,7 +126,7 @@ input:-webkit-autofill:active {
 }
 
 body {
-  @apply font-product-regular break-words text-[#000000d6];
+  @apply font-inter-regular break-words text-black-core/[0.87];
 }
 
 .content > p {
@@ -126,13 +134,13 @@ body {
 }
 
 .prose > * {
-  @apply text-[1.125rem] md:text-[1.27rem] md:leading-[2rem] tracking-[0.04em];
+  @apply text-lg md:text-[1.1875rem] md:leading-8;
 }
 
 .comment input[type="text"],
 .comment input[type="email"],
 .comment textarea {
-  @apply my-2 border border-solid border-gray-300 rounded bg-white bg-clip-padding px-3 py-1.5 font-normal text-base text-gray-700 transition ease-in-out focus:border-gray-300 focus:outline-none focus:bg-white focus:text-gray-700;
+  @apply my-2 border border-solid border-gray-300 rounded bg-white bg-clip-padding px-3 py-1.5 font-normal text-base text-black-core/[0.75] transition ease-in-out focus:border-gray-300 focus:outline-none focus:bg-white focus:text-black-core/[0.75];
 }
 
 .comment input[type="submit"] {
@@ -152,7 +160,7 @@ body {
 }
 
 .gradient-border-btn {
-  @apply border-[1px] border-solid border-transparent rounded-[0.6rem] bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] shadow-[inset_2px_1000px_1px_#fff] p-[1rem] text-center hover:border-[1px] hover:border-solid hover:border-transparent hover:from-[#f2709c] hover:to-[#ff9472] hover:shadow-none active:scale-[0.98];
+  @apply border border-solid border-transparent rounded-[0.6rem] bg-gradient-to-r from-[#f2709c] via-[#ff909c] to-[#ff9472] shadow-[inset_2px_1000px_1px_#fff] p-[1rem] text-center hover:border hover:border-solid hover:border-transparent hover:from-[#f2709c] hover:to-[#ff9472] hover:shadow-none active:scale-[0.98];
 }
 
 .gradient-border-btn > a > .fab {
@@ -160,7 +168,7 @@ body {
 }
 
 .gradient-border-btn > span {
-  @apply my-0 mx-[6px] text-[#3d3d3d];
+  @apply my-0 mx-1.5 text-[#3d3d3d];
 }
 
 .gradient-border-btn:hover > span,
@@ -189,7 +197,7 @@ ul {
 }
 
 strong {
-  @apply font-product-black tracking-wide;
+  @apply font-comme-medium tracking-[0.01em] !text-black-core/[1] !font-medium text-[1.0625rem] md:text-[1.15625rem];
 }
 
 h1 strong {
@@ -197,7 +205,7 @@ h1 strong {
 }
 
 h2 strong {
-  @apply text-[1.5rem] lg:text-[1.7rem];
+  @apply text-2xl lg:text-[1.7rem] font-comme-semibold;
 }
 
 /* HighlightJS */
@@ -282,17 +290,29 @@ code::after {
   @apply content-none !important;
 }
 
+.prose h2 {
+  @apply font-comme-semibold text-[#000] xl:text-[2.0625rem] !mb-4 !tracking-tight;
+}
+
+.prose i,
+.prose a span {
+  @apply font-comme-regular text-lg text-black-core/[0.87] tracking-[0.03rem];
+}
+
 .prose
   :where(code, code strong):not(:where([class~="not-prose"], blockquote code)) {
-  @apply bg-gray-200 py-0.5 px-1 rounded-[4px] font-[550] tracking-wide font-source-codepro;
+  @apply bg-gray-200 py-0.5 px-1 rounded font-[550] tracking-wide font-source-codepro;
 }
 
 .prose :where(pre code):not(:where([class~="not-prose"] *)) {
   @apply bg-transparent text-[#dbe0e0] leading-normal tracking-[-0.022em] !break-normal;
 }
 
-.prose :where(blockquote, blockquote i):not(:where([class~="not-prose"] *)) {
-  @apply not-italic text-[1.4rem] lg:text-[1.755rem] leading-[2.3rem] text-[#757575] font-normal font-inter-light;
+.prose
+  :where(blockquote, blockquote i, blockquote i strong):not(
+    :where([class~="not-prose"] *)
+  ) {
+  @apply not-italic !text-[1.4rem] lg:!text-[1.755rem] !leading-[2.3rem] !text-black-core/[0.75] !font-normal tracking-wide font-inter-extralight;
 }
 
 .prose
@@ -308,7 +328,7 @@ code::after {
 
 .category-swiper .swiper-button-next:after,
 .category-swiper .swiper-button-prev:after {
-  @apply px-7 pb-[1rem] pt-1 text-black-900 !text-[12px];
+  @apply px-7 pb-4 pt-1 text-black-900 !text-xs;
 }
 
 .category-swiper .swiper-button-prev:after {

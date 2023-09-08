@@ -124,7 +124,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
               <div className="w-20 md:w-1/5 ">
                 <hr className="border-1 border-[#ff9472]" />
               </div>
-              <div className="text-[1.5rem] md:text-[1.60rem] xl:text-[1.67rem] text-white font-semibold leading-tight md:leading-snug text-left tracking-wide">
+              <div className="text-[1.5rem] md:text-[1.60rem] xl:text-[1.67rem] text-white font-semibold leading-tight md:leading-snug text-left tracking-normal">
                 On a mission to help you become a better{" "}
                 <span className="text-[#ff9472]">Software Engineer</span>.
                 Sharing knowlegde on{" "}
@@ -193,7 +193,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
             {config.SHOW_SEARCH_POSTS ? (
               <div className="flex flex-row items-center 2xl:basis-3/12 w-80 h-12 rounded-[10px] !bg-gray-100 pl-3">
                 <span>
-                  <i className="rounded-full text-gray-500 cursor-pointer">
+                  <i className="rounded-full text-black-core/[0.65] cursor-pointer">
                     <FontAwesomeIcon
                       icon={faMagnifyingGlass}
                       className="w-[1.1rem] h-5 pr-1 text-sm"
@@ -230,7 +230,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
             {/* Featured Posts Section */}
             {featurePosts.length != 0 ? (
               <>
-                <span className="text-[2.5rem] font-semibold tracking-wide">
+                <span className="text-[2.375rem] tracking-none font-inter-bold">
                   Featured
                 </span>
                 <div className="grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 mt-8">
@@ -266,9 +266,9 @@ export default function Home({ posts, status, categories, mixpanel }) {
                               />
                             </Link>
                           </div>
-                          <div className="items-center text-[0.875rem] lg:text-[1.125rem] text-gray-500">
+                          <div className="items-center !text-black-core/[0.65]">
                             <Link href={"/" + featurePost.slug}>
-                              <div className="flex flex-row justify-between text-[0.922rem] leading-5 tracking-wide">
+                              <div className="flex flex-row justify-between text-sm tracking-wide">
                                 <div>
                                   <span>{featurePost.published_on}</span>
                                   <span className="hidden lg:inline-block after:content-['\00B7'] after:mx-1"></span>
@@ -281,8 +281,8 @@ export default function Home({ posts, status, categories, mixpanel }) {
                                 </span>
                               </div>
                               <div
-                                className="my-2 text-[1.375rem] font-semibold leading-7 tracking-wide text-[#000000d6] hover:underline underline-offset-4 transition-all hover:scale-[0.96]
-                        lg:text-[1.5rem] lg:leading-8"
+                                className="my-2 text-[1.3125rem] leading-7 md:text-xl lg:text-[1.4375rem] lg:leading-8 tracking-none text-black-core/[0.87] hover:underline underline-offset-4 transition-all hover:scale-[0.96]
+                         font-inter-semibold"
                                 onClick={() => {
                                   mixpanel.track("tap_blog_title", {
                                     Title: featurePost.title,
@@ -302,9 +302,9 @@ export default function Home({ posts, status, categories, mixpanel }) {
                   <div className="flex justify-end mt-10">
                     <Link
                       href="/featured"
-                      className="relative rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.5rem] font-bold text-white"
+                      className="relative rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] py-2 font-inter-semibold text-white"
                     >
-                      <span className="py-[1rem] px-[1.05rem] tracking-wide hoverable-text">
+                      <span className="py-4 px-[1.05rem] tracking-none hoverable-text">
                         Read More Featured
                       </span>
                     </Link>
@@ -313,7 +313,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                   ""
                 )}
                 <hr className="my-10" />
-                <span className="text-[2.5rem] font-semibold tracking-wide">
+                <span className="text-[2.375rem] tracking-none font-inter-bold">
                   Blogs
                 </span>
               </>
@@ -375,10 +375,10 @@ export default function Home({ posts, status, categories, mixpanel }) {
                       }`}
                     >
                       <div
-                        className={`text-[1.375rem] font-semibold leading-7 tracking-wide text-[#000000d6] hover:underline underline-offset-4 transition-all hover:scale-[0.96] ${
+                        className={`text-[1.3125rem] leading-7 sm:text-[1.375rem] sm:leading-[1.875rem] tracking-none text-black-core/[0.87] hover:underline underline-offset-4 transition-all hover:scale-[0.96] font-inter-semibold ${
                           i === 0 && count % 3 === 1
-                            ? "md:text-[1.5rem] lg:text-[1.875rem] md:font-bold md:leading-8 lg:leading-10"
-                            : "lg:text-[1.5rem] lg:leading-8"
+                            ? "md:text-2xl xl:text-3xl md:font-bold xl:leading-10"
+                            : "md:text-xl lg:text-[1.4375rem] lg:leading-8"
                         }`}
                       >
                         <Link
@@ -392,18 +392,18 @@ export default function Home({ posts, status, categories, mixpanel }) {
                           {post.title}
                         </Link>
                       </div>
-                      <div className="text-[1.0625rem] md:text-[1.125rem] lg:text-[1.13rem] lg:leading-7 tracking-wide text-gray-500">
+                      <div className="text-[1.0625rem] md:text-base lg:text-lg tracking-wide text-black-core/[0.65]">
                         <Link href={"/" + post.slug}>
-                          <p className="line-clamp-3">{post.summary}</p>
+                          <p className="line-clamp-3 ">{post.summary}</p>
                         </Link>
                       </div>
-                      <div className="flex flex-row items-center pt-3 text-[0.875rem] lg:text-[1.125rem] text-gray-500">
-                        <div className="relative w-[40px] md:w-[41px] h-[40px] max-w-full max-h-full overflow-hidden">
+                      <div className="flex flex-row items-center pt-3 text-sm xl:text-lg text-black-core/[0.65]">
+                        <div className="relative w-10 md:w-[41px] h-10 max-w-full max-h-full overflow-hidden">
                           <Link href={"/" + post.slug}>
                             <Image
                               width={40}
                               height={40}
-                              className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
+                              className="absolute top-2/4 left-2/4 translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
                               src={post.authorImage}
                               alt={post.authorAltText}
                               loading="lazy"
@@ -411,7 +411,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                           </Link>
                         </div>
                         <Link href={"/" + post.slug}>
-                          <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wide">
+                          <div className="pl-3 text-sm tracking-wide">
                             <span className="text-green-700 capitalize">
                               {post.authorName}
                             </span>

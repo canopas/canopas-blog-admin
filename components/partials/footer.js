@@ -67,7 +67,7 @@ export default function Footer({ mixpanel }) {
                 Subscribe Here!
               </div>
               <form
-                className="flex flex-row space-x-2 m-auto mt-[1.5rem] xl:mt-8 items-center"
+                className="flex flex-row space-x-2 m-auto mt-6 xl:mt-8 items-center"
                 onSubmit={handleSubscription}
               >
                 <div className="w-56 md:w-72">
@@ -85,13 +85,13 @@ export default function Footer({ mixpanel }) {
                   />
                 </div>
 
-                <button className="hidden md:block rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-white">
-                  <div className="py-[0.63rem] px-[0.5rem] md:px-[1.1rem] text-md md:text-xl hoverable-text inline-block">
+                <button className="hidden md:block rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-white">
+                  <div className="py-[0.63rem] px-2 md:px-[1.1rem] text-md md:text-xl hoverable-text inline-block">
                     Subscribe
                   </div>
                 </button>
                 <button
-                  className="md:hidden w-[45px] h-[45px] rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff]"
+                  className="md:hidden w-[45px] h-[45px] rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff]"
                   aria-label="SubscribeBtn"
                 >
                   <div className="w-[21px] h-[21px] inline-block">
@@ -114,7 +114,7 @@ export default function Footer({ mixpanel }) {
               <div className="mt-8 xl:mt-5 text-[1.375rem] leading-[1.6875rem] md:text-[1.5rem] md:leading-[1.8125rem] lg:text-[1.75rem] lg:leading-[1.9375rem] text-white/[.87] font-inter-bold">
                 Follow us on
               </div>
-              <ul className="flex flex-wrap justify-center w-full m-auto mt-[1.5rem] xl:mt-8 pl-0 cursor-pointer list-none">
+              <ul className="flex flex-wrap justify-center w-full m-auto mt-6 xl:mt-8 pl-0 cursor-pointer list-none">
                 <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mr-1 md:mr-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
                     href={config.FACEBOOK_URL}
@@ -220,7 +220,7 @@ export default function Footer({ mixpanel }) {
             </div>
           </div>
 
-          <div className="mb-8 md:mb-9 text-[0.75rem] leading-[0.9375rem] md:text-[0.84375rem] md:leading-[1.03125rem] lg:text-[0.9375rem] lg:leading-[1.125rem] text-white/[.87] text-center">
+          <div className="mb-8 md:mb-9 text-xs leading-[0.9375rem] md:text-[0.84375rem] md:leading-[1.03125rem] lg:text-[0.9375rem] lg:leading-[1.125rem] text-white/[.87] text-center">
             <div className="w-3 h-3 md:w-4 md:h-4 mr-1 inline-block">
               <FontAwesomeIcon
                 icon={faCopyright}

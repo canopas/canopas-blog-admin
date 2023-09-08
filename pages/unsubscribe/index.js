@@ -56,12 +56,12 @@ export default function Unsubscribe() {
 
   return (
     <>
-      <div className="container w-[90%] sm:w-[70%] lg:w-[50%] 2xl:w-[40%] h-fit-content min-h-[50vh] my-16 rounded-[12px] bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] p-6">
+      <div className="container w-[90%] sm:w-[70%] lg:w-1/2 2xl:w-2/5 h-fit-content min-h-[50vh] my-16 rounded-[12px] bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] p-6">
         <div className="text-center">
           <h1 className="mb-3 text-3xl">Unsubscribe</h1>
           <hr />
           <p className="my-3">{email}</p>
-          <div className="w-[50%] h-auto mx-[24%]">
+          <div className="w-1/2 h-auto mx-[24%]">
             <Image
               width={100}
               height={100}
@@ -75,7 +75,7 @@ export default function Unsubscribe() {
             are you sure you wish to unsubscribe from Canopas blog?
           </p>
           <div className="flex justify-center space-x-3 ">
-            <button className="w-auto rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] text-[1.1rem] font-semibold text-white hover:shadow-[inset_2px_1000px_1px_#fff] hover:cursor-pointer">
+            <button className="w-auto rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] text-[1.1rem] font-semibold text-white hover:shadow-[inset_2px_1000px_1px_#fff] hover:cursor-pointer">
               <div
                 className="px-[1.35rem] py-[0.3rem] align-middle text-center tracking-wider hoverable-text capitalize"
                 onClick={userUnsubscribe}
@@ -87,7 +87,7 @@ export default function Unsubscribe() {
               href={config.WEBSITE_URL + "/resources"}
               onClick={handleLogout}
             >
-              <button className="w-auto rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] text-[1.1rem] font-semibold text-white hover:shadow-[inset_2px_1000px_1px_#fff] hover:cursor-pointer">
+              <button className="w-auto rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] text-[1.1rem] font-semibold text-white hover:shadow-[inset_2px_1000px_1px_#fff] hover:cursor-pointer">
                 <div className="px-[1.35rem] py-[0.3rem] align-middle text-center tracking-wider hoverable-text capitalize">
                   no
                 </div>

@@ -117,6 +117,7 @@ export default function Footer({ mixpanel }) {
               <ul className="flex flex-wrap justify-center w-full m-auto mt-[1.5rem] xl:mt-8 pl-0 cursor-pointer list-none">
                 <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mr-1 md:mr-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
+                    prefetch={false}
                     href={config.FACEBOOK_URL}
                     target="_blank"
                     onClick={() => {
@@ -134,6 +135,7 @@ export default function Footer({ mixpanel }) {
 
                 <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
+                    prefetch={false}
                     href={config.INSTAGRAM_URL}
                     target="_blank"
                     onClick={() => {
@@ -151,6 +153,7 @@ export default function Footer({ mixpanel }) {
 
                 <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
+                    prefetch={false}
                     href={config.TWITTER_URL}
                     target="_blank"
                     onClick={() => {
@@ -168,6 +171,7 @@ export default function Footer({ mixpanel }) {
 
                 <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
+                    prefetch={false}
                     href={config.BLOG_URL}
                     target="_blank"
                     onClick={() => {
@@ -185,6 +189,7 @@ export default function Footer({ mixpanel }) {
 
                 <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
+                    prefetch={false}
                     href={config.LINKEDIN_URL}
                     target="_blank"
                     onClick={() => {
@@ -202,6 +207,7 @@ export default function Footer({ mixpanel }) {
 
                 <li className="flex justify-center !items-center w-10 h-10 md:w-[62px] md:h-[62px] mx-1 md:mx-1.5 !rounded-full text-center cursor-pointer gradient-border-btn !border-0">
                   <Link
+                    prefetch={false}
                     href={config.YOUTUBE_URL}
                     target="_blank"
                     onClick={() => {

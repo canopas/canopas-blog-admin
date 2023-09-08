@@ -24,6 +24,7 @@ export default function Custom404() {
         </div>
         <div className="hover:text-[#fff]">
           <Link
+            prefetch={false}
             className="gradient-border-btn hover:text-[#fff] rounded-[0.6rem] p-[1rem] m-[5px] text-center border-[1px] border-solid border-transparent from-[#ff9472] via-[#ff909c] to-[#f2709c] bg-gradient-to-r shadow-[inset_2px_1000px_1px_#fff] active:scale-[0.98]  my-16 flex flex-row items-center"
             href="/"
           >

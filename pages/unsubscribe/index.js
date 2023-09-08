@@ -84,6 +84,7 @@ export default function Unsubscribe() {
               </div>
             </button>
             <Link
+              prefetch={false}
               href={config.WEBSITE_URL + "/resources"}
               onClick={handleLogout}
             >

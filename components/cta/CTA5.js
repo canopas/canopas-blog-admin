@@ -32,7 +32,11 @@ export default function CTA() {
               Not sure where to start? We also offer code and architecture
               reviews, strategic planning, and more.
             </p>
-            <Link href={`${config.WEBSITE_URL}/contact`} className="mt-10">
+            <Link
+              prefetch={false}
+              href={`${config.WEBSITE_URL}/contact`}
+              className="mt-10"
+            >
               <div className="flex items-center mx-auto md:mx-0 w-max rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal  text-[1.09375rem] leading-[1.3125rem] xl:text-[1.188rem] xl:leading-[1.188rem] font-inter-semibold !tracking-[0] text-white active:scale-[0.98]">
                 <span className="py-[0.9rem] md:py-[1rem] px-[1.2rem] md:px-[1.3rem] hoverable-text inline-block">
                   Get Free Consultation

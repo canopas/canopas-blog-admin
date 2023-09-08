@@ -484,6 +484,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                             return (
                               <div className="my-4 mr-4" key={tag.id}>
                                 <Link
+                                  prefetch={false}
                                   href={"/tag/" + tag.slug}
                                   className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize"
                                   onClick={() => {

@@ -31,7 +31,7 @@ export default function PostsList({ postData, mixpanel }) {
             className="flex flex-col col-span-2 mb-8 lg:mb-10 border-b-2"
             key={i}
           >
-            <Link href={"/" + post.slug}>
+            <Link prefetch={false} href={"/" + post.slug}>
               <div className="flex flex-row space-x-2 items-center text-[1rem] md:text-[1.03rem] leading-5 tracking-wide capitalize">
                 <div className="relative w-[30px] md:w-[31px] h-[30px] max-w-full max-h-full overflow-hidden">
                   <Image
@@ -89,6 +89,7 @@ export default function PostsList({ postData, mixpanel }) {
               <>
                 <div className="flex flex-row flex-wrap space-x-2 items-center mb-10 md:mb-14 w-[60%] ">
                   <Link
+                    prefetch={false}
                     href={"/tag/" + slug}
                     className="my-1 rounded-full bg-[#f2f2f2] px-2.5 py-1 font-medium no-underline capitalize"
                   >
@@ -105,6 +106,7 @@ export default function PostsList({ postData, mixpanel }) {
                   return (
                     <div className="my-4 mr-2" key={tag.id}>
                       <Link
+                        prefetch={false}
                         href={"/tag/" + tag.slug}
                         className="my-1 rounded-full bg-[#f2f2f2] px-3 py-1.5 font-medium no-underline capitalize"
                       >

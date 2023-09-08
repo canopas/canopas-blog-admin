@@ -43,7 +43,11 @@ export default function CTA() {
                 Bring us your toughest challenge and we&apos;ll show you the
                 path to a sleek solution.
               </div>
-              <Link href={`${config.WEBSITE_URL}/contact`} className="">
+              <Link
+                prefetch={false}
+                href={`${config.WEBSITE_URL}/contact`}
+                className=""
+              >
                 <div className="flex items-center mt-5 md:mt-4 lg:mt-5 mx-auto md:mx-0 w-max rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal text-[1rem] leading-[1.1875rem] md:text-[1.09375rem] md:leading-[1.3125rem] xl:text-[1.1875rem] xl:leading-[1.4375rem] font-inter-semibold !tracking-[0] text-white active:scale-[0.98]">
                   <span className="py-[0.7rem] px-[1.2rem] hoverable-text inline-block">
                     Talk to our experts

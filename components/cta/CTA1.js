@@ -26,7 +26,7 @@ export default function CTA() {
             implement robust mobile apps to achieve your business objectives.
             Schedule Your Free Consultation Now.
           </p>
-          <Link href={`${config.WEBSITE_URL}/contact`}>
+          <Link prefetch={false} href={`${config.WEBSITE_URL}/contact`}>
             <div className="flex items-center mt-10 mx-auto md:mx-0 w-max rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal text-[1.1875rem] leading-[1.1875rem] font-inter-semibold tracking-normal text-white active:scale-[0.98]">
               <span className="py-4 px-[1.2rem] hoverable-text inline-block">
                 Get Free Consultation
@@ -55,7 +55,7 @@ export default function CTA() {
             implement robust mobile apps to achieve your business objectives.
             Schedule Your Free Consultation Now.
           </p>
-          <Link href={`${config.WEBSITE_URL}/contact`}>
+          <Link prefetch={false} href={`${config.WEBSITE_URL}/contact`}>
             <div className="flex items-center mt-10 mx-auto md:mx-0 w-max rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal text-[1.1875rem] leading-[1.1875rem] font-inter-semibold tracking-normal text-white active:scale-[0.98]">
               <span className="py-4 px-[1.2rem] hoverable-text inline-block">
                 Get Free Consultation

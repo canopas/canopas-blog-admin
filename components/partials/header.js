@@ -63,7 +63,7 @@ export default function Header({ mixpanel }) {
         <nav className="py-5 md:py-[1.75rem] font-inter-medium">
           <div className="container flex flex-row flex-wrap justify-start items-center 3xl:px-24">
             <div className="mr-4 py-[0.3125rem] text-[1.25rem] text-black no-underline whitespace-nowrap">
-              <Link href={HOST_URL}>
+              <Link prefetch={false} href={HOST_URL}>
                 <Image
                   src={Logo}
                   className="mt-1 w-[205px] h-[38.5px]"
@@ -76,6 +76,7 @@ export default function Header({ mixpanel }) {
               <ul className="hidden lg:flex flex-row flex-wrap items-center justify-start lg:ml-auto pl-0 text-[1rem] md:text-[1.10375rem] xl:text-[1.1875rem] leading-[1.125rem] md:leading-[1.28125rem] lg:leading-[1.4375rem]">
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
+                    prefetch={false}
                     href={`${HOST_URL}/services`}
                     className={`relative mr-3.5 xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
                       router.pathname == `${HOST_URL}/services`
@@ -92,6 +93,7 @@ export default function Header({ mixpanel }) {
 
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
+                    prefetch={false}
                     href={`${HOST_URL}/portfolio`}
                     className={`relative mr-3.5 xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
                       router.pathname == `${HOST_URL}/portfolio`
@@ -108,6 +110,7 @@ export default function Header({ mixpanel }) {
 
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
+                    prefetch={false}
                     href={`${HOST_URL}/contributions`}
                     className="relative mr-3.5 xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                     onMouseEnter={handleMouseEnter}
@@ -126,6 +129,7 @@ export default function Header({ mixpanel }) {
                   >
                     <li className="relative ml-0 my-2 sm:my-0">
                       <Link
+                        prefetch={false}
                         href={`${HOST_URL}/contributions`}
                         className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[27px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                         onClick={() => {
@@ -139,6 +143,7 @@ export default function Header({ mixpanel }) {
 
                     <li className="ml-0 my-2 sm:my-0 relative">
                       <Link
+                        prefetch={false}
                         href="https://blog.canopas.com/"
                         className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[27px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                         onClick={() => {
@@ -152,6 +157,7 @@ export default function Header({ mixpanel }) {
                     </li>
                     <li className="ml-0 my-2 sm:my-0 relative">
                       <Link
+                        prefetch={false}
                         href={`${HOST_URL}/resources`}
                         className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[27px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                         onClick={() => {
@@ -170,6 +176,7 @@ export default function Header({ mixpanel }) {
 
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
+                    prefetch={false}
                     href={`${HOST_URL}/jobs`}
                     className={`relative mr-3.5 xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
                       router.pathname == `${HOST_URL}/jobs`
@@ -186,6 +193,7 @@ export default function Header({ mixpanel }) {
 
                 <li className="ml-0 my-2 sm:my-0">
                   <Link
+                    prefetch={false}
                     href={`${HOST_URL}/about`}
                     className={`relative mr-3.5 xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] ${
                       router.pathname == `${HOST_URL}/about`
@@ -202,6 +210,7 @@ export default function Header({ mixpanel }) {
 
                 <li className="order-last ml-0 my-2 sm:my-0 p-0">
                   <Link
+                    prefetch={false}
                     href={`${HOST_URL}/contact`}
                     className={`relative mb-0 mr-3.5 xl:mr-[25px] rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff835b] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.75rem] font-inter-bold text-white ${
                       router.pathname == `${HOST_URL}/contact`
@@ -235,7 +244,7 @@ export default function Header({ mixpanel }) {
                 <div className="sticky top-0 w-full py-3">
                   <div className="flex justify-between items-center">
                     <div className="text-[1.25rem] text-black no-undurline whitespace-nowrap">
-                      <Link href={HOST_URL}>
+                      <Link prefetch={false} href={HOST_URL}>
                         <Image
                           src={Logo}
                           className="mt-1 w-[190px] h-[34.5px]"
@@ -258,6 +267,7 @@ export default function Header({ mixpanel }) {
                 <ul className="flex flex-col justify-start h-[50%] sm:h-[45%] mt-5 text-[1rem] text-[1.09375rem] leading-[1.125rem] overflow-y-scroll">
                   <li className="my-5">
                     <Link
+                      prefetch={false}
                       href={`${HOST_URL}/services`}
                       className="relative hover:bg-gradient-to-r after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left hoverable-text"
                       onClick={() => {
@@ -270,6 +280,7 @@ export default function Header({ mixpanel }) {
 
                   <li className="my-5">
                     <Link
+                      prefetch={false}
                       href={`${HOST_URL}/portfolio`}
                       className="relative hover:bg-gradient-to-r after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left hoverable-text"
                       onClick={() => {
@@ -282,6 +293,7 @@ export default function Header({ mixpanel }) {
 
                   <li className="my-5">
                     <Link
+                      prefetch={false}
                       href={``}
                       className="relative mr-3.5 xl:mr-[30px] after:absolute after:top-[29px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                       onClick={() => setShowContributionMenu((prev) => !prev)}
@@ -297,6 +309,7 @@ export default function Header({ mixpanel }) {
                     >
                       <li className="relative">
                         <Link
+                          prefetch={false}
                           href={`${HOST_URL}/contributions`}
                           className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[25px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                           onClick={() => {
@@ -309,6 +322,7 @@ export default function Header({ mixpanel }) {
                       </li>
                       <li className="relative">
                         <Link
+                          prefetch={false}
                           href="https://blog.canopas.com/"
                           className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[25px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                           onClick={() => {
@@ -321,6 +335,7 @@ export default function Header({ mixpanel }) {
                       </li>
                       <li className="relative">
                         <Link
+                          prefetch={false}
                           href={`${HOST_URL}/resources`}
                           className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[25px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                           onClick={() => {
@@ -336,6 +351,7 @@ export default function Header({ mixpanel }) {
 
                   <li className="my-5">
                     <Link
+                      prefetch={false}
                       href={`${HOST_URL}/jobs`}
                       className="relative hover:bg-gradient-to-r after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left hoverable-text"
                       onClick={() => {
@@ -348,6 +364,7 @@ export default function Header({ mixpanel }) {
 
                   <li className="my-5">
                     <Link
+                      prefetch={false}
                       href={`${HOST_URL}/about`}
                       className="relative hover:bg-gradient-to-r after:absolute after:top-[26px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left hoverable-text"
                       onClick={() => {
@@ -361,6 +378,7 @@ export default function Header({ mixpanel }) {
                 <div className="w-full h-auto bg-white p-4">
                   <div className="grid p-3 pb-5">
                     <Link
+                      prefetch={false}
                       href={`${HOST_URL}/contact`}
                       className="relative justify-self-center rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] font-inter-bold text-white "
                       onClick={() => {

@@ -247,6 +247,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                             } `}
                           >
                             <Link
+                              prefetch={false}
                               href={"/" + featurePost.slug}
                               aria-label={
                                 "Read more about " + featurePost.title
@@ -267,7 +268,10 @@ export default function Home({ posts, status, categories, mixpanel }) {
                             </Link>
                           </div>
                           <div className="items-center text-[0.875rem] lg:text-[1.125rem] text-gray-500">
-                            <Link href={"/" + featurePost.slug}>
+                            <Link
+                              prefetch={false}
+                              href={"/" + featurePost.slug}
+                            >
                               <div className="flex flex-row justify-between text-[0.922rem] leading-5 tracking-wide">
                                 <div>
                                   <span>{featurePost.published_on}</span>
@@ -301,6 +305,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                 {featurePosts.length > 6 ? (
                   <div className="flex justify-end mt-10">
                     <Link
+                      prefetch={false}
                       href="/featured"
                       className="relative rounded-full border-[1px] border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.5rem] font-bold text-white"
                     >
@@ -349,6 +354,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                       }`}
                     >
                       <Link
+                        prefetch={false}
                         href={"/" + post.slug}
                         aria-label={"Read more about " + post.title}
                       >
@@ -382,6 +388,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                         }`}
                       >
                         <Link
+                          prefetch={false}
                           href={"/" + post.slug}
                           onClick={() => {
                             mixpanel.track("tap_blog_title", {
@@ -393,13 +400,13 @@ export default function Home({ posts, status, categories, mixpanel }) {
                         </Link>
                       </div>
                       <div className="text-[1.0625rem] md:text-[1.125rem] lg:text-[1.13rem] lg:leading-7 tracking-wide text-gray-500">
-                        <Link href={"/" + post.slug}>
+                        <Link prefetch={false} href={"/" + post.slug}>
                           <p className="line-clamp-3">{post.summary}</p>
                         </Link>
                       </div>
                       <div className="flex flex-row items-center pt-3 text-[0.875rem] lg:text-[1.125rem] text-gray-500">
                         <div className="relative w-[40px] md:w-[41px] h-[40px] max-w-full max-h-full overflow-hidden">
-                          <Link href={"/" + post.slug}>
+                          <Link prefetch={false} href={"/" + post.slug}>
                             <Image
                               width={40}
                               height={40}
@@ -410,7 +417,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                             />
                           </Link>
                         </div>
-                        <Link href={"/" + post.slug}>
+                        <Link prefetch={false} href={"/" + post.slug}>
                           <div className="pl-3 text-[0.875rem] md:text-[0.922rem] leading-5 tracking-wide">
                             <span className="text-green-700 capitalize">
                               {post.authorName}

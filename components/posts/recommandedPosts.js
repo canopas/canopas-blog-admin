@@ -25,7 +25,7 @@ export default function RecommandedPosts({ postData }) {
           );
           if (i < 3) {
             return (
-              <Link href={"/" + post.slug} key={i}>
+              <Link prefetch={false} href={"/" + post.slug} key={i}>
                 <div className="grid grid-cols-3 xl:grid-cols-2 gap-5 xl:gap-2 2xl:gap-5 items-end mb-10 xl:mb-6 2xl:mb-8">
                   <div className="flex flex-col col-span-2 space-y-2">
                     <div className="flex flex-row space-x-2 items-center text-[0.8rem] md:text-[0.9rem] xl:text-[0.8rem] tracking-wider capitalize">

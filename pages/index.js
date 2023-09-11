@@ -230,7 +230,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
             {/* Featured Posts Section */}
             {featurePosts.length != 0 ? (
               <>
-                <span className="text-[2.375rem] tracking-none font-inter-bold">
+                <span className="text-[2.375rem] tracking-none font-inter font-bold">
                   Featured
                 </span>
                 <div className="grid gap-10 md:gap-5 lg:gap-10 md:grid-cols-3 mt-8">
@@ -240,9 +240,9 @@ export default function Home({ posts, status, categories, mixpanel }) {
                       return (
                         <div key={featurePost.slug} className="space-y-2">
                           <div
-                            className={`w-auto h-auto border border-1 border-gray-300 transition-all aspect-auto hover:scale-105 ${
+                            className={`w-auto h-auto border border-1 border-gray-300 transition-all aspect-auto hover:scale-105 md:h-[7.742rem] lg:h-[10.085rem] xl:h-[12.195rem] 2xl:h-[14.304em] ${
                               featurePost.image.data == null
-                                ? "md:h-[7.742rem] lg:h-[10.085rem] xl:h-[12.195rem] 2xl:h-[14.304em] bg-black-900"
+                                ? "bg-black-900"
                                 : ""
                             } `}
                           >
@@ -282,7 +282,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                               </div>
                               <div
                                 className="my-2 text-[1.3125rem] leading-7 md:text-xl lg:text-[1.4375rem] lg:leading-8 tracking-none text-black-core/[0.87] hover:underline underline-offset-4 transition-all hover:scale-[0.96]
-                         font-inter-semibold"
+                         font-inter font-semibold"
                                 onClick={() => {
                                   mixpanel.track("tap_blog_title", {
                                     Title: featurePost.title,
@@ -302,7 +302,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                   <div className="flex justify-end mt-10">
                     <Link
                       href="/featured"
-                      className="relative rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] py-2 font-inter-semibold text-white"
+                      className="relative rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] py-2 font-inter font-semibold text-white"
                     >
                       <span className="py-4 px-[1.05rem] tracking-none hoverable-text">
                         Read More Featured
@@ -313,7 +313,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                   ""
                 )}
                 <hr className="my-10" />
-                <span className="text-[2.375rem] tracking-none font-inter-bold">
+                <span className="text-[2.375rem] tracking-none font-inter font-bold">
                   Blogs
                 </span>
               </>
@@ -375,7 +375,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                       }`}
                     >
                       <div
-                        className={`text-[1.3125rem] leading-7 sm:text-[1.375rem] sm:leading-[1.875rem] tracking-none text-black-core/[0.87] hover:underline underline-offset-4 transition-all hover:scale-[0.96] font-inter-semibold ${
+                        className={`text-[1.3125rem] leading-7 sm:text-[1.375rem] sm:leading-[1.875rem] tracking-none text-black-core/[0.87] hover:underline underline-offset-4 transition-all hover:scale-[0.96] font-inter font-semibold ${
                           i === 0 && count % 3 === 1
                             ? "md:text-2xl xl:text-3xl md:font-bold xl:leading-10"
                             : "md:text-xl lg:text-[1.4375rem] lg:leading-8"

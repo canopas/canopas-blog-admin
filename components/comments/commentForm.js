@@ -56,7 +56,7 @@ export default function CommentForm({ post, onNewComment, recaptchaRef }) {
 
   return (
     <div className="container py-20 tracking-normal">
-      <div className="flex items-center pb-5 font-inter-semibold text-xl">
+      <div className="flex items-center pb-5 font-inter font-semibold text-xl">
         <FontAwesomeIcon
           icon={faMessage}
           className="w-7 h-7 pr-2 text-pink-300"

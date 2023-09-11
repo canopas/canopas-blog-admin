@@ -17,18 +17,11 @@ module.exports = {
         "4xl": "2440px",
       },
       fontFamily: {
-        "inter-extralight": ["Inter ExtraLight"],
-        "inter-regular": ["Inter Regular"],
-        "inter-medium": ["Inter Medium"],
-        "inter-semibold": ["Inter SemiBold"],
-        "inter-bold": ["Inter Bold"],
+        inter: ["var(--inter-font)"],
         "source-codepro": ["Source CodePro"],
         "poppins-regular": ["Poppins Regular"],
         "poppins-medium": ["Poppins Medium"],
-        "comme-light": ["Comme Light"],
-        "comme-regular": ["Comme Regular"],
-        "comme-medium": ["Comme Medium"],
-        "comme-semibold": ["Comme SemiBold"],
+        comme: ["var(--comme-font)"],
       },
       colors: {
         black: {

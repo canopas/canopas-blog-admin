@@ -276,7 +276,7 @@ export default function CTA() {
                       )}
                       <button
                         id="submit"
-                        className="border-2 border-solid border-transparent bg-black-900 text-white hover:border-black-900 hover:bg-white hover:text-black-900 font-inter-bold"
+                        className="border-2 border-solid border-transparent bg-black-900 text-white hover:border-black-900 hover:bg-white hover:text-black-900 font-inter font-bold"
                       >
                         <span className="py-[0.6rem] px-4 lg:px-[1.8rem] lg:py-[0.8rem] text-base lg:text-[1.1875rem] inline-block">
                           Get Free Consultation

@@ -60,7 +60,7 @@ export default function Header({ mixpanel }) {
               }`
         } header-section`}
       >
-        <nav className="py-5 md:py-7 font-inter-medium">
+        <nav className="py-5 md:py-7 font-inter font-medium">
           <div className="container flex flex-row flex-wrap justify-start items-center 3xl:px-24">
             <div className="mr-4 py-[0.3125rem] text-xl text-black no-underline whitespace-nowrap">
               <Link href={HOST_URL}>
@@ -68,6 +68,7 @@ export default function Header({ mixpanel }) {
                   src={Logo}
                   className="mt-1 w-[205px] h-[38.5px]"
                   alt="canopas-logo"
+                  loading="eager"
                 />
               </Link>
             </div>
@@ -127,7 +128,7 @@ export default function Header({ mixpanel }) {
                     <li className="relative ml-0 my-2 sm:my-0">
                       <Link
                         href={`${HOST_URL}/contributions`}
-                        className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[27px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                        className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter font-medium text-black-core/[0.6] after:absolute after:top-[27px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                         onClick={() => {
                           handleMenuClick("tap_header_contributions");
                         }}
@@ -140,7 +141,7 @@ export default function Header({ mixpanel }) {
                     <li className="ml-0 my-2 sm:my-0 relative">
                       <Link
                         href="https://blog.canopas.com/"
-                        className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[27px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                        className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter font-medium text-black-core/[0.6] after:absolute after:top-[27px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                         onClick={() => {
                           handleMenuClick("tap_header_blog");
                         }}
@@ -153,7 +154,7 @@ export default function Header({ mixpanel }) {
                     <li className="ml-0 my-2 sm:my-0 relative">
                       <Link
                         href={`${HOST_URL}/resources`}
-                        className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[27px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                        className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter font-medium text-black-core/[0.6] after:absolute after:top-[27px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                         onClick={() => {
                           handleMenuClick("tap_header_resources");
                         }}
@@ -203,7 +204,7 @@ export default function Header({ mixpanel }) {
                 <li className="order-last ml-0 my-2 sm:my-0 p-0">
                   <Link
                     href={`${HOST_URL}/contact`}
-                    className={`relative mb-0 mr-3.5 xl:mr-[25px] rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff835b] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.75rem] font-inter-bold text-white ${
+                    className={`relative mb-0 mr-3.5 xl:mr-[25px] rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff835b] hover:shadow-[inset_2px_1000px_1px_#fff] py-[0.75rem] font-inter font-bold text-white ${
                       router.pathname == `${HOST_URL}/contact`
                         ? "bg-clip-border gradient-text"
                         : ""
@@ -297,7 +298,7 @@ export default function Header({ mixpanel }) {
                       <li className="relative">
                         <Link
                           href={`${HOST_URL}/contributions`}
-                          className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[25px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                          className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter font-medium text-black-core/[0.6] after:absolute after:top-[25px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                           onClick={() => {
                             handleMenuClick("tap_header_contributions");
                           }}
@@ -309,7 +310,7 @@ export default function Header({ mixpanel }) {
                       <li className="relative">
                         <Link
                           href="https://blog.canopas.com/"
-                          className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[25px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                          className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter font-medium text-black-core/[0.6] after:absolute after:top-[25px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                           onClick={() => {
                             handleMenuClick("tap_header_blog");
                           }}
@@ -321,7 +322,7 @@ export default function Header({ mixpanel }) {
                       <li className="relative">
                         <Link
                           href={`${HOST_URL}/resources`}
-                          className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter-medium text-black-core/[0.6] after:absolute after:top-[25px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
+                          className="relative mr-3.5 xl:mr-[30px] mx-2 font-inter font-medium text-black-core/[0.6] after:absolute after:top-[25px] after:bottom-0 after:left-0 after:w-full after:h-[3px] after:bg-gradient-to-r from-[#f2709c] to-[#ff9472] hoverable-text hover:bg-gradient-to-r after:origin-bottom-left after:duration-300 after:scale-x-0 hover:after:scale-x-100 hover:after:origin-bottom-left"
                           onClick={() => {
                             handleMenuClick("tap_header_resources");
                           }}
@@ -361,7 +362,7 @@ export default function Header({ mixpanel }) {
                   <div className="grid p-3 pb-5">
                     <Link
                       href={`${HOST_URL}/contact`}
-                      className="relative justify-self-center rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] font-inter-bold text-white "
+                      className="relative justify-self-center rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] font-inter font-bold text-white "
                       onClick={() => {
                         handleMenuClick("tap_header_cta");
                       }}

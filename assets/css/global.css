@@ -3,99 +3,27 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Inter ExtraLight";
-  font-style: normal;
-  font-weight: 200;
   font-display: swap;
-  src: url(./../fonts/Inter-ExtraLight.woff2);
-}
-
-@font-face {
-  font-family: "Inter Regular";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(./../fonts/Inter-Regular.woff2);
-}
-
-@font-face {
-  font-family: "Inter Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(./../fonts/Inter-Medium.woff2);
-}
-
-@font-face {
-  font-family: "Inter SemiBold";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(./../fonts/Inter-SemiBold.woff2);
-}
-
-@font-face {
-  font-family: "Inter Bold";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url(./../fonts/Inter-Bold.woff2);
-}
-
-@font-face {
   font-family: "Source CodePro";
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
-  src: url(./../fonts/Source-codePro.woff2);
+  src: url(./../fonts/Source-codePro.woff2) format("woff2");
 }
 
 @font-face {
+  font-display: swap;
   font-family: "Poppins Regular";
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
-  src: url(./../fonts/Poppins-Regular.woff2);
+  src: url(./../fonts/Poppins-Regular.woff2) format("woff2");
 }
 
 @font-face {
+  font-display: swap;
   font-family: "Poppins Medium";
-  font-style: normal;
+  font-style: medium;
   font-weight: 500;
-  font-display: swap;
-  src: url(./../fonts/Poppins-Medium.woff2);
-}
-
-@font-face {
-  font-family: "Comme Light";
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url(./../fonts/Comme-Light.woff2);
-}
-
-@font-face {
-  font-family: "Comme Regular";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(./../fonts/Comme-Regular.woff2);
-}
-
-@font-face {
-  font-family: "Comme Medium";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url(./../fonts/Comme-Medium.woff2);
-}
-
-@font-face {
-  font-family: "Comme SemiBold";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url(./../fonts/Comme-SemiBold.woff2);
+  src: url(./../fonts/Poppins-Medium.woff2) format("woff2");
 }
 
 input:-webkit-autofill,
@@ -126,7 +54,7 @@ input:-webkit-autofill:active {
 }
 
 body {
-  @apply font-inter-regular break-words text-black-core/[0.87];
+  @apply font-inter font-normal break-words text-black-core/[0.87];
 }
 
 .content > p {
@@ -197,7 +125,7 @@ ul {
 }
 
 strong {
-  @apply font-comme-medium tracking-[0.01em] !text-black-core/[1] !font-medium text-[1.0625rem] md:text-[1.15625rem];
+  @apply font-comme tracking-[0.01em] !text-black-core/[1] !font-medium text-[1.0625rem] md:text-[1.15625rem];
 }
 
 h1 strong {
@@ -205,7 +133,7 @@ h1 strong {
 }
 
 h2 strong {
-  @apply text-2xl lg:text-[1.7rem] font-comme-semibold;
+  @apply text-2xl lg:text-[1.7rem] font-comme font-semibold;
 }
 
 /* HighlightJS */
@@ -291,12 +219,12 @@ code::after {
 }
 
 .prose h2 {
-  @apply font-comme-semibold text-[#000] xl:text-[2.0625rem] !mb-4 !tracking-tight;
+  @apply font-comme text-[#000] xl:text-[2.0625rem] !mb-4 !tracking-tight font-semibold;
 }
 
 .prose i,
 .prose a span {
-  @apply font-comme-regular text-lg text-black-core/[0.87] tracking-[0.03rem];
+  @apply font-comme text-lg text-black-core/[0.87] tracking-[0.03rem] font-normal;
 }
 
 .prose
@@ -312,7 +240,7 @@ code::after {
   :where(blockquote, blockquote i, blockquote i strong):not(
     :where([class~="not-prose"] *)
   ) {
-  @apply not-italic !text-[1.4rem] lg:!text-[1.755rem] !leading-[2.3rem] !text-black-core/[0.75] !font-normal tracking-wide font-inter-extralight;
+  @apply not-italic !text-[1.4rem] lg:!text-[1.755rem] !leading-[2.3rem] !text-black-core/[0.75] !font-extralight tracking-wide font-inter;
 }
 
 .prose

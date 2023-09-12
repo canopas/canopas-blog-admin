@@ -13,7 +13,7 @@ export default function CTA() {
 
         <div className="container flex flex-col items-center md:flex-row md:flex-row-reverse 3xl:px-20">
           <div className="flex flex-col md:relative md:items-end lg:basis-[55.49%]">
-            <p className="text-center font-inter-bold text-[2.625rem] leading-[3.125rem] text-white md:text-right md:text-[3.275rem] md:leading-[3.875rem] xl:text-[5.625rem] xl:leading-[6.125rem]">
+            <p className="text-center font-inter font-bold text-[2.625rem] leading-[3.125rem] text-white md:text-right md:text-[3.275rem] md:leading-[3.875rem] xl:text-[5.625rem] xl:leading-[6.125rem]">
               <span className="bg-gradient-L bg-clip-text text-transparent">
                 L
               </span>
@@ -28,12 +28,12 @@ export default function CTA() {
               </span>
               ogether
             </p>
-            <p className="sm:w-[385px] mt-6 text-center font-inter-regular text-base text-white md:text-right md:text-[1.4rem] md:leading-8 md:text-white/[0.75] xl:w-[82%] xl:text-[1.75rem] xl:leading-[2.625rem] 2xl:w-[68%]">
+            <p className="sm:w-[385px] mt-6 text-center font-inter font-normal text-base text-white md:text-right md:text-[1.4rem] md:leading-8 md:text-white/[0.75] xl:w-[82%] xl:text-[1.75rem] xl:leading-[2.625rem] 2xl:w-[68%]">
               Not sure where to start? We also offer code and architecture
               reviews, strategic planning, and more.
             </p>
             <Link href={`${config.WEBSITE_URL}/contact`} className="mt-10">
-              <div className="flex items-center mx-auto md:mx-0 w-max rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal  text-[1.09375rem] leading-[1.3125rem] xl:text-[1.188rem] xl:leading-[1.188rem] font-inter-semibold !tracking-[0] text-white active:scale-[0.98]">
+              <div className="flex items-center mx-auto md:mx-0 w-max rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-center font-normal  text-[1.09375rem] leading-[1.3125rem] xl:text-[1.188rem] xl:leading-[1.188rem] font-inter font-semibold !tracking-[0] text-white active:scale-[0.98]">
                 <span className="py-[0.9rem] md:py-4 px-[1.2rem] md:px-[1.3rem] hoverable-text inline-block">
                   Get Free Consultation
                 </span>

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AuthorDetails({ postData }) {
   return (
-    <div className="w-full mt-16 bg-[#f7f7f7] py-0.5 text-black-core/[0.75] font-inter-regular">
+    <div className="w-full mt-16 bg-[#f7f7f7] py-0.5 text-black-core/[0.75] font-inter font-normal">
       <div className="sm:hidden container mx-5">
         <hr className="bg-gray-600 w-full py-[0.7px] !mt-2 mb-0" />
         <div className="flex flex-col items-center my-5">
@@ -16,7 +16,7 @@ export default function AuthorDetails({ postData }) {
             />
           </div>
           <div className="flex flex-col space-y-3 items-center">
-            <div className="text-[1.6875rem] font-inter-semibold tracking-normal text-black-core/[0.87]">
+            <div className="text-[1.6875rem] font-inter font-semibold tracking-normal text-black-core/[0.87]">
               {postData.authorName}
             </div>
             <div className="text-base leading-normal tracking-normal text-center">
@@ -46,7 +46,7 @@ export default function AuthorDetails({ postData }) {
               postData.authorBio ? "space-y-4" : "space-y-1"
             } md:-ml-16 xl:-ml-10 2xl:-ml-16`}
           >
-            <div className="text-[1.6875rem] font-inter-semibold tracking-normal text-black-core/[0.87]">
+            <div className="text-[1.6875rem] font-inter font-semibold tracking-normal text-black-core/[0.87]">
               {postData.authorName}
             </div>
             <div className="text-base leading-normal tracking-normal">

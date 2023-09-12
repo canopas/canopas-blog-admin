@@ -99,7 +99,7 @@ export default function CTA() {
   };
 
   return (
-    <div className="relative -bottom-5 sm:-bottom-2 overflow-hidden xl:mt-32 px-0 font-inter-medium z-[1]">
+    <div className="relative -bottom-5 sm:-bottom-2 overflow-hidden xl:mt-32 px-0 font-inter font-medium z-[1]">
       <div className="absolute w-full h-[8%] sm:h-[6%] bg-white md:hidden"></div>
       {width < 600 ? (
         <Image
@@ -115,7 +115,7 @@ export default function CTA() {
         />
       )}
 
-      <div className="mt-20 sm:mt-14 text-center gradient-text text-3xl md:text-5xl md:leading-[3.625rem] lg:text-[4.0625rem] lg:leading-[4.9375rem] font-inter-bold">
+      <div className="mt-20 sm:mt-14 text-center gradient-text text-3xl md:text-5xl md:leading-[3.625rem] lg:text-[4.0625rem] lg:leading-[4.9375rem] font-inter font-bold">
         Say Hello!
       </div>
       <div className="container text-center">
@@ -279,7 +279,7 @@ export default function CTA() {
                     )}
                     <button
                       id="submit"
-                      className="relative justify-self-center rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-white font-inter-bold"
+                      className="relative justify-self-center rounded-full border border-solid border-transparent bg-gradient-to-r from-[#f2709c] to-[#ff9472] hover:shadow-[inset_2px_1000px_1px_#fff] text-white font-inter font-bold"
                     >
                       <span className="py-[0.6rem] px-[1.8rem] md:py-[0.8rem] text-md lg:text-xl hoverable-text inline-block">
                         Get Free Consultation

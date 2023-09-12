@@ -10,7 +10,7 @@ export default function RecommandedPosts({ postData }) {
 
   return (
     <>
-      <span className="text-[1.6875rem] lg:text-[2rem] xl:text-[1.5625rem] capitalize font-inter-medium">
+      <span className="text-[1.6875rem] lg:text-[2rem] xl:text-[1.5625rem] capitalize font-inter font-medium">
         Recommended for you
       </span>
       <div className="mt-8">
@@ -38,13 +38,13 @@ export default function RecommandedPosts({ postData }) {
                           alt={post.authorAltText}
                         />
                       </div>
-                      <span className="font-inter-medium tracking-wide">
+                      <span className="font-inter font-medium tracking-wide">
                         {post.authorName}
                       </span>
                     </div>
 
                     <div
-                      className="text-base sm:text-[1.0625rem] md:text-xl xl:text-[1rem] sm:leading-[1.45rem] md:leading-[1.7rem] xl:leading-[1.35rem] xl:line-clamp-3 text-black-core/[0.87] font-inter-medium"
+                      className="text-base sm:text-[1.0625rem] md:text-xl xl:text-[1rem] sm:leading-[1.45rem] md:leading-[1.7rem] xl:leading-[1.35rem] xl:line-clamp-3 text-black-core/[0.87] font-inter font-medium"
                       onClick={() => {
                         mixpanel.track("tap_blog_title", {
                           Title: post.title,

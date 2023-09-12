@@ -49,7 +49,7 @@ export default function Home({ posts, status, slug, mixpanel }) {
               <div className="w-6 h-6 md:w-7 md:h-7 mt-1">
                 <FontAwesomeIcon icon={faTags} className="w-full h-full" />
               </div>
-              <h1 className="my-6 md:my-10 text-[1.5rem] md:text-[1.875rem] xl:text-[2.25rem] leading-7 tracking-none capitalize font-inter-semibold">
+              <h1 className="my-6 md:my-10 text-[1.5rem] md:text-[1.875rem] xl:text-[2.25rem] leading-7 tracking-none capitalize font-inter font-semibold">
                 {tagName}
               </h1>
             </div>

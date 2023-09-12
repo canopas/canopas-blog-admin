@@ -52,7 +52,7 @@ export default function Footer({ mixpanel }) {
   };
   return (
     <>
-      <div className="relative overflow-hidden px-0 font-inter-medium z-[1] footer-section">
+      <div className="relative overflow-hidden px-0 font-inter font-medium z-[1] footer-section">
         <Image
           height={200}
           width={200}
@@ -63,7 +63,7 @@ export default function Footer({ mixpanel }) {
         <div className="container lg:px-20 2xl:px-32">
           <div className="grid grid-rows-2 xl:grid-rows-none xl:grid-cols-2 justify-items-stretch mt-7 md:mt-11 mb-8 md:mb-12 xl:mb-[60px]">
             <div className="max-h-1 justify-self-center xl:justify-self-end xl:order-last">
-              <div className="mt-5 text-[1.375rem] leading-[1.6875rem] md:text-[1.5rem] md:leading-[1.8125rem] lg:text-[1.75rem] lg:leading-[1.9375rem] text-white/[.87] font-inter-bold">
+              <div className="mt-5 text-[1.375rem] leading-[1.6875rem] md:text-[1.5rem] md:leading-[1.8125rem] lg:text-[1.75rem] lg:leading-[1.9375rem] text-white/[.87] font-inter font-bold">
                 Subscribe Here!
               </div>
               <form
@@ -111,7 +111,7 @@ export default function Footer({ mixpanel }) {
               )}
             </div>
             <div className="justify-self-center xl:justify-self-start">
-              <div className="mt-8 xl:mt-5 text-[1.375rem] leading-[1.6875rem] md:text-[1.5rem] md:leading-[1.8125rem] lg:text-[1.75rem] lg:leading-[1.9375rem] text-white/[.87] font-inter-bold">
+              <div className="mt-8 xl:mt-5 text-[1.375rem] leading-[1.6875rem] md:text-[1.5rem] md:leading-[1.8125rem] lg:text-[1.75rem] lg:leading-[1.9375rem] text-white/[.87] font-inter font-bold">
                 Follow us on
               </div>
               <ul className="flex flex-wrap justify-center w-full m-auto mt-6 xl:mt-8 pl-0 cursor-pointer list-none">
@@ -245,7 +245,7 @@ export default function Footer({ mixpanel }) {
         </div>
         {alerts ? (
           <div
-            className="fixed bottom-[5%] inset-x-[5%] sm:inset-x-[20%] xl:inset-x-[27%] flex flex-rows justify-between items-center w-[90%] sm:w-7/12 xl:w-5/12 z-[500] rounded-[10px] from-[#ff835b] to-[#f2709c] bg-gradient-to-r py-5 font-inter-semibold text-center text-white md:text-xl"
+            className="fixed bottom-[5%] inset-x-[5%] sm:inset-x-[20%] xl:inset-x-[27%] flex flex-rows justify-between items-center w-[90%] sm:w-7/12 xl:w-5/12 z-[500] rounded-[10px] from-[#ff835b] to-[#f2709c] bg-gradient-to-r py-5 font-inter font-semibold text-center text-white md:text-xl"
             role="alert"
           >
             <p className="block sm:inline mx-7">Subscribe Successfully!</p>

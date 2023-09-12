@@ -438,7 +438,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                           <div className="pl-5 pr-6 lg:pl-4 lg:pr-4 2xl:pl-5 2xl:pr-6 leading-relaxed">
                             <div className="mt-4 text-[1.0625rem] list-none ">
                               <div
-                                className="my-3 !tracking-normal font-comme-light"
+                                className="my-3 !tracking-normal font-comme font-light"
                                 onClick={handleClick}
                                 dangerouslySetInnerHTML={{
                                   __html: indexContent,
@@ -454,13 +454,13 @@ export default function Post({ postData, status, posts, mixpanel }) {
                   </div>
 
                   {/* main article */}
-                  <div className="prose lg:prose-lg xl:w-full 2xl:w-auto !font-comme-regular">
+                  <div className="prose lg:prose-lg xl:w-full 2xl:w-auto">
                     <div
                       ref={contentRef}
                       dangerouslySetInnerHTML={{
                         __html: blogContent,
                       }}
-                      className="!tracking-wide text-black-core/[0.80] font-comme-light"
+                      className="!tracking-wide text-black-core/[0.80] font-comme font-light"
                     ></div>
                     <div className="flex flex-row flex-wrap mt-11">
                       {post.tags
@@ -469,7 +469,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                               <div className="my-4 mr-4" key={tag.id}>
                                 <Link
                                   href={"/tag/" + tag.slug}
-                                  className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize tracking-tight"
+                                  className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize tracking-tight font-comme !font-normal"
                                   onClick={() => {
                                     mixpanel.track(
                                       "tap_tag_" + tag.slug.replace("-", "_"),

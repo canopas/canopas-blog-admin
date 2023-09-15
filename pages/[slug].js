@@ -11,7 +11,6 @@ import { setPostFields, filterPostsByCategoryAndTag } from "../utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-regular-svg-icons";
 import {
-  faTags,
   faLink,
   faXmark,
   faArrowUpRightFromSquare,
@@ -273,7 +272,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                       height={200}
                       src={post.image_url || ""}
                       alt={post.alternativeText || ""}
-                      loading="eager"
+                      loading="lazy"
                       className={`${
                         post.image.data == null
                           ? "w-[45%] h-4/5 mx-auto my-[5%]"
@@ -326,6 +325,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                             className="absolute top-2/4 left-2/4 translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
                             src={post.authorImage}
                             alt={post.authorAltText}
+                            loading="lazy"
                           />
                         </div>
                         <div className="text-base md:text-[1.09rem] xl:text-[1.125rem] tracking-wide">

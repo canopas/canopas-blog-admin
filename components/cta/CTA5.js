@@ -45,6 +45,7 @@ export default function CTA() {
               src={cta800}
               alt="cta-image"
               className="mt-4 w-[85%] h-[85%] sm:w-4/5 sm:h-4/5 md:w-full md:h-full md:mt-0 mx-[7.5%] sm:mx-[10%] md:mx-0"
+              loading="lazy"
             />
 
             <div className="gradient-border absolute bottom-4 left-2 h-[55px] border-l-[13px] md:hidden"></div>

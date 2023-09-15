@@ -13,20 +13,19 @@ function getReadingTime(content) {
 
 // Formate date and time from millis
 function formateDate(date) {
-  if (!date) return [null, null];
-  const newDate = new Date(date);
-  const formattedDate = newDate.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-
-  // time formate
-  const formattedTime = newDate.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit",
-  });
-  return [formattedDate, formattedTime];
+  return date
+    ? [
+        new Date(date).toLocaleDateString("en-US", {
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        }),
+        new Date(date).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      ]
+    : [null, null];
 }
 
 function setPostFields(post, slug) {
@@ -67,80 +66,78 @@ function setPostFields(post, slug) {
 
 function calculateWeight(post, keyword) {
   let weight = 0;
-  if (post.attributes.title.toLowerCase().includes(keyword.toLowerCase())) {
-    weight = post.attributes.title
-      .toLowerCase()
-      .match(new RegExp(keyword.toLowerCase(), "g")).length;
-    weight *= 5;
+  const lowercaseKeyword = keyword.toLowerCase();
+
+  if (post.attributes.title.toLowerCase().includes(lowercaseKeyword)) {
+    weight +=
+      post.attributes.title
+        .toLowerCase()
+        .match(new RegExp(lowercaseKeyword, "g")).length * 5;
   }
-  if (post.attributes.content.toLowerCase().includes(keyword.toLowerCase())) {
-    weight = post.attributes.content
-      .toLowerCase()
-      .match(new RegExp(keyword.toLowerCase(), "g")).length;
-    weight *= 2;
+
+  if (post.attributes.content.toLowerCase().includes(lowercaseKeyword)) {
+    weight +=
+      post.attributes.content
+        .toLowerCase()
+        .match(new RegExp(lowercaseKeyword, "g")).length * 2;
   }
+
   if (post.attributes.tags) {
-    post.attributes.tags.map((tag) => {
-      if (tag.name.toLowerCase().includes(keyword.toLowerCase())) {
-        weight = tag.name
-          .toLowerCase()
-          .match(new RegExp(keyword.toLowerCase(), "g")).length;
-        weight *= 1;
+    weight += post.attributes.tags.reduce((acc, tag) => {
+      if (tag.name.toLowerCase().includes(lowercaseKeyword)) {
+        acc +=
+          tag.name.toLowerCase().match(new RegExp(lowercaseKeyword, "g"))
+            .length * 1;
       }
-    });
+      return acc;
+    }, 0);
   }
 
   return weight;
 }
 
-function filterPostsByCategory(post, keyword) {
-  return post.filter(
-    (result) =>
-      result.attributes.category.data != null &&
-      result.attributes.category.data.attributes.name == keyword,
+const filterPostsByCategory = (posts, keyword) =>
+  posts.filter(
+    (result) => result.attributes.category.data?.attributes.name === keyword,
   );
-}
 
-function isValidEmail(email) {
-  let emailRegx =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return !emailRegx.test(email);
-}
-function isValidPhoneNumber(phonenumber) {
-  let NumberRegx =
-    /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-  return !NumberRegx.test(phonenumber);
-}
+const isValidEmail = (email) =>
+  !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    email,
+  );
+
+const isValidPhoneNumber = (phonenumber) =>
+  !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(
+    phonenumber,
+  );
 
 function filterPostsByCategoryAndTag(post, posts) {
   const relatedPosts = [];
   const postTags = post?.tags.map((tag) => tag.name);
   const postCategoryName = post?.category.data?.attributes.name ?? null;
 
-  if (posts) {
-    if (postCategoryName || postTags?.length > 0) {
-      posts.forEach((post) => {
-        let index = 0;
+  if (posts && (postCategoryName || postTags?.length > 0)) {
+    posts.forEach((post) => {
+      let index = 0;
 
-        const relatedTags = post.attributes.tags.map((tag) => tag.name);
-        const relatedCategoryName =
-          post.attributes.category.data?.attributes.name ?? null;
+      const relatedTags = post.attributes.tags.map((tag) => tag.name);
+      const relatedCategoryName =
+        post.attributes.category.data?.attributes.name ?? null;
 
-        index +=
-          postCategoryName &&
-          relatedCategoryName &&
-          postCategoryName === relatedCategoryName
-            ? 3
-            : 0;
+      index +=
+        postCategoryName &&
+        relatedCategoryName &&
+        postCategoryName === relatedCategoryName
+          ? 3
+          : 0;
 
-        index += postTags.filter((tag) => relatedTags.includes(tag)).length;
+      index += postTags.filter((tag) => relatedTags.includes(tag)).length;
 
-        if (index > 0) {
-          post.attributes.index = index;
-          relatedPosts.push(post);
-        }
-      });
-    }
+      if (index > 0) {
+        post.attributes.index = index;
+        relatedPosts.push(post);
+      }
+    });
   }
   return relatedPosts;
 }

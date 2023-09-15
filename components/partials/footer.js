@@ -14,7 +14,7 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { faBell, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { faCopyright } from "@fortawesome/free-regular-svg-icons";
+import { faCopyright } from "@fortawesome/free-regular-svg-icons/faCopyright";
 import { isValidEmail } from "../../utils";
 
 export default function Footer({ mixpanel }) {
@@ -59,6 +59,7 @@ export default function Footer({ mixpanel }) {
           className="absolute top-[15px] sm:top-0 left-0 w-full h-full xl2:h-[unset] -z-[1] object-cover xl2:object-fill"
           src={bg}
           alt="canopas-footer"
+          loading="lazy"
         />
         <div className="container lg:px-20 2xl:px-32">
           <div className="grid grid-rows-2 xl:grid-rows-none xl:grid-cols-2 justify-items-stretch mt-7 md:mt-11 mb-8 md:mb-12 xl:mb-[60px]">

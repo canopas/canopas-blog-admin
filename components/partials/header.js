@@ -68,7 +68,7 @@ export default function Header({ mixpanel }) {
                   src={Logo}
                   className="mt-1 w-[205px] h-[38.5px]"
                   alt="canopas-logo"
-                  loading="eager"
+                  loading="lazy"
                 />
               </Link>
             </div>
@@ -241,6 +241,7 @@ export default function Header({ mixpanel }) {
                           src={Logo}
                           className="mt-1 w-[190px] h-[34.5px]"
                           alt="canopas-logo"
+                          loading="lazy"
                         />
                       </Link>
                     </div>

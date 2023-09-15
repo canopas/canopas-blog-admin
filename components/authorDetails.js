@@ -13,6 +13,7 @@ export default function AuthorDetails({ postData }) {
               className="absolute inset-x-5 !my-0 rounded-full object-cover"
               src={postData.authorImage}
               alt={postData.authorAltText}
+              loading="lazy"
             />
           </div>
           <div className="flex flex-col space-y-3 items-center">
@@ -39,6 +40,7 @@ export default function AuthorDetails({ postData }) {
               className="absolute lg:left-4 top-2 rounded-full object-cover"
               src={postData.authorImage}
               alt={postData.authorAltText}
+              loading="lazy"
             />
           </div>
           <div

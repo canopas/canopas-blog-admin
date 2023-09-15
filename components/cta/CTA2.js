@@ -45,9 +45,23 @@ export default function CTA() {
   };
 
   useEffect(() => {
+    if (!document.querySelector('script[src*="recaptcha_key"]')) {
+      const recaptchaScript = document.createElement("script");
+      recaptchaScript.setAttribute(
+        "src",
+        "https://www.google.com/recaptcha/enterprise.js?render=" +
+          process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+      );
+      recaptchaScript.setAttribute("async", "true");
+      recaptchaScript.setAttribute("defer", "true");
+
+      document.head.appendChild(recaptchaScript);
+    }
+
     const myText = document.querySelector(".myTextarea");
     myText.style.minHeight = "100px";
   }, []);
+
   const submitForm = (event) => {
     event.preventDefault();
     if (!validateForm()) {
@@ -106,12 +120,14 @@ export default function CTA() {
           src={bg400}
           className="absolute w-full -z-[1]"
           alt="canopas-contact-footer"
+          loading="lazy"
         />
       ) : (
         <Image
           src={bg2400}
           className="absolute top-0 left-0 w-full h-full xl2:h-[unset] -z-[1] object-cover xl2:object-fill"
           alt="canopas-contact-footer"
+          loading="lazy"
         />
       )}
 
@@ -259,6 +275,7 @@ export default function CTA() {
                     src={loaderImage}
                     className="w-16 h-16"
                     alt="loader-image"
+                    loading="lazy"
                   />
                 ) : (
                   <div className="relative">

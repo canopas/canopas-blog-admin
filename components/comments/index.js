@@ -63,6 +63,7 @@ export default function Comment({ post }) {
                               objectFit="cover"
                               src={UserImage}
                               alt={"user-avatar"}
+                              loading="lazy"
                             />
                           </div>
                           {comment.attributes.user.data.map((user) => {
@@ -115,6 +116,7 @@ export default function Comment({ post }) {
                                             objectFit="cover"
                                             src={UserImage}
                                             alt={"user-avatar"}
+                                            loading="lazy"
                                           />
                                         </div>
                                         {threadComment.attributes.user.data.map(

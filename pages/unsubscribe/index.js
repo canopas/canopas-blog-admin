@@ -68,6 +68,7 @@ export default function Unsubscribe() {
               className="w-full h-full rounded-full object-cover inset-0"
               src={emailTemplate}
               alt="email"
+              loading="lazy"
             />
           </div>
 

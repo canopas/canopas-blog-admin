@@ -42,6 +42,19 @@ export default function CTA() {
   };
 
   useEffect(() => {
+    if (!document.querySelector('script[src*="recaptcha_key"]')) {
+      const recaptchaScript = document.createElement("script");
+      recaptchaScript.setAttribute(
+        "src",
+        "https://www.google.com/recaptcha/enterprise.js?render=" +
+          process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
+      );
+      recaptchaScript.setAttribute("async", "true");
+      recaptchaScript.setAttribute("defer", "true");
+
+      document.head.appendChild(recaptchaScript);
+    }
+
     const myText = document.querySelector(".myTextarea");
     myText.style.minHeight = "100px";
   }, []);
@@ -256,6 +269,7 @@ export default function CTA() {
                       src={loaderImage}
                       className="w-16 h-16"
                       alt="loader-image"
+                      loading="lazy"
                     />
                   ) : (
                     <div className="relative">

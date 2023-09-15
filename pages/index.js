@@ -70,6 +70,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
   const count = results.length;
   const category = "home";
 
+  console.log("hello");
   const filterBlogs = (event) => {
     setDisplayedPosts(10);
     if (event.target.innerHTML == category) {
@@ -118,7 +119,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
         authorName={config.SEO_META_DATA.authorName}
       />
       <section className="container min-h-[50vh] my-14 mx-2 sm:mx-auto 3xl:px-24">
-        {config.SHOW_HEADER_TITLE ? (
+        {config.SHOW_HEADER_TITLE && (
           <div className="my-16 w-full bg-black-900">
             <div className="flex flex-col space-y-2 py-4 px-14 md:px-28 xl:px-44">
               <div className="w-20 md:w-1/5 ">
@@ -134,11 +135,9 @@ export default function Home({ posts, status, categories, mixpanel }) {
               </div>
             </div>
           </div>
-        ) : (
-          ""
         )}
 
-        {config.SHOW_CATEGORY_POSTS || config.SHOW_SEARCH_POSTS ? (
+        {(config.SHOW_CATEGORY_POSTS || config.SHOW_SEARCH_POSTS) && (
           <div className="flex flex-col 2xl:flex-row space-y-8 2xl:space-y-0 2xl:justify-between 2xl:items-center my-14 category-swiper">
             {categories.length != 0 ? (
               <div className="2xl:basis-8/12 h-10 border-b border-[#e6e6e6]">
@@ -186,11 +185,9 @@ export default function Home({ posts, status, categories, mixpanel }) {
                   })}
                 </Swiper>
               </div>
-            ) : (
-              ""
-            )}
+            ) : null}
 
-            {config.SHOW_SEARCH_POSTS ? (
+            {config.SHOW_SEARCH_POSTS && (
               <div className="flex flex-row items-center 2xl:basis-3/12 w-80 h-12 rounded-[10px] !bg-gray-100 pl-3">
                 <span>
                   <i className="rounded-full text-black-core/[0.65] cursor-pointer">
@@ -211,14 +208,9 @@ export default function Home({ posts, status, categories, mixpanel }) {
                   }}
                 />
               </div>
-            ) : (
-              ""
             )}
           </div>
-        ) : (
-          ""
         )}
-
         {count == 0 || status == config.NOT_FOUND ? (
           <div className="py-40 text-[1.4rem] text-center text-black-900 ">
             {config.POST_NOT_FOUND_MESSAGE}
@@ -357,9 +349,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                           height={100}
                           src={post.image_url || ""}
                           alt={post.alternativeText || ""}
-                          loading={
-                            i === 0 && count % 3 === 1 ? "eager" : "lazy"
-                          }
+                          loading="lazy"
                           className={`${
                             post.image.data == null
                               ? "w-[46%] h-4/5 mx-auto my-[5%]"
@@ -377,7 +367,7 @@ export default function Home({ posts, status, categories, mixpanel }) {
                       <div
                         className={`text-[1.3125rem] leading-7 sm:text-[1.375rem] sm:leading-[1.875rem] tracking-none text-black-core/[0.87] hover:underline underline-offset-4 transition-all hover:scale-[0.96] font-inter font-semibold ${
                           i === 0 && count % 3 === 1
-                            ? "md:text-2xl xl:text-3xl md:font-bold xl:leading-10"
+                            ? "md:text-2xl xl:text-3xl xl:leading-10"
                             : "md:text-xl lg:text-[1.4375rem] lg:leading-8"
                         }`}
                       >

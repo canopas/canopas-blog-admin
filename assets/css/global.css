@@ -240,7 +240,7 @@ code::after {
   :where(blockquote, blockquote i, blockquote i strong):not(
     :where([class~="not-prose"] *)
   ) {
-  @apply not-italic !text-[1.4rem] lg:!text-[1.755rem] !leading-[2.3rem] !text-black-core/[0.75] !font-extralight tracking-wide font-inter;
+  @apply not-italic !text-[1.4rem] lg:!text-[1.755rem] !leading-[2.3rem] !text-black-core/[0.75] !font-extralight !tracking-wide !font-inter;
 }
 
 .prose

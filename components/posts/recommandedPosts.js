@@ -36,6 +36,7 @@ export default function RecommandedPosts({ postData }) {
                           className="absolute top-2/4 left-2/4 translate-x-[-50%] translate-y-[-50%] rounded-full object-cover"
                           src={post.authorImage}
                           alt={post.authorAltText}
+                          loading="lazy"
                         />
                       </div>
                       <span className="font-inter font-medium tracking-wide">
@@ -73,7 +74,7 @@ export default function RecommandedPosts({ postData }) {
                       height={100}
                       src={post.image_url || ""}
                       alt={post.alternativeText || ""}
-                      loading="eager"
+                      loading="lazy"
                       className={`${
                         post.image.data == null
                           ? "w-auto h-4/5 mx-auto my-[5%] xl:my-[7%]"

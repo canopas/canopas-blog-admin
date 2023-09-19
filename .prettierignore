@@ -1,6 +1,9 @@
-.next
-out
 node_modules
 package-lock.json
 package.json
+yarn.lock
 .vscode
+.cache
+.next
+build
+out

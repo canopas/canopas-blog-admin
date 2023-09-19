@@ -2,6 +2,7 @@ const path = require("path");
 
 module.exports = {
   basePath: "/resources",
+  output: "standalone",
   reactStrictMode: true,
   sassOptions: {
     includePaths: [path.join(__dirname, "assets")],

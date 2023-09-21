@@ -219,7 +219,7 @@ code::after {
 }
 
 .prose h1 {
-  @apply font-comme text-[#000] xl:text-[2.0625rem] !mb-4 !tracking-tight font-semibold;
+  @apply font-comme text-[#000] text-[1.6875rem] md:text-[1.78125rem] lg:text-[1.95rem] xl:text-[2.0625rem] !mb-4 !tracking-tight font-semibold !leading-snug mt-7;
 }
 
 .prose h2 {

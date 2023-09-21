@@ -218,6 +218,10 @@ code::after {
   @apply content-none !important;
 }
 
+.prose h1 {
+  @apply font-comme text-[#000] xl:text-[2.0625rem] !mb-4 !tracking-tight font-semibold;
+}
+
 .prose h2 {
   @apply font-comme text-[#000] xl:text-[2.0625rem] !mb-4 !tracking-tight font-semibold;
 }

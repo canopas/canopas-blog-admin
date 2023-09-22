@@ -31,7 +31,7 @@ jobs:
           echo NEXT_PUBLIC_STRAPI_DOMAIN=${{ secrets.STRAPI_DOMAIN }} >> .env
           echo NEXT_PUBLIC_WEBSITE_URL=${{ secrets.WEBSITE_URL_PROD }} >> .env
           echo NEXT_PUBLIC_API_BASE=${{ secrets.API_BASE_PROD }} >> .env
-          mv src/config.prod.js src/config.js
+          mv config-prod.js config.js
           bash ./../deploy/deploy-ecr-image.sh prod-blog ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/canopas-blog
 
       - name: Trigger Canopas website Workflow

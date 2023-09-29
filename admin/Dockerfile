@@ -11,6 +11,12 @@ RUN yarn install --frozen-lockfile
 
 ENV NODE_ENV production
 
+RUN cd src/plugins/blog-editor
+
+RUN yarn install
+
+RUN cd ../../..
+
 RUN yarn build
 
 EXPOSE 1337

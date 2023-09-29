@@ -16,5 +16,13 @@ module.exports = {
         auth: false,
       },
     },
+    {
+      method: "PUT",
+      path: "/post/autosave",
+      handler: "post.autosave",
+      config: {
+        auth: false,
+      },
+    },
   ],
 };

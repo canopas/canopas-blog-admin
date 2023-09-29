@@ -43,6 +43,32 @@ const Editor = ({ onChange, name, value }) => {
     },
   };
 
+  async function autosave(newData) {
+    const urlPart = window.location.href.split("/");
+    const postId = urlPart[urlPart.length - 1];
+
+    try {
+      await fetch("/v1/post/autosave", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          postId,
+          newData,
+        }),
+      })
+        .then((response) => {
+          // console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.error("Autosave error:", error);
+    }
+  }
+
   return (
     <>
       <div
@@ -67,6 +93,7 @@ const Editor = ({ onChange, name, value }) => {
               onChange({ target: { name, value: newData } });
             } else {
               onChange({ target: { name, value: JSON.stringify(newData) } });
+              autosave(newData);
             }
           }}
           tools={{ ...requiredTools, ...customTools, ...customImageTool }}

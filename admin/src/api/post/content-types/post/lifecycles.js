@@ -76,6 +76,9 @@ async function modifyContentAndSetErrorMsg(event) {
     // generate table of contents
     await generateTOC(result, event);
     await generateNewToc(result, event);
+    if (result.tags) {
+      event.params.data.tags = await TagsInput(result.tags);
+    }
   }
 }
 
@@ -180,10 +183,12 @@ async function generateTOC(result, event) {
 
     event.params.data.content = dom.serialize();
     event.params.data.toc = toc += "</ul></li>";
-    event.params.data.tags = await TagsInput(result.tags);
 
     // set published on
-    if (!event.params.data.published_on) {
+    if (
+      event.params.data.publishedAt == null &&
+      !event.params.data.published_on
+    ) {
       event.params.data.published_on = new Date();
     }
   }
@@ -196,10 +201,12 @@ async function generateNewToc(result, event) {
 
     event.params.data.new_content = dom.serialize();
     event.params.data.new_toc = toc += "</ul>";
-    event.params.data.tags = await TagsInput(result.tags);
 
     // set published on
-    if (!event.params.data.published_on) {
+    if (
+      event.params.data.publishedAt == null &&
+      !event.params.data.published_on
+    ) {
       event.params.data.published_on = new Date();
     }
   }

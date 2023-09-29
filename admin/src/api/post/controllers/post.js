@@ -83,4 +83,26 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
 
     return this.transformResponse(posts);
   },
+
+  async autosave(ctx) {
+    const { postId, newData } = ctx.request.body;
+    let posts = await strapi.db.query("api::post.post").update({
+      where: { id: postId },
+      data: {
+        new_blog_content: newData,
+      },
+      populate: {
+        author: {
+          populate: {
+            image: true,
+          },
+        },
+        tags: true,
+        category: true,
+        image: true,
+      },
+    });
+
+    return this.transformResponse(posts);
+  },
 }));

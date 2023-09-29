@@ -4,6 +4,7 @@ const { JSDOM } = jsdom;
 const fs = require("fs");
 const path = require("path");
 const handlebars = require("handlebars");
+const convertToHTML = require("./convertData");
 
 module.exports = {
   async beforeCreate(event) {
@@ -74,6 +75,7 @@ async function modifyContentAndSetErrorMsg(event) {
 
     // generate table of contents
     await generateTOC(result, event);
+    await generateNewToc(result, event);
   }
 }
 
@@ -174,41 +176,7 @@ function validateFields(result) {
 async function generateTOC(result, event) {
   if (result.blog_content) {
     const dom = new JSDOM(result.blog_content);
-    const doc = dom.window.document;
-
-    // find all header tags in the document
-    const headers = doc.querySelectorAll("h1, h2");
-
-    // table of contents field
-    let toc = `<ul style="list-style-type: disc">`;
-    let lastNode = 6; // max header node
-    let childNode = false;
-
-    headers.forEach((header, index) => {
-      let currentNode = parseInt(header.nodeName.at(-1));
-      let text = header.textContent
-        .replace(/\s/g, "-")
-        .replace(/[^A-Za-z-]/g, "")
-        .toLowerCase();
-
-      text = text + "-" + index;
-
-      if (currentNode > lastNode || (currentNode == lastNode && childNode)) {
-        toc = childNode
-          ? toc
-          : toc +
-            "<li style='list-style-type: none'><ul style='list-style-type: square'>";
-        toc += `<li style='margin:1px 0px'><a href="#${text}">${header.textContent}</a></li>`;
-        childNode = true;
-      } else {
-        toc = childNode ? toc + "</ul>" : toc;
-        toc += `<li style='margin:1px 0px'><a href="#${text}">${header.textContent}</a></li>`;
-        childNode = false;
-      }
-
-      lastNode = currentNode;
-      header.setAttribute("id", `${text}`);
-    });
+    let toc = createToc(dom);
 
     event.params.data.content = dom.serialize();
     event.params.data.toc = toc += "</ul></li>";
@@ -220,3 +188,59 @@ async function generateTOC(result, event) {
     }
   }
 }
+
+async function generateNewToc(result, event) {
+  if (result.new_blog_content) {
+    const dom = new JSDOM(convertToHTML(result.new_blog_content));
+    let toc = createToc(dom);
+
+    event.params.data.new_content = dom.serialize();
+    event.params.data.new_toc = toc += "</ul>";
+    event.params.data.tags = await TagsInput(result.tags);
+
+    // set published on
+    if (!event.params.data.published_on) {
+      event.params.data.published_on = new Date();
+    }
+  }
+}
+
+const createToc = (dom) => {
+  const doc = dom.window.document;
+
+  // find all header tags in the document
+  const headers = doc.querySelectorAll("h1, h2");
+
+  // table of contents field
+  let toc = `<ul style="list-style-type: disc">`;
+  let lastNode = 6; // max header node
+  let childNode = false;
+
+  headers.forEach((header, index) => {
+    let currentNode = parseInt(header.nodeName.at(-1));
+    let text = header.textContent
+      .replace(/\s/g, "-")
+      .replace(/[^A-Za-z-]/g, "")
+      .toLowerCase();
+
+    text = text + "-" + index;
+
+    if (currentNode > lastNode || (currentNode == lastNode && childNode)) {
+      toc = childNode
+        ? toc
+        : toc +
+          "<li style='list-style-type: none'><ul style='list-style-type: square'>";
+      toc += `<li style='margin:1px 0px'><a href="#${text}">${header.textContent}</a></li>`;
+      childNode = true;
+    } else {
+      toc = childNode ? toc + "</ul>" : toc;
+      toc += `<li style='margin:1px 0px'><a href="#${text}">${header.textContent}</a></li>`;
+      childNode = false;
+    }
+
+    lastNode = currentNode;
+    header.setAttribute("id", `${text}`);
+  });
+
+  return toc;
+};

@@ -113,31 +113,36 @@ export default function Post({ postData, status, posts, mixpanel }) {
     status = config.NOT_FOUND;
   }
 
-  const blogContent = post?.content
-    .replace(
+  let blogContent = config.SHOW_NEW_CONTENT
+    ? post?.new_content || post?.content
+    : post?.content;
+  let indexContent = config.SHOW_NEW_CONTENT
+    ? post?.new_toc || post?.toc
+    : post?.toc;
+
+  blogContent = blogContent
+    ?.replace(
       /<img/g,
       '<img class="mx-auto aspect-w-2 sm:object-cover" style="width:min-content;height:min-content"',
     )
-    .replace(/color:rgb\(14,16,26\);/g, "");
+    .replace(/color:rgb\(14,16,26\);/g, "")
+    .replace(/<a /g, '<a target="_blank"');
 
   // table of contents formation
-  const indexContent = post?.toc?.replace(
-    /<a\s+href="(.*?)"/g,
-    (match, href) => {
-      let match2 = /#([^\n]+-0)\b/g.exec(href);
+  indexContent = indexContent?.replace(/<a\s+href="(.*?)"/g, (match, href) => {
+    let match2 = /#([^\n]+-0)\b/g.exec(href);
 
-      let classes =
-        "text-ellipsis hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text";
-      if (href === activeId) {
-        classes +=
-          " relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:left-0 after:bottom-0 after:w-full after:h-px after:bg-gradient-to-r";
-      } else if (match2 && match2[1]) {
-        firstHeadingId = match2[1].replace("#", "");
-      }
+    let classes =
+      "text-ellipsis hover:bg-gradient-to-r from-pink-300 to-orange-300 hover:text-transparent hover:bg-clip-text";
+    if (href === activeId) {
+      classes +=
+        " relative bg-gradient-to-r bg-clip-text text-transparent after:absolute after:left-0 after:bottom-0 after:w-full after:h-px after:bg-gradient-to-r";
+    } else if (match2 && match2[1]) {
+      firstHeadingId = match2[1].replace("#", "");
+    }
 
-      return `<a href="${href}" class="${classes}"`;
-    },
-  );
+    return `<a href="${href}" class="${classes}"`;
+  });
 
   const handleClick = (event) => {
     event.preventDefault();

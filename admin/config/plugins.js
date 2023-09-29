@@ -77,6 +77,10 @@ module.exports = ({ env }) => ({
       jwtSecret: env("JWT_SECRET"),
     },
   },
+  "blog-editor": {
+    enabled: true,
+    resolve: "./src/plugins/blog-editor",
+  },
   guidelines: {
     enabled: true,
     resolve: "./src/plugins/guidelines", // path to guidelines folder

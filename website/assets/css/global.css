@@ -124,16 +124,9 @@ ul {
   @apply pl-4;
 }
 
+b,
 strong {
   @apply font-comme tracking-[0.01em] !text-black-core/[1] !font-medium text-[1.0625rem] md:text-[1.15625rem];
-}
-
-h1 strong {
-  @apply text-[1.8rem] lg:text-[2rem];
-}
-
-h2 strong {
-  @apply text-2xl lg:text-[1.7rem] font-comme font-semibold;
 }
 
 /* HighlightJS */
@@ -218,17 +211,27 @@ code::after {
   @apply content-none !important;
 }
 
-.prose h1 {
-  @apply font-comme text-[#000] text-[1.6875rem] md:text-[1.78125rem] lg:text-[1.95rem] xl:text-[2.0625rem] !mb-4 !tracking-tight font-semibold !leading-snug mt-7;
+.prose h1,
+.prose h1 strong {
+  @apply font-comme text-[#000] text-[1.6875rem] md:text-[1.78125rem] lg:text-[1.95rem] xl:text-[2.0625rem] !-mb-2.5 !tracking-tight font-semibold !leading-snug mt-[3.75rem];
 }
 
-.prose h2 {
+.prose h2,
+.prose h2 strong {
   @apply font-comme text-[#000] xl:text-[2.0625rem] !mb-4 !tracking-tight font-semibold;
 }
 
+.prose hr {
+  @apply !my-6;
+}
+
 .prose i,
-.prose a span {
+.prose a {
   @apply font-comme text-lg text-black-core/[0.87] tracking-[0.03rem] font-normal;
+}
+
+.prose span a {
+  @apply font-comme text-lg text-blue-700 tracking-[0.03rem] font-normal;
 }
 
 .prose
@@ -240,11 +243,12 @@ code::after {
   @apply bg-transparent text-[#dbe0e0] leading-normal tracking-[-0.022em] !break-normal;
 }
 
-.prose
-  :where(blockquote, blockquote i, blockquote i strong):not(
-    :where([class~="not-prose"] *)
-  ) {
+.prose :where(blockquote, blockquote i):not(:where([class~="not-prose"] *)) {
   @apply not-italic !text-[1.4rem] lg:!text-[1.755rem] !leading-[2.3rem] !text-black-core/[0.75] !font-extralight tracking-wide font-inter;
+}
+
+.prose :where(blockquote strong):not(:where([class~="not-prose"] *)) {
+  @apply not-italic !text-[1.4rem] lg:!text-[1.755rem] !leading-[2.3rem] !text-black-core/[0.75] !font-normal tracking-wide font-inter;
 }
 
 .prose

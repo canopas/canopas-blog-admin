@@ -18,6 +18,9 @@ jobs:
         run: |
           cd admin
           yarn install
+          cd src/plugins/blog-editor
+          yarn install
+          cd ../../..
           yarn build
 
       - name: Set up Node for website

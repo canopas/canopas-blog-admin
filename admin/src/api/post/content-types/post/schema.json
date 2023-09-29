@@ -74,7 +74,13 @@
       "type": "text",
       "required": true
     },
+    "new_content": {
+      "type": "text"
+    },
     "toc": {
+      "type": "text"
+    },
+    "new_toc": {
       "type": "text"
     },
     "is_published": {
@@ -89,6 +95,10 @@
     },
     "keywords": {
       "type": "string"
+    },
+    "new_blog_content": {
+      "type": "customField",
+      "customField": "plugin::blog-editor.editor"
     }
   }
 }

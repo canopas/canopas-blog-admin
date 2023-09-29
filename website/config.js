@@ -23,7 +23,7 @@ export default Object.freeze({
   SHOW_CATEGORY_POSTS: false,
   SHOW_HEADER_TITLE: false,
   SHOW_COMMENT_SECTION: false,
-  SHOW_NEW_CONTENT: true,
+  SHOW_NEW_CONTENT: false,
 
   FACEBOOK_URL: "https://www.facebook.com/canopassoftware",
   INSTAGRAM_URL: "https://www.instagram.com/canopassoftware/",

@@ -202,6 +202,9 @@ async function generateNewToc(result, event) {
     if (!event.params.data.published_on) {
       event.params.data.published_on = new Date();
     }
+  } else {
+    event.params.data.new_content = null;
+    event.params.data.new_toc = null;
   }
 }
 

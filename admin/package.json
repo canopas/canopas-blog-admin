@@ -16,7 +16,7 @@
     "@strapi/plugin-users-permissions": "^4.11.5",
     "@strapi/provider-email-amazon-ses": "^4.11.5",
     "@strapi/provider-upload-aws-s3": "^4.11.5",
-    "@strapi/strapi": "^4.11.5",
+    "@strapi/strapi": "^4.14.3",
     "@webbio/strapi-plugin-scheduler": "^1.0.6",
     "jsdom": "^22.1.0",
     "markdown-loader": "^8.0.0",

@@ -46,7 +46,7 @@ function setPostFields(post, slug) {
     post.attributes.title;
 
   const author = post.attributes.author.data?.attributes;
-  post.attributes.authorName = author?.username || "author";
+  post.attributes.authorName = author?.name || "author";
   post.attributes.authorImage = author?.image.data
     ? author.image.data?.attributes.url
     : Avatar;

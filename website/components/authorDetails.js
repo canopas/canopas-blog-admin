@@ -22,9 +22,6 @@ export default function AuthorDetails({ postData }) {
             <div className="text-base leading-normal tracking-normal text-center">
               {postData.authorBio}
             </div>
-            <div className="!mt-7 text-[0.8750rem] capitalize tracking-normal">
-              {postData.authorRole}
-            </div>
           </div>
         </div>
         <hr className="bg-gray-600 w-full py-[0.5px] !mb-3 mt-0" />
@@ -51,9 +48,6 @@ export default function AuthorDetails({ postData }) {
             </div>
             <div className="text-base leading-normal tracking-normal">
               {postData.authorBio}
-            </div>
-            <div className="text-[0.8750rem] capitalize tracking-normal">
-              {postData.authorRole}
             </div>
           </div>
         </div>

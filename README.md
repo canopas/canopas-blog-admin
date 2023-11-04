@@ -4,7 +4,7 @@ This is our open-source Next.js blog website of [canopas](https://canopas.com). 
 
 ## Showcase
 
-This repository contains the working code of [our resources](https://articles.canopas.com/resources). You can check out the link to view a live example of this repository.
+This repository contains the working code of [our resources](https://canopas.com/resources). You can check out the link to view a live example of this repository.
 
 ### Admin panel for handling content
 

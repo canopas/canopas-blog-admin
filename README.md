@@ -8,7 +8,8 @@ This repository contains the working code of [our resources](https://canopas.com
 
 ### Admin panel for handling content
 
-![Admin panel](https://github.com/canopas/canopas-blog/assets/69897605/5a61df91-94bd-4a09-bced-e811450a2873)
+![Admin panel](https://github.com/canopas/canopas-blog/assets/115449373/7542ff05-08ca-45ae-a4c6-24785419ae35)
+
 
 ### Blogs website
 

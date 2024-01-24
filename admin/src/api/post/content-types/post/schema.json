@@ -60,7 +60,9 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images"]
+      "allowedTypes": [
+        "images"
+      ]
     },
     "summary": {
       "type": "text",
@@ -99,6 +101,11 @@
     "new_blog_content": {
       "type": "customField",
       "customField": "plugin::blog-editor.editor"
+    },
+    "is_resource": {
+      "type": "boolean",
+      "default": true,
+      "required": true
     }
   }
 }

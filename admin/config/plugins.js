@@ -16,7 +16,7 @@ module.exports = ({ env }) => ({
                   encodeURIComponent(match[0]);
                 return (
                   // If you need, set maxwidth and other styles for 'iframely-embed' class - it's yours to customize
-                  '<div class="iframely-embeddddd">' +
+                  '<div class="iframely-embed">' +
                   '<div class="iframely-responsive">' +
                   `<iframe src="${iframeUrl}" ` +
                   'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +

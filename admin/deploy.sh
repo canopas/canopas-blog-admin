@@ -7,3 +7,5 @@ sudo mkdir -p /etc/nginx/conf.d && sudo mv nginx.conf /etc/nginx/ && sudo mv con
 sudo mkdir -p /etc/nginx/certs && sudo mv certs/blog.live.domain.name.key /etc/nginx/certs/blog.live.domain.name.key && sudo mv certs/blog.live.domain.name.cert /etc/nginx/certs/blog.live.domain.name.cert
 
 docker stack deploy --with-registry-auth -c ./docker-compose.yaml canopas-website
+
+docker system prune --force

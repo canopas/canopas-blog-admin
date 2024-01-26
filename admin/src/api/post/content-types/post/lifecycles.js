@@ -128,8 +128,8 @@ async function modifyContentAndSetErrorMsg(event) {
     // validate input fields
     validateFields(result);
 
-    // generate slug from title
-    if (result.title) {
+    if (result.is_resource && result.title) {
+      // generate slug from title
       event.params.data.slug = generateSlug(result.title, result.slug);
     }
 

@@ -26,7 +26,7 @@ module.exports = {
           where: { id: event.result.id },
           data: {
             is_published: true,
-            published_on: new Date(),
+            published_on: event.params.data.publishedAt,
           },
         });
 

@@ -16,7 +16,6 @@ module.exports = {
 
   async beforeUpdate(event) {
     await modifyContentAndSetErrorMsg(event);
-    triggerGithubWorkflow(false);
   },
 
   async afterUpdate(event) {
@@ -26,7 +25,6 @@ module.exports = {
           where: { id: event.result.id },
           data: {
             is_published: true,
-            published_on: event.params.data.publishedAt,
           },
         });
 
@@ -63,6 +61,8 @@ module.exports = {
 
         triggerGithubWorkflow(true);
       }
+    } else {
+      triggerGithubWorkflow(false);
     }
   },
 };

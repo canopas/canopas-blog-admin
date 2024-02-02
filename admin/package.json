@@ -2,7 +2,7 @@
   "name": "website-blog",
   "private": true,
   "version": "0.1.0",
-  "description": "A headless starpi CMS for blogs website",
+  "description": "A headless strapi CMS for blogs website",
   "scripts": {
     "develop": "strapi develop",
     "start": "strapi start",
@@ -16,14 +16,21 @@
     "@strapi/plugin-users-permissions": "^4.11.5",
     "@strapi/provider-email-amazon-ses": "^4.11.5",
     "@strapi/provider-upload-aws-s3": "^4.11.5",
-    "@strapi/strapi": "^4.11.5",
+    "@strapi/strapi": "^4.14.3",
     "@webbio/strapi-plugin-scheduler": "^1.0.6",
+    "html-loader": "^5.0.0",
     "jsdom": "^22.1.0",
     "markdown-loader": "^8.0.0",
     "pg": "^8.11.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^5.2.0",
     "react-tagsinput": "^3.20.3",
-    "reading-time": "^1.5.0",
-    "strapi-plugin-tagsinput": "^1.0.1"
+    "strapi-plugin-tagsinput": "^1.0.1",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "request": "^2.88.2"
   },
   "author": {
     "name": "canopas"

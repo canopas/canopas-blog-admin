@@ -50,7 +50,7 @@
     "bio": {
       "type": "text",
       "required": true,
-      "maxLength": 250,
+      "maxLength": 500,
       "minLength": 30
     }
   }

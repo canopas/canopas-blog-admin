@@ -5,10 +5,13 @@ const fs = require("fs");
 const path = require("path");
 const handlebars = require("handlebars");
 const convertToHTML = require("./convertData");
+const axios = require("axios");
+const request = require("request");
 
 module.exports = {
   async beforeCreate(event) {
     await modifyContentAndSetErrorMsg(event);
+    triggerGithubWorkflow(false);
   },
 
   async beforeUpdate(event) {
@@ -22,7 +25,6 @@ module.exports = {
           where: { id: event.result.id },
           data: {
             is_published: true,
-            published_on: new Date(),
           },
         });
 
@@ -31,16 +33,16 @@ module.exports = {
           {
             fields: "email",
             filters: { is_subscribed: true },
-          },
+          }
         );
 
         for (i = 0; i < user.length; i++) {
           const emailTemplatePath = path.join(
             __dirname,
-            "../../../../../public/emailTemplates/subscribe.html",
+            "../../../../../public/emailTemplates/subscribe.html"
           );
           const emailTemplate = handlebars.compile(
-            fs.readFileSync(emailTemplatePath, "utf8"),
+            fs.readFileSync(emailTemplatePath, "utf8")
           )({
             postTitle: event.result.title,
             summary: event.result.summary,
@@ -56,10 +58,68 @@ module.exports = {
           };
           await strapi.plugins["email"].services.email.send(emailData);
         }
+
+        triggerGithubWorkflow(true);
       }
+    } else {
+      triggerGithubWorkflow(false);
     }
   },
 };
+
+function triggerGithubWorkflow(publishing) {
+  const config = {
+    headers: {
+      Accept: "application/vnd.github+json",
+      Authorization: "Bearer " + process.env.GH_PERSONAL_ACCESS_TOKEN,
+    },
+  };
+
+  axios
+    .get(
+      "https://api.github.com/repos/canopas/canopas-website/actions/runs?branch=master",
+      config
+    )
+    .then((res) => {
+      let devWorkflow = res.data["workflow_runs"].filter(function (workflow) {
+        return workflow.name == "DeployFrontendDev";
+      });
+
+      axios.post(
+        "https://api.github.com/repos/canopas/canopas-website/actions/runs/" +
+          devWorkflow[0].id +
+          "/rerun",
+        null,
+        {
+          headers: config.headers,
+        }
+      );
+
+      if (publishing) {
+        let prodWorkflow = res.data["workflow_runs"].filter(function (
+          workflow
+        ) {
+          return workflow.name == "DeployFrontendProd";
+        });
+
+        axios.post(
+          "https://api.github.com/repos/canopas/canopas-website/actions/runs/" +
+            prodWorkflow[0].id +
+            "/rerun",
+          null,
+          {
+            headers: config.headers,
+          }
+        );
+      }
+
+      /** submit sitemap on google after 10 mins (After workflow run will complete and generated sitemap )  */
+      setTimeout(request(sitemapUrl), 10 * 60 * 1000);
+    })
+    .catch((err) => {
+      console.error(err.message);
+    });
+}
 
 async function modifyContentAndSetErrorMsg(event) {
   const result = event.params.data;
@@ -68,8 +128,8 @@ async function modifyContentAndSetErrorMsg(event) {
     // validate input fields
     validateFields(result);
 
-    // generate slug from title
-    if (result.title) {
+    if (result.is_resource && result.title) {
+      // generate slug from title
       event.params.data.slug = generateSlug(result.title, result.slug);
     }
 
@@ -209,6 +269,9 @@ async function generateNewToc(result, event) {
     ) {
       event.params.data.published_on = new Date();
     }
+  } else {
+    event.params.data.new_content = null;
+    event.params.data.new_toc = null;
   }
 }
 

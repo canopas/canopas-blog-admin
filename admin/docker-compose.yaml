@@ -5,8 +5,6 @@ services:
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/blog-admin:${GITHUB_SHA}-${GITHUB_RUN_ATTEMPT}-blog-admin
     deploy:
       replicas: 1
-    depends_on:
-      - db
     volumes:
       - uploads:/srv/app/public/uploads
     ports:
@@ -29,17 +27,7 @@ services:
       AWS_BUCKET_URL: ${AWS_BUCKET_URL}
       SENTRY_DSN: ${SENTRY_DSN}
       HR_FROM_MAIL: ${HR_FROM_MAIL}
-
-  db:
-    image: postgres:15.1-alpine
-    environment:
-      POSTGRES_USER: ${DATABASE_USERNAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
-      POSTGRES_DB: ${DATABASE_NAME}
-    volumes:
-      - blog-data:/var/lib/postgresql/data/
-    ports:
-      - "5432:5432"
+      GH_PERSONAL_ACCESS_TOKEN: ${GH_PERSONAL_ACCESS_TOKEN}
 
   nginx:
     image: nginx:latest

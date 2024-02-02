@@ -43,9 +43,9 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSL_PRIVATE_KEY: |
-              ${{ secrets.SSL_PRIVATE_KEY }}
+            ${{ secrets.SSL_PRIVATE_KEY }}
           SSL_PUBLIC_KEY: |
-              ${{ secrets.SSL_PUBLIC_KEY }}
+            ${{ secrets.SSL_PUBLIC_KEY }}
         run: |
           echo "$SSH_PRIVATE_KEY" > ssh_private_key && chmod 600 ssh_private_key
           sed -i "s|ADMIN_PANEL_URL|${{ secrets.ADMIN_PANEL_URL }}|g" admin/nginx/conf.d/website-blog.conf

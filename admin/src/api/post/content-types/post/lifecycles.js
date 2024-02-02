@@ -33,16 +33,16 @@ module.exports = {
           {
             fields: "email",
             filters: { is_subscribed: true },
-          }
+          },
         );
 
         for (i = 0; i < user.length; i++) {
           const emailTemplatePath = path.join(
             __dirname,
-            "../../../../../public/emailTemplates/subscribe.html"
+            "../../../../../public/emailTemplates/subscribe.html",
           );
           const emailTemplate = handlebars.compile(
-            fs.readFileSync(emailTemplatePath, "utf8")
+            fs.readFileSync(emailTemplatePath, "utf8"),
           )({
             postTitle: event.result.title,
             summary: event.result.summary,
@@ -78,7 +78,7 @@ function triggerGithubWorkflow(publishing) {
   axios
     .get(
       "https://api.github.com/repos/canopas/canopas-website/actions/runs?branch=master",
-      config
+      config,
     )
     .then((res) => {
       let devWorkflow = res.data["workflow_runs"].filter(function (workflow) {
@@ -92,15 +92,15 @@ function triggerGithubWorkflow(publishing) {
         null,
         {
           headers: config.headers,
-        }
+        },
       );
 
       if (publishing) {
-        let prodWorkflow = res.data["workflow_runs"].filter(function (
-          workflow
-        ) {
-          return workflow.name == "DeployFrontendProd";
-        });
+        let prodWorkflow = res.data["workflow_runs"].filter(
+          function (workflow) {
+            return workflow.name == "DeployFrontendProd";
+          },
+        );
 
         axios.post(
           "https://api.github.com/repos/canopas/canopas-website/actions/runs/" +
@@ -109,7 +109,7 @@ function triggerGithubWorkflow(publishing) {
           null,
           {
             headers: config.headers,
-          }
+          },
         );
       }
 

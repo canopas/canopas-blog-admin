@@ -22,10 +22,14 @@ Welcome to our blog! We value high-quality content that engages and informs our 
 
 ## Additional Guidelines
 
+- Start writing a blog from `content manager` ➝ `post` ➝ `create new entry`
 - Use indentation to add space at the beginning of paragraphs or code blocks.
 - Separate divs or sections using horizontal lines.
+- The image will be available on the `media library` section on the left sidebar, if not then you can upload it from the blog itself
+- Convert gifs to videos for animations
+- For `summary` and `meta_description`, you can add them from story settings or make it your own, which is related to your blog
+- `is_resource` field should be false for technical blogs
 - Include related articles at the end of your post to encourage readers to explore more content.
-- To provide a user experience similar to Medium blogs, follow the formatting style we use in Medium blogs.
 
 ## Users Permissions
 

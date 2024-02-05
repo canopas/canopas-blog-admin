@@ -10,7 +10,6 @@ This repository contains the working code of [our resources](https://canopas.com
 
 ![Admin panel](https://github.com/canopas/canopas-blog/assets/115449373/7542ff05-08ca-45ae-a4c6-24785419ae35)
 
-
 ### Blogs website
 
 #### Blog Index page UI

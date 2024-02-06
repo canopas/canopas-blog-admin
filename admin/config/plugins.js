@@ -72,6 +72,13 @@ module.exports = ({ env }) => ({
       },
     },
   },
+  settings: {
+    parser: {
+      formidable: {
+        maxFileSize: 50 * 1024 * 1024, // 50MB: file size limit for media library
+      },
+    },
+  },
   "users-permissions": {
     config: {
       jwtSecret: env("JWT_SECRET"),

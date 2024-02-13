@@ -275,8 +275,21 @@ async function generatePreview(event) {
   const doc = dom.window.document;
   const embeds = doc.querySelectorAll("oembed[url]");
   for (const element of embeds) {
-    let data = await runScraper(element.attributes.url.value);
-    let string = ` <div
+    let string = "";
+    if (["mp4", "webm"].some((v) => element.attributes.url.value.includes(v))) {
+      string = `<video width="50%" style="margin:auto" autoplay loop muted>
+        <source src="${element.attributes.url.value}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>`;
+    } else if (
+      ["png", "jpg", "jpeg", "webp"].some((v) =>
+        element.attributes.url.value.includes(v)
+      )
+    ) {
+      string = "";
+    } else {
+      let data = await runScraper(element.attributes.url.value);
+      string = ` <div
       style="
         overflow-wrap: break-word;
         box-shadow: rgb(242, 242, 242) 0px 0px 0px 1px inset;
@@ -346,6 +359,7 @@ async function generatePreview(event) {
       ></a>
     </div>
 `;
+    }
     element.innerHTML = string;
     event.params.data.content = dom.serialize();
   }
@@ -354,7 +368,7 @@ async function generatePreview(event) {
 async function runScraper(url) {
   const browser = await puppeteer.launch({
     headless: true,
-    args: ["--no-sandbox"],
+    args: ["--no-sandbox", "--disable-features=site-per-process"],
   });
   try {
     const page = await browser.newPage();

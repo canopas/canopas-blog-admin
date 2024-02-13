@@ -30,6 +30,41 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
       },
     });
 
+    if (!entity.is_resource) {
+      entity.recommandedPosts = [];
+    } else {
+      const recommandedPosts = await strapi.db
+        .query("api::post.post")
+        .findMany({
+          where: {
+            $and: [
+              {
+                slug: { $ne: entity.slug },
+              },
+              {
+                is_resource: entity.is_resource,
+              },
+            ],
+          },
+          sort: { published_on: "desc" },
+          populate: {
+            author: {
+              populate: {
+                image: true,
+              },
+            },
+          },
+        });
+
+      entity.recommandedPosts = recommandedPosts
+        .filter((post) => {
+          return entity.tags
+            .map((t) => t.name)
+            .some((r) => post.tags.map((t) => t.name).includes(r));
+        })
+        .slice(0, 3);
+    }
+
     return this.transformResponse(entity);
   },
 
@@ -44,14 +79,7 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
             image: true,
           },
         },
-        tags: true,
-        category: true,
         image: true,
-        comments: {
-          populate: {
-            user: true,
-          },
-        },
       },
     });
 
@@ -60,7 +88,7 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
   async getBlogByTagName(ctx) {
     const { tag } = ctx.params;
 
-    let posts = await strapi.entityService.findMany("api::post.post", {
+    let posts = await strapi.db.query("api::post.post").findMany({
       sort: { published_on: "desc" },
       populate: {
         author: {
@@ -69,7 +97,6 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
           },
         },
         tags: true,
-        category: true,
         image: true,
       },
       publicationState: "live",

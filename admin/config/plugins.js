@@ -9,16 +9,11 @@ module.exports = ({ env }) => ({
               name: "iframely previews",
               url: /.+/,
               html: (match) => {
-                let iframeUrl =
-                  "//cdn.iframe.ly/api/iframe?app=1&api_key=" +
-                  env("IFRAMELY_API_KEY") +
-                  "&url=" +
-                  encodeURIComponent(match[0]);
                 return (
                   // If you need, set maxwidth and other styles for 'iframely-embed' class - it's yours to customize
                   '<div class="iframely-embed">' +
                   '<div class="iframely-responsive">' +
-                  `<iframe src="${iframeUrl}" ` +
+                  `<iframe src="${match[0]}" ` +
                   'frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>' +
                   "</iframe>" +
                   "</div>" +

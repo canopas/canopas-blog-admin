@@ -7,6 +7,7 @@ const handlebars = require("handlebars");
 const convertToHTML = require("./convertData");
 const axios = require("axios");
 const request = require("request");
+const puppeteer = require("puppeteer");
 
 module.exports = {
   async beforeCreate(event) {
@@ -33,16 +34,16 @@ module.exports = {
           {
             fields: "email",
             filters: { is_subscribed: true },
-          },
+          }
         );
 
         for (i = 0; i < user.length; i++) {
           const emailTemplatePath = path.join(
             __dirname,
-            "../../../../../public/emailTemplates/subscribe.html",
+            "../../../../../public/emailTemplates/subscribe.html"
           );
           const emailTemplate = handlebars.compile(
-            fs.readFileSync(emailTemplatePath, "utf8"),
+            fs.readFileSync(emailTemplatePath, "utf8")
           )({
             postTitle: event.result.title,
             summary: event.result.summary,
@@ -78,7 +79,7 @@ function triggerGithubWorkflow(publishing) {
   axios
     .get(
       "https://api.github.com/repos/canopas/canopas-website/actions/runs?branch=master",
-      config,
+      config
     )
     .then((res) => {
       let devWorkflow = res.data["workflow_runs"].filter(function (workflow) {
@@ -92,15 +93,15 @@ function triggerGithubWorkflow(publishing) {
         null,
         {
           headers: config.headers,
-        },
+        }
       );
 
       if (publishing) {
-        let prodWorkflow = res.data["workflow_runs"].filter(
-          function (workflow) {
-            return workflow.name == "DeployFrontendProd";
-          },
-        );
+        let prodWorkflow = res.data["workflow_runs"].filter(function (
+          workflow
+        ) {
+          return workflow.name == "DeployFrontendProd";
+        });
 
         axios.post(
           "https://api.github.com/repos/canopas/canopas-website/actions/runs/" +
@@ -109,7 +110,7 @@ function triggerGithubWorkflow(publishing) {
           null,
           {
             headers: config.headers,
-          },
+          }
         );
       }
 
@@ -136,6 +137,7 @@ async function modifyContentAndSetErrorMsg(event) {
     // generate table of contents
     await generateTOC(result, event);
     await generateNewToc(result, event);
+    await generatePreview(event);
   }
 }
 
@@ -268,6 +270,107 @@ async function generateNewToc(result, event) {
   }
 }
 
+async function generatePreview(event) {
+  const dom = new JSDOM(event.params.data.content);
+  const doc = dom.window.document;
+  const embeds = doc.querySelectorAll("oembed[url]");
+  for (const element of embeds) {
+    let data = await runScraper(element.attributes.url.value);
+    let string = ` <div
+      style="
+        overflow-wrap: break-word;
+        box-shadow: rgb(242, 242, 242) 0px 0px 0px 1px inset;
+      "
+    >
+      <a href="${element.attributes.url.value}" target="_blank" style="text-decoration: none; ">
+        <div style="display: flex">
+          <div
+            style="
+              padding: 16px 20px;
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              flex: 1 1 auto;
+            "
+          >
+            <h2
+              style="
+                text-overflow: ellipsis;
+                font-size: 16px !important;
+                color: #242424;
+                font-weight: 700;
+                margin: 0 !important;
+              "
+            >
+              ${data.title}
+            </h2>
+            <div class="desc" style="margin-top: 8px">
+              <h3
+                style="
+                  text-overflow: ellipsis;
+                  font-size: 16px !important;
+                  color: #6b6b6b;
+                  line-height: 20px;
+                  margin: 0 !important;
+                "
+              >
+                ${data.description}
+              </h3>
+            </div>
+            <div>
+              <p
+                style="
+                  -webkit-line-clamp: 2;
+                  max-height: 40px;
+                  text-overflow: ellipsis;
+                  font-size: 13px !important;
+                  color: #6b6b6b;
+                  margin: 0 !important;
+                "
+              >
+                ${data.domain}
+              </p>
+            </div>
+          </div>
+          <div style="width: 160px">
+            <div
+              style="
+                background-image: url('${data.img}');
+                background-position: 50% 50%;
+                height: 167px;
+                width: 160px;
+                background-size: cover;
+              "
+            ></div>
+          </div></div
+      ></a>
+    </div>
+`;
+    element.innerHTML = string;
+    event.params.data.content = dom.serialize();
+  }
+}
+
+async function runScraper(url) {
+  const browser = await puppeteer.launch({ headless: "old" });
+  try {
+    const page = await browser.newPage();
+    await page.goto(url);
+    const obj = {
+      title: await getTitle(page),
+      description: await getDescription(page),
+      domain: await getDomainName(page, url),
+      img: await getImg(page, url),
+    };
+    await browser.close();
+    return obj;
+  } catch (e) {
+    console.error(e);
+  } finally {
+    await browser.close();
+  }
+}
+
 const createToc = (dom) => {
   const doc = dom.window.document;
 
@@ -306,4 +409,130 @@ const createToc = (dom) => {
   });
 
   return toc;
+};
+
+const getTitle = async (page) => {
+  const title = await page.evaluate(() => {
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle != null && ogTitle.content.length > 0) {
+      return ogTitle.content;
+    }
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twitterTitle != null && twitterTitle.content.length > 0) {
+      return twitterTitle.content;
+    }
+    const docTitle = document.title;
+    if (docTitle != null && docTitle.length > 0) {
+      return docTitle;
+    }
+    const h1El = document.querySelector("h1");
+    const h1 = h1El ? h1El.innerHTML : null;
+    if (h1 != null && h1.length > 0) {
+      return h1;
+    }
+    const h2El = document.querySelector("h2");
+    const h2 = h2El ? h2El.innerHTML : null;
+    if (h2 != null && h2.length > 0) {
+      return h2;
+    }
+    return null;
+  });
+  return title;
+};
+
+const getDescription = async (page) => {
+  const description = await page.evaluate(() => {
+    const ogDescription = document.querySelector(
+      'meta[property="og:description"]'
+    );
+    if (ogDescription != null && ogDescription.content.length > 0) {
+      return ogDescription.content;
+    }
+    const twitterDescription = document.querySelector(
+      'meta[name="twitter:description"]'
+    );
+    if (twitterDescription != null && twitterDescription.content.length > 0) {
+      return twitterDescription.content;
+    }
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription != null && metaDescription.content.length > 0) {
+      return metaDescription.content;
+    }
+    let paragraphs = document.querySelectorAll("p");
+    let fstVisibleParagraph = null;
+    for (const element of paragraphs) {
+      if (
+        // if object is visible in dom
+        element.offsetParent !== null &&
+        !element.childElementCount != 0
+      ) {
+        fstVisibleParagraph = element.textContent;
+        break;
+      }
+    }
+    return fstVisibleParagraph;
+  });
+  return description;
+};
+
+const getDomainName = async (page, uri) => {
+  const domainName = await page.evaluate(() => {
+    const canonicalLink = document.querySelector("link[rel=canonical]");
+    if (canonicalLink != null && canonicalLink.href.length > 0) {
+      return canonicalLink.href;
+    }
+    const ogUrlMeta = document.querySelector('meta[property="og:url"]');
+    if (ogUrlMeta != null && ogUrlMeta.content.length > 0) {
+      return ogUrlMeta.content;
+    }
+    return null;
+  });
+  return domainName != null
+    ? new URL(domainName).hostname.replace("www.", "")
+    : new URL(uri).hostname.replace("www.", "");
+};
+
+const getImg = async (page, uri) => {
+  const img = await page.evaluate(async () => {
+    const ogImg = document.querySelector('meta[property="og:image"]');
+    if (ogImg != null && ogImg.content.length > 0) {
+      return ogImg.content;
+    }
+    const imgRelLink = document.querySelector('link[rel="image_src"]');
+    if (imgRelLink != null && imgRelLink.href.length > 0) {
+      return imgRelLink.href;
+    }
+    const twitterImg = document.querySelector('meta[name="twitter:image"]');
+    if (twitterImg != null && twitterImg.content.length > 0) {
+      return twitterImg.content;
+    }
+
+    let imgs = Array.from(document.getElementsByTagName("img"));
+    if (imgs.length > 0) {
+      imgs = imgs.filter((img) => {
+        let addImg = true;
+        if (img.naturalWidth > img.naturalHeight) {
+          if (img.naturalWidth / img.naturalHeight > 3) {
+            addImg = false;
+          }
+        } else if (img.naturalHeight / img.naturalWidth > 3) {
+          addImg = false;
+        }
+        if (img.naturalHeight <= 50 || img.naturalWidth <= 50) {
+          addImg = false;
+        }
+        return addImg;
+      });
+      if (imgs.length > 0) {
+        imgs.forEach((img) =>
+          img.src.indexOf("//") === -1
+            ? (img.src = `${new URL(uri).origin}/${img.src}`)
+            : img.src
+        );
+        return imgs[0].src;
+      }
+    }
+    return null;
+  });
+  return img;
 };

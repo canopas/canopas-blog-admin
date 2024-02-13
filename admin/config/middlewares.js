@@ -28,6 +28,12 @@ module.exports = ({ env }) => [
       },
     },
   },
+  {
+    name: "strapi::compression",
+    config: {
+      gzip: true,
+    },
+  },
   "strapi::cors",
   "strapi::poweredBy",
   "strapi::logger",

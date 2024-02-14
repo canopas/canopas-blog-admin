@@ -30,48 +30,56 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
       },
     });
 
-    if (!entity.is_resource) {
+    if (entity) {
       entity.recommandedPosts = [];
-    } else {
-      const recommandedPosts = await strapi.db
-        .query("api::post.post")
-        .findMany({
-          where: {
-            $and: [
-              {
-                slug: { $ne: entity.slug },
-              },
-              {
-                is_resource: entity.is_resource,
-              },
-            ],
-          },
-          sort: { published_on: "desc" },
-          populate: {
-            author: {
-              populate: {
-                image: true,
-              },
+      if (entity.is_resource) {
+        const recommandedPosts = await strapi.db
+          .query("api::post.post")
+          .findMany({
+            where: {
+              $and: [
+                {
+                  slug: { $ne: entity.slug },
+                },
+                {
+                  is_resource: entity.is_resource,
+                },
+              ],
             },
-            image: true,
-          },
-        });
+            sort: { published_on: "desc" },
+            populate: {
+              author: {
+                populate: {
+                  image: true,
+                },
+              },
+              image: true,
+            },
+          });
 
-      entity.recommandedPosts = recommandedPosts
-        .filter((post) => {
-          return entity.tags
-            .map((t) => t.name)
-            .some((r) => post.tags.map((t) => t.name).includes(r));
-        })
-        .slice(0, 3);
+        entity.recommandedPosts = recommandedPosts
+          .filter((post) => {
+            return entity.tags
+              .map((t) => t.name)
+              .some((r) => post.tags.map((t) => t.name).includes(r));
+          })
+          .slice(0, 3);
+      }
     }
 
     return this.transformResponse(entity);
   },
 
   async find(ctx) {
-    let posts = await strapi.entityService.findMany("api::post.post", {
+    const count = await strapi
+      .query("api::post.post")
+      .count({ where: { is_resource: ctx.query.filters.is_resource } });
+
+    const posts = await strapi.entityService.findMany("api::post.post", {
       filters: ctx.query.filters,
+      fields: ctx.query.fields,
+      start: ctx.query.pagination.start,
+      limit: ctx.query.pagination.limit,
       publicationState: ctx.query.publicationState,
       sort: { published_on: "desc" },
       populate: {
@@ -84,12 +92,17 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
       },
     });
 
-    return this.transformResponse(posts);
+    return this.transformResponse({
+      posts: posts,
+      count: count,
+    });
   },
+
   async getBlogByTagName(ctx) {
     const { tag } = ctx.params;
-
-    let posts = await strapi.db.query("api::post.post").findMany({
+    let posts = await strapi.entityService.findMany("api::post.post", {
+      fields: ctx.query.fields,
+      publicationState: ctx.query.publicationState,
       sort: { published_on: "desc" },
       populate: {
         author: {
@@ -97,10 +110,8 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
             image: true,
           },
         },
-        tags: true,
         image: true,
       },
-      publicationState: "live",
     });
 
     posts = posts.filter((post) => {

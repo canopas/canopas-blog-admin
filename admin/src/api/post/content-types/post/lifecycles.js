@@ -559,6 +559,7 @@ function getReadingTime(content) {
   if (!content) return 0;
   const numberOfWords = content
     .replace(/<\/?[^>]+(>|$)/g, "")
-    .split(/\s/g).length;
+    .split(/\s/g)
+    .filter((e) => e !== "").length;
   return Math.ceil(numberOfWords / 265);
 }

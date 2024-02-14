@@ -29,6 +29,7 @@ node_modules
 .strapi
 .cache
 build
+admin/types
 
 #images
 public/uploads

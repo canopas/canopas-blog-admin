@@ -138,6 +138,7 @@ async function modifyContentAndSetErrorMsg(event) {
     await generateTOC(result, event);
     await generateNewToc(result, event);
     await generatePreview(event);
+    event.params.data.reading_time = getReadingTime(event.params.data.content);
   }
 }
 
@@ -277,7 +278,7 @@ async function generatePreview(event) {
   for (const element of embeds) {
     let string = "";
     if (["mp4", "webm"].some((v) => element.attributes.url.value.includes(v))) {
-      string = `<video width="50%" style="margin:auto" autoplay loop muted>
+      string = `<video style="margin:auto" autoplay loop muted>
         <source src="${element.attributes.url.value}" type="video/mp4">
         Your browser does not support the video tag.
       </video>`;
@@ -553,3 +554,11 @@ const getImg = async (page, uri) => {
   });
   return img;
 };
+
+function getReadingTime(content) {
+  if (!content) return 0;
+  const numberOfWords = content
+    .replace(/<\/?[^>]+(>|$)/g, "")
+    .split(/\s/g).length;
+  return Math.ceil(numberOfWords / 265);
+}

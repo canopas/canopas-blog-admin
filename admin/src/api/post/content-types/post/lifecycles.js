@@ -278,7 +278,7 @@ async function generatePreview(event) {
   for (const element of embeds) {
     let string = "";
     if (["mp4", "webm"].some((v) => element.attributes.url.value.includes(v))) {
-      string = `<video style="margin:auto" autoplay loop muted>
+      string = `<video style="margin:auto;max-height:70vh" autoplay loop muted>
         <source src="${element.attributes.url.value}" type="video/mp4">
         Your browser does not support the video tag.
       </video>`;
@@ -309,23 +309,31 @@ async function generatePreview(event) {
           >
             <h2
               style="
+                max-height:40px;
+                margin: 0 !important;
+                overflow: hidden;
+                color: #242424;
                 text-overflow: ellipsis;
                 font-size: 16px !important;
-                color: #242424;
                 font-weight: 700;
-                margin: 0 !important;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient:vertical;
               "
             >
               ${data.title}
             </h2>
-            <div class="desc" style="margin-top: 8px">
+            <div style="margin-top: 8px">
               <h3
                 style="
+                  max-height:40px;
+                  margin: 0 !important;
+                  overflow: hidden;
+                  color: #6b6b6b;
                   text-overflow: ellipsis;
                   font-size: 16px !important;
-                  color: #6b6b6b;
                   line-height: 20px;
-                  margin: 0 !important;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient:vertical;
                 "
               >
                 ${data.description}
@@ -334,12 +342,13 @@ async function generatePreview(event) {
             <div>
               <p
                 style="
-                  -webkit-line-clamp: 2;
-                  max-height: 40px;
-                  text-overflow: ellipsis;
-                  font-size: 13px !important;
-                  color: #6b6b6b;
+                  max-height:40px;
                   margin: 0 !important;
+                  color: #6b6b6b;
+                  font-size: 13px !important;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient:vertical;
+                  text-overflow: ellipsis;
                 "
               >
                 ${data.domain}

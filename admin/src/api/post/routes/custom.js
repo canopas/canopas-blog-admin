@@ -16,5 +16,13 @@ module.exports = {
         auth: false,
       },
     },
+    {
+      method: "GET",
+      path: "/paginate",
+      handler: "post.findPaginate",
+      config: {
+        auth: false,
+      },
+    },
   ],
 };

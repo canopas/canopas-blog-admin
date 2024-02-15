@@ -92,8 +92,28 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
       },
     });
 
+    ctx.query.filters.is_featured = true;
+    const featuredPosts = await strapi.entityService.findMany(
+      "api::post.post",
+      {
+        filters: ctx.query.filters,
+        fields: ctx.query.fields,
+        publicationState: ctx.query.publicationState,
+        sort: { published_on: "desc" },
+        populate: {
+          author: {
+            populate: {
+              image: true,
+            },
+          },
+          image: true,
+        },
+      }
+    );
+
     return this.transformResponse({
       posts: posts,
+      featuredPosts: featuredPosts,
       count: count,
     });
   },
@@ -118,6 +138,27 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
       if (post.tags) {
         return post.tags.some((tagSlug) => tagSlug.slug === tag);
       }
+    });
+
+    return this.transformResponse(posts);
+  },
+
+  async findPaginate(ctx) {
+    const posts = await strapi.entityService.findMany("api::post.post", {
+      filters: ctx.query.filters,
+      fields: ctx.query.fields,
+      start: ctx.query.pagination.start,
+      limit: ctx.query.pagination.limit,
+      publicationState: ctx.query.publicationState,
+      sort: { published_on: "desc" },
+      populate: {
+        author: {
+          populate: {
+            image: true,
+          },
+        },
+        image: true,
+      },
     });
 
     return this.transformResponse(posts);

@@ -5,14 +5,11 @@ const fs = require("fs");
 const path = require("path");
 const handlebars = require("handlebars");
 const convertToHTML = require("./convertData");
-const axios = require("axios");
-const request = require("request");
 const puppeteer = require("puppeteer");
 
 module.exports = {
   async beforeCreate(event) {
     await modifyContentAndSetErrorMsg(event);
-    triggerGithubWorkflow(false);
   },
 
   async beforeUpdate(event) {
@@ -60,67 +57,10 @@ module.exports = {
           await strapi.plugins["email"].services.email.send(emailData);
         }
 
-        triggerGithubWorkflow(true);
       }
-    } else {
-      triggerGithubWorkflow(false);
     }
   },
 };
-
-function triggerGithubWorkflow(publishing) {
-  const config = {
-    headers: {
-      Accept: "application/vnd.github+json",
-      Authorization: "Bearer " + process.env.GH_PERSONAL_ACCESS_TOKEN,
-    },
-  };
-
-  axios
-    .get(
-      "https://api.github.com/repos/canopas/canopas-website/actions/runs?branch=master",
-      config
-    )
-    .then((res) => {
-      let devWorkflow = res.data["workflow_runs"].filter(function (workflow) {
-        return workflow.name == "DeployFrontendDev";
-      });
-
-      axios.post(
-        "https://api.github.com/repos/canopas/canopas-website/actions/runs/" +
-          devWorkflow[0].id +
-          "/rerun",
-        null,
-        {
-          headers: config.headers,
-        }
-      );
-
-      if (publishing) {
-        let prodWorkflow = res.data["workflow_runs"].filter(function (
-          workflow
-        ) {
-          return workflow.name == "DeployFrontendProd";
-        });
-
-        axios.post(
-          "https://api.github.com/repos/canopas/canopas-website/actions/runs/" +
-            prodWorkflow[0].id +
-            "/rerun",
-          null,
-          {
-            headers: config.headers,
-          }
-        );
-      }
-
-      /** submit sitemap on google after 10 mins (After workflow run will complete and generated sitemap )  */
-      setTimeout(request(sitemapUrl), 10 * 60 * 1000);
-    })
-    .catch((err) => {
-      console.error(err.message);
-    });
-}
 
 async function modifyContentAndSetErrorMsg(event) {
   const result = event.params.data;

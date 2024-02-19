@@ -30,9 +30,6 @@
     "strapi-plugin-tagsinput": "^1.0.1",
     "styled-components": "^5.2.1"
   },
-  "devDependencies": {
-    "request": "^2.88.2"
-  },
   "author": {
     "name": "canopas"
   },

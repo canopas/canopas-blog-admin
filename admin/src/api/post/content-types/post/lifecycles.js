@@ -56,7 +56,6 @@ module.exports = {
           };
           await strapi.plugins["email"].services.email.send(emailData);
         }
-
       }
     }
   },
@@ -78,7 +77,11 @@ async function modifyContentAndSetErrorMsg(event) {
     await generateTOC(result, event);
     await generateNewToc(result, event);
     await generatePreview(event);
-    event.params.data.reading_time = getReadingTime(event.params.data.content);
+    if (event.params.data.content) {
+      event.params.data.reading_time = getReadingTime(
+        event.params.data.content
+      );
+    }
   }
 }
 

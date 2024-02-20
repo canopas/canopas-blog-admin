@@ -71,9 +71,10 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
   },
 
   async find(ctx) {
-    const count = await strapi
-      .query("api::post.post")
-      .count({ where: { is_resource: ctx.query.filters.is_resource } });
+    const count = await strapi.entityService.count("api::post.post", {
+      filters: ctx.query.filters,
+      publicationState: ctx.query.publicationState,
+    });
 
     const posts = await strapi.entityService.findMany("api::post.post", {
       filters: ctx.query.filters,

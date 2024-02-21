@@ -76,11 +76,9 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
       publicationState: ctx.query.publicationState,
     });
 
-    const posts = await strapi.entityService.findMany("api::post.post", {
+    let filterObject = {
       filters: ctx.query.filters,
       fields: ctx.query.fields,
-      start: ctx.query.pagination.start,
-      limit: ctx.query.pagination.limit,
       publicationState: ctx.query.publicationState,
       sort: { published_on: "desc" },
       populate: {
@@ -91,9 +89,26 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
         },
         image: true,
       },
-    });
+    };
 
-    ctx.query.filters.is_featured = true;
+    if (ctx.query.pagination) {
+      filterObject.start = ctx.query.pagination.start || 0;
+      filterObject.limit = ctx.query.pagination.limit || 10;
+    }
+
+    const posts = await strapi.entityService.findMany(
+      "api::post.post",
+      filterObject
+    );
+
+    if (ctx.query.filters) {
+      ctx.query.filters.is_featured = true;
+    } else {
+      ctx.queryfilters = {
+        is_featured: true,
+      };
+    }
+
     const featuredPosts = await strapi.entityService.findMany(
       "api::post.post",
       {
@@ -145,11 +160,9 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
   },
 
   async findPaginate(ctx) {
-    const posts = await strapi.entityService.findMany("api::post.post", {
+    let filterObject = {
       filters: ctx.query.filters,
       fields: ctx.query.fields,
-      start: ctx.query.pagination.start,
-      limit: ctx.query.pagination.limit,
       publicationState: ctx.query.publicationState,
       sort: { published_on: "desc" },
       populate: {
@@ -160,7 +173,17 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
         },
         image: true,
       },
-    });
+    };
+
+    if (ctx.query.pagination) {
+      filterObject.start = ctx.query.pagination.start || 0;
+      filterObject.limit = ctx.query.pagination.limit || 10;
+    }
+
+    const posts = await strapi.entityService.findMany(
+      "api::post.post",
+      filterObject
+    );
 
     return this.transformResponse(posts);
   },

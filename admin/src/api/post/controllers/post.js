@@ -31,9 +31,9 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
     });
 
     if (entity) {
-      entity.recommandedPosts = [];
+      entity.recommendedPosts = [];
       if (entity.is_resource) {
-        const recommandedPosts = await strapi.db
+        const recommendedPosts = await strapi.db
           .query("api::post.post")
           .findMany({
             where: {
@@ -57,7 +57,7 @@ module.exports = createCoreController("api::post.post", ({ strapi }) => ({
             },
           });
 
-        entity.recommandedPosts = recommandedPosts
+        entity.recommendedPosts = recommendedPosts
           .filter((post) => {
             return entity.tags
               .map((t) => t.name)

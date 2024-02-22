@@ -17,8 +17,14 @@ module.exports = {
   },
 
   async afterUpdate(event) {
+    console.log(
+      "afterUpdate: ",
+      event.params.data.publishedAt,
+      event.result.is_published
+    );
     if (event.params.data.publishedAt) {
       if (!event.result.is_published) {
+        console.log("afterUpdate inside: ", event.result.is_published);
         await strapi.db.query("api::post.post").update({
           where: { id: event.result.id },
           data: {

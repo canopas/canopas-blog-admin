@@ -32,9 +32,9 @@ const CTA5 = dynamic(() => import("../components/cta/CTA5"), { ssr: false });
 const Comment = dynamic(() => import("../components/comments/index"), {
   ssr: false,
 });
-const RecommandedPosts = dynamic(
-  () => import("../components/posts/recommandedPosts"),
-  { ssr: false },
+const recommendedPosts = dynamic(
+  () => import("../components/posts/recommendedPosts"),
+  { ssr: false }
 );
 const AuthorDetails = dynamic(() => import("../components/authorDetails"), {
   ssr: false,
@@ -48,7 +48,7 @@ export async function getServerSideProps(context) {
 
   try {
     response = await axios.get(
-      config.STRAPI_URL + "/v1/posts/" + slug + "?populate=deep",
+      config.STRAPI_URL + "/v1/posts/" + slug + "?populate=deep"
     );
     postData = response.data.data;
     setPostFields(postData);
@@ -64,7 +64,7 @@ export async function getServerSideProps(context) {
     : "&publicationState=live";
   try {
     response = await axios.get(
-      config.STRAPI_URL + "/v1/posts?filters[slug][$ne]=" + slug + published,
+      config.STRAPI_URL + "/v1/posts?filters[slug][$ne]=" + slug + published
     );
     posts = response.data.data;
     posts.forEach((post) => setPostFields(post));
@@ -74,7 +74,7 @@ export async function getServerSideProps(context) {
 
   context.res.setHeader(
     "Cache-Control",
-    "public, s-maxage=10, stale-while-revalidate=59",
+    "public, s-maxage=10, stale-while-revalidate=59"
   );
 
   return { props: { postData, status, posts } };
@@ -123,7 +123,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
   blogContent = blogContent
     ?.replace(
       /<img/g,
-      '<img class="mx-auto aspect-w-2 sm:object-cover" style="width:min-content;height:min-content"',
+      '<img class="mx-auto aspect-w-2 sm:object-cover" style="width:min-content;height:min-content"'
     )
     .replace(/color:rgb\(14,16,26\);/g, "")
     .replace(/<a /g, '<a target="_blank"');
@@ -208,7 +208,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
       }
 
       setHeaderHeight(
-        document.getElementsByTagName("header")["0"].clientHeight,
+        document.getElementsByTagName("header")["0"].clientHeight
       );
 
       document.querySelectorAll("oembed[url]").forEach((element) => {
@@ -357,11 +357,9 @@ export default function Post({ postData, status, posts, mixpanel }) {
                               mixpanel.track("tap_share_facebook");
                               window.open(
                                 `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                                  config.WEBSITE_URL +
-                                    "/resources/" +
-                                    post.slug,
+                                  config.WEBSITE_URL + "/resources/" + post.slug
                                 )}`,
-                                "_blank",
+                                "_blank"
                               );
                             }}
                           />
@@ -372,11 +370,9 @@ export default function Post({ postData, status, posts, mixpanel }) {
                               mixpanel.track("tap_share_linkedin");
                               window.open(
                                 `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-                                  config.WEBSITE_URL +
-                                    "/resources/" +
-                                    post.slug,
+                                  config.WEBSITE_URL + "/resources/" + post.slug
                                 )}`,
-                                "_blank",
+                                "_blank"
                               );
                             }}
                           />
@@ -387,13 +383,11 @@ export default function Post({ postData, status, posts, mixpanel }) {
                               mixpanel.track("tap_share_twitter");
                               window.open(
                                 `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                                  post.title,
+                                  post.title
                                 )}&url=${encodeURIComponent(
-                                  config.WEBSITE_URL +
-                                    "/resources/" +
-                                    post.slug,
+                                  config.WEBSITE_URL + "/resources/" + post.slug
                                 )}`,
-                                "_blank",
+                                "_blank"
                               );
                             }}
                           />
@@ -404,11 +398,9 @@ export default function Post({ postData, status, posts, mixpanel }) {
                               mixpanel.track("tap_share_reddit");
                               window.open(
                                 `https://www.reddit.com/submit?url=${encodeURIComponent(
-                                  config.WEBSITE_URL +
-                                    "/resources/" +
-                                    post.slug,
+                                  config.WEBSITE_URL + "/resources/" + post.slug
                                 )}`,
-                                "_blank",
+                                "_blank"
                               );
                             }}
                           />
@@ -431,8 +423,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                     relatedPosts.length != 0
                       ? "xl:space-x-6 2xl:space-x-8 3xl:space-x-12 xl:mx-0"
                       : "xl:space-x-10 2xl:space-x-20 xl:mx-8 2xl:mx-20 3xl:mx-32"
-                  }  mx-2 lg:mx-24 rounded-3xl text-lg`}
-                >
+                  }  mx-2 lg:mx-24 rounded-3xl text-lg`}>
                   <div className="relative w-full xl:w-[45%] tracking-tight text-black-core/[0.87]">
                     <div className="xl:sticky top-[7.5rem] flex flex-col">
                       {indexContent != null ? (
@@ -465,8 +456,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                       dangerouslySetInnerHTML={{
                         __html: blogContent,
                       }}
-                      className="!tracking-wide text-black-core/[0.80] font-comme font-light"
-                    ></div>
+                      className="!tracking-wide text-black-core/[0.80] font-comme font-light"></div>
                     <div className="flex flex-row flex-wrap mt-11">
                       {post.tags
                         ? post.tags.map((tag) => {
@@ -477,10 +467,9 @@ export default function Post({ postData, status, posts, mixpanel }) {
                                   className="rounded-full bg-[#f2f2f2] shadow-[4px_4px_4px_rgba(0,0,0,0.19)] px-6 py-2 no-underline capitalize tracking-tight font-comme !font-normal"
                                   onClick={() => {
                                     mixpanel.track(
-                                      "tap_tag_" + tag.slug.replace("-", "_"),
+                                      "tap_tag_" + tag.slug.replace("-", "_")
                                     );
-                                  }}
-                                >
+                                  }}>
                                   {tag.name}
                                 </Link>
                               </div>
@@ -496,7 +485,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
                     <div className="relative w-2/5">
                       <div className="xl:sticky top-28">
                         <div className="hidden xl:block w-full h-fit">
-                          <RecommandedPosts
+                          <recommendedPosts
                             postData={[relatedPosts, mixpanel]}
                           />
                         </div>
@@ -512,7 +501,7 @@ export default function Post({ postData, status, posts, mixpanel }) {
               {relatedPosts.length != 0 ? (
                 <div className="container inline-block xl:hidden mt-10 lg:mx-4">
                   <hr className="mb-10" />
-                  <RecommandedPosts postData={[relatedPosts, mixpanel]} />
+                  <recommendedPosts postData={[relatedPosts, mixpanel]} />
                 </div>
               ) : (
                 ""

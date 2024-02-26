@@ -2,12 +2,15 @@
   "name": "guidelines",
   "version": "0.0.0",
   "description": "This plugin provides a guidelines for how to use admin panel",
-  "strapi": {
-    "name": "guidelines",
-    "description": "This plugin provides a guidelines for how to use admin panel",
-    "kind": "plugin",
-    "displayName": "Guidelines"
+  "license": "MIT",
+  "author": {
+    "name": "Canopas"
   },
+  "maintainers": [
+    {
+      "name": "Canopas"
+    }
+  ],
   "dependencies": {
     "@strapi/design-system": "^1.6.3",
     "@strapi/helper-plugin": "^4.6.0",
@@ -26,17 +29,14 @@
     "react-router-dom": "^5.3.4",
     "styled-components": "^5.3.6"
   },
-  "author": {
-    "name": "Canopas"
-  },
-  "maintainers": [
-    {
-      "name": "Canopas"
-    }
-  ],
   "engines": {
-    "node": ">=14.19.1 <=18.x.x",
+    "node": ">=14.19.1 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "strapi": {
+    "name": "guidelines",
+    "description": "This plugin provides a guidelines for how to use admin panel",
+    "kind": "plugin",
+    "displayName": "Guidelines"
+  }
 }

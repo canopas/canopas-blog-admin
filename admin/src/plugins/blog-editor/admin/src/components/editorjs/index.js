@@ -18,7 +18,7 @@ const Editor = ({ onChange, name, value }) => {
       openStateSetter: setIsMediaLibOpen,
       indexStateSetter: setMediaLibBlockIndex,
     }),
-    [],
+    []
   );
 
   const handleMediaLibChange = useCallback(
@@ -31,7 +31,7 @@ const Editor = ({ onChange, name, value }) => {
       });
       mediaLibToggleFunc();
     },
-    [mediaLibBlockIndex, editorInstance],
+    [mediaLibBlockIndex, editorInstance]
   );
 
   const customImageTool = {

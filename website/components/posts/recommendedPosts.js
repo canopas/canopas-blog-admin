@@ -5,7 +5,7 @@ export default function recommendedPosts({ postData }) {
   let [relatedPosts, mixpanel] = postData;
 
   relatedPosts = relatedPosts.sort(
-    (a, b) => b.attributes.index - a.attributes.index
+    (a, b) => b.attributes.index - a.attributes.index,
   );
 
   return (
@@ -21,7 +21,7 @@ export default function recommendedPosts({ postData }) {
             {
               month: "short",
               day: "numeric",
-            }
+            },
           );
           if (i < 3) {
             return (
@@ -49,7 +49,8 @@ export default function recommendedPosts({ postData }) {
                         mixpanel.track("tap_blog_title", {
                           Title: post.title,
                         });
-                      }}>
+                      }}
+                    >
                       {post.title}
                     </div>
                     <div className="xl:hidden text-black-core/[0.65] text-sm md:text-base md:leading-7 !tracking-wide">
@@ -65,7 +66,8 @@ export default function recommendedPosts({ postData }) {
                       post.image.data == null
                         ? "h-[5.084rem] md:h-[6.96rem] lg:h-[8.9rem] bg-black-900"
                         : "aspect-w-2 md:aspect-h-1 h-[5.084rem] border border-1"
-                    }`}>
+                    }`}
+                  >
                     <Image
                       width={100}
                       height={100}

@@ -2,12 +2,15 @@
   "name": "blog-editor",
   "version": "0.0.0",
   "description": "This is the description of the plugin.",
-  "strapi": {
-    "name": "blog-editor",
-    "description": "Description of Blog Editor plugin",
-    "kind": "plugin",
-    "displayName": "Blog Editor"
+  "license": "MIT",
+  "author": {
+    "name": "Canopas"
   },
+  "maintainers": [
+    {
+      "name": "Canopas"
+    }
+  ],
   "dependencies": {
     "@editorjs/code": "2.7.0",
     "@editorjs/delimiter": "1.2.0",
@@ -43,17 +46,14 @@
     "react-router-dom": "^5.3.4",
     "styled-components": "^5.3.6"
   },
-  "author": {
-    "name": "Canopas"
-  },
-  "maintainers": [
-    {
-      "name": "Canopas"
-    }
-  ],
   "engines": {
     "node": ">=16.0.0 <=20.x.x",
     "npm": ">=6.0.0"
   },
-  "license": "MIT"
+  "strapi": {
+    "name": "blog-editor",
+    "description": "Description of Blog Editor plugin",
+    "kind": "plugin",
+    "displayName": "Blog Editor"
+  }
 }

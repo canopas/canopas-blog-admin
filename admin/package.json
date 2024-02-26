@@ -1,18 +1,21 @@
 {
   "name": "website-blog",
-  "private": true,
   "version": "0.1.0",
+  "private": true,
   "description": "A headless strapi CMS for blogs website",
+  "license": "MIT",
+  "author": {
+    "name": "canopas"
+  },
   "scripts": {
+    "build": "strapi build",
     "develop": "strapi develop",
     "start": "strapi start",
-    "build": "strapi build",
     "strapi": "strapi"
   },
   "dependencies": {
     "@_sh/strapi-plugin-ckeditor": "^1.1.3",
     "@strapi/plugin-i18n": "^4.11.5",
-    "@strapi/plugin-sentry": "^4.12.1",
     "@strapi/plugin-users-permissions": "^4.11.5",
     "@strapi/provider-email-amazon-ses": "^4.11.5",
     "@strapi/provider-upload-aws-s3": "^4.11.5",
@@ -27,18 +30,13 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^5.2.0",
     "react-tagsinput": "^3.20.3",
-    "strapi-plugin-tagsinput": "^1.0.1",
+    "strapi-plugin-tagsinput": "^1.0.3",
     "styled-components": "^5.2.1"
   },
-  "author": {
-    "name": "canopas"
+  "engines": {
+    "npm": ">=6.0.0"
   },
   "strapi": {
     "uuid": "b6b5fb58-ed76-44ab-8910-3857abbf3b9f"
-  },
-  "engines": {
-    "node": ">=14.19.1 <=18.x.x",
-    "npm": ">=6.0.0"
-  },
-  "license": "MIT"
+  }
 }

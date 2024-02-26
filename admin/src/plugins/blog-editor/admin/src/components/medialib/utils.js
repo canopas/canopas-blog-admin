@@ -37,7 +37,7 @@ export const changeFunc = ({ indexStateSetter, editor, data, index }) => {
       newBlockData,
       {},
       index + insertedBlocksCount,
-      true,
+      true
     );
     insertedBlocksCount++;
   });

@@ -25,7 +25,6 @@ services:
       AWS_REGION: ${AWS_REGION}
       AWS_BUCKET: ${AWS_BUCKET}
       AWS_BUCKET_URL: ${AWS_BUCKET_URL}
-      SENTRY_DSN: ${SENTRY_DSN}
       HR_FROM_MAIL: ${HR_FROM_MAIL}
 
   nginx:

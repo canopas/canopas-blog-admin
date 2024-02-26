@@ -50,7 +50,7 @@ module.exports = ({ strapi }) => ({
           success: 0,
           message: e.message,
         },
-        500,
+        500
       );
     }
   },
@@ -95,7 +95,7 @@ module.exports = ({ strapi }) => ({
           success: 0,
           message: e.message,
         },
-        500,
+        500
       );
     }
   },

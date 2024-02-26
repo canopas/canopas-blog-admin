@@ -87,13 +87,6 @@ module.exports = ({ env }) => ({
     enabled: true,
     resolve: "./src/plugins/guidelines", // path to guidelines folder
   },
-  sentry: {
-    enabled: true,
-    config: {
-      dsn: env("SENTRY_DSN"),
-      sendMetadata: true,
-    },
-  },
   scheduler: {
     enabled: true,
     config: {

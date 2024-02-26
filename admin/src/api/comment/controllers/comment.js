@@ -73,17 +73,17 @@ module.exports = createCoreController("api::comment.comment", ({ strapi }) => ({
             },
           },
         },
-      },
+      }
     );
 
     //  Send email
     const emailTemplatePath = path.join(
       __dirname,
-      "../../../../public/emailTemplates/comment.html",
+      "../../../../public/emailTemplates/comment.html"
     );
 
     const emailTemplate = handlebars.compile(
-      fs.readFileSync(emailTemplatePath, "utf8"),
+      fs.readFileSync(emailTemplatePath, "utf8")
     )({
       parent_id: parent_id,
       emailTitle: `${

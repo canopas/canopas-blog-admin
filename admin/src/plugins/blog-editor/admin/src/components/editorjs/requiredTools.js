@@ -32,7 +32,7 @@ const requiredTools = {
               headers: {
                 Authorization: `Bearer ${auth.getToken()}`,
               },
-            },
+            }
           );
 
           return data;

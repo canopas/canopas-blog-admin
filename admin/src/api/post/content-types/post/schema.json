@@ -48,7 +48,10 @@
     "tags": {
       "type": "customField",
       "customField": "plugin::tagsinput.tags",
-      "required": true
+      "required": true,
+      "options": {
+        "apiUrl": "/v1/tags/suggestions?populate=deep&fields[0]=slug&fields[1]=name"
+      }
     },
     "category": {
       "type": "relation",

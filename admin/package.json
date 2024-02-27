@@ -30,7 +30,7 @@
     "react-dom": "^18.0.0",
     "react-router-dom": "^5.2.0",
     "react-tagsinput": "^3.20.3",
-    "strapi-plugin-tagsinput": "^1.0.3",
+    "strapi-plugin-tagsinput": "^1.0.4",
     "styled-components": "^5.2.1"
   },
   "engines": {

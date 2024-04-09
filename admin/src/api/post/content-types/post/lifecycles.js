@@ -245,7 +245,9 @@ async function generatePreview(event) {
         box-shadow: rgb(242, 242, 242) 0px 0px 0px 1px inset;
       "
     >
-      <a href="${element.attributes.url.value}" target="_blank" style="text-decoration: none; ">
+      <a href="${
+        element.attributes.url.value
+      }" target="_blank" style="text-decoration: none; ">
         <div style="display: flex">
           <div
             style="
@@ -269,7 +271,7 @@ async function generatePreview(event) {
                 -webkit-box-orient:vertical;
               "
             >
-              ${data.title}
+              ${data.title || ""}
             </h2>
             <div style="margin-top: 8px">
               <h3
@@ -285,7 +287,7 @@ async function generatePreview(event) {
                   -webkit-box-orient:vertical;
                 "
               >
-                ${data.description}
+                ${data.description || ""}
               </h3>
             </div>
             <div>
@@ -300,14 +302,14 @@ async function generatePreview(event) {
                   text-overflow: ellipsis;
                 "
               >
-                ${data.domain}
+                ${data.domain || ""}
               </p>
             </div>
           </div>
           <div style="width: 160px">
             <div
               style="
-                background-image: url('${data.img}');
+                background-image: url('${data.img || ""}');
                 background-position: 50% 50%;
                 height: 167px;
                 width: 160px;

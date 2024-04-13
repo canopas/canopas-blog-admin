@@ -17,14 +17,8 @@ module.exports = {
   },
 
   async afterUpdate(event) {
-    console.log(
-      "afterUpdate: ",
-      event.params.data.publishedAt,
-      event.result.is_published
-    );
     if (event.params.data.publishedAt) {
       if (!event.result.is_published) {
-        console.log("afterUpdate inside: ", event.result.is_published);
         await strapi.db.query("api::post.post").update({
           where: { id: event.result.id },
           data: {
@@ -125,19 +119,19 @@ function generateSlug(title, slug) {
 async function TagsInput(tags) {
   let tagsData = [];
   for (i = 0; i < tags.length; i++) {
+    let slug = tags[i].name
+      .replace(/\s/g, "-")
+      .replace(/[^A-Za-z-]/g, "")
+      .toLowerCase();
+
     let existingTag = await strapi.db.query("api::tag.tag").findOne({
-      where: {
-        name: {
-          $eqi: tags[i].name,
-        },
-      },
+      where: { slug },
     });
 
-    if (existingTag == null) {
-      let slug = tags[i].name
-        .replace(/\s/g, "-")
-        .replace(/[^A-Za-z-]/g, "")
-        .toLowerCase();
+    const insert = existingTag && existingTag.name != tags[i].name;
+    slug = insert ? slug + "-" + i : slug;
+
+    if (existingTag == null || insert) {
       existingTag = await strapi.db.query("api::tag.tag").create({
         data: {
           slug,
@@ -333,7 +327,7 @@ async function runScraper(url) {
   });
   try {
     const page = await browser.newPage();
-    await page.goto(url);
+    await page.goto(url, { waitUntil: "domcontentloaded" });
     const obj = {
       title: await getTitle(page),
       description: await getDescription(page),

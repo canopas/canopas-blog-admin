@@ -128,10 +128,7 @@ async function TagsInput(tags) {
       where: { slug },
     });
 
-    const insert = existingTag && existingTag.name != tags[i].name;
-    slug = insert ? slug + "-" + i : slug;
-
-    if (existingTag == null || insert) {
+    if (existingTag == null) {
       existingTag = await strapi.db.query("api::tag.tag").create({
         data: {
           slug,

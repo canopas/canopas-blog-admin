@@ -22,18 +22,3 @@ jobs:
           yarn install
           cd ../../..
           yarn build
-
-      - name: Set up Node for website
-        uses: actions/setup-node@v1
-        with:
-          node-version: "20.x"
-
-      - name: Build frontend
-        env:
-          NEXT_PUBLIC_WEBSITE_URL: https://dev-stack.canopas.com
-          NEXT_PUBLIC_STRAPI_DOMAIN: ${{secrets.ADMIN_PANEL_URL}}
-        run: |
-          cd website
-          yarn add prettier
-          yarn lint
-          yarn build

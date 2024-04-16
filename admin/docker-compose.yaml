@@ -5,8 +5,6 @@ services:
     image: ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/blog-admin:${GITHUB_SHA}-${GITHUB_RUN_ATTEMPT}-blog-admin
     deploy:
       replicas: 1
-    volumes:
-      - uploads:/srv/app/public/uploads
     ports:
       - "1337:1337"
     environment:
@@ -26,6 +24,11 @@ services:
       AWS_BUCKET: ${AWS_BUCKET}
       AWS_BUCKET_URL: ${AWS_BUCKET_URL}
       HR_FROM_MAIL: ${HR_FROM_MAIL}
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ${AWS_REGION}
+        awslogs-group: canopas-blog-admin-logs
 
   nginx:
     image: nginx:latest
@@ -42,7 +45,3 @@ networks:
   outside:
     external:
       name: "host"
-
-volumes:
-  blog-data:
-  uploads:

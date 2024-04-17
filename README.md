@@ -79,7 +79,7 @@ yarn develop
 
 # Customization
 
-- All email templates reside in `admin/pubic/emailTemplates`. You can customize them as per your requirement.
+- All email templates reside in `admin/public/emailTemplates`. You can customize them as per your requirement.
 - You can update titles, descriptions, and logos of your admin panel from `admin/src/admin/app.js`.
 
 - The admin panel has its own guidelines to guide writers about adding content. You can add/update guidelines for your admins or writers in `admin/src/plugins/guidelines/admin/src/pages/guidelines.md`.

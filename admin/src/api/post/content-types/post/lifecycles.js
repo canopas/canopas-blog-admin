@@ -26,36 +26,36 @@ module.exports = {
           },
         });
 
-        const user = await strapi.entityService.findMany(
-          "plugin::users-permissions.user",
-          {
-            fields: "email",
-            filters: { is_subscribed: true },
-          }
-        );
+        // const user = await strapi.entityService.findMany(
+        //   "plugin::users-permissions.user",
+        //   {
+        //     fields: "email",
+        //     filters: { is_subscribed: true },
+        //   }
+        // );
 
-        for (i = 0; i < user.length; i++) {
-          const emailTemplatePath = path.join(
-            __dirname,
-            "../../../../../public/emailTemplates/subscribe.html"
-          );
-          const emailTemplate = handlebars.compile(
-            fs.readFileSync(emailTemplatePath, "utf8")
-          )({
-            postTitle: event.result.title,
-            summary: event.result.summary,
-            slug: event.result.slug,
-            imageUrl: event.result.image ? event.result.image.url : "",
-            userEmail: user[i].email,
-          });
-          let emailData = {
-            to: user[i].email,
-            from: process.env.HR_FROM_MAIL,
-            subject: event.result.title,
-            html: emailTemplate,
-          };
-          await strapi.plugins["email"].services.email.send(emailData);
-        }
+        // for (i = 0; i < user.length; i++) {
+        //   const emailTemplatePath = path.join(
+        //     __dirname,
+        //     "../../../../../public/emailTemplates/subscribe.html"
+        //   );
+        //   const emailTemplate = handlebars.compile(
+        //     fs.readFileSync(emailTemplatePath, "utf8")
+        //   )({
+        //     postTitle: event.result.title,
+        //     summary: event.result.summary,
+        //     slug: event.result.slug,
+        //     imageUrl: event.result.image ? event.result.image.url : "",
+        //     userEmail: user[i].email,
+        //   });
+        //   let emailData = {
+        //     to: user[i].email,
+        //     from: process.env.HR_FROM_MAIL,
+        //     subject: event.result.title,
+        //     html: emailTemplate,
+        //   };
+        //   await strapi.plugins["email"].services.email.send(emailData);
+        // }
       }
     }
   },

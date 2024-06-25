@@ -68,11 +68,6 @@ async function modifyContentAndSetErrorMsg(event) {
     // validate input fields
     validateFields(result);
 
-    if (result.is_resource && result.title) {
-      // generate slug from title
-      event.params.data.slug = generateSlug(result.title, result.slug);
-    }
-
     // generate table of contents
     await generateTOC(result, event);
     await generateNewToc(result, event);
@@ -153,9 +148,30 @@ function generateRandomNumber() {
 
 function validateFields(result) {
   // set required message for summary,tags and meta_description
+  if (!result.title) {
+    const error = new YupValidationError({
+      path: "title",
+      message: "This value is required.",
+    });
+    throw error;
+  }
   if (result.tags && result.tags.length == 0) {
     const error = new YupValidationError({
       path: "tags",
+      message: "This value is required.",
+    });
+    throw error;
+  }
+  if (result.author.connect.length == 0) {
+    const error = new YupValidationError({
+      path: "author",
+      message: "This value is required.",
+    });
+    throw error;
+  }
+  if (!result.summary) {
+    const error = new YupValidationError({
+      path: "summary",
       message: "This value is required.",
     });
     throw error;
@@ -167,10 +183,24 @@ function validateFields(result) {
     });
     throw error;
   }
+  if (!result.meta_description) {
+    const error = new YupValidationError({
+      path: "meta_description",
+      message: "This value is required.",
+    });
+    throw error;
+  }
   if (result.meta_description && result.meta_description.length > 160) {
     const error = new YupValidationError({
       path: "meta_description",
       message: "Allow max 160 chars only",
+    });
+    throw error;
+  }
+  if (result.blog_content == '') {
+    const error = new YupValidationError({
+      path: "blog_content",
+      message: "This value is required.",
     });
     throw error;
   }

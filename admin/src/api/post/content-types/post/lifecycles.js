@@ -9,11 +9,11 @@ const puppeteer = require("puppeteer");
 
 module.exports = {
   async beforeCreate(event) {
-    await modifyContentAndSetErrorMsg(event);
+    await modifyContentAndSetErrorMsg(event, false);
   },
 
   async beforeUpdate(event) {
-    await modifyContentAndSetErrorMsg(event);
+    await modifyContentAndSetErrorMsg(event, true);
   },
 
   async afterUpdate(event) {
@@ -61,12 +61,12 @@ module.exports = {
   },
 };
 
-async function modifyContentAndSetErrorMsg(event) {
+async function modifyContentAndSetErrorMsg(event, is_from_update) {
   const result = event.params.data;
 
   if (result) {
     // validate input fields
-    validateFields(result);
+    validateFields(result, is_from_update);
 
     // generate table of contents
     await generateTOC(result, event);
@@ -146,8 +146,12 @@ function generateRandomNumber() {
   return Math.floor(Math.random() * 9000000000) + 1000000000;
 }
 
-function validateFields(result) {
-  // set required message for summary,tags and meta_description
+function validateFields(result, is_from_update) {
+  // no need to validate if it's only going to publish or unpublish
+  if (Object.keys(result).length <= 3) {
+    return;
+  }
+
   if (!result.title) {
     const error = new YupValidationError({
       path: "title",
@@ -155,6 +159,7 @@ function validateFields(result) {
     });
     throw error;
   }
+
   if (result.tags && result.tags.length == 0) {
     const error = new YupValidationError({
       path: "tags",
@@ -162,13 +167,28 @@ function validateFields(result) {
     });
     throw error;
   }
-  if (result.author.connect.length == 0) {
+
+  // required author when add post
+  if (!is_from_update && result.author.connect.length == 0) {
     const error = new YupValidationError({
       path: "author",
       message: "This value is required.",
     });
     throw error;
   }
+  // required author when update post
+  if (
+    is_from_update &&
+    result.author.disconnect.length > 0 &&
+    result.author.connect.length == 0
+  ) {
+    const error = new YupValidationError({
+      path: "author",
+      message: "This value is required.",
+    });
+    throw error;
+  }
+
   if (!result.summary) {
     const error = new YupValidationError({
       path: "summary",
@@ -176,6 +196,7 @@ function validateFields(result) {
     });
     throw error;
   }
+
   if (result.summary && result.summary.length > 200) {
     const error = new YupValidationError({
       path: "summary",
@@ -183,6 +204,7 @@ function validateFields(result) {
     });
     throw error;
   }
+
   if (!result.meta_description) {
     const error = new YupValidationError({
       path: "meta_description",
@@ -190,6 +212,7 @@ function validateFields(result) {
     });
     throw error;
   }
+
   if (result.meta_description && result.meta_description.length > 160) {
     const error = new YupValidationError({
       path: "meta_description",
@@ -197,7 +220,8 @@ function validateFields(result) {
     });
     throw error;
   }
-  if (result.blog_content == '') {
+
+  if (result.blog_content == "") {
     const error = new YupValidationError({
       path: "blog_content",
       message: "This value is required.",

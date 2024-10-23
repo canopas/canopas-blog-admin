@@ -121,6 +121,10 @@ module.exports = ({ env }) => ({
         secret: env("AWS_SECRET_ACCESS_KEY"),
         amazon: `https://email.${env("AWS_REGION")}.amazonaws.com`,
       },
+      settings: {
+        defaultFrom: env("HR_FROM_MAIL"),
+        defaultReplyTo: env("HR_FROM_MAIL"),
+      },
     },
   },
 });

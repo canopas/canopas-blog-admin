@@ -35,7 +35,6 @@ services:
     deploy:
       replicas: 1
     volumes:
-      - /etc/nginx/certs/:/etc/nginx/certs/
       - /etc/nginx/conf.d/:/etc/nginx/conf.d/
       - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
     networks:

@@ -3,7 +3,7 @@ name: Deploy Admin-panel
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy-admin-panel:

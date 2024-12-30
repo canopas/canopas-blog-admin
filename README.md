@@ -35,7 +35,8 @@ This repository contains the admin panel of [our resources](https://canopas.com/
 
 3. **Automatic previews:** We created custom previews like medium in Blog Editor.Your blog post will have preview of links based on its data like images or videos. You need to just paste the links and it will geneate preview on save and you can see it at your frontend.
 
-4. **CI/CD and Deployment:** With CI in place, every code change is automatically tested and integrated into the main codebase. This ensures that the main branch always remains stable, reducing the chances of bugs and allowing for rapid deployment.
+4. **CI/CD and Deployment:** With CI in place, every code change is automatically tested and integrated into the main codebase. This ensures that the master branch always remains stable, reducing the chances of bugs and allowing for rapid deployment.
+   
 5. **Recommended Posts:** Enhance user engagement by showcasing recommended posts to your audience. This feature suggests relevant content based on the user's reading history, keeping visitors on your website for longer.
 
 6. **Email Subscription:** Engage your readers effectively with our built-in subscription system. Visitors can subscribe to your blog and receive updates whenever you publish new content, helping you build a loyal readership base. Users can also unsubscribe from emails.
@@ -118,6 +119,10 @@ The following are main dependencies used by the project
 - [Tagsinput](https://market.strapi.io/plugins/strapi-plugin-tagsinput)
 
 ---
+
+## Contribution
+
+The Canopas team enthusiastically welcomes contributions and project participation! There are a bunch of things you can do if you want to contribute! The [Contributor Guide](CONTRIBUTING.md) has all the information you need for everything from reporting bugs to contributing entire new features. Please don't hesitate to jump in if you'd like to, or even ask us questions if something isn't clear.
 
 # Credits
 

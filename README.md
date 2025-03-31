@@ -29,11 +29,11 @@ This repository contains the admin panel of [our resources](https://canopas.com/
 
 # Key Features
 
-1. **Strapi CMS in Admin Panel:**: This project created with Strapi. This provides us CMS with API as backend. We can use both for Creating Editing, and Publishing the blogs and its relavant content seamlessly.
+1. ** Strapi CMS in Admin Panel: **This project was created with Strapi, which provides us with a CMS with an API as the backend. We can use both to create, edit, and publish blogs and their relevant content seamlessly.
 
-2. **SEO-friendly URLs and Metadata:** Each posts has SEO fields like meta tags, URL structures and sitemaps. You can customize all the essentia; fields for Optimal SEO.
+2. **SEO-friendly URLs and Metadata:** Each post has SEO fields like meta tags, URL structures, and sitemaps. You can customize all the essential fields for Optimal SEO.
 
-3. **Automatic previews:** We created custom previews like medium in Blog Editor.Your blog post will have preview of links based on its data like images or videos. You need to just paste the links and it will geneate preview on save and you can see it at your frontend.
+3. **Automatic previews:** We created custom previews like medium in Blog Editor. Your blog post will have a preview of links based on its data, like images or videos. You need to just paste the links, and it will generate a preview on save, and you can see it at your frontend.
 
 4. **CI/CD and Deployment:** With CI in place, every code change is automatically tested and integrated into the main codebase. This ensures that the master branch always remains stable, reducing the chances of bugs and allowing for rapid deployment.
    
@@ -112,7 +112,7 @@ git config core.hooksPath .githooks
 
 # Dependencies
 
-The following are main dependencies used by the project
+The following are the main dependencies used by the project
 
 - [Strapi](https://github.com/strapi/strapi)
 - [Ckeditor](https://github.com/nshenderov/strapi-plugin-ckeditor)
